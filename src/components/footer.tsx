@@ -49,7 +49,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-cream/10 pt-6 text-xs text-cream/40 sm:flex-row sm:items-center sm:justify-between">
-          <span>© {year} Raul Architects. {f("rights")}</span>
+          <span>© {year} Media7.az. {f("rights")}</span>
           <span className="uppercase tracking-[0.16em]">Germany · Switzerland · Azerbaijan</span>
         </div>
       </Container>
