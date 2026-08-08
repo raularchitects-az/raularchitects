@@ -1,0 +1,176 @@
+{
+  "meta": {
+    "title": "Raul Architects — Avropa Dərəcəli Memarlıq və BİM İnnovasiyası",
+    "description": "Raul Nağıyev — Almaniya, İsveçrə və Azərbaycanda davamlı, passiv ev (Passivhaus) və rəqəmsal əkiz memarlığı təqdim edən beynəlxalq memar, mühəndis, interyer dizayneri və BİM eksperti."
+  },
+  "nav": {
+    "about": "Haqqımızda",
+    "services": "Xidmətlər",
+    "bim": "BİM Ekspertizası",
+    "contact": "Əlaqə",
+    "cta": "Bizimlə Əlaqə"
+  },
+  "hero": {
+    "eyebrow": "Almaniya · İsveçrə · Azərbaycan",
+    "headline": "Avropa Dərəcəli Memarlıq və BİM İnnovasiyası",
+    "subtitle": "Almaniya və İsveçrədə yerləşir. Davamlı, passiv ev (Passivhaus) və rəqəmsal əkiz standartlarında memarlıq mükəmməlliyi təqdim edir.",
+    "ctaPrimary": "Xidmətlərə Baxın",
+    "ctaSecondary": "Bizimlə Əlaqə",
+    "stats": [
+      { "value": "30+", "label": "Almaniyada layihə" },
+      { "value": "3", "label": "İsveçrədə davam edən" },
+      { "value": "15+", "label": "Azərbaycanda layihə" }
+    ]
+  },
+  "about": {
+    "eyebrow": "Memar Haqqında",
+    "title": "Raul Nağıyev",
+    "role": "Memar · Mühəndis · İnteryer Dizayneri · BİM Eksperti",
+    "intro": "38 yaşlı beynəlxalq memar, mühəndis, interyer dizayneri və BİM eksperti Raul Nağıyev, Mərkəzi Avropanın dizayn dəqiqliyi ilə Qafqazın inkişaf edən bazarları arasında körpü qurur. Almaniyanın BTU Cottbus universitetindən magistr dərəcəsi, Böyük Britaniyadan interyer dizaynı ixtisası və Azərbaycandan mühəndislik təhsili ilə onun praktikası üç ölkə üzrə texniki dəqiqliyi zərif memarlıq həssaslığı ilə birləşdirir.",
+    "educationTitle": "Təhsil",
+    "education": [
+      { "title": "Magistr Dərəcəsi, Memarlıq və Mühəndislik", "place": "BTU Cottbus, Almaniya" },
+      { "title": "İnteryer Dizaynı İxtisası", "place": "Böyük Britaniya" },
+      { "title": "Mühəndislik Əsasları", "place": "Azərbaycan" }
+    ],
+    "statsTitle": "Təcrübə Göstəriciləri",
+    "stats": [
+      { "value": "30+", "label": "Almaniyada tamamlanmış layihə" },
+      { "value": "3", "label": "İsveçrədə davam edən layihə" },
+      { "value": "15+", "label": "Azərbaycanda tamamlanmış layihə" }
+    ],
+    "collabTitle": "Əməkdaşlıqlar",
+    "collaborations": [
+      "MACE International — Böyük Britaniya",
+      "GOLDBECK — Almaniya",
+      "TA AG — İsveçrə",
+      "AK Aluminium"
+    ],
+    "awardsTitle": "Mükafatlar və Müsabiqələr",
+    "awards": [
+      "eVolo Skyscraper Müsabiqəsi — Nyu-York",
+      "Schinkel Wettbewerbe — Berlin",
+      "Beynəlxalq Müsabiqələr — Riqa"
+    ],
+    "standardsTitle": "Standartlar və Sertifikatlar",
+    "standards": [
+      "ISO",
+      "DIN — Deutsches Institut für Normung",
+      "SIA — İsveçrə Mühəndis və Memarlar Cəmiyyəti",
+      "Passiv Ev Standartı",
+      "Enerji Səmərəli və Ağıllı Ev Prinsipləri"
+    ]
+  },
+  "services": {
+    "eyebrow": "Təklif Etdiyimiz",
+    "title": "Xidmətlər",
+    "subtitle": "Fərdi müştərilər və şirkətlər üçün ilk eskizdən tikinti sonrası modelinə qədər tam memarlıq, interyer və BİM xidmətləri.",
+    "items": [
+      {
+        "icon": "Building2",
+        "title": "Memarlıq və Bina Dizaynı",
+        "tag": "B2C · B2B",
+        "description": "Konsepsiyadan tamamlanmasına qədər dəqiqliklə hazırlanan yaşayış, kommersiya, modernləşdirmə və genişləndirmə layihələri."
+      },
+      {
+        "icon": "Sofa",
+        "title": "İnteryer Dizaynı və Məkan Konsepsiyaları",
+        "tag": "B2C",
+        "description": "Funksionallıq, işıq və material həqiqiliyini tarazlaşdıran insan mərkəzli interyer konsepsiyaları."
+      },
+      {
+        "icon": "Boxes",
+        "title": "Şirkətlər üçün BİM Xidmətləri",
+        "tag": "B2B",
+        "description": "3D ağıllı modellər, kolliziya analizi, həcm hesablanması (Simeta), tikinti sonrası (As-Built) modellər və Rəqəmsal Əkiz təhlükəsi."
+      },
+      {
+        "icon": "FileCheck2",
+        "title": "İcazələr və İşçi Layihələr",
+        "tag": "B2C · B2B",
+        "description": "Tikinti icazəsi sənədləşdirilməsi və ArchiCAD & Revit proqramlarında texniki çertyojlar."
+      },
+      {
+        "icon": "ClipboardCheck",
+        "title": "Layihə İdarəetməsi və Tikinti Nəzarəti",
+        "tag": "B2C · B2B",
+        "description": "Planlaşdırmadan təhvilə qədər sahədə tikinti nəzarəti və layihə idarəetməsi."
+      }
+    ]
+  },
+  "bim": {
+    "eyebrow": "BİM və Fəlsəfə",
+    "title": "Tikinti Məlumat Modelləşdirməsi və Rəqəmsal Əkiz",
+    "description": "BİM metodologiyası binanı ilk kərpic qoyulmazdan çox əvvəl strukturlaşdırılmış, ağıllı məlumata çevirir. Hər divar, tir və boru vahid ağıllı model daxilində əlaqələndirilmiş elementə çevrilir, bu da kolliziyasız tikintiyə, dəqiq xərc nəzarətinə və binanın bütün həyat dövrü ərzində xidmət edən canlı Rəqəmsal Əkizə imkan yaradır.",
+    "features": [
+      {
+        "icon": "Scan",
+        "title": "Rəqəmsal Əkiz",
+        "titleNative": "Digital Twin",
+        "description": "Binanın fiziki nüsxəsi ilə bütün həyat dövrü ərzində sinxronlaşdırılan canlı rəqəmsal surəti."
+      },
+      {
+        "icon": "AlertTriangle",
+        "title": "Kolliziya Aşkarlanması",
+        "description": "Tikinti başlamazdan əvvəl memarlıq, konstruksiya və mühəndis şəbəkələri üzrə avtomatik ziddiyyət analizi."
+      },
+      {
+        "icon": "Calculator",
+        "title": "Xərc Səmərəliliyi",
+        "description": "İtkiləri, təkrar işləri və büdcə artımlarını azaldan dəqiq həcm hesablanması və proqnozlaşdırma."
+      },
+      {
+        "icon": "Leaf",
+        "title": "Davamlı Dizayn",
+        "description": "Ekoloji izi azaltmaq üçün enerji, material və həyat dövrü performansı üzrə məlumata əsaslanan qərarlar."
+      }
+    ],
+    "philosophyTitle": "Əsas Fəlsəfə",
+    "philosophy": [
+      {
+        "title": "Funksionallıq",
+        "description": "Hər məkan təsir bağışlamazdan əvvəl öz məqsədinə güzəştsiz xidmət etmək üçün dizayn edilir."
+      },
+      {
+        "title": "Estetika",
+        "description": "Dəqiqlik və ölçülülük bəzəkdən çox sakit lüks yaradan zamansız memarlıq formalaşdırır."
+      },
+      {
+        "title": "Davamlılıq",
+        "description": "Passiv Ev prinsipləri və enerji səmərəli sistemlər ilk eskizdən nəzərə alınır."
+      },
+      {
+        "title": "İnsan Mərkəzlilik",
+        "description": "Binalar insanların məkanda necə yaşadığı, işlədiyi və hərəkət etdiyi əsasında dizayn edilir."
+      },
+      {
+        "title": "Kontekst",
+        "description": "Hər layihə öz yerinə, iqliminə, mədəniyyətinə və tənzimləyici mühitinə cavab verir."
+      }
+    ]
+  },
+  "footer": {
+    "brand": "Raul Architects",
+    "tagline": "Avropa Dərəcəli Memarlıq və BİM İnnovasiyası",
+    "description": "Almaniya və İsveçrədə yerləşən, Azərbaycan köklərinə malik beynəlxalq memarlıq, interyer dizaynı və BİM konsaltinq şirkəti.",
+    "contactTitle": "Əlaqə",
+    "email": "office@raularchitects.com",
+    "phoneSwitzerlandLabel": "İsveçrə",
+    "phoneSwitzerland": "+41 77 250 9786",
+    "phoneGermanyLabel": "Almaniya",
+    "phoneGermany": "+49 157 8970 7008",
+    "website": "raularchitects.com",
+    "locationsTitle": "Yerləşmə",
+    "locations": ["Almaniya", "İsveçrə", "Azərbaycan"],
+    "navTitle": "Naviqasiya",
+    "formTitle": "Sorğu Göndərin",
+    "formName": "Ad, Soyad",
+    "formEmail": "E-poçt ünvanı",
+    "formMessage": "Layihəniz haqqında bizə məlumat verin",
+    "formSubmit": "Mesaj Göndər",
+    "rights": "Bütün hüquqlar qorunur."
+  },
+  "languageSwitcher": {
+    "label": "Dil"
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "meta": {
+    "title": "Raul Architects — European Architectural Precision & BIM Innovation",
+    "description": "Raul Naghiyev is an international architect, engineer, interior designer, and BIM expert delivering sustainable, passivhaus, and digital-twin architecture across Germany, Switzerland, and Azerbaijan."
+  },
+  "nav": {
+    "about": "About",
+    "services": "Services",
+    "bim": "BIM Expertise",
+    "contact": "Contact",
+    "cta": "Contact Us"
+  },
+  "hero": {
+    "eyebrow": "Germany · Switzerland · Azerbaijan",
+    "headline": "European Architectural Precision & BIM Innovation",
+    "subtitle": "Based in Germany & Switzerland. Delivering sustainable, passivhaus, and digital-twin architectural excellence.",
+    "ctaPrimary": "View Services",
+    "ctaSecondary": "Contact Us",
+    "stats": [
+      { "value": "30+", "label": "Projects in Germany" },
+      { "value": "3", "label": "Ongoing in Switzerland" },
+      { "value": "15+", "label": "Projects in Azerbaijan" }
+    ]
+  },
+  "about": {
+    "eyebrow": "About the Architect",
+    "title": "Raul Naghiyev",
+    "role": "Architect · Engineer · Interior Designer · BIM Expert",
+    "intro": "A 38-year-old international architect, engineer, interior designer, and BIM expert, Raul Naghiyev builds a bridge between Central European design rigor and the emerging markets of the Caucasus. With a Master's degree from BTU Cottbus, Germany, an interior design qualification from the United Kingdom, and an engineering foundation from Azerbaijan, his practice unites technical precision with a refined architectural sensibility across three countries.",
+    "educationTitle": "Education",
+    "education": [
+      { "title": "Master's Degree, Architecture & Engineering", "place": "BTU Cottbus, Germany" },
+      { "title": "Interior Design Qualification", "place": "United Kingdom" },
+      { "title": "Engineering Foundation Studies", "place": "Azerbaijan" }
+    ],
+    "statsTitle": "Track Record",
+    "stats": [
+      { "value": "30+", "label": "Completed projects in Germany" },
+      { "value": "3", "label": "Ongoing projects in Switzerland" },
+      { "value": "15+", "label": "Completed projects in Azerbaijan" }
+    ],
+    "collabTitle": "Collaborations",
+    "collaborations": [
+      "MACE International — United Kingdom",
+      "GOLDBECK — Germany",
+      "TA AG — Switzerland",
+      "AK Aluminium"
+    ],
+    "awardsTitle": "Awards & Competitions",
+    "awards": [
+      "eVolo Skyscraper Competition — New York",
+      "Schinkel Wettbewerbe — Berlin",
+      "International Competitions — Riga"
+    ],
+    "standardsTitle": "Standards & Certifications",
+    "standards": [
+      "ISO",
+      "DIN — Deutsches Institut für Normung",
+      "SIA — Swiss Society of Engineers and Architects",
+      "Passive House Standard",
+      "Energy-Efficient & Smart Home Principles"
+    ]
+  },
+  "services": {
+    "eyebrow": "What We Offer",
+    "title": "Services",
+    "subtitle": "Comprehensive architectural, interior, and BIM services for private clients and companies — from first sketch to as-built model.",
+    "items": [
+      {
+        "icon": "Building2",
+        "title": "Architectural & Building Design",
+        "tag": "B2C · B2B",
+        "description": "Residential, commercial, modernization, and extension projects designed with precision from concept to completion."
+      },
+      {
+        "icon": "Sofa",
+        "title": "Interior Design & Spatial Concepts",
+        "tag": "B2C",
+        "description": "Human-centred interior concepts that balance function, light, material honesty, and character."
+      },
+      {
+        "icon": "Boxes",
+        "title": "BIM Services for Companies",
+        "tag": "B2B",
+        "description": "3D smart models, collision analysis, quantity takeoff (Simeta), as-built models, and full Digital Twin delivery."
+      },
+      {
+        "icon": "FileCheck2",
+        "title": "Permits & Working Projects",
+        "tag": "B2C · B2B",
+        "description": "Building permit documentation and technical working drawings in ArchiCAD & Revit."
+      },
+      {
+        "icon": "ClipboardCheck",
+        "title": "Project Management & Supervision",
+        "tag": "B2C · B2B",
+        "description": "On-site construction supervision and project management from planning through handover."
+      }
+    ]
+  },
+  "bim": {
+    "eyebrow": "BIM & Philosophy",
+    "title": "Building Information Modeling & Digital Twin",
+    "description": "BIM methodology transforms a building into structured, intelligent data — long before the first stone is laid. Every wall, beam, and pipe becomes a coordinated element within a single smart model, enabling clash-free construction, precise cost control, and a living Digital Twin (Rəqəmsal Əkiz) that continues to serve the building throughout its lifecycle.",
+    "features": [
+      {
+        "icon": "Scan",
+        "title": "Digital Twin",
+        "titleNative": "Rəqəmsal Əkiz",
+        "description": "A living digital replica of the building, synchronized with its physical counterpart across the full lifecycle."
+      },
+      {
+        "icon": "AlertTriangle",
+        "title": "Collision Detection",
+        "description": "Automated clash analysis across architectural, structural, and MEP disciplines before construction begins."
+      },
+      {
+        "icon": "Calculator",
+        "title": "Cost Efficiency",
+        "description": "Accurate quantity takeoff and forecasting that reduce waste, rework, and budget overruns."
+      },
+      {
+        "icon": "Leaf",
+        "title": "Sustainable Design",
+        "description": "Data-driven decisions across energy, material, and lifecycle performance for a lower environmental footprint."
+      }
+    ],
+    "philosophyTitle": "Core Philosophy",
+    "philosophy": [
+      {
+        "title": "Functionality",
+        "description": "Every space is designed to serve its purpose without compromise, before it is designed to impress."
+      },
+      {
+        "title": "Aesthetics",
+        "description": "Precision and restraint create timeless architecture — quiet luxury over ornament."
+      },
+      {
+        "title": "Sustainability",
+        "description": "Passive House principles and energy-efficient systems are considered from the very first sketch."
+      },
+      {
+        "title": "Human-Centricity",
+        "description": "Buildings are designed around how people actually live, work, and move through space."
+      },
+      {
+        "title": "Context",
+        "description": "Every project responds to its site, climate, culture, and regulatory environment."
+      }
+    ]
+  },
+  "footer": {
+    "brand": "Raul Architects",
+    "tagline": "European Architectural Precision & BIM Innovation",
+    "description": "International architecture, interior design, and BIM consultancy — based in Germany & Switzerland, with roots in Azerbaijan.",
+    "contactTitle": "Contact",
+    "email": "office@raularchitects.com",
+    "phoneSwitzerlandLabel": "Switzerland",
+    "phoneSwitzerland": "+41 77 250 9786",
+    "phoneGermanyLabel": "Germany",
+    "phoneGermany": "+49 157 8970 7008",
+    "website": "raularchitects.com",
+    "locationsTitle": "Locations",
+    "locations": ["Germany", "Switzerland", "Azerbaijan"],
+    "navTitle": "Navigation",
+    "formTitle": "Send an Inquiry",
+    "formName": "Full Name",
+    "formEmail": "Email Address",
+    "formMessage": "Tell us about your project",
+    "formSubmit": "Send Message",
+    "rights": "All rights reserved."
+  },
+  "languageSwitcher": {
+    "label": "Language"
+  }
+}

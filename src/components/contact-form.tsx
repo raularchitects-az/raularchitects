@@ -1,0 +1,74 @@
+"use client";
+
+import { useState, type FormEvent } from "react";
+import { useTranslations } from "next-intl";
+import { Send, CheckCircle2 } from "lucide-react";
+
+export function ContactForm() {
+  const t = useTranslations("footer");
+  const [submitted, setSubmitted] = useState(false);
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSubmitted(true);
+  }
+
+  if (submitted) {
+    return (
+      <div className="flex min-h-[22rem] flex-col items-center justify-center gap-4 border border-charcoal/10 bg-cream p-10 text-center">
+        <CheckCircle2 className="h-9 w-9 text-bronze-dark" strokeWidth={1.5} />
+        <p className="max-w-xs text-sm leading-relaxed text-charcoal/70">{t("formMessage")}</p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5 border border-charcoal/10 bg-cream p-8 sm:p-10">
+      <h3 className="font-serif text-xl text-charcoal">{t("formTitle")}</h3>
+
+      <label className="flex flex-col gap-2">
+        <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-charcoal/50">
+          {t("formName")}
+        </span>
+        <input
+          required
+          type="text"
+          name="name"
+          className="border border-charcoal/15 bg-transparent px-4 py-3 text-sm text-charcoal outline-none transition-colors duration-300 placeholder:text-charcoal/30 focus:border-bronze-dark"
+        />
+      </label>
+
+      <label className="flex flex-col gap-2">
+        <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-charcoal/50">
+          {t("formEmail")}
+        </span>
+        <input
+          required
+          type="email"
+          name="email"
+          className="border border-charcoal/15 bg-transparent px-4 py-3 text-sm text-charcoal outline-none transition-colors duration-300 placeholder:text-charcoal/30 focus:border-bronze-dark"
+        />
+      </label>
+
+      <label className="flex flex-col gap-2">
+        <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-charcoal/50">
+          {t("formMessage")}
+        </span>
+        <textarea
+          required
+          name="message"
+          rows={4}
+          className="resize-none border border-charcoal/15 bg-transparent px-4 py-3 text-sm text-charcoal outline-none transition-colors duration-300 placeholder:text-charcoal/30 focus:border-bronze-dark"
+        />
+      </label>
+
+      <button
+        type="submit"
+        className="group mt-2 inline-flex items-center justify-center gap-2 border border-charcoal bg-charcoal px-6 py-3.5 text-xs font-medium uppercase tracking-[0.2em] text-cream transition-all duration-300 hover:border-bronze-dark hover:bg-bronze-dark"
+      >
+        {t("formSubmit")}
+        <Send className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" strokeWidth={1.5} />
+      </button>
+    </form>
+  );
+}
