@@ -5,6 +5,7 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { Navbar } from "@/components/navbar";
 import "../globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -57,7 +58,8 @@ export default async function LocaleLayout({
     >
       <body className="min-h-full bg-cream font-sans text-charcoal">
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <Navbar />
+          <div className="pt-20">{children}</div>
         </NextIntlClientProvider>
       </body>
     </html>

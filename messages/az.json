@@ -1,173 +1,222 @@
 {
   "meta": {
-    "title": "Raul Architects — Avropa Dərəcəli Memarlıq və BİM İnnovasiyası",
-    "description": "Raul Nağıyev — Almaniya, İsveçrə və Azərbaycanda davamlı, passiv ev (Passivhaus) və rəqəmsal əkiz memarlığı təqdim edən beynəlxalq memar, mühəndis, interyer dizayneri və BİM eksperti."
+    "title": "Raul Architects — Layihələr, Portfolio, Xidmətlər",
+    "description": "Almaniya, İsveçrə və Azərbaycanda hazır memarlıq konseptləri, real portfolio və BIM əsaslı layihələndirmə xidmətləri."
   },
   "nav": {
-    "about": "Haqqımızda",
+    "projects": "Layihələr",
+    "portfolio": "Portfolio",
     "services": "Xidmətlər",
-    "bim": "BİM Ekspertizası",
+    "advantages": "Üstünlüklər",
+    "about": "Haqqımızda",
     "contact": "Əlaqə",
-    "cta": "Bizimlə Əlaqə"
+    "menuOpen": "Menyu",
+    "menuClose": "Bağla",
+    "whatsapp": "WhatsApp"
   },
-  "hero": {
-    "eyebrow": "Almaniya · İsveçrə · Azərbaycan",
-    "headline": "Avropa Dərəcəli Memarlıq və BİM İnnovasiyası",
-    "subtitle": "Almaniya və İsveçrədə yerləşir. Davamlı, passiv ev (Passivhaus) və rəqəmsal əkiz standartlarında memarlıq mükəmməlliyi təqdim edir.",
-    "ctaPrimary": "Xidmətlərə Baxın",
-    "ctaSecondary": "Bizimlə Əlaqə",
-    "stats": [
-      { "value": "30+", "label": "Almaniyada layihə" },
-      { "value": "3", "label": "İsveçrədə davam edən" },
-      { "value": "15+", "label": "Azərbaycanda layihə" }
-    ]
+  "home": {
+    "allProjectsCta": "Bütün Layihələr"
   },
-  "about": {
-    "eyebrow": "Memar Haqqında",
-    "title": "Raul Nağıyev",
-    "role": "Memar · Mühəndis · İnteryer Dizayneri · BİM Eksperti",
-    "intro": "38 yaşlı beynəlxalq memar, mühəndis, interyer dizayneri və BİM eksperti Raul Nağıyev, Mərkəzi Avropanın dizayn dəqiqliyi ilə Qafqazın inkişaf edən bazarları arasında körpü qurur. Almaniyanın BTU Cottbus universitetindən magistr dərəcəsi, Böyük Britaniyadan interyer dizaynı ixtisası və Azərbaycandan mühəndislik təhsili ilə onun praktikası üç ölkə üzrə texniki dəqiqliyi zərif memarlıq həssaslığı ilə birləşdirir.",
-    "educationTitle": "Təhsil",
-    "education": [
-      { "title": "Magistr Dərəcəsi, Memarlıq və Mühəndislik", "place": "BTU Cottbus, Almaniya" },
-      { "title": "İnteryer Dizaynı İxtisası", "place": "Böyük Britaniya" },
-      { "title": "Mühəndislik Əsasları", "place": "Azərbaycan" }
-    ],
-    "statsTitle": "Təcrübə Göstəriciləri",
-    "stats": [
-      { "value": "30+", "label": "Almaniyada tamamlanmış layihə" },
-      { "value": "3", "label": "İsveçrədə davam edən layihə" },
-      { "value": "15+", "label": "Azərbaycanda tamamlanmış layihə" }
-    ],
-    "collabTitle": "Əməkdaşlıqlar",
-    "collaborations": [
-      "MACE International — Böyük Britaniya",
-      "GOLDBECK — Almaniya",
-      "TA AG — İsveçrə",
-      "AK Aluminium"
-    ],
-    "awardsTitle": "Mükafatlar və Müsabiqələr",
-    "awards": [
-      "eVolo Skyscraper Müsabiqəsi — Nyu-York",
-      "Schinkel Wettbewerbe — Berlin",
-      "Beynəlxalq Müsabiqələr — Riqa"
-    ],
-    "standardsTitle": "Standartlar və Sertifikatlar",
-    "standards": [
-      "ISO",
-      "DIN — Deutsches Institut für Normung",
-      "SIA — İsveçrə Mühəndis və Memarlar Cəmiyyəti",
-      "Passiv Ev Standartı",
-      "Enerji Səmərəli və Ağıllı Ev Prinsipləri"
-    ]
+  "projectsPage": {
+    "eyebrow": "Konsept Layihələr",
+    "title": "Layihələr",
+    "subtitle": "Almaniya və İsveçrə standartlarında hazırlanmış, torpağınıza uyğunlaşdırıla bilən hazır memarlıq konseptləri.",
+    "filters": {
+      "all": "Hamısı",
+      "villa": "Villalar",
+      "family-house": "Ailə Evləri",
+      "cabin": "Cabin",
+      "duplex": "Duplex",
+      "commercial": "Commercial",
+      "hospitality": "Hospitality"
+    },
+    "viewProject": "Layihəyə bax",
+    "items": {
+      "compact-villa": { "title": "Compact Villa", "specs": ["150–180 m²", "3 yataq otağı", "1–2 mərtəbə"] },
+      "family-villa": { "title": "Family Villa", "specs": ["220–280 m²", "4 yataq otağı", "2 mərtəbə"] },
+      "premium-villa": { "title": "Premium Villa", "specs": ["350–450 m²", "4–5 yataq otağı", "Hovuz · Qaraj"] },
+      "courtyard-house": { "title": "Courtyard House", "specs": ["120–160 m²", "3 yataq otağı", "1 mərtəbə"] },
+      "modern-family-house": { "title": "Modern Family House", "specs": ["180–220 m²", "3–4 yataq otağı", "2 mərtəbə"] },
+      "a-frame-cabin": { "title": "A-Frame Cabin", "specs": ["60–90 m²", "Turizm / şəxsi istifadə"] },
+      "premium-cabin": { "title": "Premium Cabin", "specs": ["100–140 m²", "Turizm / investisiya"] },
+      "duplex-townhouse": { "title": "Duplex / Townhouse", "specs": ["İki yaşayış vahidi", "Developer / investisiya"] },
+      "commercial": { "title": "Commercial", "specs": ["Ofis / restoran / kommersiya"] },
+      "hospitality": { "title": "Hospitality", "specs": ["Boutique Hotel / Resort"] }
+    }
   },
-  "services": {
-    "eyebrow": "Təklif Etdiyimiz",
+  "projectDetail": {
+    "backLabel": "Bütün Layihələr",
+    "sequenceLabels": { "exterior": "Exterior", "interior": "Interior", "plan": "Plan", "bim": "BIM" },
+    "adaptTitle": "Bu layihəni torpağınıza uyğunlaşdıraq.",
+    "applyCta": "Layihə üçün müraciət",
+    "whatsappCta": "WhatsApp",
+    "form": {
+      "land": "Torpaq sahəsi",
+      "location": "Lokasiya",
+      "size": "Təxmini m²",
+      "phone": "Telefon",
+      "submit": "Göndər",
+      "success": "Təşəkkürlər. Komandamız qısa müddətdə sizinlə əlaqə saxlayacaq."
+    },
+    "items": {
+      "compact-villa": {
+        "title": "Compact Villa",
+        "specs": ["150–180 m²", "3 Yataq otağı", "1–2 Mərtəbə", "2 Sanitar qovşaq", "1 Avtomobil"],
+        "description": "Kompakt sahədə maksimum funksionallıq. Gənc ailələr və ilk ev sahibləri üçün optimallaşdırılmış planlaşdırma."
+      },
+      "family-villa": {
+        "title": "Family Villa",
+        "specs": ["220 m²", "4 Yataq otağı", "2 Mərtəbə", "3 Sanitar qovşaq", "2 Avtomobil"],
+        "description": "Böyüyən ailələr üçün geniş yaşayış sahəsi. Açıq mətbəx-qonaq otağı konsepti və ayrıca valideyn blоku."
+      },
+      "premium-villa": {
+        "title": "Premium Villa",
+        "specs": ["350–450 m²", "4–5 Yataq otağı", "3 Mərtəbə", "Hovuz", "3 Avtomobil"],
+        "description": "Yüksək tələbkar müştərilər üçün. Hovuz, geniş terraslar və panoramik şüşə fasadlarla premium yaşayış."
+      },
+      "courtyard-house": {
+        "title": "Courtyard House",
+        "specs": ["120–160 m²", "3 Yataq otağı", "1 Mərtəbə", "2 Sanitar qovşaq", "Daxili həyət"],
+        "description": "Mərkəzi daxili həyət ətrafında qurulan məxfi, təbii işıqla dolu tək mərtəbəli yaşayış."
+      },
+      "modern-family-house": {
+        "title": "Modern Family House",
+        "specs": ["180–220 m²", "3–4 Yataq otağı", "2 Mərtəbə", "3 Sanitar qovşaq", "2 Avtomobil"],
+        "description": "Müasir xətlər və funksional planlaşdırma ilə orta ölçülü ailə evi."
+      },
+      "a-frame-cabin": {
+        "title": "A-Frame Cabin",
+        "specs": ["60–90 m²", "2 Yataq otağı", "1 Mərtəbə", "Açıq planlı salon"],
+        "description": "Turizm və şəxsi istirahət üçün minimalist dağ evi konsepti."
+      },
+      "premium-cabin": {
+        "title": "Premium Cabin",
+        "specs": ["100–140 m²", "3 Yataq otağı", "1–2 Mərtəbə", "Geniş terras"],
+        "description": "İnvestisiya və turizm məqsədli, geniş terrası olan premium kabin."
+      },
+      "duplex-townhouse": {
+        "title": "Duplex / Townhouse",
+        "specs": ["2 × 140 m²", "2 Ayrı giriş", "2 Mərtəbə hər blokda"],
+        "description": "Developer layihələri üçün iki müstəqil yaşayış vahidindən ibarət blok."
+      },
+      "commercial": {
+        "title": "Commercial",
+        "specs": ["Çevik sahə planlaşdırması", "Ofis / Restoran / Ticarət", "Fərdi konfiqurasiya"],
+        "description": "Biznes ehtiyaclarına uyğun çevik kommersiya obyekti layihələndirilməsi."
+      },
+      "hospitality": {
+        "title": "Hospitality",
+        "specs": ["8–24 nömrə", "Lobbi / Restoran", "Spa-hazır infrastruktur"],
+        "description": "Butik otel və turizm obyektləri üçün qonaqpərvərlik məkanı konsepti."
+      }
+    }
+  },
+  "portfolioPage": {
+    "eyebrow": "Portfolio",
+    "title": "Real Təcrübə",
+    "subtitle": "Almaniya, İsveçrə və Azərbaycanda tamamlanmış və davam edən layihələr.",
+    "countryFilters": {
+      "all": "Hamısı",
+      "azerbaijan": "Azərbaycan",
+      "germany": "Almaniya",
+      "switzerland": "İsveçrə"
+    },
+    "typeLabels": {
+      "architecture": "Architecture",
+      "bim": "BIM",
+      "interior": "Interior",
+      "construction": "Construction"
+    },
+    "viewProject": "Layihəyə bax",
+    "backLabel": "Bütün Portfolio",
+    "detailIntro": "Bu, Raul Architects-in {location} daxilindəki real təcrübəsini əks etdirən layihədir.",
+    "ctaLabel": "Layihənizi müzakirə edək",
+    "items": {
+      "az-residential-01": { "title": "RESIDENTIAL PROJECT", "location": "Azərbaycan" },
+      "az-residential-02": { "title": "RESIDENTIAL PROJECT", "location": "Azərbaycan" },
+      "de-residential-01": { "title": "RESIDENTIAL PROJECT", "location": "Almaniya" },
+      "de-residential-02": { "title": "RESIDENTIAL PROJECT", "location": "Almaniya" },
+      "ch-residential-01": { "title": "RESIDENTIAL PROJECT", "location": "İsveçrə" },
+      "ch-residential-02": { "title": "RESIDENTIAL PROJECT", "location": "İsveçrə" }
+    }
+  },
+  "servicesPage": {
+    "eyebrow": "Xidmətlər",
     "title": "Xidmətlər",
-    "subtitle": "Fərdi müştərilər və şirkətlər üçün ilk eskizdən tikinti sonrası modelinə qədər tam memarlıq, interyer və BİM xidmətləri.",
+    "items": {
+      "tikinti-ve-temir": { "title": "Tikinti və Təmir" },
+      "bim-ile-layihelendirme": { "title": "BIM ilə Layihələndirmə" },
+      "interyer-dizayn": { "title": "İnteryer Dizayn" },
+      "seherselme-helleri": { "title": "Şəhərsalma Həlləri" }
+    }
+  },
+  "serviceDetail": {
+    "backLabel": "Bütün Xidmətlər",
+    "ctaTitle": "Layihənizi müzakirə edək",
+    "ctaButton": "Əlaqə saxlayın",
+    "items": {
+      "tikinti-ve-temir": {
+        "title": "Tikinti və Təmir",
+        "intro": "Yeni tikintidən əsaslı təmirə qədər tam icra dövrü nəzarəti.",
+        "points": ["Yeni tikinti layihələrinin icrası", "Əsaslı təmir və modernləşdirmə", "Sahədə texniki nəzarət", "Podratçı və material koordinasiyası"]
+      },
+      "bim-ile-layihelendirme": {
+        "title": "BIM ilə Layihələndirmə",
+        "intro": "Tikintidən əvvəl binanın tam rəqəmsal ikizi. Kolliziyasız, dəqiq və proqnozlaşdırıla bilən icra.",
+        "points": ["3D ağıllı model və kolliziya analizi", "Həcm hesablanması (Simeta)", "Tikinti sonrası As-Built modellər", "Rəqəmsal Əkiz (Digital Twin)"]
+      },
+      "interyer-dizayn": {
+        "title": "İnteryer Dizayn",
+        "intro": "Funksionallıq və estetikanı birləşdirən məkan konsepsiyaları.",
+        "points": ["Fərdi məkan planlaşdırması", "Material və işıq konsepsiyası", "Mebel və detal layihələndirməsi", "3D vizuallaşdırma"]
+      },
+      "seherselme-helleri": {
+        "title": "Şəhərsalma Həlləri",
+        "intro": "Torpaq sahəsindən maksimum dəyər yaradan məhəllə və yerləşmə planlaması.",
+        "points": ["Baş plan və zonalaşdırma", "Sıxlıq və infrastruktur analizi", "Developer üçün fizibilite", "Normativ uyğunluq"]
+      }
+    }
+  },
+  "advantagesPage": {
+    "eyebrow": "Üstünlüklər",
+    "title": "Niyə Raul Architects",
     "items": [
-      {
-        "icon": "Building2",
-        "title": "Memarlıq və Bina Dizaynı",
-        "tag": "B2C · B2B",
-        "description": "Konsepsiyadan tamamlanmasına qədər dəqiqliklə hazırlanan yaşayış, kommersiya, modernləşdirmə və genişləndirmə layihələri."
-      },
-      {
-        "icon": "Sofa",
-        "title": "İnteryer Dizaynı və Məkan Konsepsiyaları",
-        "tag": "B2C",
-        "description": "Funksionallıq, işıq və material həqiqiliyini tarazlaşdıran insan mərkəzli interyer konsepsiyaları."
-      },
-      {
-        "icon": "Boxes",
-        "title": "Şirkətlər üçün BİM Xidmətləri",
-        "tag": "B2B",
-        "description": "3D ağıllı modellər, kolliziya analizi, həcm hesablanması (Simeta), tikinti sonrası (As-Built) modellər və Rəqəmsal Əkiz təhlükəsi."
-      },
-      {
-        "icon": "FileCheck2",
-        "title": "İcazələr və İşçi Layihələr",
-        "tag": "B2C · B2B",
-        "description": "Tikinti icazəsi sənədləşdirilməsi və ArchiCAD & Revit proqramlarında texniki çertyojlar."
-      },
-      {
-        "icon": "ClipboardCheck",
-        "title": "Layihə İdarəetməsi və Tikinti Nəzarəti",
-        "tag": "B2C · B2B",
-        "description": "Planlaşdırmadan təhvilə qədər sahədə tikinti nəzarəti və layihə idarəetməsi."
-      }
+      { "title": "Almaniya & İsveçrə Təcrübəsi", "description": "Avropa standartlarında yanaşma." },
+      { "title": "BIM Texnologiyası", "description": "Tikintidən əvvəl binanın detallı rəqəmsal modeli." },
+      { "title": "Büdcə Optimallaşdırılması", "description": "Səhvlərin, material itkisinin və əlavə xərclərin minimuma endirilməsi." },
+      { "title": "Enerji Səmərəliliyi", "description": "Uzunmüddətli istismar xərclərinin nəzərə alınması." },
+      { "title": "Uzunömürlülük", "description": "Düzgün konstruktiv və material həlləri." },
+      { "title": "Müddətə Riayət", "description": "Planlaşdırılmış layihələndirmə və icra." }
     ]
   },
-  "bim": {
-    "eyebrow": "BİM və Fəlsəfə",
-    "title": "Tikinti Məlumat Modelləşdirməsi və Rəqəmsal Əkiz",
-    "description": "BİM metodologiyası binanı ilk kərpic qoyulmazdan çox əvvəl strukturlaşdırılmış, ağıllı məlumata çevirir. Hər divar, tir və boru vahid ağıllı model daxilində əlaqələndirilmiş elementə çevrilir, bu da kolliziyasız tikintiyə, dəqiq xərc nəzarətinə və binanın bütün həyat dövrü ərzində xidmət edən canlı Rəqəmsal Əkizə imkan yaradır.",
-    "features": [
-      {
-        "icon": "Scan",
-        "title": "Rəqəmsal Əkiz",
-        "titleNative": "Digital Twin",
-        "description": "Binanın fiziki nüsxəsi ilə bütün həyat dövrü ərzində sinxronlaşdırılan canlı rəqəmsal surəti."
-      },
-      {
-        "icon": "AlertTriangle",
-        "title": "Kolliziya Aşkarlanması",
-        "description": "Tikinti başlamazdan əvvəl memarlıq, konstruksiya və mühəndis şəbəkələri üzrə avtomatik ziddiyyət analizi."
-      },
-      {
-        "icon": "Calculator",
-        "title": "Xərc Səmərəliliyi",
-        "description": "İtkiləri, təkrar işləri və büdcə artımlarını azaldan dəqiq həcm hesablanması və proqnozlaşdırma."
-      },
-      {
-        "icon": "Leaf",
-        "title": "Davamlı Dizayn",
-        "description": "Ekoloji izi azaltmaq üçün enerji, material və həyat dövrü performansı üzrə məlumata əsaslanan qərarlar."
-      }
-    ],
-    "philosophyTitle": "Əsas Fəlsəfə",
-    "philosophy": [
-      {
-        "title": "Funksionallıq",
-        "description": "Hər məkan təsir bağışlamazdan əvvəl öz məqsədinə güzəştsiz xidmət etmək üçün dizayn edilir."
-      },
-      {
-        "title": "Estetika",
-        "description": "Dəqiqlik və ölçülülük bəzəkdən çox sakit lüks yaradan zamansız memarlıq formalaşdırır."
-      },
-      {
-        "title": "Davamlılıq",
-        "description": "Passiv Ev prinsipləri və enerji səmərəli sistemlər ilk eskizdən nəzərə alınır."
-      },
-      {
-        "title": "İnsan Mərkəzlilik",
-        "description": "Binalar insanların məkanda necə yaşadığı, işlədiyi və hərəkət etdiyi əsasında dizayn edilir."
-      },
-      {
-        "title": "Kontekst",
-        "description": "Hər layihə öz yerinə, iqliminə, mədəniyyətinə və tənzimləyici mühitinə cavab verir."
-      }
-    ]
+  "aboutPage": {
+    "eyebrow": "Haqqımızda",
+    "title": "Raul Naghiyev Architects",
+    "countries": ["Almaniya", "İsveçrə", "Azərbaycan"],
+    "intro": "BTU Cottbus (Almaniya) məzunu, beynəlxalq təcrübəyə malik memar, mühəndis və BIM eksperti Raul Nağıyev tərəfindən qurulan praktika.",
+    "blocks": {
+      "raul": { "title": "Raul Naghiyev", "description": "Memar, mühəndis, interyer dizayneri və BİM eksperti. BTU Cottbus magistrı, Böyük Britaniyada interyer dizaynı ixtisası." },
+      "team": { "title": "Komanda", "description": "Almaniya, İsveçrə və Azərbaycanda tərəfdaş mühəndislik və tikinti şirkətləri ilə əməkdaşlıq." },
+      "international": { "title": "Beynəlxalq Təcrübə", "description": "Almaniyada 30+, Azərbaycanda 15+ tamamlanmış, İsveçrədə 3 davam edən layihə." },
+      "bim": { "title": "BIM Kompetensiyası", "description": "ISO, DIN, SIA standartlarına uyğun tam rəqəmsal layihələndirmə bacarığı." }
+    }
   },
-  "footer": {
-    "brand": "Raul Architects",
-    "tagline": "Avropa Dərəcəli Memarlıq və BİM İnnovasiyası",
-    "description": "Almaniya və İsveçrədə yerləşən, Azərbaycan köklərinə malik beynəlxalq memarlıq, interyer dizaynı və BİM konsaltinq şirkəti.",
-    "contactTitle": "Əlaqə",
-    "email": "office@raularchitects.com",
-    "phoneSwitzerlandLabel": "İsveçrə",
-    "phoneSwitzerland": "+41 77 250 9786",
-    "phoneGermanyLabel": "Almaniya",
-    "phoneGermany": "+49 157 8970 7008",
-    "website": "raularchitects.com",
-    "locationsTitle": "Yerləşmə",
-    "locations": ["Almaniya", "İsveçrə", "Azərbaycan"],
-    "navTitle": "Naviqasiya",
-    "formTitle": "Sorğu Göndərin",
-    "formName": "Ad, Soyad",
-    "formEmail": "E-poçt ünvanı",
-    "formMessage": "Layihəniz haqqında bizə məlumat verin",
-    "formSubmit": "Mesaj Göndər",
+  "contactPage": {
+    "eyebrow": "Əlaqə",
+    "title": "Layihənizi müzakirə edək.",
+    "azerbaijan": { "label": "Azərbaycan", "email": "office@raularchitects.com", "whatsapp": "+49 157 8970 7008" },
+    "germany": { "label": "Almaniya", "phone": "+49 157 8970 7008" },
+    "switzerland": { "label": "İsveçrə", "phone": "+41 77 250 9786" },
+    "form": {
+      "title": "Müraciət formu",
+      "name": "Ad, Soyad",
+      "email": "E-poçt ünvanı",
+      "message": "Layihəniz haqqında qısa məlumat",
+      "submit": "Göndər",
+      "success": "Təşəkkürlər! Tezliklə sizinlə əlaqə saxlayacağıq."
+    }
+  },
+  "footerMini": {
     "rights": "Bütün hüquqlar qorunur."
   },
   "languageSwitcher": {

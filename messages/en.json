@@ -1,173 +1,222 @@
 {
   "meta": {
-    "title": "Raul Architects — European Architectural Precision & BIM Innovation",
-    "description": "Raul Naghiyev is an international architect, engineer, interior designer, and BIM expert delivering sustainable, passivhaus, and digital-twin architecture across Germany, Switzerland, and Azerbaijan."
+    "title": "Raul Architects — Projects, Portfolio, Services",
+    "description": "Ready architectural concepts, real portfolio work, and BIM-based design services in Germany, Switzerland, and Azerbaijan."
   },
   "nav": {
-    "about": "About",
+    "projects": "Projects",
+    "portfolio": "Portfolio",
     "services": "Services",
-    "bim": "BIM Expertise",
+    "advantages": "Advantages",
+    "about": "About",
     "contact": "Contact",
-    "cta": "Contact Us"
+    "menuOpen": "Menu",
+    "menuClose": "Close",
+    "whatsapp": "WhatsApp"
   },
-  "hero": {
-    "eyebrow": "Germany · Switzerland · Azerbaijan",
-    "headline": "European Architectural Precision & BIM Innovation",
-    "subtitle": "Based in Germany & Switzerland. Delivering sustainable, passivhaus, and digital-twin architectural excellence.",
-    "ctaPrimary": "View Services",
-    "ctaSecondary": "Contact Us",
-    "stats": [
-      { "value": "30+", "label": "Projects in Germany" },
-      { "value": "3", "label": "Ongoing in Switzerland" },
-      { "value": "15+", "label": "Projects in Azerbaijan" }
-    ]
+  "home": {
+    "allProjectsCta": "All Projects"
   },
-  "about": {
-    "eyebrow": "About the Architect",
-    "title": "Raul Naghiyev",
-    "role": "Architect · Engineer · Interior Designer · BIM Expert",
-    "intro": "A 38-year-old international architect, engineer, interior designer, and BIM expert, Raul Naghiyev builds a bridge between Central European design rigor and the emerging markets of the Caucasus. With a Master's degree from BTU Cottbus, Germany, an interior design qualification from the United Kingdom, and an engineering foundation from Azerbaijan, his practice unites technical precision with a refined architectural sensibility across three countries.",
-    "educationTitle": "Education",
-    "education": [
-      { "title": "Master's Degree, Architecture & Engineering", "place": "BTU Cottbus, Germany" },
-      { "title": "Interior Design Qualification", "place": "United Kingdom" },
-      { "title": "Engineering Foundation Studies", "place": "Azerbaijan" }
-    ],
-    "statsTitle": "Track Record",
-    "stats": [
-      { "value": "30+", "label": "Completed projects in Germany" },
-      { "value": "3", "label": "Ongoing projects in Switzerland" },
-      { "value": "15+", "label": "Completed projects in Azerbaijan" }
-    ],
-    "collabTitle": "Collaborations",
-    "collaborations": [
-      "MACE International — United Kingdom",
-      "GOLDBECK — Germany",
-      "TA AG — Switzerland",
-      "AK Aluminium"
-    ],
-    "awardsTitle": "Awards & Competitions",
-    "awards": [
-      "eVolo Skyscraper Competition — New York",
-      "Schinkel Wettbewerbe — Berlin",
-      "International Competitions — Riga"
-    ],
-    "standardsTitle": "Standards & Certifications",
-    "standards": [
-      "ISO",
-      "DIN — Deutsches Institut für Normung",
-      "SIA — Swiss Society of Engineers and Architects",
-      "Passive House Standard",
-      "Energy-Efficient & Smart Home Principles"
-    ]
+  "projectsPage": {
+    "eyebrow": "Concept Projects",
+    "title": "Projects",
+    "subtitle": "Ready architectural concepts built to Germany & Switzerland standards, adaptable to your own plot.",
+    "filters": {
+      "all": "All",
+      "villa": "Villas",
+      "family-house": "Family Houses",
+      "cabin": "Cabin",
+      "duplex": "Duplex",
+      "commercial": "Commercial",
+      "hospitality": "Hospitality"
+    },
+    "viewProject": "View Project",
+    "items": {
+      "compact-villa": { "title": "Compact Villa", "specs": ["150–180 m²", "3 bedrooms", "1–2 floors"] },
+      "family-villa": { "title": "Family Villa", "specs": ["220–280 m²", "4 bedrooms", "2 floors"] },
+      "premium-villa": { "title": "Premium Villa", "specs": ["350–450 m²", "4–5 bedrooms", "Pool · Garage"] },
+      "courtyard-house": { "title": "Courtyard House", "specs": ["120–160 m²", "3 bedrooms", "1 floor"] },
+      "modern-family-house": { "title": "Modern Family House", "specs": ["180–220 m²", "3–4 bedrooms", "2 floors"] },
+      "a-frame-cabin": { "title": "A-Frame Cabin", "specs": ["60–90 m²", "Tourism / private use"] },
+      "premium-cabin": { "title": "Premium Cabin", "specs": ["100–140 m²", "Tourism / investment"] },
+      "duplex-townhouse": { "title": "Duplex / Townhouse", "specs": ["Two living units", "Developer / investment"] },
+      "commercial": { "title": "Commercial", "specs": ["Office / restaurant / retail"] },
+      "hospitality": { "title": "Hospitality", "specs": ["Boutique Hotel / Resort"] }
+    }
   },
-  "services": {
-    "eyebrow": "What We Offer",
+  "projectDetail": {
+    "backLabel": "All Projects",
+    "sequenceLabels": { "exterior": "Exterior", "interior": "Interior", "plan": "Plan", "bim": "BIM" },
+    "adaptTitle": "Let's adapt this project to your plot.",
+    "applyCta": "Apply for this Project",
+    "whatsappCta": "WhatsApp",
+    "form": {
+      "land": "Plot Size",
+      "location": "Location",
+      "size": "Approx. m²",
+      "phone": "Phone",
+      "submit": "Send",
+      "success": "Thank you. Our team will reach out to you shortly."
+    },
+    "items": {
+      "compact-villa": {
+        "title": "Compact Villa",
+        "specs": ["150–180 m²", "3 Bedrooms", "1–2 Floors", "2 Bathrooms", "1 Car"],
+        "description": "Maximum functionality on a compact footprint. Optimized layout for young families and first-time homeowners."
+      },
+      "family-villa": {
+        "title": "Family Villa",
+        "specs": ["220 m²", "4 Bedrooms", "2 Floors", "3 Bathrooms", "2 Cars"],
+        "description": "Generous living space for growing families. Open kitchen-living concept and a separate parents' wing."
+      },
+      "premium-villa": {
+        "title": "Premium Villa",
+        "specs": ["350–450 m²", "4–5 Bedrooms", "3 Floors", "Pool", "3 Cars"],
+        "description": "For the most discerning clients. Premium living with a pool, expansive terraces, and panoramic glass façades."
+      },
+      "courtyard-house": {
+        "title": "Courtyard House",
+        "specs": ["120–160 m²", "3 Bedrooms", "1 Floor", "2 Bathrooms", "Interior Courtyard"],
+        "description": "A private, light-filled single-storey home organized around a central interior courtyard."
+      },
+      "modern-family-house": {
+        "title": "Modern Family House",
+        "specs": ["180–220 m²", "3–4 Bedrooms", "2 Floors", "3 Bathrooms", "2 Cars"],
+        "description": "A mid-sized family home with clean modern lines and functional layout."
+      },
+      "a-frame-cabin": {
+        "title": "A-Frame Cabin",
+        "specs": ["60–90 m²", "2 Bedrooms", "1 Floor", "Open-Plan Living"],
+        "description": "A minimalist mountain retreat concept for tourism or personal use."
+      },
+      "premium-cabin": {
+        "title": "Premium Cabin",
+        "specs": ["100–140 m²", "3 Bedrooms", "1–2 Floors", "Wide Terrace"],
+        "description": "A premium cabin with a wide terrace, built for investment and tourism purposes."
+      },
+      "duplex-townhouse": {
+        "title": "Duplex / Townhouse",
+        "specs": ["2 × 140 m²", "2 Separate Entrances", "2 Floors per Unit"],
+        "description": "A block of two independent living units, built for developer projects."
+      },
+      "commercial": {
+        "title": "Commercial",
+        "specs": ["Flexible Floor Plan", "Office / Restaurant / Retail", "Custom Fit-out"],
+        "description": "Flexible commercial space design tailored to your business needs."
+      },
+      "hospitality": {
+        "title": "Hospitality",
+        "specs": ["8–24 Rooms", "Lobby / Restaurant", "Spa-Ready Infrastructure"],
+        "description": "A hospitality concept for boutique hotels and tourism properties."
+      }
+    }
+  },
+  "portfolioPage": {
+    "eyebrow": "Portfolio",
+    "title": "Real Experience",
+    "subtitle": "Completed and ongoing projects across Germany, Switzerland, and Azerbaijan.",
+    "countryFilters": {
+      "all": "All",
+      "azerbaijan": "Azerbaijan",
+      "germany": "Germany",
+      "switzerland": "Switzerland"
+    },
+    "typeLabels": {
+      "architecture": "Architecture",
+      "bim": "BIM",
+      "interior": "Interior",
+      "construction": "Construction"
+    },
+    "viewProject": "View Project",
+    "backLabel": "All Portfolio",
+    "detailIntro": "This project reflects Raul Architects' real experience in {location}.",
+    "ctaLabel": "Let's discuss your project",
+    "items": {
+      "az-residential-01": { "title": "RESIDENTIAL PROJECT", "location": "Azerbaijan" },
+      "az-residential-02": { "title": "RESIDENTIAL PROJECT", "location": "Azerbaijan" },
+      "de-residential-01": { "title": "RESIDENTIAL PROJECT", "location": "Germany" },
+      "de-residential-02": { "title": "RESIDENTIAL PROJECT", "location": "Germany" },
+      "ch-residential-01": { "title": "RESIDENTIAL PROJECT", "location": "Switzerland" },
+      "ch-residential-02": { "title": "RESIDENTIAL PROJECT", "location": "Switzerland" }
+    }
+  },
+  "servicesPage": {
+    "eyebrow": "Services",
     "title": "Services",
-    "subtitle": "Comprehensive architectural, interior, and BIM services for private clients and companies — from first sketch to as-built model.",
+    "items": {
+      "tikinti-ve-temir": { "title": "Construction & Renovation" },
+      "bim-ile-layihelendirme": { "title": "BIM-Based Design" },
+      "interyer-dizayn": { "title": "Interior Design" },
+      "seherselme-helleri": { "title": "Urban Planning Solutions" }
+    }
+  },
+  "serviceDetail": {
+    "backLabel": "All Services",
+    "ctaTitle": "Let's discuss your project",
+    "ctaButton": "Get in Touch",
+    "items": {
+      "tikinti-ve-temir": {
+        "title": "Construction & Renovation",
+        "intro": "Full-cycle execution oversight, from new construction to major renovation.",
+        "points": ["Execution of new construction projects", "Major renovation & modernization", "On-site technical supervision", "Contractor & material coordination"]
+      },
+      "bim-ile-layihelendirme": {
+        "title": "BIM-Based Design",
+        "intro": "A complete digital twin of the building before construction begins — clash-free, precise, and predictable execution.",
+        "points": ["3D smart model & collision analysis", "Quantity takeoff (Simeta)", "As-built models after completion", "Digital Twin delivery"]
+      },
+      "interyer-dizayn": {
+        "title": "Interior Design",
+        "intro": "Spatial concepts that unite functionality and aesthetics.",
+        "points": ["Custom spatial planning", "Material & lighting concepts", "Furniture & detail design", "3D visualization"]
+      },
+      "seherselme-helleri": {
+        "title": "Urban Planning Solutions",
+        "intro": "Neighborhood and site planning that creates maximum value from your land.",
+        "points": ["Master planning & zoning", "Density & infrastructure analysis", "Feasibility for developers", "Regulatory compliance"]
+      }
+    }
+  },
+  "advantagesPage": {
+    "eyebrow": "Advantages",
+    "title": "Why Raul Architects",
     "items": [
-      {
-        "icon": "Building2",
-        "title": "Architectural & Building Design",
-        "tag": "B2C · B2B",
-        "description": "Residential, commercial, modernization, and extension projects designed with precision from concept to completion."
-      },
-      {
-        "icon": "Sofa",
-        "title": "Interior Design & Spatial Concepts",
-        "tag": "B2C",
-        "description": "Human-centred interior concepts that balance function, light, material honesty, and character."
-      },
-      {
-        "icon": "Boxes",
-        "title": "BIM Services for Companies",
-        "tag": "B2B",
-        "description": "3D smart models, collision analysis, quantity takeoff (Simeta), as-built models, and full Digital Twin delivery."
-      },
-      {
-        "icon": "FileCheck2",
-        "title": "Permits & Working Projects",
-        "tag": "B2C · B2B",
-        "description": "Building permit documentation and technical working drawings in ArchiCAD & Revit."
-      },
-      {
-        "icon": "ClipboardCheck",
-        "title": "Project Management & Supervision",
-        "tag": "B2C · B2B",
-        "description": "On-site construction supervision and project management from planning through handover."
-      }
+      { "title": "Germany & Switzerland Experience", "description": "A European standard of approach." },
+      { "title": "BIM Technology", "description": "A detailed digital model of the building before construction." },
+      { "title": "Budget Optimization", "description": "Minimizing errors, material waste, and additional costs." },
+      { "title": "Energy Efficiency", "description": "Long-term operating costs considered from the start." },
+      { "title": "Longevity", "description": "Sound structural and material solutions." },
+      { "title": "Timeline Adherence", "description": "Planned design and execution." }
     ]
   },
-  "bim": {
-    "eyebrow": "BIM & Philosophy",
-    "title": "Building Information Modeling & Digital Twin",
-    "description": "BIM methodology transforms a building into structured, intelligent data — long before the first stone is laid. Every wall, beam, and pipe becomes a coordinated element within a single smart model, enabling clash-free construction, precise cost control, and a living Digital Twin (Rəqəmsal Əkiz) that continues to serve the building throughout its lifecycle.",
-    "features": [
-      {
-        "icon": "Scan",
-        "title": "Digital Twin",
-        "titleNative": "Rəqəmsal Əkiz",
-        "description": "A living digital replica of the building, synchronized with its physical counterpart across the full lifecycle."
-      },
-      {
-        "icon": "AlertTriangle",
-        "title": "Collision Detection",
-        "description": "Automated clash analysis across architectural, structural, and MEP disciplines before construction begins."
-      },
-      {
-        "icon": "Calculator",
-        "title": "Cost Efficiency",
-        "description": "Accurate quantity takeoff and forecasting that reduce waste, rework, and budget overruns."
-      },
-      {
-        "icon": "Leaf",
-        "title": "Sustainable Design",
-        "description": "Data-driven decisions across energy, material, and lifecycle performance for a lower environmental footprint."
-      }
-    ],
-    "philosophyTitle": "Core Philosophy",
-    "philosophy": [
-      {
-        "title": "Functionality",
-        "description": "Every space is designed to serve its purpose without compromise, before it is designed to impress."
-      },
-      {
-        "title": "Aesthetics",
-        "description": "Precision and restraint create timeless architecture — quiet luxury over ornament."
-      },
-      {
-        "title": "Sustainability",
-        "description": "Passive House principles and energy-efficient systems are considered from the very first sketch."
-      },
-      {
-        "title": "Human-Centricity",
-        "description": "Buildings are designed around how people actually live, work, and move through space."
-      },
-      {
-        "title": "Context",
-        "description": "Every project responds to its site, climate, culture, and regulatory environment."
-      }
-    ]
+  "aboutPage": {
+    "eyebrow": "About",
+    "title": "Raul Naghiyev Architects",
+    "countries": ["Germany", "Switzerland", "Azerbaijan"],
+    "intro": "A practice founded by Raul Naghiyev — a BTU Cottbus (Germany) graduate, architect, engineer, and BIM expert with international experience.",
+    "blocks": {
+      "raul": { "title": "Raul Naghiyev", "description": "Architect, engineer, interior designer, and BIM expert. Master's from BTU Cottbus, interior design qualification from the United Kingdom." },
+      "team": { "title": "Team", "description": "Collaboration with partner engineering and construction firms across Germany, Switzerland, and Azerbaijan." },
+      "international": { "title": "International Experience", "description": "30+ completed projects in Germany, 15+ in Azerbaijan, 3 ongoing in Switzerland." },
+      "bim": { "title": "BIM Competency", "description": "Full digital design capability aligned with ISO, DIN, and SIA standards." }
+    }
   },
-  "footer": {
-    "brand": "Raul Architects",
-    "tagline": "European Architectural Precision & BIM Innovation",
-    "description": "International architecture, interior design, and BIM consultancy — based in Germany & Switzerland, with roots in Azerbaijan.",
-    "contactTitle": "Contact",
-    "email": "office@raularchitects.com",
-    "phoneSwitzerlandLabel": "Switzerland",
-    "phoneSwitzerland": "+41 77 250 9786",
-    "phoneGermanyLabel": "Germany",
-    "phoneGermany": "+49 157 8970 7008",
-    "website": "raularchitects.com",
-    "locationsTitle": "Locations",
-    "locations": ["Germany", "Switzerland", "Azerbaijan"],
-    "navTitle": "Navigation",
-    "formTitle": "Send an Inquiry",
-    "formName": "Full Name",
-    "formEmail": "Email Address",
-    "formMessage": "Tell us about your project",
-    "formSubmit": "Send Message",
+  "contactPage": {
+    "eyebrow": "Contact",
+    "title": "Let's discuss your project.",
+    "azerbaijan": { "label": "Azerbaijan", "email": "office@raularchitects.com", "whatsapp": "+49 157 8970 7008" },
+    "germany": { "label": "Germany", "phone": "+49 157 8970 7008" },
+    "switzerland": { "label": "Switzerland", "phone": "+41 77 250 9786" },
+    "form": {
+      "title": "Inquiry Form",
+      "name": "Full Name",
+      "email": "Email Address",
+      "message": "Brief description of your project",
+      "submit": "Send",
+      "success": "Thank you! We will be in touch with you shortly."
+    }
+  },
+  "footerMini": {
     "rights": "All rights reserved."
   },
   "languageSwitcher": {
