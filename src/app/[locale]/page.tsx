@@ -4,23 +4,25 @@ import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { projects } from "@/data/projects";
+import { HomeHeroNav } from "@/components/home-hero-nav";
 
 export default async function Home({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
   setRequestLocale(locale);
 
   const t = await getTranslations("projectsPage");
-  const home = await getTranslations("home");
 
   const featured = projects.filter((p) => p.featuredOnHome);
 
   return (
     <main>
+      <HomeHeroNav />
+
       {featured.map((project, index) => (
         <Link
           key={project.slug}
           href={`/layihelar/${project.slug}`}
-          className="group relative block h-[70vh] w-full overflow-hidden sm:h-[85vh]"
+          className="group relative block h-[70vh] w-full overflow-hidden border-t border-cream/10 sm:h-[85vh]"
         >
           <Image
             src={project.image}
@@ -48,16 +50,6 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
           </div>
         </Link>
       ))}
-
-      <Link
-        href="/layihelar"
-        className="group flex h-[40vh] w-full flex-col items-center justify-center gap-4 bg-charcoal transition-colors duration-500 hover:bg-charcoal-dark sm:h-[50vh]"
-      >
-        <span className="font-serif text-3xl text-cream transition-colors duration-300 group-hover:text-bronze-light sm:text-5xl">
-          {home("allProjectsCta")}
-        </span>
-        <ArrowRight className="h-6 w-6 text-cream/50 transition-all duration-300 group-hover:translate-x-2 group-hover:text-bronze-light" strokeWidth={1.25} />
-      </Link>
     </main>
   );
 }
