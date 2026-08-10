@@ -9,9 +9,9 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 import { MegaMenu } from "@/components/mega-menu";
 
 const primaryLinks = [
+  { href: "/xidmetler", key: "services" },
   { href: "/layihelar", key: "projects" },
   { href: "/portfolio", key: "portfolio" },
-  { href: "/xidmetler", key: "services" },
 ] as const;
 
 export function Navbar() {
@@ -21,12 +21,12 @@ export function Navbar() {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-charcoal/10 bg-cream">
-        <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">
-          <Link href="/" className="shrink-0">
+        <nav className="mx-auto grid h-20 max-w-7xl grid-cols-2 items-center px-6 lg:grid-cols-3 lg:px-10">
+          <Link href="/" className="shrink-0 justify-self-start">
             <Logo />
           </Link>
 
-          <div className="hidden items-center gap-10 lg:flex">
+          <div className="hidden items-center justify-center gap-10 lg:flex">
             {primaryLinks.map((item) => (
               <Link
                 key={item.key}
@@ -38,16 +38,17 @@ export function Navbar() {
             ))}
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-self-end gap-3">
             <div className="hidden sm:block">
               <LanguageSwitcher />
             </div>
             <button
               type="button"
               onClick={() => setOpen(true)}
+              aria-label={t("menuOpen")}
               className="flex items-center gap-2 border border-charcoal/15 px-4 py-2.5 text-xs font-medium uppercase tracking-[0.2em] text-charcoal transition-colors duration-300 hover:border-bronze-dark hover:text-bronze-dark"
             >
-              {t("menuOpen")}
+              <span className="hidden sm:inline">{t("menuOpen")}</span>
               <Menu className="h-3.5 w-3.5" strokeWidth={1.5} />
             </button>
           </div>

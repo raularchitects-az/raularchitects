@@ -1,18 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { projects, projectCategories, type ProjectCategory } from "@/data/projects";
+import { categories, type Category } from "@/data/categories";
+import { projects } from "@/data/projects";
 import { cn } from "@/lib/utils";
 
 export function ProjectsCatalog() {
   const t = useTranslations("projectsPage");
-  const [active, setActive] = useState<ProjectCategory>("all");
+  const c = useTranslations("categories");
+  const searchParams = useSearchParams();
+
+  const initial = useMemo<Category>(() => {
+    const param = searchParams.get("category");
+    return (categories as readonly string[]).includes(param ?? "") ? (param as Category) : "all";
+  }, [searchParams]);
+
+  const [active, setActive] = useState<Category>(initial);
 
   const filtered = active === "all" ? projects : projects.filter((p) => p.category === active);
 
@@ -22,7 +32,7 @@ export function ProjectsCatalog() {
         <SectionHeading eyebrow={t("eyebrow")} title={t("title")} description={t("subtitle")} />
 
         <div className="mt-10 flex flex-wrap gap-3">
-          {projectCategories.map((category) => (
+          {categories.map((category) => (
             <button
               key={category}
               type="button"
@@ -34,7 +44,7 @@ export function ProjectsCatalog() {
                   : "border-charcoal/15 text-charcoal/70 hover:border-bronze-dark hover:text-bronze-dark",
               )}
             >
-              {t(`filters.${category}`)}
+              {c(category)}
             </button>
           ))}
         </div>
@@ -61,6 +71,9 @@ export function ProjectsCatalog() {
               </div>
 
               <div className="flex flex-col gap-2">
+                <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-bronze-dark">
+                  {c(project.category)}
+                </span>
                 <h3 className="font-serif text-2xl text-charcoal transition-colors duration-300 group-hover:text-bronze-dark">
                   {t(`items.${project.slug}.title`)}
                 </h3>

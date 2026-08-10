@@ -8,7 +8,7 @@ export const services: ServiceMeta[] = [
   { slug: "tikinti-ve-temir", number: "01", icon: "HardHat" },
   { slug: "bim-ile-layihelendirme", number: "02", icon: "Boxes" },
   { slug: "interyer-dizayn", number: "03", icon: "Sofa" },
-  { slug: "seherselme-helleri", number: "04", icon: "Building2" },
+  { slug: "seherselme-layiheleri", number: "04", icon: "Building2" },
 ];
 
 export function getService(slug: string) {

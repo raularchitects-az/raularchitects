@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { TriangleMark } from "@/components/ui/triangle-mark";
 
 export function SectionHeading({
   eyebrow,
@@ -30,12 +31,7 @@ export function SectionHeading({
             tone === "dark" ? "text-bronze-dark" : "text-bronze-light",
           )}
         >
-          <span
-            className={cn(
-              "h-px w-8",
-              tone === "dark" ? "bg-bronze-dark" : "bg-bronze-light",
-            )}
-          />
+          <TriangleMark size={9} />
           {eyebrow}
         </span>
       ) : null}

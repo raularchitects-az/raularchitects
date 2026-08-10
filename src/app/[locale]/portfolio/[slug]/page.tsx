@@ -21,9 +21,10 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  if (!getPortfolioItem(slug)) return {};
-  const t = await getTranslations({ locale, namespace: "portfolioPage" });
-  return { title: `${t(`items.${slug}.title`)} — Raul Architects` };
+  const item = getPortfolioItem(slug);
+  if (!item) return {};
+  const c = await getTranslations({ locale, namespace: "categories" });
+  return { title: `${c(item.category)} — Raul Architects` };
 }
 
 export default async function PortfolioDetailPage({
@@ -36,12 +37,14 @@ export default async function PortfolioDetailPage({
   if (!item) notFound();
 
   const t = await getTranslations("portfolioPage");
-  const location = t(`items.${slug}.location`);
+  const c = await getTranslations("categories");
+  const co = await getTranslations("countries");
+  const location = co(item.country);
 
   return (
     <>
       <section className="relative h-[70vh] w-full overflow-hidden sm:h-[92vh]">
-        <Image src={item.image} alt={t(`items.${slug}.title`)} fill priority sizes="100vw" className="object-cover" />
+        <Image src={item.image} alt={c(item.category)} fill priority sizes="100vw" className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal-dark/75 via-charcoal-dark/10 to-transparent" />
 
         <div className="absolute inset-x-0 top-0 p-6 sm:p-10">
@@ -57,10 +60,10 @@ export default async function PortfolioDetailPage({
         <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14">
           <span className="text-xs font-medium uppercase tracking-[0.24em] text-bronze-light/80">{location}</span>
           <h1 className="mt-2 font-serif text-4xl text-cream sm:text-6xl lg:text-7xl">
-            {t(`items.${slug}.title`)}
+            {c(item.category)}
           </h1>
           <span className="mt-3 block text-xs uppercase tracking-[0.16em] text-cream/60">
-            {item.types.map((pt) => t(`typeLabels.${pt}`)).join(" · ")}
+            {t("realProject")}
           </span>
         </div>
       </section>

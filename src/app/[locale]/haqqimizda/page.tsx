@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { ArrowUpRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { Footer } from "@/components/footer";
 
@@ -48,6 +50,19 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/haqqimi
               </div>
             ))}
           </div>
+
+          <Link
+            href="/haqqimizda/raul-nagiyev"
+            className="group mt-16 flex items-center justify-between gap-6 border-t border-charcoal/10 py-8"
+          >
+            <span className="font-serif text-2xl text-charcoal transition-colors duration-300 group-hover:text-bronze-dark sm:text-3xl">
+              {t("raulCta")}
+            </span>
+            <ArrowUpRight
+              className="h-6 w-6 shrink-0 text-charcoal/30 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-bronze-dark"
+              strokeWidth={1.25}
+            />
+          </Link>
         </Container>
       </section>
       <Footer />

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PortfolioGrid } from "@/components/portfolio-grid";
 import { Footer } from "@/components/footer";
@@ -19,7 +20,9 @@ export default async function PortfolioPage({ params }: PageProps<"/[locale]/por
 
   return (
     <>
-      <PortfolioGrid />
+      <Suspense fallback={null}>
+        <PortfolioGrid />
+      </Suspense>
       <Footer />
     </>
   );

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ProjectsCatalog } from "@/components/projects-catalog";
 import { Footer } from "@/components/footer";
@@ -19,7 +20,9 @@ export default async function ProjectsPage({ params }: PageProps<"/[locale]/layi
 
   return (
     <>
-      <ProjectsCatalog />
+      <Suspense fallback={null}>
+        <ProjectsCatalog />
+      </Suspense>
       <Footer />
     </>
   );
