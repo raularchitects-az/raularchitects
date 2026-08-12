@@ -40,7 +40,7 @@ export function LanguageSwitcher({ tone = "dark" }: { tone?: "dark" | "light" })
           "flex items-center gap-2 border px-3 py-2 text-xs font-medium uppercase tracking-[0.2em] transition-colors duration-300",
           tone === "dark"
             ? "border-charcoal/15 text-charcoal hover:border-bronze-dark hover:text-bronze-dark"
-            : "border-cream/20 text-cream hover:border-bronze-light hover:text-bronze-light",
+            : "border-cream/30 text-cream hover:border-cream hover:bg-cream/10",
         )}
       >
         <Globe className="h-3.5 w-3.5" strokeWidth={1.5} />

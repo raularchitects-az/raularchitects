@@ -37,7 +37,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/xidm
               >
                 <div className="flex items-baseline gap-4 sm:gap-8">
                   <span className="text-sm text-bronze-dark">{service.number}</span>
-                  <span className="font-serif text-3xl text-charcoal transition-colors duration-300 group-hover:text-cream sm:text-5xl">
+                  <span className="text-3xl font-semibold text-charcoal transition-colors duration-300 group-hover:text-cream sm:text-5xl">
                     {t(`items.${service.slug}.title`)}
                   </span>
                 </div>

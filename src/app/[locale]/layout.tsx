@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import { Cormorant_Garamond } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { hasLocale } from "next-intl";
@@ -10,13 +10,7 @@ import "../globals.css";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
   weight: ["300", "400", "500", "600", "700"],
 });
 
@@ -52,11 +46,8 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html
-      lang={locale}
-      className={`${cormorant.variable} ${jakarta.variable} h-full antialiased`}
-    >
-      <body className="min-h-full bg-cream font-sans text-charcoal">
+    <html lang={locale} className={`${cormorant.variable} h-full antialiased`}>
+      <body className="min-h-full bg-cream font-serif font-normal text-charcoal">
         <NextIntlClientProvider messages={messages}>
           <Navbar />
           <div className="pt-20">{children}</div>

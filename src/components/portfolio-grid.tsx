@@ -66,7 +66,7 @@ export function PortfolioGrid() {
                 <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-bronze-dark">
                   {c(item.category)}
                 </span>
-                <h3 className="font-serif text-xl text-charcoal transition-colors duration-300 group-hover:text-bronze-dark">
+                <h3 className="text-xl font-semibold text-charcoal transition-colors duration-300 group-hover:text-bronze-dark">
                   {t("realProject")}
                 </h3>
                 <span className="text-sm text-charcoal/55">{co(item.country)}</span>

@@ -28,7 +28,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/haqqimi
         <Container>
           <div className="flex flex-col gap-6">
             <span className="text-xs font-medium uppercase tracking-[0.28em] text-bronze-dark">{t("eyebrow")}</span>
-            <h1 className="max-w-2xl font-serif text-4xl leading-[1.1] text-charcoal sm:text-6xl">{t("title")}</h1>
+            <h1 className="max-w-2xl text-4xl font-semibold leading-[1.1] text-charcoal sm:text-6xl">{t("title")}</h1>
             <div className="flex flex-wrap gap-3">
               {countries.map((country) => (
                 <span
@@ -39,14 +39,14 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/haqqimi
                 </span>
               ))}
             </div>
-            <p className="max-w-xl text-base leading-relaxed text-charcoal/70 sm:text-lg">{t("intro")}</p>
+            <p className="max-w-xl text-base font-light leading-relaxed text-charcoal/70 sm:text-lg">{t("intro")}</p>
           </div>
 
           <div className="mt-20 grid gap-x-10 gap-y-12 border-t border-charcoal/10 pt-16 sm:grid-cols-2">
             {blockKeys.map((key) => (
               <div key={key} className="flex flex-col gap-3">
-                <h3 className="font-serif text-2xl text-charcoal">{t(`blocks.${key}.title`)}</h3>
-                <p className="text-base leading-relaxed text-charcoal/65">{t(`blocks.${key}.description`)}</p>
+                <h3 className="text-2xl font-semibold text-charcoal">{t(`blocks.${key}.title`)}</h3>
+                <p className="text-base font-light leading-relaxed text-charcoal/65">{t(`blocks.${key}.description`)}</p>
               </div>
             ))}
           </div>
@@ -55,7 +55,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/haqqimi
             href="/haqqimizda/raul-nagiyev"
             className="group mt-16 flex items-center justify-between gap-6 border-t border-charcoal/10 py-8"
           >
-            <span className="font-serif text-2xl text-charcoal transition-colors duration-300 group-hover:text-bronze-dark sm:text-3xl">
+            <span className="text-2xl font-semibold text-charcoal transition-colors duration-300 group-hover:text-bronze-dark sm:text-3xl">
               {t("raulCta")}
             </span>
             <ArrowUpRight

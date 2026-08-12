@@ -40,17 +40,17 @@ export default async function RaulNagiyevPage({ params }: PageProps<"/[locale]/h
             <div className="flex flex-col gap-6">
               <div className="relative aspect-[4/5] w-full overflow-hidden bg-cream-dark">
                 <Image
-                  src="/images/raul-placeholder.jpg"
+                  src="/images/raul-cutout.png"
                   alt={t("title")}
                   fill
                   priority
                   sizes="(min-width: 1024px) 22rem, 90vw"
-                  className="object-cover"
+                  className="object-contain object-bottom p-4"
                 />
               </div>
               <div className="flex flex-col gap-1">
-                <h1 className="font-serif text-3xl text-charcoal">{t("title")}</h1>
-                <p className="text-sm leading-relaxed text-charcoal/60">{t("role")}</p>
+                <h1 className="text-3xl font-semibold text-charcoal">{t("title")}</h1>
+                <p className="text-sm font-light leading-relaxed text-charcoal/60">{t("role")}</p>
               </div>
             </div>
 
@@ -60,18 +60,18 @@ export default async function RaulNagiyevPage({ params }: PageProps<"/[locale]/h
                 const items = isBio ? null : (t.raw(`sections.${key}.items`) as string[]);
                 return (
                   <div key={key} className="grid gap-4 py-10 sm:grid-cols-[10rem_1fr] sm:gap-8">
-                    <h2 className="inline-flex items-start gap-2 font-serif text-xl text-charcoal sm:text-2xl">
+                    <h2 className="inline-flex items-start gap-2 text-xl font-semibold text-charcoal sm:text-2xl">
                       <TriangleMark size={12} className="mt-1.5" />
                       {t(`sections.${key}.title`)}
                     </h2>
                     {isBio ? (
-                      <p className="max-w-2xl text-base leading-relaxed text-charcoal/70">
+                      <p className="max-w-2xl text-base font-light leading-relaxed text-charcoal/70">
                         {t("sections.bio.body")}
                       </p>
                     ) : (
                       <ul className="flex flex-col gap-2.5">
                         {items?.map((item) => (
-                          <li key={item} className="text-base leading-relaxed text-charcoal/70">
+                          <li key={item} className="text-base font-light leading-relaxed text-charcoal/70">
                             {item}
                           </li>
                         ))}

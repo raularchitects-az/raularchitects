@@ -59,7 +59,7 @@ export default async function PortfolioDetailPage({
 
         <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14">
           <span className="text-xs font-medium uppercase tracking-[0.24em] text-bronze-light/80">{location}</span>
-          <h1 className="mt-2 font-serif text-4xl text-cream sm:text-6xl lg:text-7xl">
+          <h1 className="mt-2 text-4xl font-semibold text-cream sm:text-6xl lg:text-7xl">
             {c(item.category)}
           </h1>
           <span className="mt-3 block text-xs uppercase tracking-[0.16em] text-cream/60">
@@ -70,7 +70,7 @@ export default async function PortfolioDetailPage({
 
       <section className="bg-cream py-16 sm:py-24">
         <Container className="flex max-w-3xl flex-col items-start gap-10">
-          <p className="text-lg leading-relaxed text-charcoal/70">
+          <p className="text-lg font-light leading-relaxed text-charcoal/70">
             {t("detailIntro", { location })}
           </p>
           <Link

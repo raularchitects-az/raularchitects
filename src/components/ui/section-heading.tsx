@@ -37,7 +37,7 @@ export function SectionHeading({
       ) : null}
       <h2
         className={cn(
-          "font-serif text-3xl leading-[1.15] tracking-tight text-balance sm:text-4xl lg:text-[2.75rem]",
+          "text-3xl font-semibold leading-[1.15] tracking-tight text-balance sm:text-4xl lg:text-[2.75rem]",
           tone === "dark" ? "text-charcoal" : "text-cream",
         )}
       >
@@ -46,7 +46,7 @@ export function SectionHeading({
       {description ? (
         <p
           className={cn(
-            "max-w-2xl text-base leading-relaxed sm:text-lg",
+            "max-w-2xl text-base font-light leading-relaxed sm:text-lg",
             tone === "dark" ? "text-charcoal/70" : "text-cream/70",
             align === "center" && "mx-auto",
           )}

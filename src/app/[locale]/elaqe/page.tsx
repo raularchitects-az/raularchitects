@@ -28,7 +28,7 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/elaqe
             <div className="flex flex-col gap-12">
               <div className="flex flex-col gap-4">
                 <span className="text-xs font-medium uppercase tracking-[0.28em] text-bronze-dark">{t("eyebrow")}</span>
-                <h1 className="max-w-lg font-serif text-4xl leading-[1.1] text-charcoal sm:text-5xl">
+                <h1 className="max-w-lg text-4xl font-semibold leading-[1.1] text-charcoal sm:text-5xl">
                   {t("title")}
                 </h1>
               </div>

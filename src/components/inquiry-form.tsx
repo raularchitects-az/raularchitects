@@ -24,7 +24,7 @@ export function InquiryForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5 border border-charcoal/10 bg-cream-dark/40 p-8 sm:p-10">
-      <h3 className="font-serif text-xl text-charcoal">{t("title")}</h3>
+      <h3 className="text-xl font-semibold text-charcoal">{t("title")}</h3>
 
       <label className="flex flex-col gap-2">
         <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-charcoal/50">{t("name")}</span>

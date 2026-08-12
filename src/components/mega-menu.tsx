@@ -51,7 +51,7 @@ export function MegaMenu({ open, onClose }: { open: boolean; onClose: () => void
     >
       <div className="mx-auto flex min-h-full max-w-7xl flex-col px-6 py-6 lg:px-10">
         <div className="flex items-center justify-between">
-          <span className="font-sans text-sm font-bold uppercase tracking-[0.18em] text-cream">Raul Architects</span>
+          <span className="text-sm font-semibold uppercase tracking-[0.18em] text-cream">Raul Architects</span>
           <button
             type="button"
             onClick={onClose}
@@ -72,7 +72,7 @@ export function MegaMenu({ open, onClose }: { open: boolean; onClose: () => void
             >
               <Link href={item.href} onClick={onClose} className="group flex items-baseline gap-4">
                 <span className="text-xs text-bronze-light/50">{String(index + 1).padStart(2, "0")}</span>
-                <span className="font-serif text-4xl text-cream transition-colors duration-300 group-hover:text-bronze-light sm:text-6xl">
+                <span className="text-4xl font-semibold text-cream transition-colors duration-300 group-hover:text-bronze-light sm:text-6xl">
                   {t(item.key)}
                 </span>
                 <ArrowUpRight

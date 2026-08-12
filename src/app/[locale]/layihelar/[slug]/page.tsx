@@ -71,7 +71,7 @@ export default async function ProjectDetailPage({
         </div>
 
         <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14">
-          <h1 className="font-serif text-4xl text-cream sm:text-6xl lg:text-7xl">
+          <h1 className="text-4xl font-semibold text-cream sm:text-6xl lg:text-7xl">
             {t(`items.${slug}.title`)}
           </h1>
         </div>
@@ -91,7 +91,7 @@ export default async function ProjectDetailPage({
 
       <section className="bg-cream py-16 sm:py-20">
         <Container className="max-w-3xl">
-          <p className="text-lg leading-relaxed text-charcoal/70">{description}</p>
+          <p className="text-lg font-light leading-relaxed text-charcoal/70">{description}</p>
         </Container>
       </section>
 
@@ -115,7 +115,7 @@ export default async function ProjectDetailPage({
       <section className="bg-charcoal py-24 sm:py-32">
         <Container className="max-w-3xl">
           <div className="flex flex-col items-center gap-8 text-center">
-            <h2 className="font-serif text-3xl text-cream sm:text-4xl">{t("adaptTitle")}</h2>
+            <h2 className="text-3xl font-semibold text-cream sm:text-4xl">{t("adaptTitle")}</h2>
             <div className="flex flex-col gap-4 sm:flex-row">
               <a
                 href="#apply"

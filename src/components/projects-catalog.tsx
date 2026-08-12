@@ -74,7 +74,7 @@ export function ProjectsCatalog() {
                 <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-bronze-dark">
                   {c(project.category)}
                 </span>
-                <h3 className="font-serif text-2xl text-charcoal transition-colors duration-300 group-hover:text-bronze-dark">
+                <h3 className="text-2xl font-semibold text-charcoal transition-colors duration-300 group-hover:text-bronze-dark">
                   {t(`items.${project.slug}.title`)}
                 </h3>
                 <ul className="flex flex-wrap gap-x-3 gap-y-1 text-sm text-charcoal/55">

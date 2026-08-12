@@ -55,8 +55,8 @@ export default async function ServiceDetailPage({
           <div className="mt-10 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
             <div className="flex flex-col gap-4">
               <span className="text-sm text-bronze-light">{service.number}</span>
-              <h1 className="font-serif text-4xl text-cream sm:text-6xl">{t(`items.${slug}.title`)}</h1>
-              <p className="max-w-xl text-base leading-relaxed text-cream/65 sm:text-lg">
+              <h1 className="text-4xl font-semibold text-cream sm:text-6xl">{t(`items.${slug}.title`)}</h1>
+              <p className="max-w-xl text-base font-light leading-relaxed text-cream/65 sm:text-lg">
                 {t(`items.${slug}.intro`)}
               </p>
             </div>
@@ -81,7 +81,7 @@ export default async function ServiceDetailPage({
           </div>
 
           <div className="mt-16 flex flex-col items-start gap-6 border-t border-charcoal/10 pt-10">
-            <h2 className="font-serif text-2xl text-charcoal sm:text-3xl">{t("ctaTitle")}</h2>
+            <h2 className="text-2xl font-semibold text-charcoal sm:text-3xl">{t("ctaTitle")}</h2>
             <Link
               href="/elaqe"
               className="group inline-flex items-center gap-2 border border-charcoal bg-charcoal px-7 py-3.5 text-xs font-medium uppercase tracking-[0.22em] text-cream transition-all duration-300 hover:border-bronze-dark hover:bg-bronze-dark"

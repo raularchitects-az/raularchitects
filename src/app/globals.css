@@ -9,11 +9,22 @@
   --color-charcoal: #47484c;
   --color-charcoal-dark: #1c1c1e;
 
-  --font-serif: var(--font-cormorant), "Cormorant Garamond", serif;
-  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", sans-serif;
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
 
   --animate-fade-up: fade-up 0.8s ease-out forwards;
   --animate-fade-in: fade-in 1s ease-out forwards;
+  --animate-gradient: gradient-shift 8s ease-in-out infinite;
+
+  @keyframes gradient-shift {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
 
   @keyframes fade-up {
     from {
@@ -80,5 +91,29 @@
       color-mix(in srgb, var(--color-bronze-light) 22%, transparent) 0%,
       transparent 60%
     );
+  }
+
+  .bg-gradient-animated {
+    background-image: linear-gradient(
+      115deg,
+      #8f6b4f 0%,
+      #b58e72 22%,
+      #d3b79c 48%,
+      #c4a085 72%,
+      #9a7356 100%
+    );
+    background-size: 220% 220%;
+    animation: var(--animate-gradient);
+  }
+
+  .bg-gradient-animated-soft {
+    background-image: linear-gradient(
+      135deg,
+      color-mix(in srgb, #b58e72 18%, white) 0%,
+      color-mix(in srgb, #d3b79c 28%, white) 40%,
+      color-mix(in srgb, #c4a085 16%, white) 100%
+    );
+    background-size: 200% 200%;
+    animation: var(--animate-gradient);
   }
 }
