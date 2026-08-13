@@ -13,7 +13,6 @@ const links = [
 
 export function Footer() {
   const t = useTranslations("nav");
-  const f = useTranslations("footerMini");
   const year = new Date().getFullYear();
 
   return (
@@ -35,9 +34,18 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-10 flex flex-col items-center gap-2 border-t border-charcoal/10 pt-6 text-xs text-charcoal/40 sm:flex-row sm:justify-between">
-          <span>© {year} Raul Architects</span>
-          <span>{f("rights")}</span>
+        <div className="mt-10 border-t border-charcoal/10 pt-6 text-center text-xs text-charcoal/40 sm:text-left">
+          <span>
+            © {year} Designed and developed by{" "}
+            <a
+              href="https://media7.az"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-charcoal/55 transition-colors duration-300 hover:text-bronze-dark"
+            >
+              media7.az
+            </a>
+          </span>
         </div>
       </Container>
     </footer>

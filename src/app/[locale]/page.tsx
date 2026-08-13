@@ -4,7 +4,6 @@ import { ArrowRight, ArrowUpRight, HardHat, Boxes, Sofa, Building2, type LucideI
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { TriangleMark } from "@/components/ui/triangle-mark";
-import { RoofSketch } from "@/components/ui/roof-sketch";
 import { Reveal } from "@/components/ui/reveal";
 import { Footer } from "@/components/footer";
 import { services } from "@/data/services";
@@ -31,15 +30,14 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
           <div className="grid gap-12 py-16 sm:py-20 lg:grid-cols-2 lg:items-center lg:gap-16 lg:py-24">
             <Reveal>
               <Link href="/haqqimizda/raul-nagiyev" className="group relative flex flex-col gap-5">
-                <div className="relative mx-auto flex aspect-[3/4] w-full max-w-[22rem] items-end justify-center sm:mx-0">
-                  <RoofSketch className="absolute left-1/2 top-[4%] h-[72%] w-[115%] -translate-x-1/2 opacity-45" />
+                <div className="relative mx-auto aspect-[3/4] w-full max-w-[22rem] overflow-hidden bg-cream-dark sm:mx-0">
                   <Image
-                    src="/images/raul-cutout.png"
+                    src="/images/raul-photo.jpg"
                     alt="Raul Nağıyev"
                     fill
                     priority
                     sizes="(min-width: 1024px) 22rem, 90vw"
-                    className="relative z-10 object-contain object-bottom drop-shadow-[0_18px_40px_rgba(71,72,76,0.18)] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                   />
                 </div>
                 <div className="relative z-10 flex flex-col gap-1">
