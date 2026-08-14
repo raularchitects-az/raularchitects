@@ -29,6 +29,11 @@ export async function generateMetadata({
   return {
     title: t("title"),
     description: t("description"),
+    colorScheme: "only light",
+    other: {
+      "color-scheme": "light only",
+      "supported-color-schemes": "light",
+    },
   };
 }
 
@@ -46,8 +51,12 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full bg-cream font-sans font-normal text-charcoal">
+    <html
+      lang={locale}
+      className={`${inter.variable} h-full antialiased`}
+      style={{ colorScheme: "light only" }}
+    >
+      <body className="min-h-full bg-cream font-sans font-normal text-charcoal" style={{ colorScheme: "light" }}>
         <NextIntlClientProvider messages={messages}>
           <Navbar />
           <div className="pt-20">{children}</div>
