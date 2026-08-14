@@ -41,10 +41,8 @@ export function Navbar() {
             ))}
           </div>
 
-          <div className="flex items-center justify-self-end gap-3">
-            <div className="hidden sm:block">
-              <LanguageSwitcher tone="light" />
-            </div>
+          <div className="flex items-center justify-self-end gap-2 sm:gap-3">
+            <LanguageSwitcher tone="light" />
             <button
               type="button"
               onClick={() => setOpen(true)}

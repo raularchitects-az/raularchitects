@@ -163,8 +163,8 @@
   }
 
   .hero-photo {
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .hero-photo-fade-mobile {
@@ -173,8 +173,8 @@
     background: linear-gradient(
       to bottom,
       transparent 0%,
-      transparent 72%,
-      color-mix(in srgb, #f7f2ec 45%, transparent) 88%,
+      transparent 58%,
+      color-mix(in srgb, #f7f2ec 35%, transparent) 78%,
       #f7f2ec 100%
     );
   }
@@ -242,6 +242,14 @@
     .hero-triangle-mark {
       opacity: 0.16;
       clip-path: polygon(0 0, 0 100%, 100% 100%);
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .hero-triangle-mark {
+      right: -18%;
+      bottom: -18%;
+      width: min(120%, 34rem);
     }
   }
 }
