@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Mail, Phone, MessageCircle, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { InquiryForm } from "@/components/inquiry-form";
 import { Footer } from "@/components/footer";
@@ -35,27 +35,27 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/elaqe
 
               <div className="flex flex-col gap-10">
                 <div className="flex flex-col gap-3 border-t border-charcoal/10 pt-6">
+                  <a
+                    href="mailto:office@raularchitects.com"
+                    className="group inline-flex items-center gap-3 text-base tabular-nums text-charcoal/75 transition-colors duration-300 hover:text-bronze-dark"
+                  >
+                    <Mail className="h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
+                    office@raularchitects.com
+                  </a>
+                </div>
+
+                <div className="flex flex-col gap-3 border-t border-charcoal/10 pt-6">
                   <h3 className="text-xs font-medium uppercase tracking-[0.2em] text-charcoal/50">
                     {t("azerbaijan.label")}
                   </h3>
-                  <a href={`mailto:${t("azerbaijan.email")}`} className="group inline-flex items-center gap-3 text-charcoal/75 transition-colors duration-300 hover:text-bronze-dark">
-                    <Mail className="h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
-                    {t("azerbaijan.email")}
-                  </a>
-                  <a href={`tel:${t("azerbaijan.phone").replace(/\s/g, "")}`} className="group inline-flex items-center gap-3 text-charcoal/75 transition-colors duration-300 hover:text-bronze-dark">
+                  <a
+                    href={`tel:${t("azerbaijan.phone").replace(/\s/g, "")}`}
+                    className="group inline-flex items-center gap-3 text-base tabular-nums text-charcoal/75 transition-colors duration-300 hover:text-bronze-dark"
+                  >
                     <Phone className="h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
                     {t("azerbaijan.phone")}
                   </a>
-                  <a
-                    href={`https://wa.me/${t("azerbaijan.whatsapp").replace(/[^0-9]/g, "")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-3 text-charcoal/75 transition-colors duration-300 hover:text-bronze-dark"
-                  >
-                    <MessageCircle className="h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
-                    WhatsApp · {t("azerbaijan.whatsapp")}
-                  </a>
-                  <p className="inline-flex items-start gap-3 text-charcoal/75">
+                  <p className="inline-flex items-start gap-3 text-base tabular-nums text-charcoal/75">
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
                     <span>{t("azerbaijan.address")}</span>
                   </p>
@@ -65,11 +65,14 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/elaqe
                   <h3 className="text-xs font-medium uppercase tracking-[0.2em] text-charcoal/50">
                     {t("germany.label")}
                   </h3>
-                  <a href={`tel:${t("germany.phone").replace(/\s/g, "")}`} className="group inline-flex items-center gap-3 text-charcoal/75 transition-colors duration-300 hover:text-bronze-dark">
+                  <a
+                    href={`tel:${t("germany.phone").replace(/\s/g, "")}`}
+                    className="group inline-flex items-center gap-3 text-base tabular-nums text-charcoal/75 transition-colors duration-300 hover:text-bronze-dark"
+                  >
                     <Phone className="h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
                     {t("germany.phone")}
                   </a>
-                  <p className="inline-flex items-start gap-3 text-charcoal/75">
+                  <p className="inline-flex items-start gap-3 text-base tabular-nums text-charcoal/75">
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
                     <span>{t("germany.address")}</span>
                   </p>
@@ -79,11 +82,14 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/elaqe
                   <h3 className="text-xs font-medium uppercase tracking-[0.2em] text-charcoal/50">
                     {t("switzerland.label")}
                   </h3>
-                  <a href={`tel:${t("switzerland.phone").replace(/\s/g, "")}`} className="group inline-flex items-center gap-3 text-charcoal/75 transition-colors duration-300 hover:text-bronze-dark">
+                  <a
+                    href={`tel:${t("switzerland.phone").replace(/\s/g, "")}`}
+                    className="group inline-flex items-center gap-3 text-base tabular-nums text-charcoal/75 transition-colors duration-300 hover:text-bronze-dark"
+                  >
                     <Phone className="h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
                     {t("switzerland.phone")}
                   </a>
-                  <p className="inline-flex items-start gap-3 text-charcoal/75">
+                  <p className="inline-flex items-start gap-3 text-base tabular-nums text-charcoal/75">
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
                     <span>{t("switzerland.address")}</span>
                   </p>

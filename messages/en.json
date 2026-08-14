@@ -45,25 +45,117 @@
     "subtitle": "Ready-made architectural concepts built to German and Swiss standards, adaptable to your plot.",
     "viewProject": "View project",
     "items": {
-      "compact-villa": { "title": "Compact Villa", "specs": ["150–180 m²", "3 bedrooms", "1–2 floors"] },
-      "family-villa": { "title": "Family Villa", "specs": ["220–280 m²", "4 bedrooms", "2 floors"] },
-      "premium-villa": { "title": "Premium Villa", "specs": ["350–450 m²", "4–5 bedrooms", "Pool · Garage"] },
-      "bag-evi-01": { "title": "Garden House", "specs": ["90–120 m²", "2–3 bedrooms", "Garden / Yard"] },
-      "courtyard-house": { "title": "Courtyard House", "specs": ["120–160 m²", "3 bedrooms", "1 floor"] },
-      "modern-family-house": { "title": "Modern Family House", "specs": ["180–220 m²", "3–4 bedrooms", "2 floors"] },
-      "a-frame-cabin": { "title": "A-Frame Cabin", "specs": ["60–90 m²", "Tourism / private use"] },
-      "premium-cabin": { "title": "Premium Cabin", "specs": ["100–140 m²", "Tourism / investment"] },
-      "duplex-01": { "title": "Duplex", "specs": ["Two housing units", "Developer / investment"] },
-      "townhouse-01": { "title": "Townhouse", "specs": ["Row houses", "Developer / investment"] },
-      "yasayis-kompleksi-01": { "title": "Residential Complex", "specs": ["Multi-storey", "Developer project"] },
-      "commercial": { "title": "Commercial", "specs": ["Office / restaurant / retail"] },
-      "hotel-01": { "title": "Hotel", "specs": ["Boutique hotel / resort"] },
-      "ictimai-01": { "title": "Public Building", "specs": ["Culture / public space"] }
+      "compact-villa": {
+        "title": "Compact Villa",
+        "specs": [
+          "150–180 m²",
+          "3 bedrooms",
+          "1–2 floors"
+        ]
+      },
+      "family-villa": {
+        "title": "Family Villa",
+        "specs": [
+          "220–280 m²",
+          "4 bedrooms",
+          "2 floors"
+        ]
+      },
+      "premium-villa": {
+        "title": "Premium Villa",
+        "specs": [
+          "350–450 m²",
+          "4–5 bedrooms",
+          "Pool · Garage"
+        ]
+      },
+      "bag-evi-01": {
+        "title": "Garden House",
+        "specs": [
+          "90–120 m²",
+          "2–3 bedrooms",
+          "Garden / Yard"
+        ]
+      },
+      "courtyard-house": {
+        "title": "Courtyard House",
+        "specs": [
+          "120–160 m²",
+          "3 bedrooms",
+          "1 floor"
+        ]
+      },
+      "modern-family-house": {
+        "title": "Modern Family House",
+        "specs": [
+          "180–220 m²",
+          "3–4 bedrooms",
+          "2 floors"
+        ]
+      },
+      "a-frame-cabin": {
+        "title": "A-Frame Cabin",
+        "specs": [
+          "60–90 m²",
+          "Tourism / private use"
+        ]
+      },
+      "premium-cabin": {
+        "title": "Premium Cabin",
+        "specs": [
+          "100–140 m²",
+          "Tourism / investment"
+        ]
+      },
+      "duplex-01": {
+        "title": "Duplex",
+        "specs": [
+          "Two housing units",
+          "Developer / investment"
+        ]
+      },
+      "townhouse-01": {
+        "title": "Townhouse",
+        "specs": [
+          "Row houses",
+          "Developer / investment"
+        ]
+      },
+      "yasayis-kompleksi-01": {
+        "title": "Residential Complex",
+        "specs": [
+          "Multi-storey",
+          "Developer project"
+        ]
+      },
+      "commercial": {
+        "title": "Commercial",
+        "specs": [
+          "Office / restaurant / retail"
+        ]
+      },
+      "hotel-01": {
+        "title": "Hotel",
+        "specs": [
+          "Boutique hotel / resort"
+        ]
+      },
+      "ictimai-01": {
+        "title": "Public Building",
+        "specs": [
+          "Culture / public space"
+        ]
+      }
     }
   },
   "projectDetail": {
     "backLabel": "All Projects",
-    "sequenceLabels": { "exterior": "Exterior", "interior": "Interior", "plan": "Plan", "bim": "BIM" },
+    "sequenceLabels": {
+      "exterior": "Exterior",
+      "interior": "Interior",
+      "plan": "Plan",
+      "bim": "BIM"
+    },
     "adaptTitle": "Let's adapt this project to your plot.",
     "applyCta": "Apply for this project",
     "whatsappCta": "WhatsApp",
@@ -78,72 +170,141 @@
     "items": {
       "compact-villa": {
         "title": "Compact Villa",
-        "specs": ["150–180 m²", "3 Bedrooms", "1–2 Floors", "2 Bathrooms", "1 Car"],
+        "specs": [
+          "150–180 m²",
+          "3 Bedrooms",
+          "1–2 Floors",
+          "2 Bathrooms",
+          "1 Car"
+        ],
         "description": "Maximum functionality on a compact plot. Optimized layout for young families and first-time homeowners."
       },
       "family-villa": {
         "title": "Family Villa",
-        "specs": ["220 m²", "4 Bedrooms", "2 Floors", "3 Bathrooms", "2 Cars"],
+        "specs": [
+          "220 m²",
+          "4 Bedrooms",
+          "2 Floors",
+          "3 Bathrooms",
+          "2 Cars"
+        ],
         "description": "Generous living space for growing families. Open kitchen-living concept with a separate parents' wing."
       },
       "premium-villa": {
         "title": "Premium Villa",
-        "specs": ["350–450 m²", "4–5 Bedrooms", "3 Floors", "Pool", "3 Cars"],
+        "specs": [
+          "350–450 m²",
+          "4–5 Bedrooms",
+          "3 Floors",
+          "Pool",
+          "3 Cars"
+        ],
         "description": "For the most demanding clients. Premium living with a pool, wide terraces and panoramic glass façades."
       },
       "bag-evi-01": {
         "title": "Garden House",
-        "specs": ["90–120 m²", "2–3 Bedrooms", "1 Floor", "Large garden plot"],
+        "specs": [
+          "90–120 m²",
+          "2–3 Bedrooms",
+          "1 Floor",
+          "Large garden plot"
+        ],
         "description": "A garden house concept immersed in nature, designed for quiet retreat."
       },
       "courtyard-house": {
         "title": "Courtyard House",
-        "specs": ["120–160 m²", "3 Bedrooms", "1 Floor", "2 Bathrooms", "Interior courtyard"],
+        "specs": [
+          "120–160 m²",
+          "3 Bedrooms",
+          "1 Floor",
+          "2 Bathrooms",
+          "Interior courtyard"
+        ],
         "description": "Private, light-filled single-storey living arranged around a central courtyard."
       },
       "modern-family-house": {
         "title": "Modern Family House",
-        "specs": ["180–220 m²", "3–4 Bedrooms", "2 Floors", "3 Bathrooms", "2 Cars"],
+        "specs": [
+          "180–220 m²",
+          "3–4 Bedrooms",
+          "2 Floors",
+          "3 Bathrooms",
+          "2 Cars"
+        ],
         "description": "A mid-sized family home with clean modern lines and functional planning."
       },
       "a-frame-cabin": {
         "title": "A-Frame Cabin",
-        "specs": ["60–90 m²", "2 Bedrooms", "1 Floor", "Open-plan living"],
+        "specs": [
+          "60–90 m²",
+          "2 Bedrooms",
+          "1 Floor",
+          "Open-plan living"
+        ],
         "description": "A minimalist mountain cabin concept for tourism and private retreat."
       },
       "premium-cabin": {
         "title": "Premium Cabin",
-        "specs": ["100–140 m²", "3 Bedrooms", "1–2 Floors", "Large terrace"],
+        "specs": [
+          "100–140 m²",
+          "3 Bedrooms",
+          "1–2 Floors",
+          "Large terrace"
+        ],
         "description": "A premium cabin with a wide terrace for investment and tourism purposes."
       },
       "duplex-01": {
         "title": "Duplex",
-        "specs": ["2 × 140 m²", "2 separate entrances", "2 floors per unit"],
+        "specs": [
+          "2 × 140 m²",
+          "2 separate entrances",
+          "2 floors per unit"
+        ],
         "description": "A block of two independent housing units for developer projects."
       },
       "townhouse-01": {
         "title": "Townhouse",
-        "specs": ["3 × 120 m²", "Row construction", "2 floors per unit"],
+        "specs": [
+          "3 × 120 m²",
+          "Row construction",
+          "2 floors per unit"
+        ],
         "description": "A compact, functional row-house concept for urban settings."
       },
       "yasayis-kompleksi-01": {
         "title": "Residential Complex",
-        "specs": ["Multi-storey", "Apartment-style units", "Shared courtyard"],
+        "specs": [
+          "Multi-storey",
+          "Apartment-style units",
+          "Shared courtyard"
+        ],
         "description": "A multi-unit residential complex concept for developer investments."
       },
       "commercial": {
         "title": "Commercial",
-        "specs": ["Flexible layout", "Office / Restaurant / Retail", "Custom configuration"],
+        "specs": [
+          "Flexible layout",
+          "Office / Restaurant / Retail",
+          "Custom configuration"
+        ],
         "description": "Flexible commercial property design tailored to business needs."
       },
       "hotel-01": {
         "title": "Hotel",
-        "specs": ["8–24 rooms", "Lobby / Restaurant", "Spa-ready infrastructure"],
+        "specs": [
+          "8–24 rooms",
+          "Lobby / Restaurant",
+          "Spa-ready infrastructure"
+        ],
         "description": "A hospitality concept for boutique hotels and tourism properties."
       },
       "ictimai-01": {
         "title": "Public Building",
-        "specs": ["Open public space", "Cultural / Civic", "Large foyer"],
+        "specs": [
+          "Open public space",
+          "Cultural / Civic",
+          "Large foyer"
+        ],
         "description": "A building concept designed for cultural and civic activity."
       }
     }
@@ -162,10 +323,18 @@
     "eyebrow": "Services",
     "title": "Services",
     "items": {
-      "tikinti-ve-temir": { "title": "Construction & Renovation" },
-      "bim-ile-layihelendirme": { "title": "BIM-Based Design" },
-      "interyer-dizayn": { "title": "Interior Design" },
-      "seherselme-layiheleri": { "title": "Urban Planning Projects" }
+      "tikinti-ve-temir": {
+        "title": "Construction & Renovation"
+      },
+      "bim-ile-layihelendirme": {
+        "title": "BIM-Based Design"
+      },
+      "interyer-dizayn": {
+        "title": "Interior Design"
+      },
+      "seherselme-layiheleri": {
+        "title": "Urban Planning Projects"
+      }
     }
   },
   "serviceDetail": {
@@ -176,35 +345,71 @@
       "tikinti-ve-temir": {
         "title": "Construction & Renovation",
         "intro": "Full-cycle execution oversight from new construction to major renovation.",
-        "points": ["Execution of new construction projects", "Major renovation and modernization", "On-site technical supervision", "Contractor and material coordination"]
+        "points": [
+          "Execution of new construction projects",
+          "Major renovation and modernization",
+          "On-site technical supervision",
+          "Contractor and material coordination"
+        ]
       },
       "bim-ile-layihelendirme": {
         "title": "BIM-Based Design",
         "intro": "A complete digital twin of the building before construction. Clash-free, precise and predictable execution.",
-        "points": ["3D smart model and clash detection", "Quantity takeoff (Simeta)", "As-Built models after construction", "Digital Twin"]
+        "points": [
+          "3D smart model and clash detection",
+          "Quantity takeoff (Simeta)",
+          "As-Built models after construction",
+          "Digital Twin"
+        ]
       },
       "interyer-dizayn": {
         "title": "Interior Design",
         "intro": "Spatial concepts that combine functionality and aesthetics.",
-        "points": ["Custom spatial planning", "Material and lighting concept", "Furniture and detail design", "3D visualization"]
+        "points": [
+          "Custom spatial planning",
+          "Material and lighting concept",
+          "Furniture and detail design",
+          "3D visualization"
+        ]
       },
       "seherselme-layiheleri": {
         "title": "Urban Planning Projects",
         "intro": "Neighborhood and site planning that creates maximum value from a plot of land.",
-        "points": ["Master plan and zoning", "Density and infrastructure analysis", "Feasibility for developers", "Regulatory compliance"]
+        "points": [
+          "Master plan and zoning",
+          "Density and infrastructure analysis",
+          "Feasibility for developers",
+          "Regulatory compliance"
+        ]
       }
     }
   },
   "aboutPage": {
     "eyebrow": "About",
     "title": "Raul Architects",
-    "countries": ["Germany", "Switzerland", "Azerbaijan"],
+    "countries": [
+      "Germany",
+      "Switzerland",
+      "Azerbaijan"
+    ],
     "intro": "A practice founded by Raul Naghiyev — a BTU Cottbus (Germany) graduate, internationally experienced architect, engineer and BIM expert.",
     "blocks": {
-      "raul": { "title": "Raul Naghiyev", "description": "Architect, engineer, interior designer and BIM expert. BTU Cottbus master's graduate, specialized in interior design in the United Kingdom." },
-      "team": { "title": "Team", "description": "Collaboration with partner engineering and construction firms in Germany, Switzerland and Azerbaijan." },
-      "international": { "title": "International Experience", "description": "30+ completed projects in Germany, 15+ in Azerbaijan, 3 ongoing in Switzerland." },
-      "bim": { "title": "BIM Competence", "description": "Full digital design capability aligned with ISO, DIN and SIA standards." }
+      "raul": {
+        "title": "Raul Naghiyev",
+        "description": "Architect, engineer, interior designer and BIM expert. BTU Cottbus master's graduate, specialized in interior design in the United Kingdom."
+      },
+      "team": {
+        "title": "Team",
+        "description": "Collaboration with partner engineering and construction firms in Germany, Switzerland and Azerbaijan."
+      },
+      "international": {
+        "title": "International Experience",
+        "description": "30+ completed projects in Germany, 15+ in Azerbaijan, 3 ongoing in Switzerland."
+      },
+      "bim": {
+        "title": "BIM Competence",
+        "description": "Full digital design capability aligned with ISO, DIN and SIA standards."
+      }
     },
     "raulCta": "Who is Raul Naghiyev?"
   },
@@ -259,9 +464,7 @@
     "title": "Let's discuss your project.",
     "azerbaijan": {
       "label": "Azerbaijan",
-      "email": "office@raularchitects.com",
       "phone": "+994 10 413 26 96",
-      "whatsapp": "+49 157 8970 7008",
       "address": "Yusif Vəzir Çəmənzəminli 18, AZ 1078, Baku"
     },
     "germany": {

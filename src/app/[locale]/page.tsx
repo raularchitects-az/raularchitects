@@ -48,8 +48,8 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
                       strokeWidth={2}
                     />
                   </span>
-                  <span className="text-sm font-light text-charcoal/60">{home("role1")}</span>
-                  <span className="text-sm font-light text-charcoal/60">{home("role2")}</span>
+                  <span className="text-sm font-semibold text-charcoal/75">{home("role1")}</span>
+                  <span className="text-sm font-semibold text-charcoal/75">{home("role2")}</span>
                 </div>
               </Link>
             </Reveal>

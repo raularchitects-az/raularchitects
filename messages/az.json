@@ -45,25 +45,117 @@
     "subtitle": "Almaniya və İsveçrə standartlarında hazırlanmış, torpağınıza uyğunlaşdırıla bilən hazır memarlıq konseptləri.",
     "viewProject": "Layihəyə bax",
     "items": {
-      "compact-villa": { "title": "Compact Villa", "specs": ["150–180 m²", "3 yataq otağı", "1–2 mərtəbə"] },
-      "family-villa": { "title": "Family Villa", "specs": ["220–280 m²", "4 yataq otağı", "2 mərtəbə"] },
-      "premium-villa": { "title": "Premium Villa", "specs": ["350–450 m²", "4–5 yataq otağı", "Hovuz · Qaraj"] },
-      "bag-evi-01": { "title": "Bağ Evi", "specs": ["90–120 m²", "2–3 yataq otağı", "Bağ / Həyət"] },
-      "courtyard-house": { "title": "Courtyard House", "specs": ["120–160 m²", "3 yataq otağı", "1 mərtəbə"] },
-      "modern-family-house": { "title": "Modern Family House", "specs": ["180–220 m²", "3–4 yataq otağı", "2 mərtəbə"] },
-      "a-frame-cabin": { "title": "A-Frame Cabin", "specs": ["60–90 m²", "Turizm / şəxsi istifadə"] },
-      "premium-cabin": { "title": "Premium Cabin", "specs": ["100–140 m²", "Turizm / investisiya"] },
-      "duplex-01": { "title": "Duplex", "specs": ["İki yaşayış vahidi", "Developer / investisiya"] },
-      "townhouse-01": { "title": "Townhouse", "specs": ["Sıra evlər", "Developer / investisiya"] },
-      "yasayis-kompleksi-01": { "title": "Yaşayış Kompleksi", "specs": ["Çoxmərtəbəli", "Developer layihəsi"] },
-      "commercial": { "title": "Kommersiya", "specs": ["Ofis / restoran / kommersiya"] },
-      "hotel-01": { "title": "Hotel", "specs": ["Boutique Hotel / Resort"] },
-      "ictimai-01": { "title": "İctimai Bina", "specs": ["Mədəniyyət / İctimai məkan"] }
+      "compact-villa": {
+        "title": "Compact Villa",
+        "specs": [
+          "150–180 m²",
+          "3 yataq otağı",
+          "1–2 mərtəbə"
+        ]
+      },
+      "family-villa": {
+        "title": "Family Villa",
+        "specs": [
+          "220–280 m²",
+          "4 yataq otağı",
+          "2 mərtəbə"
+        ]
+      },
+      "premium-villa": {
+        "title": "Premium Villa",
+        "specs": [
+          "350–450 m²",
+          "4–5 yataq otağı",
+          "Hovuz · Qaraj"
+        ]
+      },
+      "bag-evi-01": {
+        "title": "Bağ Evi",
+        "specs": [
+          "90–120 m²",
+          "2–3 yataq otağı",
+          "Bağ / Həyət"
+        ]
+      },
+      "courtyard-house": {
+        "title": "Courtyard House",
+        "specs": [
+          "120–160 m²",
+          "3 yataq otağı",
+          "1 mərtəbə"
+        ]
+      },
+      "modern-family-house": {
+        "title": "Modern Family House",
+        "specs": [
+          "180–220 m²",
+          "3–4 yataq otağı",
+          "2 mərtəbə"
+        ]
+      },
+      "a-frame-cabin": {
+        "title": "A-Frame Cabin",
+        "specs": [
+          "60–90 m²",
+          "Turizm / şəxsi istifadə"
+        ]
+      },
+      "premium-cabin": {
+        "title": "Premium Cabin",
+        "specs": [
+          "100–140 m²",
+          "Turizm / investisiya"
+        ]
+      },
+      "duplex-01": {
+        "title": "Duplex",
+        "specs": [
+          "İki yaşayış vahidi",
+          "Developer / investisiya"
+        ]
+      },
+      "townhouse-01": {
+        "title": "Townhouse",
+        "specs": [
+          "Sıra evlər",
+          "Developer / investisiya"
+        ]
+      },
+      "yasayis-kompleksi-01": {
+        "title": "Yaşayış Kompleksi",
+        "specs": [
+          "Çoxmərtəbəli",
+          "Developer layihəsi"
+        ]
+      },
+      "commercial": {
+        "title": "Kommersiya",
+        "specs": [
+          "Ofis / restoran / kommersiya"
+        ]
+      },
+      "hotel-01": {
+        "title": "Hotel",
+        "specs": [
+          "Boutique Hotel / Resort"
+        ]
+      },
+      "ictimai-01": {
+        "title": "İctimai Bina",
+        "specs": [
+          "Mədəniyyət / İctimai məkan"
+        ]
+      }
     }
   },
   "projectDetail": {
     "backLabel": "Bütün Layihələr",
-    "sequenceLabels": { "exterior": "Exterior", "interior": "Interior", "plan": "Plan", "bim": "BIM" },
+    "sequenceLabels": {
+      "exterior": "Exterior",
+      "interior": "Interior",
+      "plan": "Plan",
+      "bim": "BIM"
+    },
     "adaptTitle": "Bu layihəni torpağınıza uyğunlaşdıraq.",
     "applyCta": "Layihə üçün müraciət",
     "whatsappCta": "WhatsApp",
@@ -78,72 +170,141 @@
     "items": {
       "compact-villa": {
         "title": "Compact Villa",
-        "specs": ["150–180 m²", "3 Yataq otağı", "1–2 Mərtəbə", "2 Sanitar qovşaq", "1 Avtomobil"],
+        "specs": [
+          "150–180 m²",
+          "3 Yataq otağı",
+          "1–2 Mərtəbə",
+          "2 Sanitar qovşaq",
+          "1 Avtomobil"
+        ],
         "description": "Kompakt sahədə maksimum funksionallıq. Gənc ailələr və ilk ev sahibləri üçün optimallaşdırılmış planlaşdırma."
       },
       "family-villa": {
         "title": "Family Villa",
-        "specs": ["220 m²", "4 Yataq otağı", "2 Mərtəbə", "3 Sanitar qovşaq", "2 Avtomobil"],
+        "specs": [
+          "220 m²",
+          "4 Yataq otağı",
+          "2 Mərtəbə",
+          "3 Sanitar qovşaq",
+          "2 Avtomobil"
+        ],
         "description": "Böyüyən ailələr üçün geniş yaşayış sahəsi. Açıq mətbəx-qonaq otağı konsepti və ayrıca valideyn blоku."
       },
       "premium-villa": {
         "title": "Premium Villa",
-        "specs": ["350–450 m²", "4–5 Yataq otağı", "3 Mərtəbə", "Hovuz", "3 Avtomobil"],
+        "specs": [
+          "350–450 m²",
+          "4–5 Yataq otağı",
+          "3 Mərtəbə",
+          "Hovuz",
+          "3 Avtomobil"
+        ],
         "description": "Yüksək tələbkar müştərilər üçün. Hovuz, geniş terraslar və panoramik şüşə fasadlarla premium yaşayış."
       },
       "bag-evi-01": {
         "title": "Bağ Evi",
-        "specs": ["90–120 m²", "2–3 Yataq otağı", "1 Mərtəbə", "Geniş bağ sahəsi"],
+        "specs": [
+          "90–120 m²",
+          "2–3 Yataq otağı",
+          "1 Mərtəbə",
+          "Geniş bağ sahəsi"
+        ],
         "description": "Təbiətlə iç-içə, sakit istirahət üçün nəzərdə tutulmuş bağ evi konsepti."
       },
       "courtyard-house": {
         "title": "Courtyard House",
-        "specs": ["120–160 m²", "3 Yataq otağı", "1 Mərtəbə", "2 Sanitar qovşaq", "Daxili həyət"],
+        "specs": [
+          "120–160 m²",
+          "3 Yataq otağı",
+          "1 Mərtəbə",
+          "2 Sanitar qovşaq",
+          "Daxili həyət"
+        ],
         "description": "Mərkəzi daxili həyət ətrafında qurulan məxfi, təbii işıqla dolu tək mərtəbəli yaşayış."
       },
       "modern-family-house": {
         "title": "Modern Family House",
-        "specs": ["180–220 m²", "3–4 Yataq otağı", "2 Mərtəbə", "3 Sanitar qovşaq", "2 Avtomobil"],
+        "specs": [
+          "180–220 m²",
+          "3–4 Yataq otağı",
+          "2 Mərtəbə",
+          "3 Sanitar qovşaq",
+          "2 Avtomobil"
+        ],
         "description": "Müasir xətlər və funksional planlaşdırma ilə orta ölçülü ailə evi."
       },
       "a-frame-cabin": {
         "title": "A-Frame Cabin",
-        "specs": ["60–90 m²", "2 Yataq otağı", "1 Mərtəbə", "Açıq planlı salon"],
+        "specs": [
+          "60–90 m²",
+          "2 Yataq otağı",
+          "1 Mərtəbə",
+          "Açıq planlı salon"
+        ],
         "description": "Turizm və şəxsi istirahət üçün minimalist dağ evi konsepti."
       },
       "premium-cabin": {
         "title": "Premium Cabin",
-        "specs": ["100–140 m²", "3 Yataq otağı", "1–2 Mərtəbə", "Geniş terras"],
+        "specs": [
+          "100–140 m²",
+          "3 Yataq otağı",
+          "1–2 Mərtəbə",
+          "Geniş terras"
+        ],
         "description": "İnvestisiya və turizm məqsədli, geniş terrası olan premium kabin."
       },
       "duplex-01": {
         "title": "Duplex",
-        "specs": ["2 × 140 m²", "2 Ayrı giriş", "2 Mərtəbə hər blokda"],
+        "specs": [
+          "2 × 140 m²",
+          "2 Ayrı giriş",
+          "2 Mərtəbə hər blokda"
+        ],
         "description": "Developer layihələri üçün iki müstəqil yaşayış vahidindən ibarət blok."
       },
       "townhouse-01": {
         "title": "Townhouse",
-        "specs": ["3 × 120 m²", "Sıra tikili", "2 Mərtəbə hər blokda"],
+        "specs": [
+          "3 × 120 m²",
+          "Sıra tikili",
+          "2 Mərtəbə hər blokda"
+        ],
         "description": "Şəhər mühiti üçün sıx, funksional sıra ev konsepti."
       },
       "yasayis-kompleksi-01": {
         "title": "Yaşayış Kompleksi",
-        "specs": ["Çoxmərtəbəli", "Mənzil tipli vahidlər", "Ortaq həyət"],
+        "specs": [
+          "Çoxmərtəbəli",
+          "Mənzil tipli vahidlər",
+          "Ortaq həyət"
+        ],
         "description": "Developer investisiyaları üçün çoxmənzilli yaşayış kompleksi konsepti."
       },
       "commercial": {
         "title": "Kommersiya",
-        "specs": ["Çevik sahə planlaşdırması", "Ofis / Restoran / Ticarət", "Fərdi konfiqurasiya"],
+        "specs": [
+          "Çevik sahə planlaşdırması",
+          "Ofis / Restoran / Ticarət",
+          "Fərdi konfiqurasiya"
+        ],
         "description": "Biznes ehtiyaclarına uyğun çevik kommersiya obyekti layihələndirilməsi."
       },
       "hotel-01": {
         "title": "Hotel",
-        "specs": ["8–24 nömrə", "Lobbi / Restoran", "Spa-hazır infrastruktur"],
+        "specs": [
+          "8–24 nömrə",
+          "Lobbi / Restoran",
+          "Spa-hazır infrastruktur"
+        ],
         "description": "Butik otel və turizm obyektləri üçün qonaqpərvərlik məkanı konsepti."
       },
       "ictimai-01": {
         "title": "İctimai Bina",
-        "specs": ["Açıq ictimai məkan", "Mədəniyyət / İnzibati", "Geniş foye"],
+        "specs": [
+          "Açıq ictimai məkan",
+          "Mədəniyyət / İnzibati",
+          "Geniş foye"
+        ],
         "description": "Mədəni və ictimai fəaliyyət üçün nəzərdə tutulmuş bina konsepti."
       }
     }
@@ -162,10 +323,18 @@
     "eyebrow": "Xidmətlər",
     "title": "Xidmətlər",
     "items": {
-      "tikinti-ve-temir": { "title": "Tikinti və Təmir" },
-      "bim-ile-layihelendirme": { "title": "BIM Metodu ilə Layihələndirmə" },
-      "interyer-dizayn": { "title": "İnteryer Dizayn" },
-      "seherselme-layiheleri": { "title": "Şəhərsalma Layihələri" }
+      "tikinti-ve-temir": {
+        "title": "Tikinti və Təmir"
+      },
+      "bim-ile-layihelendirme": {
+        "title": "BIM Metodu ilə Layihələndirmə"
+      },
+      "interyer-dizayn": {
+        "title": "İnteryer Dizayn"
+      },
+      "seherselme-layiheleri": {
+        "title": "Şəhərsalma Layihələri"
+      }
     }
   },
   "serviceDetail": {
@@ -176,35 +345,71 @@
       "tikinti-ve-temir": {
         "title": "Tikinti və Təmir",
         "intro": "Yeni tikintidən əsaslı təmirə qədər tam icra dövrü nəzarəti.",
-        "points": ["Yeni tikinti layihələrinin icrası", "Əsaslı təmir və modernləşdirmə", "Sahədə texniki nəzarət", "Podratçı və material koordinasiyası"]
+        "points": [
+          "Yeni tikinti layihələrinin icrası",
+          "Əsaslı təmir və modernləşdirmə",
+          "Sahədə texniki nəzarət",
+          "Podratçı və material koordinasiyası"
+        ]
       },
       "bim-ile-layihelendirme": {
         "title": "BIM Metodu ilə Layihələndirmə",
         "intro": "Tikintidən əvvəl binanın tam rəqəmsal ikizi. Kolliziyasız, dəqiq və proqnozlaşdırıla bilən icra.",
-        "points": ["3D ağıllı model və kolliziya analizi", "Həcm hesablanması (Simeta)", "Tikinti sonrası As-Built modellər", "Rəqəmsal Əkiz (Digital Twin)"]
+        "points": [
+          "3D ağıllı model və kolliziya analizi",
+          "Həcm hesablanması (Simeta)",
+          "Tikinti sonrası As-Built modellər",
+          "Rəqəmsal Əkiz (Digital Twin)"
+        ]
       },
       "interyer-dizayn": {
         "title": "İnteryer Dizayn",
         "intro": "Funksionallıq və estetikanı birləşdirən məkan konsepsiyaları.",
-        "points": ["Fərdi məkan planlaşdırması", "Material və işıq konsepsiyası", "Mebel və detal layihələndirməsi", "3D vizuallaşdırma"]
+        "points": [
+          "Fərdi məkan planlaşdırması",
+          "Material və işıq konsepsiyası",
+          "Mebel və detal layihələndirməsi",
+          "3D vizuallaşdırma"
+        ]
       },
       "seherselme-layiheleri": {
         "title": "Şəhərsalma Layihələri",
         "intro": "Torpaq sahəsindən maksimum dəyər yaradan məhəllə və yerləşmə planlaması.",
-        "points": ["Baş plan və zonalaşdırma", "Sıxlıq və infrastruktur analizi", "Developer üçün fizibilite", "Normativ uyğunluq"]
+        "points": [
+          "Baş plan və zonalaşdırma",
+          "Sıxlıq və infrastruktur analizi",
+          "Developer üçün fizibilite",
+          "Normativ uyğunluq"
+        ]
       }
     }
   },
   "aboutPage": {
     "eyebrow": "Haqqımızda",
     "title": "Raul Architects",
-    "countries": ["Almaniya", "İsveçrə", "Azərbaycan"],
+    "countries": [
+      "Almaniya",
+      "İsveçrə",
+      "Azərbaycan"
+    ],
     "intro": "BTU Cottbus (Almaniya) məzunu, beynəlxalq təcrübəyə malik memar, mühəndis və BIM eksperti Raul Nağıyev tərəfindən qurulan praktika.",
     "blocks": {
-      "raul": { "title": "Raul Nağıyev", "description": "Memar, mühəndis, interyer dizayneri və BİM eksperti. BTU Cottbus magistrı, Böyük Britaniyada interyer dizaynı ixtisası." },
-      "team": { "title": "Komanda", "description": "Almaniya, İsveçrə və Azərbaycanda tərəfdaş mühəndislik və tikinti şirkətləri ilə əməkdaşlıq." },
-      "international": { "title": "Beynəlxalq Təcrübə", "description": "Almaniyada 30+, Azərbaycanda 15+ tamamlanmış, İsveçrədə 3 davam edən layihə." },
-      "bim": { "title": "BIM Kompetensiyası", "description": "ISO, DIN, SIA standartlarına uyğun tam rəqəmsal layihələndirmə bacarığı." }
+      "raul": {
+        "title": "Raul Nağıyev",
+        "description": "Memar, mühəndis, interyer dizayneri və BİM eksperti. BTU Cottbus magistrı, Böyük Britaniyada interyer dizaynı ixtisası."
+      },
+      "team": {
+        "title": "Komanda",
+        "description": "Almaniya, İsveçrə və Azərbaycanda tərəfdaş mühəndislik və tikinti şirkətləri ilə əməkdaşlıq."
+      },
+      "international": {
+        "title": "Beynəlxalq Təcrübə",
+        "description": "Almaniyada 30+, Azərbaycanda 15+ tamamlanmış, İsveçrədə 3 davam edən layihə."
+      },
+      "bim": {
+        "title": "BIM Kompetensiyası",
+        "description": "ISO, DIN, SIA standartlarına uyğun tam rəqəmsal layihələndirmə bacarığı."
+      }
     },
     "raulCta": "Raul Nağıyev kimdir?"
   },
@@ -259,9 +464,7 @@
     "title": "Layihənizi müzakirə edək.",
     "azerbaijan": {
       "label": "Azərbaycan",
-      "email": "office@raularchitects.com",
       "phone": "+994 10 413 26 96",
-      "whatsapp": "+49 157 8970 7008",
       "address": "Yusif Vəzir Çəmənzəminli 18, AZ 1078, Bakı"
     },
     "germany": {

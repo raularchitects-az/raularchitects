@@ -59,6 +59,8 @@
   body {
     background-color: var(--color-cream);
     color: var(--color-charcoal);
+    font-variant-numeric: lining-nums tabular-nums;
+    font-feature-settings: "lnum" 1, "tnum" 1;
   }
 
   ::selection {
