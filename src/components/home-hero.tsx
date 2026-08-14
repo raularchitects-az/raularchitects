@@ -56,12 +56,12 @@ export function HomeHero({
         </div>
 
         {/* LAYER 3 — identity over photo */}
-        <div className="hero-layer-identity absolute bottom-0 left-[28%] z-10 max-w-[min(36rem,46%)] pb-14 sm:left-[30%] lg:left-[22%] lg:max-w-[min(36rem,30%)] lg:pb-16 xl:left-[20%]">
+        <div className="hero-layer-identity absolute bottom-0 left-6 z-10 max-w-[calc(100%-1.5rem)] pb-14 sm:left-8 lg:left-[22%] lg:max-w-[min(36rem,30%)] lg:pb-16 xl:left-[20%]">
           <Link
             href="/haqqimizda/raul-nagiyev"
             className="group inline-flex flex-col gap-2.5 sm:gap-3"
           >
-            <span className="hero-name-plate inline-flex w-fit px-4 py-2.5 text-base font-bold uppercase tracking-[0.08em] text-white sm:px-5 sm:py-3 sm:text-xl lg:text-2xl">
+            <span className="hero-name-plate inline-flex w-fit px-4 py-2.5 text-sm font-bold uppercase tracking-[0.08em] text-white whitespace-nowrap sm:px-5 sm:py-3 sm:text-base lg:text-2xl lg:whitespace-normal">
               {raulName}
             </span>
             <span className="hero-identity-roles flex flex-col gap-0.5 text-[13px] font-medium leading-snug text-[#f7f2ec] lg:text-[0.95rem] lg:text-white lg:drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)]">
