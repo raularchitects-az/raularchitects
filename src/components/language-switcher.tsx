@@ -54,12 +54,7 @@ export function LanguageSwitcher({ tone = "dark" }: { tone?: "dark" | "light" })
       {open ? (
         <ul
           role="listbox"
-          className={cn(
-            "absolute right-0 top-[calc(100%+0.5rem)] z-50 w-40 border shadow-xl",
-            tone === "dark"
-              ? "border-charcoal/10 bg-cream"
-              : "border-cream/10 bg-charcoal-dark",
-          )}
+          className="absolute right-0 top-[calc(100%+0.5rem)] z-[70] w-44 overflow-hidden border border-charcoal/10 bg-cream shadow-xl"
         >
           {locales.map((code) => (
             <li key={code}>
@@ -71,10 +66,8 @@ export function LanguageSwitcher({ tone = "dark" }: { tone?: "dark" | "light" })
                 className={cn(
                   "flex w-full items-center justify-between px-4 py-2.5 text-left text-xs uppercase tracking-[0.18em] transition-colors duration-200",
                   code === locale
-                    ? "text-bronze-dark"
-                    : tone === "dark"
-                      ? "text-charcoal/70 hover:bg-charcoal/[0.04] hover:text-charcoal"
-                      : "text-cream/70 hover:bg-cream/[0.06] hover:text-cream",
+                    ? "bg-bronze-dark/10 font-semibold text-bronze-dark"
+                    : "text-charcoal/70 hover:bg-charcoal/[0.04] hover:text-charcoal",
                 )}
               >
                 <span>{localeNames[code]}</span>

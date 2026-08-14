@@ -20,8 +20,10 @@ export function Navbar() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 overflow-hidden shadow-[0_8px_30px_rgba(145,107,79,0.18)]">
-        <div className="absolute inset-0 bg-gradient-animated" />
+      <header className="fixed inset-x-0 top-0 z-50 shadow-[0_8px_30px_rgba(145,107,79,0.18)]">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-animated" />
+        </div>
         <nav className="relative mx-auto grid h-20 max-w-7xl grid-cols-2 items-center px-6 lg:grid-cols-3 lg:px-10">
           <Link href="/" className="shrink-0 justify-self-start">
             <Logo tone="light" />
