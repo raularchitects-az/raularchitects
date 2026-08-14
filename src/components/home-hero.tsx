@@ -56,10 +56,10 @@ export function HomeHero({
         </div>
 
         {/* LAYER 3 — identity over photo */}
-        <div className="hero-layer-identity absolute inset-x-0 bottom-0 z-10 px-6 pb-14 sm:px-8 lg:px-10 lg:pb-16 xl:px-14">
+        <div className="hero-layer-identity absolute bottom-0 left-[28%] z-10 max-w-[min(36rem,46%)] pb-14 sm:left-[30%] lg:left-[22%] lg:max-w-[min(36rem,30%)] lg:pb-16 xl:left-[20%]">
           <Link
             href="/haqqimizda/raul-nagiyev"
-            className="group inline-flex max-w-xl flex-col gap-2.5 sm:gap-3"
+            className="group inline-flex flex-col gap-2.5 sm:gap-3"
           >
             <span className="hero-name-plate inline-flex w-fit px-4 py-2.5 text-base font-bold uppercase tracking-[0.08em] text-white sm:px-5 sm:py-3 sm:text-xl lg:text-2xl">
               {raulName}
