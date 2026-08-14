@@ -123,13 +123,6 @@
       -webkit-filter: none !important;
       filter: none !important;
     }
-
-    img,
-    picture,
-    video,
-    svg {
-      filter: none !important;
-    }
   }
 }
 

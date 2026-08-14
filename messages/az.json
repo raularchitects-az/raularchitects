@@ -396,11 +396,11 @@
       "İsveçrə",
       "Azərbaycan"
     ],
-    "intro": "BTU Cottbus (Almaniya) məzunu, beynəlxalq təcrübəyə malik memar, mühəndis və BIM eksperti Raul Nağıyev tərəfindən qurulan praktika.",
+    "intro": "Brandenburg Technical University, Germany məzunu, beynəlxalq təcrübəyə malik memar, mühəndis və BIM eksperti Raul Nağıyev tərəfindən qurulan praktika.",
     "blocks": {
       "raul": {
         "title": "Raul Nağıyev",
-        "description": "Memar, mühəndis, interyer dizayneri və BİM eksperti. BTU Cottbus magistrı, Böyük Britaniyada interyer dizaynı ixtisası."
+        "description": "Memar, mühəndis, interyer dizayneri və BİM eksperti. Brandenburg Technical University (Almaniya) magistrı, Böyük Britaniyada interyer dizaynı ixtisası."
       },
       "team": {
         "title": "Komanda",
@@ -429,7 +429,7 @@
       "education": {
         "title": "Təhsil",
         "items": [
-          "Brandenburg Technical University, Cottbus, Almaniya — Memarlıq üzrə magistr",
+          "Brandenburg Technical University, Almaniya — Memarlıq üzrə magistr",
           "Böyük Britaniya — İnteryer Dizaynı ixtisası",
           "Azərbaycan — İnşaat Mühəndisliyi"
         ]

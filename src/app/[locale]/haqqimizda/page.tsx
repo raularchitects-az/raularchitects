@@ -39,7 +39,9 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/haqqimi
                 </span>
               ))}
             </div>
-            <p className="max-w-xl text-base font-light leading-relaxed text-charcoal/70 sm:text-lg">{t("intro")}</p>
+            <p className="max-w-xl text-base font-light leading-relaxed text-charcoal/70 sm:text-lg">
+              {t("intro")}
+            </p>
           </div>
 
           <div className="mt-20 grid gap-x-10 gap-y-12 border-t border-charcoal/10 pt-16 sm:grid-cols-2">

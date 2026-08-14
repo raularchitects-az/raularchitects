@@ -396,11 +396,11 @@
       "Schweiz",
       "Aserbaidschan"
     ],
-    "intro": "Eine Praxis, gegründet von Raul Naghiyev — Absolvent der BTU Cottbus (Deutschland), international erfahrener Architekt, Ingenieur und BIM-Experte.",
+    "intro": "Eine Praxis, gegründet von Raul Naghiyev — Absolvent der Brandenburg Technical University (Deutschland), international erfahrener Architekt, Ingenieur und BIM-Experte.",
     "blocks": {
       "raul": {
         "title": "Raul Naghiyev",
-        "description": "Architekt, Ingenieur, Interior Designer und BIM-Experte. Masterabsolvent der BTU Cottbus, spezialisiert auf Interior Design im Vereinigten Königreich."
+        "description": "Architekt, Ingenieur, Interior Designer und BIM-Experte. Masterabsolvent der Brandenburg Technical University (Deutschland), spezialisiert auf Interior Design im Vereinigten Königreich."
       },
       "team": {
         "title": "Team",
@@ -429,7 +429,7 @@
       "education": {
         "title": "Ausbildung",
         "items": [
-          "Brandenburg Technical University, Cottbus, Deutschland — Master in Architektur",
+          "Brandenburg Technical University, Deutschland — Master in Architektur",
           "Vereinigtes Königreich — Qualifikation Interior Design",
           "Aserbaidschan — Bauingenieurwesen"
         ]

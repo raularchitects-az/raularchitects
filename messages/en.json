@@ -396,11 +396,11 @@
       "Switzerland",
       "Azerbaijan"
     ],
-    "intro": "A practice founded by Raul Naghiyev — a BTU Cottbus (Germany) graduate, internationally experienced architect, engineer and BIM expert.",
+    "intro": "A practice founded by Raul Naghiyev — a Brandenburg Technical University (Germany) graduate, internationally experienced architect, engineer and BIM expert.",
     "blocks": {
       "raul": {
         "title": "Raul Naghiyev",
-        "description": "Architect, engineer, interior designer and BIM expert. BTU Cottbus master's graduate, specialized in interior design in the United Kingdom."
+        "description": "Architect, engineer, interior designer and BIM expert. Brandenburg Technical University (Germany) master's graduate, specialized in interior design in the United Kingdom."
       },
       "team": {
         "title": "Team",
@@ -429,7 +429,7 @@
       "education": {
         "title": "Education",
         "items": [
-          "Brandenburg Technical University, Cottbus, Germany — Master's in Architecture",
+          "Brandenburg Technical University, Germany — Master's in Architecture",
           "United Kingdom — Interior Design qualification",
           "Azerbaijan — Civil Engineering"
         ]
