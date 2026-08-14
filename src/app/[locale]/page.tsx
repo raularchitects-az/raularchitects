@@ -23,50 +23,66 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
 
   return (
     <main>
-      {/* HERO — Raul + Services */}
-      <section className="relative overflow-hidden border-b border-charcoal/10 bg-cream">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-animated-soft opacity-70" />
-        <Container className="relative">
-          <div className="grid gap-12 py-16 sm:py-20 lg:grid-cols-2 lg:items-center lg:gap-16 lg:py-24">
-            <Reveal>
-              <Link href="/haqqimizda/raul-nagiyev" className="group relative flex flex-col gap-5">
-                <div className="relative mx-auto aspect-[3/4] w-full max-w-[22rem] overflow-hidden bg-cream-dark sm:mx-0">
-                  <Image
-                    src="/images/raul-photo.jpg"
-                    alt="Raul Nağıyev"
-                    fill
-                    priority
-                    sizes="(min-width: 1024px) 22rem, 90vw"
-                    className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                  />
-                </div>
-                <div className="relative z-10 flex flex-col gap-1">
-                  <span className="inline-flex items-center gap-2 text-2xl font-semibold text-charcoal transition-colors duration-300 group-hover:text-bronze-dark sm:text-3xl">
-                    {home("raulName")}
-                    <ArrowUpRight
-                      className="h-5 w-5 text-charcoal/30 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-bronze-dark"
-                      strokeWidth={2}
-                    />
-                  </span>
-                  <span className="text-sm font-semibold text-charcoal/75">{home("role1")}</span>
-                  <span className="text-sm font-semibold text-charcoal/75">{home("role2")}</span>
-                </div>
-              </Link>
-            </Reveal>
+      {/* HERO — full-screen Raul background + services */}
+      <section className="relative min-h-[calc(100dvh-5rem)] w-full overflow-hidden bg-[#f7f2ec]">
+        <Image
+          src="/images/raul-hero.jpg"
+          alt="Raul Nağıyev"
+          fill
+          priority
+          quality={95}
+          sizes="100vw"
+          className="object-cover object-[18%_center] sm:object-left"
+        />
 
-            <Reveal delay={120} className="flex flex-col">
+        {/* Fade into #f7f2ec */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#f7f2ec] sm:hidden"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-transparent via-[#f7f2ec]/25 to-[#f7f2ec] sm:block"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 hidden w-[52%] bg-gradient-to-r from-transparent to-[#f7f2ec] lg:block"
+        />
+
+        <Container className="relative z-10 flex min-h-[calc(100dvh-5rem)] flex-col justify-end gap-10 py-10 sm:py-14 lg:flex-row lg:items-end lg:justify-between lg:gap-16 lg:py-16">
+          <Reveal className="max-w-md">
+            <Link href="/haqqimizda/raul-nagiyev" className="group flex flex-col gap-2">
+              <span className="inline-flex items-center gap-2 text-3xl font-semibold tracking-tight text-charcoal transition-colors duration-300 group-hover:text-bronze-dark sm:text-4xl sm:text-white sm:drop-shadow-[0_2px_18px_rgba(0,0,0,0.55)] sm:group-hover:text-[#f7f2ec] lg:text-5xl">
+                {home("raulName")}
+                <ArrowUpRight
+                  className="h-5 w-5 text-charcoal/40 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 sm:h-6 sm:w-6 sm:text-white/80"
+                  strokeWidth={2}
+                />
+              </span>
+              <span className="text-sm font-medium text-charcoal/75 sm:text-base sm:text-white/95 sm:drop-shadow-[0_1px_10px_rgba(0,0,0,0.5)]">
+                {home("role1")}
+              </span>
+              <span className="text-sm font-medium text-charcoal/75 sm:text-base sm:text-white/95 sm:drop-shadow-[0_1px_10px_rgba(0,0,0,0.5)]">
+                {home("role2")}
+              </span>
+            </Link>
+          </Reveal>
+
+          <Reveal delay={120} className="w-full max-w-lg lg:w-[min(100%,28rem)]">
+            <div className="flex flex-col">
               {services.map((service) => {
                 const Icon = serviceIcons[service.icon] ?? Building2;
                 return (
                   <Link
                     key={service.slug}
                     href={`/xidmetler/${service.slug}`}
-                    className="group flex items-center gap-5 border-t border-charcoal/10 py-5 last:border-b sm:py-6"
+                    className="group flex items-center gap-4 border-t border-charcoal/10 py-4 last:border-b sm:gap-5 sm:py-5"
                   >
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-bronze-dark/30 bg-cream/60 text-bronze-dark transition-all duration-300 group-hover:border-bronze-dark group-hover:bg-bronze-dark group-hover:text-cream">
-                      <Icon className="h-5 w-5" strokeWidth={1.75} />
-                    </span>
-                    <span className="text-xl font-semibold uppercase tracking-wide text-charcoal transition-colors duration-300 group-hover:text-bronze-dark sm:text-2xl">
+                    <Icon
+                      className="h-5 w-5 shrink-0 text-bronze-dark transition-colors duration-300 group-hover:text-charcoal sm:h-6 sm:w-6"
+                      strokeWidth={1.5}
+                    />
+                    <span className="text-lg font-semibold uppercase tracking-wide text-charcoal transition-colors duration-300 group-hover:text-bronze-dark sm:text-xl lg:text-2xl">
                       {s(`items.${service.slug}.title`)}
                     </span>
                     <ArrowUpRight
@@ -78,14 +94,14 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
               })}
               <Link
                 href="/xidmetler"
-                className="mt-6 inline-flex items-center gap-2 self-start text-xs font-medium uppercase tracking-[0.2em] text-bronze-dark transition-colors duration-300 hover:text-charcoal"
+                className="mt-5 inline-flex items-center gap-2 self-start text-xs font-medium uppercase tracking-[0.2em] text-bronze-dark transition-colors duration-300 hover:text-charcoal"
               >
                 <TriangleMark size={10} />
                 {home("allServicesCta")}
                 <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
               </Link>
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
         </Container>
       </section>
 

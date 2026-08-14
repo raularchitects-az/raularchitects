@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-cream: #ffffff;
-  --color-cream-dark: #f4f3f1;
+  --color-cream: #f7f2ec;
+  --color-cream-dark: #efe8df;
   --color-bronze-light: #d3b79c;
   --color-bronze: #c4a085;
   --color-bronze-dark: #b58e72;
   --color-charcoal: #47484c;
   --color-charcoal-dark: #1c1c1e;
 
-  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
-  --font-sans: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-serif: var(--font-inter), Inter, system-ui, sans-serif;
+  --font-sans: var(--font-inter), Inter, system-ui, sans-serif;
 
   --animate-fade-up: fade-up 0.8s ease-out forwards;
   --animate-fade-in: fade-in 1s ease-out forwards;
