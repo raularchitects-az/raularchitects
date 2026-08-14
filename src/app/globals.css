@@ -80,18 +80,28 @@
     border-color: #e4e2de;
   }
 
+  html,
+  body {
+    color-scheme: light !important;
+  }
+
   html {
-    color-scheme: light only;
     scroll-behavior: smooth;
     background-color: #f7f2ec;
   }
 
   body {
-    color-scheme: light;
     background-color: var(--color-cream);
     color: var(--color-charcoal);
     font-variant-numeric: lining-nums tabular-nums;
     font-feature-settings: "lnum" 1, "tnum" 1;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    color-scheme: light !important;
   }
 
   ::selection {
@@ -103,9 +113,22 @@
     html,
     body,
     :root {
-      color-scheme: light only;
-      background-color: #f7f2ec;
-      color: #47484c;
+      color-scheme: light !important;
+      background-color: #f7f2ec !important;
+      color: #47484c !important;
+    }
+
+    html,
+    body {
+      -webkit-filter: none !important;
+      filter: none !important;
+    }
+
+    img,
+    picture,
+    video,
+    svg {
+      filter: none !important;
     }
   }
 }

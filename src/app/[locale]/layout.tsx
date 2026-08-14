@@ -30,6 +30,7 @@ export async function generateMetadata({
     title: t("title"),
     description: t("description"),
     colorScheme: "only light",
+    themeColor: "#f7f2ec",
     other: {
       "color-scheme": "light only",
       "supported-color-schemes": "light",
@@ -54,7 +55,7 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       className={`${inter.variable} h-full antialiased`}
-      style={{ colorScheme: "light only" }}
+      style={{ colorScheme: "light" }}
     >
       <body className="min-h-full bg-cream font-sans font-normal text-charcoal" style={{ colorScheme: "light" }}>
         <NextIntlClientProvider messages={messages}>
