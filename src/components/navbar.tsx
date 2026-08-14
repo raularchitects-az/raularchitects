@@ -20,7 +20,7 @@ export function Navbar() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 shadow-[0_8px_30px_rgba(145,107,79,0.18)]">
+      <header className="fixed inset-x-0 top-0 z-50 shadow-[0_4px_18px_rgba(145,107,79,0.12)]">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-animated" />
         </div>

@@ -19,7 +19,11 @@
     "raulName": "Raul NAGHIYEV",
     "role1": "Internationally licensed Architect, Engineer",
     "role2": "European-certified Civil Engineer and BIM Expert",
-    "allServicesCta": "All services"
+    "allServicesCta": "All services",
+    "svcTikinti": "Construction & Repair",
+    "svcBim": "BIM Design",
+    "svcInteryer": "Interior Design",
+    "svcSehersalma": "Urban Projects"
   },
   "categories": {
     "all": "All",

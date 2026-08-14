@@ -15,6 +15,33 @@
   --animate-fade-up: fade-up 0.8s ease-out forwards;
   --animate-fade-in: fade-in 1s ease-out forwards;
   --animate-gradient: gradient-shift 8s ease-in-out infinite;
+  --animate-hero-triangle: hero-triangle-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-hero-identity: fade-up 0.75s ease-out 0.2s both;
+  --animate-hero-all: fade-up 0.7s ease-out 1.28s both;
+
+  @keyframes hero-triangle-in {
+    from {
+      opacity: 0;
+      transform: translate(-10%, 16%) scale(0.82);
+      clip-path: polygon(0 100%, 0 100%, 0 100%);
+    }
+    to {
+      opacity: 0.16;
+      transform: translate(0, 0) scale(1);
+      clip-path: polygon(0 0, 0 100%, 100% 100%);
+    }
+  }
+
+  @keyframes hero-service-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.85rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
   @keyframes gradient-shift {
     0%,
@@ -117,5 +144,104 @@
     );
     background-size: 200% 200%;
     animation: var(--animate-gradient);
+  }
+
+  .text-coffee-gradient {
+    background-image: linear-gradient(
+      105deg,
+      #6b4a32 0%,
+      #8f6b4f 42%,
+      #c4a085 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero-name-plate {
+    background-image: linear-gradient(105deg, #7a5a42 0%, #b58e72 55%, #c4a085 100%);
+  }
+
+  .hero-photo {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+  }
+
+  .hero-photo-fade-mobile {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 72%,
+      color-mix(in srgb, #f7f2ec 45%, transparent) 88%,
+      #f7f2ec 100%
+    );
+  }
+
+  @media (min-width: 1024px) {
+    .hero-photo {
+      -webkit-mask-image: linear-gradient(to right, #000 0%, #000 46%, transparent 82%);
+      mask-image: linear-gradient(to right, #000 0%, #000 46%, transparent 82%);
+    }
+  }
+
+  .hero-photo-fade-desktop {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      transparent 42%,
+      color-mix(in srgb, #f7f2ec 18%, transparent) 58%,
+      color-mix(in srgb, #f7f2ec 72%, transparent) 74%,
+      #f7f2ec 90%
+    );
+  }
+
+  .hero-triangle-mark {
+    position: absolute;
+    right: -6%;
+    bottom: -8%;
+    width: min(92%, 42rem);
+    aspect-ratio: 1;
+    background-image: url("/brand/hero-triangle.png");
+    background-position: center;
+    background-size: cover;
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+    opacity: 0;
+    transform-origin: 0% 100%;
+    animation: var(--animate-hero-triangle);
+  }
+
+  .hero-layer-identity {
+    animation: var(--animate-hero-identity);
+  }
+
+  .hero-service-row {
+    opacity: 0;
+    animation: hero-service-in 0.7s ease-out forwards;
+  }
+
+  .hero-all-services {
+    opacity: 0;
+    animation: var(--animate-hero-all);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-triangle-mark,
+    .hero-layer-identity,
+    .hero-service-row,
+    .hero-all-services {
+      animation: none;
+      opacity: 1;
+      transform: none;
+      clip-path: none;
+    }
+
+    .hero-triangle-mark {
+      opacity: 0.16;
+      clip-path: polygon(0 0, 0 100%, 100% 100%);
+    }
   }
 }

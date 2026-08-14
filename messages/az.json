@@ -19,7 +19,11 @@
     "raulName": "Raul NAĞIYEV",
     "role1": "Beynəlxalq dərəcəli Memar, Mühəndis",
     "role2": "Avropa dərəcəli İnşaat Mühəndisi və BIM Eksperti",
-    "allServicesCta": "Bütün xidmətlər"
+    "allServicesCta": "Bütün xidmətlər",
+    "svcTikinti": "Tikinti Təmir",
+    "svcBim": "BIM Layihələndirmə",
+    "svcInteryer": "İnteryer Dizayn",
+    "svcSehersalma": "Şəhərsalma Həlləri"
   },
   "categories": {
     "all": "Hamısı",
