@@ -257,9 +257,23 @@
   "contactPage": {
     "eyebrow": "Контакты",
     "title": "Обсудим ваш проект.",
-    "azerbaijan": { "label": "Азербайджан", "email": "office@raularchitects.com", "whatsapp": "+49 157 8970 7008" },
-    "germany": { "label": "Германия", "phone": "+49 157 8970 7008" },
-    "switzerland": { "label": "Швейцария", "phone": "+41 77 250 9786" },
+    "azerbaijan": {
+      "label": "Азербайджан",
+      "email": "office@raularchitects.com",
+      "phone": "+994 10 413 26 96",
+      "whatsapp": "+49 157 8970 7008",
+      "address": "Yusif Vəzir Çəmənzəminli 18, AZ 1078, Baku"
+    },
+    "germany": {
+      "label": "Германия",
+      "phone": "+49 157 8970 7008",
+      "address": "Theodor-Fontane-Allee, 12529 Berlin, Germany"
+    },
+    "switzerland": {
+      "label": "Швейцария",
+      "phone": "+41 77 250 9786",
+      "address": "Badenerstrasse 549, 8048 Zürich, Switzerland"
+    },
     "form": {
       "title": "Форма заявки",
       "name": "Имя, фамилия",

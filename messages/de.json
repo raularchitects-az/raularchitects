@@ -1,0 +1,497 @@
+{
+  "meta": {
+    "title": "Raul Architects — Architektur, BIM & Interior Design",
+    "description": "Architektonische Planung, BIM-basierte Ausführung und Interior Design in Deutschland, der Schweiz und Aserbaidschan."
+  },
+  "nav": {
+    "projects": "Projekte",
+    "portfolio": "Portfolio",
+    "services": "Leistungen",
+    "about": "Über uns",
+    "contact": "Kontakt",
+    "menuOpen": "Menü",
+    "menuClose": "Schließen",
+    "aboutStudio": "Raul Architects",
+    "aboutRaul": "Wer ist Raul Naghiyev?",
+    "allServices": "Alle Leistungen"
+  },
+  "home": {
+    "raulName": "Raul NAGHIYEV",
+    "role1": "Internationaler Architekt und Ingenieur",
+    "role2": "Europäisch zertifizierter Bauingenieur und BIM-Experte",
+    "allServicesCta": "Alle Leistungen"
+  },
+  "categories": {
+    "all": "Alle",
+    "villa": "Villa",
+    "bag-evi": "Gartenhaus",
+    "ferdi-yasayis-evi": "Einfamilienhaus",
+    "kottec": "Cottage",
+    "duplex": "Duplex",
+    "townhouse": "Townhouse",
+    "yasayis-kompleksi": "Wohnkomplex",
+    "kommersiya": "Gewerbe",
+    "hotel": "Hotel",
+    "ictimai": "Öffentlich"
+  },
+  "countries": {
+    "azerbaijan": "Aserbaidschan",
+    "germany": "Deutschland",
+    "switzerland": "Schweiz"
+  },
+  "projectsPage": {
+    "eyebrow": "Konzeptprojekte",
+    "title": "Projekte",
+    "subtitle": "Fertige Architekturkonzepte nach deutschen und schweizerischen Standards, anpassbar an Ihr Grundstück.",
+    "viewProject": "Projekt ansehen",
+    "items": {
+      "compact-villa": {
+        "title": "Compact Villa",
+        "specs": [
+          "150–180 m²",
+          "3 Schlafzimmer",
+          "1–2 Geschosse"
+        ]
+      },
+      "family-villa": {
+        "title": "Family Villa",
+        "specs": [
+          "220–280 m²",
+          "4 Schlafzimmer",
+          "2 Geschosse"
+        ]
+      },
+      "premium-villa": {
+        "title": "Premium Villa",
+        "specs": [
+          "350–450 m²",
+          "4–5 Schlafzimmer",
+          "Pool · Garage"
+        ]
+      },
+      "bag-evi-01": {
+        "title": "Gartenhaus",
+        "specs": [
+          "90–120 m²",
+          "2–3 Schlafzimmer",
+          "Garten / Hof"
+        ]
+      },
+      "courtyard-house": {
+        "title": "Courtyard House",
+        "specs": [
+          "120–160 m²",
+          "3 Schlafzimmer",
+          "1 Geschoss"
+        ]
+      },
+      "modern-family-house": {
+        "title": "Modern Family House",
+        "specs": [
+          "180–220 m²",
+          "3–4 Schlafzimmer",
+          "2 Geschosse"
+        ]
+      },
+      "a-frame-cabin": {
+        "title": "A-Frame Cabin",
+        "specs": [
+          "60–90 m²",
+          "Tourismus / Privatnutzung"
+        ]
+      },
+      "premium-cabin": {
+        "title": "Premium Cabin",
+        "specs": [
+          "100–140 m²",
+          "Tourismus / Investition"
+        ]
+      },
+      "duplex-01": {
+        "title": "Duplex",
+        "specs": [
+          "Zwei Wohneinheiten",
+          "Developer / Investition"
+        ]
+      },
+      "townhouse-01": {
+        "title": "Townhouse",
+        "specs": [
+          "Reihenhäuser",
+          "Developer / Investition"
+        ]
+      },
+      "yasayis-kompleksi-01": {
+        "title": "Wohnkomplex",
+        "specs": [
+          "Mehrgeschossig",
+          "Developer-Projekt"
+        ]
+      },
+      "commercial": {
+        "title": "Gewerbe",
+        "specs": [
+          "Büro / Restaurant / Handel"
+        ]
+      },
+      "hotel-01": {
+        "title": "Hotel",
+        "specs": [
+          "Boutique-Hotel / Resort"
+        ]
+      },
+      "ictimai-01": {
+        "title": "Öffentliches Gebäude",
+        "specs": [
+          "Kultur / Öffentlicher Raum"
+        ]
+      }
+    }
+  },
+  "projectDetail": {
+    "backLabel": "Alle Projekte",
+    "sequenceLabels": {
+      "exterior": "Außenansicht",
+      "interior": "Innenraum",
+      "plan": "Plan",
+      "bim": "BIM"
+    },
+    "adaptTitle": "Lassen Sie uns dieses Projekt an Ihr Grundstück anpassen.",
+    "applyCta": "Projektanfrage",
+    "whatsappCta": "WhatsApp",
+    "form": {
+      "land": "Grundstücksgröße",
+      "location": "Standort",
+      "size": "Ca. m²",
+      "phone": "Telefon",
+      "submit": "Senden",
+      "success": "Vielen Dank. Unser Team wird sich in Kürze bei Ihnen melden."
+    },
+    "items": {
+      "compact-villa": {
+        "title": "Compact Villa",
+        "specs": [
+          "150–180 m²",
+          "3 Schlafzimmer",
+          "1–2 Geschosse",
+          "2 Bäder",
+          "1 Stellplatz"
+        ],
+        "description": "Maximale Funktionalität auf kompaktem Grundstück. Optimierte Planung für junge Familien und Ersterwerber."
+      },
+      "family-villa": {
+        "title": "Family Villa",
+        "specs": [
+          "220 m²",
+          "4 Schlafzimmer",
+          "2 Geschosse",
+          "3 Bäder",
+          "2 Stellplätze"
+        ],
+        "description": "Großzügiger Wohnraum für wachsende Familien. Offenes Küche-Wohnzimmer-Konzept mit separatem Elternbereich."
+      },
+      "premium-villa": {
+        "title": "Premium Villa",
+        "specs": [
+          "350–450 m²",
+          "4–5 Schlafzimmer",
+          "3 Geschosse",
+          "Pool",
+          "3 Stellplätze"
+        ],
+        "description": "Für anspruchsvolle Kunden. Premiumwohnen mit Pool, weiten Terrassen und panoramischen Glasfassaden."
+      },
+      "bag-evi-01": {
+        "title": "Gartenhaus",
+        "specs": [
+          "90–120 m²",
+          "2–3 Schlafzimmer",
+          "1 Geschoss",
+          "Großer Garten"
+        ],
+        "description": "Ein Gartenhauskonzept in der Natur — für ruhigen Rückzug."
+      },
+      "courtyard-house": {
+        "title": "Courtyard House",
+        "specs": [
+          "120–160 m²",
+          "3 Schlafzimmer",
+          "1 Geschoss",
+          "2 Bäder",
+          "Innenhof"
+        ],
+        "description": "Privates, lichtdurchflutetes eingeschossiges Wohnen um einen zentralen Innenhof."
+      },
+      "modern-family-house": {
+        "title": "Modern Family House",
+        "specs": [
+          "180–220 m²",
+          "3–4 Schlafzimmer",
+          "2 Geschosse",
+          "3 Bäder",
+          "2 Stellplätze"
+        ],
+        "description": "Ein mittelgroßes Familienhaus mit klaren modernen Linien und funktionaler Planung."
+      },
+      "a-frame-cabin": {
+        "title": "A-Frame Cabin",
+        "specs": [
+          "60–90 m²",
+          "2 Schlafzimmer",
+          "1 Geschoss",
+          "Offener Wohnbereich"
+        ],
+        "description": "Minimalistisches Berghüttenkonzept für Tourismus und privaten Rückzug."
+      },
+      "premium-cabin": {
+        "title": "Premium Cabin",
+        "specs": [
+          "100–140 m²",
+          "3 Schlafzimmer",
+          "1–2 Geschosse",
+          "Große Terrasse"
+        ],
+        "description": "Premium-Cabin mit großer Terrasse für Investition und Tourismus."
+      },
+      "duplex-01": {
+        "title": "Duplex",
+        "specs": [
+          "2 × 140 m²",
+          "2 getrennte Eingänge",
+          "2 Geschosse je Einheit"
+        ],
+        "description": "Ein Block aus zwei unabhängigen Wohneinheiten für Developer-Projekte."
+      },
+      "townhouse-01": {
+        "title": "Townhouse",
+        "specs": [
+          "3 × 120 m²",
+          "Reihenbauweise",
+          "2 Geschosse je Einheit"
+        ],
+        "description": "Kompaktes, funktionales Reihenhauskonzept für städtische Lagen."
+      },
+      "yasayis-kompleksi-01": {
+        "title": "Wohnkomplex",
+        "specs": [
+          "Mehrgeschossig",
+          "Wohnungseinheiten",
+          "Gemeinschaftshof"
+        ],
+        "description": "Konzept eines Mehrfamilien-Wohnkomplexes für Developer-Investitionen."
+      },
+      "commercial": {
+        "title": "Gewerbe",
+        "specs": [
+          "Flexible Raumplanung",
+          "Büro / Restaurant / Handel",
+          "Individuelle Konfiguration"
+        ],
+        "description": "Flexible Gewerbeimmobilienplanung nach den Anforderungen des Geschäfts."
+      },
+      "hotel-01": {
+        "title": "Hotel",
+        "specs": [
+          "8–24 Zimmer",
+          "Lobby / Restaurant",
+          "Spa-fähige Infrastruktur"
+        ],
+        "description": "Hospitality-Konzept für Boutique-Hotels und Tourismusimmobilien."
+      },
+      "ictimai-01": {
+        "title": "Öffentliches Gebäude",
+        "specs": [
+          "Offener öffentlicher Raum",
+          "Kultur / Verwaltung",
+          "Großes Foyer"
+        ],
+        "description": "Gebäudekonzept für kulturelle und öffentliche Nutzung."
+      }
+    }
+  },
+  "portfolioPage": {
+    "eyebrow": "Portfolio",
+    "title": "Reale Erfahrung",
+    "subtitle": "Abgeschlossene reale Projekte in Deutschland, der Schweiz und Aserbaidschan.",
+    "viewProject": "Projekt ansehen",
+    "backLabel": "Gesamtes Portfolio",
+    "realProject": "Abgeschlossenes Projekt",
+    "detailIntro": "Dieses Projekt spiegelt die reale Erfahrung von Raul Architects in {location} wider.",
+    "ctaLabel": "Lassen Sie uns Ihr Projekt besprechen"
+  },
+  "servicesPage": {
+    "eyebrow": "Leistungen",
+    "title": "Leistungen",
+    "items": {
+      "tikinti-ve-temir": {
+        "title": "Bau und Renovierung"
+      },
+      "bim-ile-layihelendirme": {
+        "title": "BIM-basierte Planung"
+      },
+      "interyer-dizayn": {
+        "title": "Interior Design"
+      },
+      "seherselme-layiheleri": {
+        "title": "Städtebauliche Projekte"
+      }
+    }
+  },
+  "serviceDetail": {
+    "backLabel": "Alle Leistungen",
+    "ctaTitle": "Lassen Sie uns Ihr Projekt besprechen",
+    "ctaButton": "Kontakt aufnehmen",
+    "items": {
+      "tikinti-ve-temir": {
+        "title": "Bau und Renovierung",
+        "intro": "Vollständige Ausführungsüberwachung — vom Neubau bis zur Generalsanierung.",
+        "points": [
+          "Umsetzung neuer Bauprojekte",
+          "Generalsanierung und Modernisierung",
+          "Technische Bauüberwachung vor Ort",
+          "Koordination von Auftragnehmern und Materialien"
+        ]
+      },
+      "bim-ile-layihelendirme": {
+        "title": "BIM-basierte Planung",
+        "intro": "Ein vollständiger digitaler Zwilling des Gebäudes vor Baubeginn. Kollisionsfrei, präzise und planbar.",
+        "points": [
+          "3D-Smartmodell und Kollisionsprüfung",
+          "Mengenermittlung (Simeta)",
+          "As-Built-Modelle nach dem Bau",
+          "Digital Twin"
+        ]
+      },
+      "interyer-dizayn": {
+        "title": "Interior Design",
+        "intro": "Raumkonzepte, die Funktionalität und Ästhetik verbinden.",
+        "points": [
+          "Individuelle Raumplanung",
+          "Material- und Lichtkonzept",
+          "Möbel- und Detailplanung",
+          "3D-Visualisierung"
+        ]
+      },
+      "seherselme-layiheleri": {
+        "title": "Städtebauliche Projekte",
+        "intro": "Quartiers- und Standortplanung, die maximalen Wert aus einem Grundstück schafft.",
+        "points": [
+          "Masterplan und Zonierung",
+          "Dichte- und Infrastrukturanalyse",
+          "Machbarkeit für Entwickler",
+          "Normative Konformität"
+        ]
+      }
+    }
+  },
+  "aboutPage": {
+    "eyebrow": "Über uns",
+    "title": "Raul Architects",
+    "countries": [
+      "Deutschland",
+      "Schweiz",
+      "Aserbaidschan"
+    ],
+    "intro": "Eine Praxis, gegründet von Raul Naghiyev — Absolvent der BTU Cottbus (Deutschland), international erfahrener Architekt, Ingenieur und BIM-Experte.",
+    "blocks": {
+      "raul": {
+        "title": "Raul Naghiyev",
+        "description": "Architekt, Ingenieur, Interior Designer und BIM-Experte. Masterabsolvent der BTU Cottbus, spezialisiert auf Interior Design im Vereinigten Königreich."
+      },
+      "team": {
+        "title": "Team",
+        "description": "Zusammenarbeit mit Partnerunternehmen für Ingenieurwesen und Bau in Deutschland, der Schweiz und Aserbaidschan."
+      },
+      "international": {
+        "title": "Internationale Erfahrung",
+        "description": "Über 30 abgeschlossene Projekte in Deutschland, über 15 in Aserbaidschan, 3 laufende Projekte in der Schweiz."
+      },
+      "bim": {
+        "title": "BIM-Kompetenz",
+        "description": "Vollständige digitale Planungsfähigkeit nach ISO-, DIN- und SIA-Standards."
+      }
+    },
+    "raulCta": "Wer ist Raul Naghiyev?"
+  },
+  "raulPage": {
+    "backLabel": "Raul Architects",
+    "title": "Raul Naghiyev",
+    "role": "Internationaler Architekt, Ingenieur, Interior Designer und BIM-Experte",
+    "sections": {
+      "bio": {
+        "title": "Biografie",
+        "body": "Ein 38-jähriger international erfahrener Architekt, Ingenieur, Interior Designer und BIM-Experte, tätig in Architektur und Ingenieurwesen in Deutschland, der Schweiz und Aserbaidschan."
+      },
+      "education": {
+        "title": "Ausbildung",
+        "items": [
+          "BTU Cottbus (Deutschland) — Master in Architektur",
+          "Vereinigtes Königreich — Qualifikation Interior Design",
+          "Aserbaidschan — Bauingenieurwesen"
+        ]
+      },
+      "experience": {
+        "title": "Erfahrung",
+        "items": [
+          "Über 30 abgeschlossene Projekte in Deutschland",
+          "3 laufende Projekte in der Schweiz",
+          "Über 15 abgeschlossene Projekte in Aserbaidschan",
+          "Zusammenarbeit: MACE International (UK), GOLDBECK (Deutschland), TA AG (Schweiz), AK Aluminium"
+        ]
+      },
+      "certificates": {
+        "title": "Zertifikate",
+        "items": [
+          "ISO-Standards",
+          "DIN — Deutsches Institut für Normung",
+          "SIA — Schweizerischer Ingenieur- und Architektenverein",
+          "Passive House",
+          "Energieeffizienz- und Smart-Home-Prinzipien"
+        ]
+      },
+      "achievements": {
+        "title": "Erfolge",
+        "items": [
+          "eVolo Skyscraper Competition, New York",
+          "Schinkel Wettbewerbe, Berlin",
+          "Architektur-Wettbewerbe in Riga"
+        ]
+      }
+    }
+  },
+  "contactPage": {
+    "eyebrow": "Kontakt",
+    "title": "Lassen Sie uns Ihr Projekt besprechen.",
+    "azerbaijan": {
+      "label": "Aserbaidschan",
+      "email": "office@raularchitects.com",
+      "phone": "+994 10 413 26 96",
+      "whatsapp": "+49 157 8970 7008",
+      "address": "Yusif Vəzir Çəmənzəminli 18, AZ 1078, Baku"
+    },
+    "germany": {
+      "label": "Deutschland",
+      "phone": "+49 157 8970 7008",
+      "address": "Theodor-Fontane-Allee, 12529 Berlin, Germany"
+    },
+    "switzerland": {
+      "label": "Schweiz",
+      "phone": "+41 77 250 9786",
+      "address": "Badenerstrasse 549, 8048 Zürich, Switzerland"
+    },
+    "form": {
+      "title": "Anfrageformular",
+      "name": "Vor- und Nachname",
+      "email": "E-Mail-Adresse",
+      "message": "Kurzbeschreibung Ihres Projekts",
+      "submit": "Senden",
+      "success": "Vielen Dank! Wir melden uns in Kürze bei Ihnen."
+    }
+  },
+  "footerMini": {
+    "rights": "Alle Rechte vorbehalten."
+  },
+  "languageSwitcher": {
+    "label": "Sprache"
+  }
+}

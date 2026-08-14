@@ -12,7 +12,7 @@
     "menuOpen": "Menu",
     "menuClose": "Close",
     "aboutStudio": "Raul Architects",
-    "aboutRaul": "Who is Raul Nagiyev?",
+    "aboutRaul": "Who is Raul Naghiyev?",
     "allServices": "All services"
   },
   "home": {
@@ -199,18 +199,18 @@
     "eyebrow": "About",
     "title": "Raul Architects",
     "countries": ["Germany", "Switzerland", "Azerbaijan"],
-    "intro": "A practice founded by Raul Nagiyev — a BTU Cottbus (Germany) graduate, internationally experienced architect, engineer and BIM expert.",
+    "intro": "A practice founded by Raul Naghiyev — a BTU Cottbus (Germany) graduate, internationally experienced architect, engineer and BIM expert.",
     "blocks": {
-      "raul": { "title": "Raul Nagiyev", "description": "Architect, engineer, interior designer and BIM expert. BTU Cottbus master's graduate, specialized in interior design in the United Kingdom." },
+      "raul": { "title": "Raul Naghiyev", "description": "Architect, engineer, interior designer and BIM expert. BTU Cottbus master's graduate, specialized in interior design in the United Kingdom." },
       "team": { "title": "Team", "description": "Collaboration with partner engineering and construction firms in Germany, Switzerland and Azerbaijan." },
       "international": { "title": "International Experience", "description": "30+ completed projects in Germany, 15+ in Azerbaijan, 3 ongoing in Switzerland." },
       "bim": { "title": "BIM Competence", "description": "Full digital design capability aligned with ISO, DIN and SIA standards." }
     },
-    "raulCta": "Who is Raul Nagiyev?"
+    "raulCta": "Who is Raul Naghiyev?"
   },
   "raulPage": {
     "backLabel": "Raul Architects",
-    "title": "Raul Nagiyev",
+    "title": "Raul Naghiyev",
     "role": "Internationally licensed Architect, Engineer, Interior Designer and BIM Expert",
     "sections": {
       "bio": {
@@ -257,9 +257,23 @@
   "contactPage": {
     "eyebrow": "Contact",
     "title": "Let's discuss your project.",
-    "azerbaijan": { "label": "Azerbaijan", "email": "office@raularchitects.com", "whatsapp": "+49 157 8970 7008" },
-    "germany": { "label": "Germany", "phone": "+49 157 8970 7008" },
-    "switzerland": { "label": "Switzerland", "phone": "+41 77 250 9786" },
+    "azerbaijan": {
+      "label": "Azerbaijan",
+      "email": "office@raularchitects.com",
+      "phone": "+994 10 413 26 96",
+      "whatsapp": "+49 157 8970 7008",
+      "address": "Yusif Vəzir Çəmənzəminli 18, AZ 1078, Baku"
+    },
+    "germany": {
+      "label": "Germany",
+      "phone": "+49 157 8970 7008",
+      "address": "Theodor-Fontane-Allee, 12529 Berlin, Germany"
+    },
+    "switzerland": {
+      "label": "Switzerland",
+      "phone": "+41 77 250 9786",
+      "address": "Badenerstrasse 549, 8048 Zürich, Switzerland"
+    },
     "form": {
       "title": "Inquiry form",
       "name": "Full name",
