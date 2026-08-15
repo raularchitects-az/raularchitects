@@ -8,7 +8,8 @@ import { Container } from "@/components/ui/container";
 import { ProjectLeadForm } from "@/components/project-lead-form";
 import { Footer } from "@/components/footer";
 import { routing } from "@/i18n/routing";
-import { projects, galleryImages, getProject } from "@/data/projects";
+import { ProjectGallery } from "@/components/project-gallery";
+import { projects, getProject, getProjectGalleryGroups } from "@/data/projects";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -40,12 +41,16 @@ export default async function ProjectDetailPage({
   const specs = t.raw(`items.${slug}.specs`) as string[];
   const description = t(`items.${slug}.description`);
 
-  const sequence = [
-    { key: "exterior", src: project.image },
-    { key: "interior", src: galleryImages.interior },
-    { key: "plan", src: galleryImages.plan },
-    { key: "bim", src: galleryImages.bim },
-  ] as const;
+  const title = t(`items.${slug}.title`);
+  const groups = getProjectGalleryGroups(slug);
+  const toCards = (sources: string[], label: string) =>
+    sources.map((src, index) => ({ src, alt: `${title} ${label} ${index + 1}` }));
+  const galleryRows = [
+    toCards(groups.exteriorImages, "exterior"),
+    toCards(groups.interiorImages, "interior"),
+    toCards(groups.planningImages, "planning"),
+  ];
+  const gallery = galleryRows.flat();
 
   return (
     <>
@@ -60,7 +65,7 @@ export default async function ProjectDetailPage({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal-dark/75 via-charcoal-dark/10 to-transparent" />
 
-        <div className="absolute inset-x-0 top-0 p-6 sm:p-10">
+        <div className="absolute inset-x-0 top-0 z-10 p-6 sm:p-10">
           <Link
             href="/layihelar"
             className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-cream/80 transition-colors duration-300 hover:text-bronze-light"
@@ -70,10 +75,17 @@ export default async function ProjectDetailPage({
           </Link>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14">
-          <h1 className="text-4xl font-semibold text-cream sm:text-6xl lg:text-7xl">
-            {t(`items.${slug}.title`)}
-          </h1>
+        <div className="absolute inset-0 z-10 flex">
+          <div className="flex w-[40%] items-end p-6 sm:p-10 lg:w-[38%] lg:p-14">
+            <h1 className="text-4xl font-semibold text-cream sm:text-6xl lg:text-7xl">
+              {t(`items.${slug}.title`)}
+            </h1>
+          </div>
+          <div className="hidden w-[60%] items-center justify-center px-5 py-24 md:flex lg:px-8 lg:py-20 xl:px-12">
+            <div className="w-4/5">
+              <ProjectGallery images={gallery} rows={galleryRows} variant="hero" />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -95,21 +107,10 @@ export default async function ProjectDetailPage({
         </Container>
       </section>
 
-      <section className="flex flex-col">
-        {sequence.map((item) => (
-          <div key={item.key} className="relative h-[60vh] w-full overflow-hidden sm:h-[80vh]">
-            <Image
-              src={item.src}
-              alt={t(`sequenceLabels.${item.key}`)}
-              fill
-              sizes="100vw"
-              className="object-cover"
-            />
-            <span className="absolute left-6 top-6 border border-cream/25 bg-charcoal/40 px-4 py-2 text-xs font-medium uppercase tracking-[0.2em] text-cream backdrop-blur-sm sm:left-10 sm:top-10">
-              {t(`sequenceLabels.${item.key}`)}
-            </span>
-          </div>
-        ))}
+      <section className="bg-cream py-10 md:hidden">
+        <Container>
+          <ProjectGallery images={gallery} rows={galleryRows} />
+        </Container>
       </section>
 
       <section className="bg-charcoal py-24 sm:py-32">

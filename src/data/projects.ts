@@ -45,6 +45,59 @@ export const galleryImages = {
   bim: "/images/projects/gallery-bim.jpg",
 };
 
+const exteriorImages = [
+  ...projects.map((item) => item.image),
+  "/images/portfolio/azerbaijan-01.jpg",
+  "/images/portfolio/germany-01.jpg",
+  "/images/portfolio/switzerland-01.jpg",
+] as const;
+
+const interiorImages = [
+  "/images/projects/gallery-interior.jpg",
+  "/images/portfolio/switzerland-02.jpg",
+  "/images/projects/compact-villa-interior.jpg",
+] as const;
+
+const planningImages = [
+  "/images/projects/gallery-plan.jpg",
+  "/images/projects/gallery-bim.jpg",
+  "/images/portfolio/germany-02.jpg",
+] as const;
+
 export function getProject(slug: string) {
   return projects.find((p) => p.slug === slug);
+}
+
+function takeUnique(candidates: readonly string[], used: Set<string>, count: number) {
+  const result: string[] = [];
+  for (const src of candidates) {
+    if (!src || used.has(src)) continue;
+    used.add(src);
+    result.push(src);
+    if (result.length === count) break;
+  }
+  return result;
+}
+
+export function getProjectGalleryGroups(slug: string) {
+  const project = getProject(slug);
+  if (!project) {
+    return { exteriorImages: [], interiorImages: [], planningImages: [] };
+  }
+
+  const used = new Set<string>();
+  const sameCategory = projects
+    .filter((item) => item.category === project.category && item.slug !== project.slug)
+    .map((item) => item.image);
+
+  return {
+    exteriorImages: takeUnique([project.image, ...sameCategory, ...exteriorImages], used, 3),
+    interiorImages: takeUnique(interiorImages, used, 3),
+    planningImages: takeUnique(planningImages, used, 3),
+  };
+}
+
+export function getProjectGallery(slug: string) {
+  const groups = getProjectGalleryGroups(slug);
+  return [...groups.exteriorImages, ...groups.interiorImages, ...groups.planningImages];
 }
