@@ -347,3 +347,10 @@
     }
   }
 }
+
+html,
+:root,
+body {
+  color-scheme: only light !important;
+  -webkit-color-scheme: only light !important;
+}
