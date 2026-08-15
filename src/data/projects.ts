@@ -1,4 +1,5 @@
 import { projectCategories, type Category } from "@/data/categories";
+import { getImportedEntry, importedProjectMetas } from "@/data/raul-portfolio-import";
 
 export { projectCategories };
 export type ProjectCategory = Exclude<Category, "all">;
@@ -7,9 +8,13 @@ export type ProjectMeta = {
   slug: string;
   category: ProjectCategory;
   image: string;
+  source?: string;
+  objectPosition?: string;
+  heroImage?: string;
+  title?: string;
 };
 
-export const projects: ProjectMeta[] = [
+const existingProjects: ProjectMeta[] = [
   { slug: "compact-villa", category: "villa", image: "/images/projects/compact-villa.jpg" },
   { slug: "family-villa", category: "villa", image: "/images/projects/family-villa.jpg" },
   { slug: "premium-villa", category: "villa", image: "/images/projects/premium-villa.jpg" },
@@ -25,6 +30,8 @@ export const projects: ProjectMeta[] = [
   { slug: "hotel-01", category: "hotel", image: "/images/projects/hospitality.jpg" },
   { slug: "ictimai-01", category: "ictimai", image: "/images/projects/ictimai.jpg" },
 ];
+
+export const projects: ProjectMeta[] = [...existingProjects, ...importedProjectMetas];
 
 export const categoryCoverImage: Record<ProjectCategory, string> = {
   villa: "/images/projects/premium-villa.jpg",
@@ -46,7 +53,7 @@ export const galleryImages = {
 };
 
 const exteriorImages = [
-  ...projects.map((item) => item.image),
+  ...existingProjects.map((item) => item.image),
   "/images/portfolio/azerbaijan-01.jpg",
   "/images/portfolio/germany-01.jpg",
   "/images/portfolio/switzerland-01.jpg",
@@ -80,13 +87,17 @@ function takeUnique(candidates: readonly string[], used: Set<string>, count: num
 }
 
 export function getProjectGalleryGroups(slug: string) {
+  if (getImportedEntry(slug)) {
+    return { exteriorImages: [], interiorImages: [], planningImages: [] };
+  }
+
   const project = getProject(slug);
   if (!project) {
     return { exteriorImages: [], interiorImages: [], planningImages: [] };
   }
 
   const used = new Set<string>();
-  const sameCategory = projects
+  const sameCategory = existingProjects
     .filter((item) => item.category === project.category && item.slug !== project.slug)
     .map((item) => item.image);
 

@@ -149,6 +149,58 @@
         "specs": [
           "Culture / public space"
         ]
+      },
+      "coworking-coliving-berlin": {
+        "title": "Co-Working Co-Living Berlin",
+        "specs": []
+      },
+      "kopenick-berlin-living": {
+        "title": "Köpenick Berlin Living",
+        "specs": []
+      },
+      "space-port-helgoland": {
+        "title": "Space Port Helgoland",
+        "specs": []
+      },
+      "gecler-kultur": {
+        "title": "Gecler Kultur",
+        "specs": []
+      },
+      "high-hill-restaurant": {
+        "title": "High Hill Restaurant",
+        "specs": []
+      },
+      "mount-pearl": {
+        "title": "Mount Pearl",
+        "specs": []
+      },
+      "nar": {
+        "title": "NAR",
+        "specs": []
+      },
+      "npo": {
+        "title": "NPO",
+        "specs": []
+      },
+      "rev-zagatala": {
+        "title": "REV Zagatala",
+        "specs": []
+      },
+      "tsm": {
+        "title": "TSM",
+        "specs": []
+      },
+      "texnopark": {
+        "title": "Texnopark",
+        "specs": []
+      },
+      "tym": {
+        "title": "TYM",
+        "specs": []
+      },
+      "wnk-naxcivan": {
+        "title": "WNK Naxçıvan",
+        "specs": []
       }
     }
   },
@@ -310,6 +362,71 @@
           "Large foyer"
         ],
         "description": "A building concept designed for cultural and civic activity."
+      },
+      "coworking-coliving-berlin": {
+        "title": "Co-Working Co-Living Berlin",
+        "specs": [],
+        "description": ""
+      },
+      "kopenick-berlin-living": {
+        "title": "Köpenick Berlin Living",
+        "specs": [],
+        "description": ""
+      },
+      "space-port-helgoland": {
+        "title": "Space Port Helgoland",
+        "specs": [],
+        "description": ""
+      },
+      "gecler-kultur": {
+        "title": "Gecler Kultur",
+        "specs": [],
+        "description": ""
+      },
+      "high-hill-restaurant": {
+        "title": "High Hill Restaurant",
+        "specs": [],
+        "description": ""
+      },
+      "mount-pearl": {
+        "title": "Mount Pearl",
+        "specs": [],
+        "description": ""
+      },
+      "nar": {
+        "title": "NAR",
+        "specs": [],
+        "description": ""
+      },
+      "npo": {
+        "title": "NPO",
+        "specs": [],
+        "description": ""
+      },
+      "rev-zagatala": {
+        "title": "REV Zagatala",
+        "specs": [],
+        "description": ""
+      },
+      "tsm": {
+        "title": "TSM",
+        "specs": [],
+        "description": ""
+      },
+      "texnopark": {
+        "title": "Texnopark",
+        "specs": [],
+        "description": ""
+      },
+      "tym": {
+        "title": "TYM",
+        "specs": [],
+        "description": ""
+      },
+      "wnk-naxcivan": {
+        "title": "WNK Naxçıvan",
+        "specs": [],
+        "description": ""
       }
     }
   },
@@ -321,7 +438,18 @@
     "backLabel": "All Portfolio",
     "realProject": "Completed Project",
     "detailIntro": "This project reflects Raul Architects' real experience in {location}.",
-    "ctaLabel": "Let's discuss your project"
+    "ctaLabel": "Let's discuss your project",
+    "items": {
+      "merdekan-villa": {
+        "title": "Merdekan Villa"
+      },
+      "sharur-yasayis-kompleksi": {
+        "title": "Sharur Yaşayış Kompleksi"
+      },
+      "exhibition-stands": {
+        "title": "Exhibition Stands"
+      }
+    }
   },
   "servicesPage": {
     "eyebrow": "Services",

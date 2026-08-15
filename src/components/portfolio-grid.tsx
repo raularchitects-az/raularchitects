@@ -56,10 +56,11 @@ export function PortfolioGrid() {
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-charcoal/5">
                 <Image
                   src={item.image}
-                  alt={c(item.category)}
+                  alt={item.title ?? c(item.category)}
                   fill
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  style={item.objectPosition ? { objectPosition: item.objectPosition } : undefined}
                 />
               </div>
               <div className="flex flex-col gap-1">
@@ -67,9 +68,9 @@ export function PortfolioGrid() {
                   {c(item.category)}
                 </span>
                 <h3 className="text-xl font-semibold text-charcoal transition-colors duration-300 group-hover:text-bronze-dark">
-                  {t("realProject")}
+                  {item.title ?? t("realProject")}
                 </h3>
-                <span className="text-sm text-charcoal/55">{co(item.country)}</span>
+                {item.country ? <span className="text-sm text-charcoal/55">{co(item.country)}</span> : null}
                 <span className="mt-2 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-charcoal/60 transition-colors duration-300 group-hover:text-bronze-dark">
                   {t("viewProject")}
                   <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />

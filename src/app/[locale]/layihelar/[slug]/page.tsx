@@ -10,6 +10,7 @@ import { Footer } from "@/components/footer";
 import { routing } from "@/i18n/routing";
 import { ProjectGallery } from "@/components/project-gallery";
 import { projects, getProject, getProjectGalleryGroups } from "@/data/projects";
+import { getImportedEntry } from "@/data/raul-portfolio-import";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -23,9 +24,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  if (!getProject(slug)) return {};
+  const project = getProject(slug);
+  if (!project) return {};
+  const imported = getImportedEntry(slug);
   const t = await getTranslations({ locale, namespace: "projectDetail" });
-  return { title: `${t(`items.${slug}.title`)} — Raul Architects` };
+  return { title: `${imported?.title ?? t(`items.${slug}.title`)} — Raul Architects` };
 }
 
 export default async function ProjectDetailPage({
@@ -38,10 +41,10 @@ export default async function ProjectDetailPage({
   if (!project) notFound();
 
   const t = await getTranslations("projectDetail");
-  const specs = t.raw(`items.${slug}.specs`) as string[];
-  const description = t(`items.${slug}.description`);
-
-  const title = t(`items.${slug}.title`);
+  const imported = getImportedEntry(slug);
+  const specs = imported ? [] : ((t.raw(`items.${slug}.specs`) as string[] | undefined) ?? []);
+  const description = imported ? "" : t(`items.${slug}.description`);
+  const title = imported?.title ?? t(`items.${slug}.title`);
   const groups = getProjectGalleryGroups(slug);
   const toCards = (sources: string[], label: string) =>
     sources.map((src, index) => ({ src, alt: `${title} ${label} ${index + 1}` }));
@@ -51,17 +54,25 @@ export default async function ProjectDetailPage({
     toCards(groups.planningImages, "planning"),
   ];
   const gallery = galleryRows.flat();
+  const importedGallery = imported?.gallery.map((image, index) => ({
+    src: image.src,
+    alt: `${title} ${image.kind} ${index + 1}`,
+    objectPosition: image.objectPosition,
+  })) ?? [];
+  const hasSpecs = specs.length > 0;
+  const hasDescription = description.trim().length > 0;
 
   return (
     <>
       <section className="relative h-[70vh] w-full overflow-hidden sm:h-[92vh]">
         <Image
-          src={project.image}
-          alt={t(`items.${slug}.title`)}
+          src={imported?.hero.src ?? project.image}
+          alt={title}
           fill
           priority
           sizes="100vw"
           className="object-cover"
+          style={imported ? { objectPosition: imported.hero.objectPosition } : undefined}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal-dark/75 via-charcoal-dark/10 to-transparent" />
 
@@ -75,43 +86,63 @@ export default async function ProjectDetailPage({
           </Link>
         </div>
 
-        <div className="absolute inset-0 z-10 flex">
-          <div className="flex w-[40%] items-end p-6 sm:p-10 lg:w-[38%] lg:p-14">
+        {imported ? (
+          <div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-10 lg:p-14">
             <h1 className="text-4xl font-semibold text-cream sm:text-6xl lg:text-7xl">
-              {t(`items.${slug}.title`)}
+              {title}
             </h1>
           </div>
-          <div className="hidden w-[60%] items-center justify-center px-5 py-24 md:flex lg:px-8 lg:py-20 xl:px-12">
-            <div className="w-4/5">
-              <ProjectGallery images={gallery} rows={galleryRows} variant="hero" />
+        ) : (
+          <div className="absolute inset-0 z-10 flex">
+            <div className="flex w-[40%] items-end p-6 sm:p-10 lg:w-[38%] lg:p-14">
+              <h1 className="text-4xl font-semibold text-cream sm:text-6xl lg:text-7xl">
+                {t(`items.${slug}.title`)}
+              </h1>
+            </div>
+            <div className="hidden w-[60%] items-center justify-center px-5 py-24 md:flex lg:px-8 lg:py-20 xl:px-12">
+              <div className="w-4/5">
+                <ProjectGallery images={gallery} rows={galleryRows} variant="hero" />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </section>
 
-      <section className="border-b border-charcoal/10 bg-cream py-8">
-        <Container>
-          <ul className="flex flex-wrap gap-x-8 gap-y-3">
-            {specs.map((spec) => (
-              <li key={spec} className="text-sm font-medium uppercase tracking-[0.12em] text-charcoal/70">
-                {spec}
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </section>
+      {hasSpecs ? (
+        <section className="border-b border-charcoal/10 bg-cream py-8">
+          <Container>
+            <ul className="flex flex-wrap gap-x-8 gap-y-3">
+              {specs.map((spec) => (
+                <li key={spec} className="text-sm font-medium uppercase tracking-[0.12em] text-charcoal/70">
+                  {spec}
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </section>
+      ) : null}
 
-      <section className="bg-cream py-16 sm:py-20">
-        <Container className="max-w-3xl">
-          <p className="text-lg font-light leading-relaxed text-charcoal/70">{description}</p>
-        </Container>
-      </section>
+      {hasDescription ? (
+        <section className="bg-cream py-16 sm:py-20">
+          <Container className="max-w-3xl">
+            <p className="text-lg font-light leading-relaxed text-charcoal/70">{description}</p>
+          </Container>
+        </section>
+      ) : null}
 
-      <section className="bg-cream py-10 md:hidden">
-        <Container>
-          <ProjectGallery images={gallery} rows={galleryRows} />
-        </Container>
-      </section>
+      {imported ? (
+        <section className="bg-cream py-10 sm:py-16">
+          <Container>
+            <ProjectGallery images={importedGallery} />
+          </Container>
+        </section>
+      ) : (
+        <section className="bg-cream py-10 md:hidden">
+          <Container>
+            <ProjectGallery images={gallery} rows={galleryRows} />
+          </Container>
+        </section>
+      )}
 
       <section className="bg-charcoal py-24 sm:py-32">
         <Container className="max-w-3xl">

@@ -6,6 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { TriangleMark } from "@/components/ui/triangle-mark";
 import { Footer } from "@/components/footer";
+import { importedCertificates } from "@/data/raul-portfolio-import";
 
 const sectionKeys = ["bio", "education", "experience", "certificates", "achievements"] as const;
 
@@ -69,13 +70,30 @@ export default async function RaulNagiyevPage({ params }: PageProps<"/[locale]/h
                         {t("sections.bio.body")}
                       </p>
                     ) : (
-                      <ul className="flex flex-col gap-2.5">
-                        {items?.map((item) => (
-                          <li key={item} className="text-base font-light leading-relaxed text-charcoal/70">
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
+                      <div className="flex flex-col gap-6">
+                        <ul className="flex flex-col gap-2.5">
+                          {items?.map((item) => (
+                            <li key={item} className="text-base font-light leading-relaxed text-charcoal/70">
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                        {key === "certificates" && importedCertificates.length > 0 ? (
+                          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                            {importedCertificates.map((certificate) => (
+                              <li key={certificate.id} className="relative aspect-[4/3] overflow-hidden bg-cream-dark">
+                                <Image
+                                  src={certificate.src}
+                                  alt={certificate.alt}
+                                  fill
+                                  sizes="(min-width: 1024px) 18rem, 45vw"
+                                  className="object-contain p-2"
+                                />
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
+                      </div>
                     )}
                   </div>
                 );

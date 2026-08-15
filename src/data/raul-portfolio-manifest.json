@@ -1,0 +1,1358 @@
+{
+  "source": "raul-portfolio-folder-2026",
+  "projects": [
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "merdekan-villa",
+      "section": "portfolio",
+      "category": "villa",
+      "country": "azerbaijan",
+      "title": "Merdekan Villa",
+      "note": null,
+      "skipped": [
+        "20150508_142603.jpg / 20150508_142606.jpg — same staircase angle as 142521",
+        "20150508_143234.jpg / 20150508_143236.jpg — same construction view as 143231"
+      ],
+      "cover": {
+        "src": "/images/import/merdekan-villa/cover.webp",
+        "objectPosition": "center 62%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 145026,
+        "original": "001.jpeg"
+      },
+      "hero": {
+        "src": "/images/import/merdekan-villa/hero.webp",
+        "objectPosition": "center 62%",
+        "width": 1942,
+        "height": 964,
+        "bytes": 251572,
+        "original": "001.jpeg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/merdekan-villa/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 62%",
+          "width": 1942,
+          "height": 964,
+          "bytes": 251572,
+          "original": "001.jpeg"
+        },
+        {
+          "src": "/images/import/merdekan-villa/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1414,
+          "bytes": 455080,
+          "original": "pool.jpg"
+        },
+        {
+          "src": "/images/import/merdekan-villa/g03.webp",
+          "kind": "interior",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1771,
+          "bytes": 177354,
+          "original": "Terace.png"
+        },
+        {
+          "src": "/images/import/merdekan-villa/g04.webp",
+          "kind": "construction",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1200,
+          "bytes": 290856,
+          "original": "20150508_142521.jpg"
+        },
+        {
+          "src": "/images/import/merdekan-villa/g05.webp",
+          "kind": "construction",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1200,
+          "bytes": 183040,
+          "original": "20150508_143039.jpg"
+        },
+        {
+          "src": "/images/import/merdekan-villa/g06.webp",
+          "kind": "construction",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1200,
+          "bytes": 288634,
+          "original": "20150508_143231.jpg"
+        }
+      ]
+    },
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "sharur-yasayis-kompleksi",
+      "section": "portfolio",
+      "category": "yasayis-kompleksi",
+      "country": "azerbaijan",
+      "title": "Sharur Yaşayış Kompleksi",
+      "note": null,
+      "skipped": [
+        "PHOTO-2024-02-22-16-13-17 (1).jpg — duplicate of 16-13-17",
+        "PHOTO-2024-02-22-16-13-25 (1).jpg / (2).jpg — duplicates",
+        "PHOTO-2024-09-08-21-02-37 (1).jpg — duplicate",
+        "PHOTO-2024-09-08-21-02-55 (1).jpg — duplicate",
+        "Konsept.pdf — PDF, not used as a site image"
+      ],
+      "cover": {
+        "src": "/images/import/sharur-yasayis-kompleksi/cover.webp",
+        "objectPosition": "center 45%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 175164,
+        "original": "11.jpg"
+      },
+      "hero": {
+        "src": "/images/import/sharur-yasayis-kompleksi/hero.webp",
+        "objectPosition": "center 45%",
+        "width": 1000,
+        "height": 630,
+        "bytes": 164776,
+        "original": "11.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/sharur-yasayis-kompleksi/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 45%",
+          "width": 1000,
+          "height": 630,
+          "bytes": 164776,
+          "original": "11.jpg"
+        },
+        {
+          "src": "/images/import/sharur-yasayis-kompleksi/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center 40%",
+          "width": 1000,
+          "height": 563,
+          "bytes": 101418,
+          "original": "5.jpg"
+        },
+        {
+          "src": "/images/import/sharur-yasayis-kompleksi/g03.webp",
+          "kind": "exterior",
+          "objectPosition": "center 40%",
+          "width": 1000,
+          "height": 563,
+          "bytes": 89404,
+          "original": "1..jpg"
+        },
+        {
+          "src": "/images/import/sharur-yasayis-kompleksi/g04.webp",
+          "kind": "construction",
+          "objectPosition": "center",
+          "width": 1280,
+          "height": 960,
+          "bytes": 293308,
+          "original": "PHOTO-2024-02-22-16-13-17.jpg"
+        },
+        {
+          "src": "/images/import/sharur-yasayis-kompleksi/g05.webp",
+          "kind": "construction",
+          "objectPosition": "center",
+          "width": 1280,
+          "height": 960,
+          "bytes": 277824,
+          "original": "PHOTO-2024-02-22-16-13-25.jpg"
+        },
+        {
+          "src": "/images/import/sharur-yasayis-kompleksi/g06.webp",
+          "kind": "construction",
+          "objectPosition": "center",
+          "width": 1280,
+          "height": 960,
+          "bytes": 214520,
+          "original": "PHOTO-2024-09-08-21-02-37.jpg"
+        },
+        {
+          "src": "/images/import/sharur-yasayis-kompleksi/g07.webp",
+          "kind": "construction",
+          "objectPosition": "center",
+          "width": 1280,
+          "height": 720,
+          "bytes": 247756,
+          "original": "PHOTO-2024-09-08-21-02-55.jpg"
+        }
+      ]
+    },
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "exhibition-stands",
+      "section": "portfolio",
+      "category": "kommersiya",
+      "country": null,
+      "title": "Exhibition Stands",
+      "note": "Filenames are renders, not documented as built-stand photos.",
+      "skipped": [],
+      "cover": {
+        "src": "/images/import/exhibition-stands/cover.webp",
+        "objectPosition": "center",
+        "width": 1200,
+        "height": 900,
+        "bytes": 105540,
+        "original": "Stand-render-01.jpg"
+      },
+      "hero": {
+        "src": "/images/import/exhibition-stands/hero.webp",
+        "objectPosition": "center",
+        "width": 2400,
+        "height": 1118,
+        "bytes": 176628,
+        "original": "Stand-render-01.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/exhibition-stands/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 931,
+          "bytes": 139028,
+          "original": "Stand-render-01.jpg"
+        },
+        {
+          "src": "/images/import/exhibition-stands/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 847,
+          "bytes": 99428,
+          "original": "Estand-render-02.jpg"
+        },
+        {
+          "src": "/images/import/exhibition-stands/g03.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1173,
+          "bytes": 177966,
+          "original": "Stand-render-03.jpg"
+        }
+      ]
+    },
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "coworking-coliving-berlin",
+      "section": "projects",
+      "category": "yasayis-kompleksi",
+      "country": "germany",
+      "title": "Co-Working Co-Living Berlin",
+      "note": null,
+      "skipped": [],
+      "cover": {
+        "src": "/images/import/coworking-coliving-berlin/cover.webp",
+        "objectPosition": "center 42%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 190088,
+        "original": "CO-Art-new-rn-1.jpg"
+      },
+      "hero": {
+        "src": "/images/import/coworking-coliving-berlin/hero.webp",
+        "objectPosition": "center 42%",
+        "width": 2400,
+        "height": 1350,
+        "bytes": 529552,
+        "original": "CO-Art-new-rn-1.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/coworking-coliving-berlin/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 42%",
+          "width": 2000,
+          "height": 1125,
+          "bytes": 386260,
+          "original": "CO-Art-new-rn-1.jpg"
+        },
+        {
+          "src": "/images/import/coworking-coliving-berlin/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center 40%",
+          "width": 2000,
+          "height": 1340,
+          "bytes": 474464,
+          "original": "Render-new.jpg"
+        },
+        {
+          "src": "/images/import/coworking-coliving-berlin/g03.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1614,
+          "height": 2572,
+          "bytes": 464382,
+          "original": "1.jpg"
+        },
+        {
+          "src": "/images/import/coworking-coliving-berlin/g04.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 638,
+          "bytes": 183282,
+          "original": "render-innenhof_edited.jpg"
+        },
+        {
+          "src": "/images/import/coworking-coliving-berlin/g05.webp",
+          "kind": "interior",
+          "objectPosition": "center",
+          "width": 1000,
+          "height": 937,
+          "bytes": 260484,
+          "original": "interior-2.jpg"
+        },
+        {
+          "src": "/images/import/coworking-coliving-berlin/g06.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1434,
+          "bytes": 137772,
+          "original": "EG.jpg"
+        },
+        {
+          "src": "/images/import/coworking-coliving-berlin/g07.webp",
+          "kind": "section",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1346,
+          "bytes": 61272,
+          "original": "Elevation-CoArt.jpg"
+        },
+        {
+          "src": "/images/import/coworking-coliving-berlin/g08.webp",
+          "kind": "section",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 2828,
+          "bytes": 92860,
+          "original": "Axsonometrie.jpg"
+        }
+      ]
+    },
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "kopenick-berlin-living",
+      "section": "projects",
+      "category": "yasayis-kompleksi",
+      "country": "germany",
+      "title": "Köpenick Berlin Living",
+      "note": null,
+      "skipped": [
+        "new-002_edited.jpg — edited duplicate of new-002",
+        "04ccc.jpg — similar to 004cc",
+        "Boardinghaus.jpg / Familienwohnung.jpg / 3-OG.jpg / Blatt-04.jpg — extra plan/unit sheets",
+        "Pikto-3.jpg / Pikto-4.jpg / Seite-2-Pikto.jpg — redundant diagrams"
+      ],
+      "cover": {
+        "src": "/images/import/kopenick-berlin-living/cover.webp",
+        "objectPosition": "center 40%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 217614,
+        "original": "perspektiv-2.jpg"
+      },
+      "hero": {
+        "src": "/images/import/kopenick-berlin-living/hero.webp",
+        "objectPosition": "center 40%",
+        "width": 2400,
+        "height": 1316,
+        "bytes": 510512,
+        "original": "perspektiv-2.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/kopenick-berlin-living/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 40%",
+          "width": 2000,
+          "height": 1097,
+          "bytes": 386526,
+          "original": "perspektiv-2.jpg"
+        },
+        {
+          "src": "/images/import/kopenick-berlin-living/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1031,
+          "bytes": 410420,
+          "original": "004cc.jpg"
+        },
+        {
+          "src": "/images/import/kopenick-berlin-living/g03.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1125,
+          "bytes": 297170,
+          "original": "new-002.jpg"
+        },
+        {
+          "src": "/images/import/kopenick-berlin-living/g04.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1125,
+          "bytes": 398782,
+          "original": "entrance.jpg"
+        },
+        {
+          "src": "/images/import/kopenick-berlin-living/g05.webp",
+          "kind": "interior",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1125,
+          "bytes": 154630,
+          "original": "interior.jpg"
+        },
+        {
+          "src": "/images/import/kopenick-berlin-living/g06.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1861,
+          "bytes": 230900,
+          "original": "Lageplan.jpg"
+        },
+        {
+          "src": "/images/import/kopenick-berlin-living/g07.webp",
+          "kind": "section",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 883,
+          "bytes": 35344,
+          "original": "Ansicht-Sud.jpg"
+        },
+        {
+          "src": "/images/import/kopenick-berlin-living/g08.webp",
+          "kind": "section",
+          "objectPosition": "center",
+          "width": 1000,
+          "height": 441,
+          "bytes": 17420,
+          "original": "SchnittA-A.jpg"
+        }
+      ]
+    },
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "space-port-helgoland",
+      "section": "projects",
+      "category": "ictimai",
+      "country": "germany",
+      "title": "Space Port Helgoland",
+      "note": null,
+      "skipped": [
+        "Space Port-c_edited.jpg — edited duplicate",
+        "Weltraumbahnhf.jpg — near-duplicate filename/view of Weltraumbahnhof",
+        "Render-09.jpg / Render-12.jpg — similar exterior frames",
+        "1-2OG.jpg / B-02.jpg / B-03.jpg / B-04.jpg / Space-s-S.jpg / Schnitt-C-C.jpg — extra sheets"
+      ],
+      "cover": {
+        "src": "/images/import/space-port-helgoland/cover.webp",
+        "objectPosition": "42% 55%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 114846,
+        "original": "Render-07.jpg"
+      },
+      "hero": {
+        "src": "/images/import/space-port-helgoland/hero.webp",
+        "objectPosition": "42% 55%",
+        "width": 1000,
+        "height": 563,
+        "bytes": 87288,
+        "original": "Render-07.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/space-port-helgoland/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "42% 55%",
+          "width": 1000,
+          "height": 563,
+          "bytes": 87288,
+          "original": "Render-07.jpg"
+        },
+        {
+          "src": "/images/import/space-port-helgoland/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1000,
+          "height": 563,
+          "bytes": 121938,
+          "original": "Render-08.jpg"
+        },
+        {
+          "src": "/images/import/space-port-helgoland/g03.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1000,
+          "height": 563,
+          "bytes": 83016,
+          "original": "Render-13.jpg"
+        },
+        {
+          "src": "/images/import/space-port-helgoland/g04.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1000,
+          "height": 520,
+          "bytes": 43818,
+          "original": "Space Port-c.jpg"
+        },
+        {
+          "src": "/images/import/space-port-helgoland/g05.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1106,
+          "bytes": 253702,
+          "original": "Weltraumbahnhof.jpg"
+        },
+        {
+          "src": "/images/import/space-port-helgoland/g06.webp",
+          "kind": "interior",
+          "objectPosition": "center",
+          "width": 1000,
+          "height": 563,
+          "bytes": 35888,
+          "original": "Final_Interior-01.jpg"
+        },
+        {
+          "src": "/images/import/space-port-helgoland/g07.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1847,
+          "bytes": 54670,
+          "original": "EG-UG.jpg"
+        },
+        {
+          "src": "/images/import/space-port-helgoland/g08.webp",
+          "kind": "section",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1058,
+          "bytes": 68384,
+          "original": "Ansicht-ost.jpg"
+        },
+        {
+          "src": "/images/import/space-port-helgoland/g09.webp",
+          "kind": "section",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 771,
+          "bytes": 36986,
+          "original": "Schnitt-A-A.jpg"
+        }
+      ]
+    },
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "gecler-kultur",
+      "section": "projects",
+      "category": "ictimai",
+      "country": null,
+      "title": "Gecler Kultur",
+      "note": null,
+      "skipped": [
+        "B-2bde.jpg / B-2bde1.jpg — variants of B-2b"
+      ],
+      "cover": {
+        "src": "/images/import/gecler-kultur/cover.webp",
+        "objectPosition": "55% 42%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 154280,
+        "original": "ren1.jpg"
+      },
+      "hero": {
+        "src": "/images/import/gecler-kultur/hero.webp",
+        "objectPosition": "55% 42%",
+        "width": 2048,
+        "height": 1280,
+        "bytes": 323652,
+        "original": "ren1.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/gecler-kultur/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "55% 42%",
+          "width": 2000,
+          "height": 1250,
+          "bytes": 287750,
+          "original": "ren1.jpg"
+        },
+        {
+          "src": "/images/import/gecler-kultur/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1707,
+          "height": 974,
+          "bytes": 305920,
+          "original": "hoff.png"
+        },
+        {
+          "src": "/images/import/gecler-kultur/g03.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1482,
+          "bytes": 25224,
+          "original": "B-2f.jpg"
+        },
+        {
+          "src": "/images/import/gecler-kultur/g04.webp",
+          "kind": "section",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1691,
+          "bytes": 36544,
+          "original": "B-2b.jpg"
+        }
+      ]
+    },
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "high-hill-restaurant",
+      "section": "projects",
+      "category": "kommersiya",
+      "country": null,
+      "title": "High Hill Restaurant",
+      "note": null,
+      "skipped": [],
+      "cover": {
+        "src": "/images/import/high-hill-restaurant/cover.webp",
+        "objectPosition": "center 40%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 202508,
+        "original": "hich hill1.jpg"
+      },
+      "hero": {
+        "src": "/images/import/high-hill-restaurant/hero.webp",
+        "objectPosition": "center 40%",
+        "width": 1984,
+        "height": 1263,
+        "bytes": 336776,
+        "original": "hich hill1.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/high-hill-restaurant/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 40%",
+          "width": 1984,
+          "height": 1263,
+          "bytes": 336776,
+          "original": "hich hill1.jpg"
+        },
+        {
+          "src": "/images/import/high-hill-restaurant/g02.webp",
+          "kind": "section",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 839,
+          "bytes": 258566,
+          "original": "3D-Section.jpg"
+        },
+        {
+          "src": "/images/import/high-hill-restaurant/g03.webp",
+          "kind": "section",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 648,
+          "bytes": 68290,
+          "original": "Hill-01.jpg"
+        },
+        {
+          "src": "/images/import/high-hill-restaurant/g04.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 3444,
+          "bytes": 225040,
+          "original": "hill-02.jpg"
+        },
+        {
+          "src": "/images/import/high-hill-restaurant/g05.webp",
+          "kind": "section",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 915,
+          "bytes": 85808,
+          "original": "Section-.jpg"
+        }
+      ]
+    },
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "mount-pearl",
+      "section": "projects",
+      "category": "villa",
+      "country": null,
+      "title": "Mount Pearl",
+      "note": null,
+      "skipped": [],
+      "cover": {
+        "src": "/images/import/mount-pearl/cover.webp",
+        "objectPosition": "center 45%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 221772,
+        "original": "Mount pearl.jpg"
+      },
+      "hero": {
+        "src": "/images/import/mount-pearl/hero.webp",
+        "objectPosition": "center 45%",
+        "width": 1600,
+        "height": 1424,
+        "bytes": 371858,
+        "original": "Mount pearl.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/mount-pearl/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 45%",
+          "width": 1600,
+          "height": 1424,
+          "bytes": 371858,
+          "original": "Mount pearl.jpg"
+        },
+        {
+          "src": "/images/import/mount-pearl/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1112,
+          "bytes": 88696,
+          "original": "GENDO_MY_FIRST_PROJECT_04AD.png"
+        },
+        {
+          "src": "/images/import/mount-pearl/g03.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 980,
+          "bytes": 184308,
+          "original": "GENDO_MY_FIRST_PROJECT_DF6F.png"
+        }
+      ]
+    },
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "nar",
+      "section": "projects",
+      "category": "ictimai",
+      "country": null,
+      "title": "NAR",
+      "note": null,
+      "skipped": [
+        "museum-2.jpg — similar museum view",
+        "NAR-0923_005.jpg — similar plan sheet",
+        "A.04.*.pdf — original PDFs left untouched"
+      ],
+      "cover": {
+        "src": "/images/import/nar/cover.webp",
+        "objectPosition": "center 45%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 164134,
+        "original": "museum.jpg"
+      },
+      "hero": {
+        "src": "/images/import/nar/hero.webp",
+        "objectPosition": "center 45%",
+        "width": 1712,
+        "height": 1312,
+        "bytes": 330694,
+        "original": "museum.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/nar/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 45%",
+          "width": 1712,
+          "height": 1312,
+          "bytes": 296298,
+          "original": "museum.jpg"
+        },
+        {
+          "src": "/images/import/nar/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 861,
+          "bytes": 302086,
+          "original": "n-1.jpg"
+        },
+        {
+          "src": "/images/import/nar/g03.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1792,
+          "height": 1240,
+          "bytes": 288078,
+          "original": "n-2.jpg"
+        },
+        {
+          "src": "/images/import/nar/g04.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1904,
+          "height": 1144,
+          "bytes": 463416,
+          "original": "n-3.jpg"
+        },
+        {
+          "src": "/images/import/nar/g05.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1964,
+          "height": 1068,
+          "bytes": 345272,
+          "original": "top view.jpg"
+        },
+        {
+          "src": "/images/import/nar/g06.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1936,
+          "height": 1124,
+          "bytes": 344140,
+          "original": "top night view.jpg"
+        },
+        {
+          "src": "/images/import/nar/g07.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "width": 1000,
+          "height": 704,
+          "bytes": 101052,
+          "original": "NAR-0923_002.jpg"
+        },
+        {
+          "src": "/images/import/nar/g08.webp",
+          "kind": "section",
+          "objectPosition": "center",
+          "width": 1000,
+          "height": 707,
+          "bytes": 179170,
+          "original": "Page-Y.jpg"
+        }
+      ]
+    },
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "npo",
+      "section": "projects",
+      "category": "ictimai",
+      "country": null,
+      "title": "NPO",
+      "note": null,
+      "skipped": [],
+      "cover": {
+        "src": "/images/import/npo/cover.webp",
+        "objectPosition": "38% 40%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 147610,
+        "original": "npo-01.jpg"
+      },
+      "hero": {
+        "src": "/images/import/npo/hero.webp",
+        "objectPosition": "38% 40%",
+        "width": 1904,
+        "height": 1128,
+        "bytes": 215756,
+        "original": "npo-01.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/npo/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "38% 40%",
+          "width": 1904,
+          "height": 1128,
+          "bytes": 215756,
+          "original": "npo-01.jpg"
+        },
+        {
+          "src": "/images/import/npo/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1888,
+          "height": 1148,
+          "bytes": 298016,
+          "original": "npo-02.jpg"
+        },
+        {
+          "src": "/images/import/npo/g03.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1920,
+          "height": 1132,
+          "bytes": 216746,
+          "original": "npo-03.jpg"
+        }
+      ]
+    },
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "rev-zagatala",
+      "section": "projects",
+      "category": "ferdi-yasayis-evi",
+      "country": "azerbaijan",
+      "title": "REV Zagatala",
+      "note": null,
+      "skipped": [
+        "x2.jpeg / x4.jpeg — smaller near-duplicate frames"
+      ],
+      "cover": {
+        "src": "/images/import/rev-zagatala/cover.webp",
+        "objectPosition": "center 45%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 216990,
+        "original": "01.jpg"
+      },
+      "hero": {
+        "src": "/images/import/rev-zagatala/hero.webp",
+        "objectPosition": "center 45%",
+        "width": 1920,
+        "height": 1020,
+        "bytes": 327690,
+        "original": "01.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/rev-zagatala/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 45%",
+          "width": 1920,
+          "height": 1020,
+          "bytes": 327690,
+          "original": "01.jpg"
+        },
+        {
+          "src": "/images/import/rev-zagatala/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1984,
+          "height": 1012,
+          "bytes": 406330,
+          "original": "02.jpg"
+        },
+        {
+          "src": "/images/import/rev-zagatala/g03.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1904,
+          "height": 1360,
+          "bytes": 304254,
+          "original": "03.jpg"
+        },
+        {
+          "src": "/images/import/rev-zagatala/g04.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1692,
+          "height": 1152,
+          "bytes": 200228,
+          "original": "05.jpg"
+        },
+        {
+          "src": "/images/import/rev-zagatala/g05.webp",
+          "kind": "construction",
+          "objectPosition": "center",
+          "width": 960,
+          "height": 1280,
+          "bytes": 191828,
+          "original": "x1.jpeg"
+        },
+        {
+          "src": "/images/import/rev-zagatala/g06.webp",
+          "kind": "construction",
+          "objectPosition": "center",
+          "width": 1600,
+          "height": 1200,
+          "bytes": 314400,
+          "original": "x3.jpeg"
+        }
+      ]
+    },
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "tsm",
+      "section": "projects",
+      "category": "ictimai",
+      "country": null,
+      "title": "TSM",
+      "note": null,
+      "skipped": [],
+      "cover": {
+        "src": "/images/import/tsm/cover.webp",
+        "objectPosition": "center 45%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 161582,
+        "original": "tsm-001.jpg"
+      },
+      "hero": {
+        "src": "/images/import/tsm/hero.webp",
+        "objectPosition": "center 45%",
+        "width": 2128,
+        "height": 1216,
+        "bytes": 316662,
+        "original": "tsm-001.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/tsm/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 45%",
+          "width": 2000,
+          "height": 1143,
+          "bytes": 316218,
+          "original": "tsm-001.jpg"
+        },
+        {
+          "src": "/images/import/tsm/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1000,
+          "height": 563,
+          "bytes": 206974,
+          "original": "tsm-002.jpg"
+        },
+        {
+          "src": "/images/import/tsm/g03.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1740,
+          "height": 3372,
+          "bytes": 430476,
+          "original": "tsm-003.jpg"
+        },
+        {
+          "src": "/images/import/tsm/g04.webp",
+          "kind": "exterior",
+          "objectPosition": "center 40%",
+          "width": 1000,
+          "height": 563,
+          "bytes": 91672,
+          "original": "0002.jpg"
+        },
+        {
+          "src": "/images/import/tsm/g05.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1000,
+          "height": 674,
+          "bytes": 170520,
+          "original": "0004.jpg"
+        },
+        {
+          "src": "/images/import/tsm/g06.webp",
+          "kind": "section",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1349,
+          "bytes": 76270,
+          "original": "A1.jpg"
+        },
+        {
+          "src": "/images/import/tsm/g07.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1435,
+          "bytes": 119924,
+          "original": "1-ci mertebe plan.jpg"
+        },
+        {
+          "src": "/images/import/tsm/g08.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1428,
+          "bytes": 80420,
+          "original": "4-cu mertebe plan.jpg"
+        }
+      ]
+    },
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "texnopark",
+      "section": "projects",
+      "category": "kommersiya",
+      "country": null,
+      "title": "Texnopark",
+      "note": null,
+      "skipped": [],
+      "cover": {
+        "src": "/images/import/texnopark/cover.webp",
+        "objectPosition": "center 45%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 163142,
+        "original": "texnopark-001.jpg"
+      },
+      "hero": {
+        "src": "/images/import/texnopark/hero.webp",
+        "objectPosition": "center 45%",
+        "width": 1936,
+        "height": 1128,
+        "bytes": 349518,
+        "original": "texnopark-001.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/texnopark/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 45%",
+          "width": 1936,
+          "height": 1128,
+          "bytes": 306882,
+          "original": "texnopark-001.jpg"
+        },
+        {
+          "src": "/images/import/texnopark/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 863,
+          "bytes": 136760,
+          "original": "tecnokark-02.jpg"
+        },
+        {
+          "src": "/images/import/texnopark/g03.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1949,
+          "height": 1033,
+          "bytes": 280782,
+          "original": "texnopark-03.jpg"
+        }
+      ]
+    },
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "tym",
+      "section": "projects",
+      "category": "ictimai",
+      "country": null,
+      "title": "TYM",
+      "note": null,
+      "skipped": [
+        "1-ci mertebe.pdf / 2-ci mertebe.pdf — original PDFs left untouched"
+      ],
+      "cover": {
+        "src": "/images/import/tym/cover.webp",
+        "objectPosition": "center 45%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 170550,
+        "original": "TYM-1023_Viz-001-01.jpg"
+      },
+      "hero": {
+        "src": "/images/import/tym/hero.webp",
+        "objectPosition": "center 45%",
+        "width": 2288,
+        "height": 1136,
+        "bytes": 331084,
+        "original": "TYM-1023_Viz-001-01.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/tym/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 45%",
+          "width": 2000,
+          "height": 993,
+          "bytes": 286926,
+          "original": "TYM-1023_Viz-001-01.jpg"
+        },
+        {
+          "src": "/images/import/tym/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1952,
+          "height": 995,
+          "bytes": 322950,
+          "original": "TYM-1023_Viz-004-01.jpg"
+        },
+        {
+          "src": "/images/import/tym/g03.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1000,
+          "height": 563,
+          "bytes": 181094,
+          "original": "TYM-1023_Viz-006.jpg"
+        }
+      ]
+    },
+    {
+      "source": "raul-portfolio-folder-2026",
+      "slug": "wnk-naxcivan",
+      "section": "projects",
+      "category": "yasayis-kompleksi",
+      "country": "azerbaijan",
+      "title": "WNK Naxçıvan",
+      "note": null,
+      "skipped": [
+        "Render-002aa.jpg — aa variant of Render-002",
+        "22030928-R03-05 (3).pdf — original PDF left untouched"
+      ],
+      "cover": {
+        "src": "/images/import/wnk-naxcivan/cover.webp",
+        "objectPosition": "center 42%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 197640,
+        "original": "Vogelperspektiv1.jpg"
+      },
+      "hero": {
+        "src": "/images/import/wnk-naxcivan/hero.webp",
+        "objectPosition": "center 42%",
+        "width": 1000,
+        "height": 604,
+        "bytes": 186036,
+        "original": "Vogelperspektiv1.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import/wnk-naxcivan/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 42%",
+          "width": 1000,
+          "height": 604,
+          "bytes": 186036,
+          "original": "Vogelperspektiv1.jpg"
+        },
+        {
+          "src": "/images/import/wnk-naxcivan/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1952,
+          "height": 1106,
+          "bytes": 450560,
+          "original": "Render-003-12.jpg"
+        },
+        {
+          "src": "/images/import/wnk-naxcivan/g03.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1904,
+          "height": 1140,
+          "bytes": 308370,
+          "original": "Render-004-12.jpg"
+        },
+        {
+          "src": "/images/import/wnk-naxcivan/g04.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1000,
+          "height": 583,
+          "bytes": 115452,
+          "original": "Render-006.jpg"
+        },
+        {
+          "src": "/images/import/wnk-naxcivan/g05.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "width": 1000,
+          "height": 544,
+          "bytes": 119188,
+          "original": "Render-002.jpg"
+        },
+        {
+          "src": "/images/import/wnk-naxcivan/g06.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "width": 2000,
+          "height": 1307,
+          "bytes": 499818,
+          "original": "Render-map-001.jpg"
+        }
+      ]
+    }
+  ],
+  "certificates": {
+    "items": [
+      {
+        "source": "raul-portfolio-folder-2026",
+        "id": "bachelor-diplom",
+        "src": "/images/import/certificates/bachelor-diplom.webp",
+        "alt": "Bachelor diploma",
+        "width": 1000,
+        "height": 1432,
+        "original": "Bachelor Diplom.jpg"
+      },
+      {
+        "source": "raul-portfolio-folder-2026",
+        "id": "allplan-architecture",
+        "src": "/images/import/certificates/allplan-architecture.webp",
+        "alt": "Allplan Architecture certificate",
+        "width": 1600,
+        "height": 2263,
+        "original": "Certificate-Allplan Architecture.jpg"
+      },
+      {
+        "source": "raul-portfolio-folder-2026",
+        "id": "archicad-bim",
+        "src": "/images/import/certificates/archicad-bim.webp",
+        "alt": "Archicad BIM certificate",
+        "width": 1600,
+        "height": 1130,
+        "original": "certificate-Archicad BIM.jpg"
+      },
+      {
+        "source": "raul-portfolio-folder-2026",
+        "id": "vorkurs",
+        "src": "/images/import/certificates/vorkurs.webp",
+        "alt": "Vorkurs certificate",
+        "width": 1600,
+        "height": 2262,
+        "original": "Certificate-Vorkurs.jpg"
+      },
+      {
+        "source": "raul-portfolio-folder-2026",
+        "id": "competition",
+        "src": "/images/import/certificates/competition.webp",
+        "alt": "Competition certificate",
+        "width": 1000,
+        "height": 1409,
+        "original": "Competition-Certificate.jpg"
+      },
+      {
+        "source": "raul-portfolio-folder-2026",
+        "id": "interior-designer",
+        "src": "/images/import/certificates/interior-designer.webp",
+        "alt": "Interior Designer diploma",
+        "width": 1600,
+        "height": 1132,
+        "original": "Interior Designer-Diplom.jpg"
+      }
+    ],
+    "skipped": [
+      "1687792387340.jpg — unclear document, not labeled",
+      "Pre-foto.JPG — portrait photo, not a certificate",
+      "Sertifikat.pdf / ZINCO sertifikat.pdf / Wallwachhaus PDF — originals left as PDF"
+    ]
+  }
+}

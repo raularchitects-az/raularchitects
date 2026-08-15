@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 export type ProjectGalleryImage = {
   src: string;
   alt: string;
+  objectPosition?: string;
 };
 
 function GalleryGrid({
@@ -16,13 +17,10 @@ function GalleryGrid({
   rows: ProjectGalleryImage[][];
   onOpen: (index: number) => void;
 }) {
-  let offset = 0;
-
   return (
     <div className="flex w-full flex-col gap-4 lg:gap-5">
-      {rows.map((row) => {
-        const start = offset;
-        offset += row.length;
+      {rows.map((row, rowIndex) => {
+        const start = rows.slice(0, rowIndex).reduce((sum, item) => sum + item.length, 0);
         return (
           <ul key={row.map((item) => item.src).join("-")} className="grid grid-cols-3 gap-4 lg:gap-5">
             {row.map((image, index) => (
@@ -39,6 +37,7 @@ function GalleryGrid({
                     fill
                     sizes="16vw"
                     className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+                    style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined}
                   />
                   <span className="pointer-events-none absolute inset-0 bg-charcoal-dark/15" />
                 </button>
@@ -60,7 +59,7 @@ export function ProjectGallery({
   rows?: ProjectGalleryImage[][];
   variant?: "hero" | "page";
 }) {
-  const items = images.filter((image, index, list) => list.findIndex((item) => item.src === image.src) === index).slice(0, 9);
+  const items = images.filter((image, index, list) => list.findIndex((item) => item.src === image.src) === index).slice(0, 10);
   const [active, setActive] = useState<number | null>(null);
 
   const close = useCallback(() => setActive(null), []);
@@ -122,6 +121,7 @@ export function ProjectGallery({
                   fill
                   sizes="50vw"
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+                  style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined}
                 />
               </button>
             </li>

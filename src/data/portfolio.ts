@@ -1,4 +1,5 @@
 import { projectCategories, type Category } from "@/data/categories";
+import { importedPortfolioMetas } from "@/data/raul-portfolio-import";
 
 export { projectCategories as portfolioCategories };
 export type PortfolioCategory = Exclude<Category, "all">;
@@ -9,11 +10,15 @@ export type PortfolioCountry = (typeof portfolioCountries)[number];
 export type PortfolioMeta = {
   slug: string;
   category: PortfolioCategory;
-  country: PortfolioCountry;
+  country: PortfolioCountry | null;
   image: string;
+  source?: string;
+  objectPosition?: string;
+  heroImage?: string;
+  title?: string;
 };
 
-export const portfolioItems: PortfolioMeta[] = [
+const existingPortfolioItems: PortfolioMeta[] = [
   { slug: "az-villa-01", category: "villa", country: "azerbaijan", image: "/images/portfolio/azerbaijan-01.jpg" },
   { slug: "az-ferdi-01", category: "ferdi-yasayis-evi", country: "azerbaijan", image: "/images/portfolio/azerbaijan-02.jpg" },
   { slug: "de-kottec-01", category: "kottec", country: "germany", image: "/images/portfolio/germany-01.jpg" },
@@ -25,6 +30,8 @@ export const portfolioItems: PortfolioMeta[] = [
   { slug: "ch-yasayis-kompleksi-01", category: "yasayis-kompleksi", country: "switzerland", image: "/images/projects/yasayis-kompleksi.jpg" },
   { slug: "az-ictimai-01", category: "ictimai", country: "azerbaijan", image: "/images/projects/ictimai.jpg" },
 ];
+
+export const portfolioItems: PortfolioMeta[] = [...existingPortfolioItems, ...importedPortfolioMetas];
 
 export const categoryCoverImage: Record<PortfolioCategory, string> = {
   villa: "/images/portfolio/azerbaijan-01.jpg",

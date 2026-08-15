@@ -7,7 +7,9 @@ import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { Footer } from "@/components/footer";
 import { routing } from "@/i18n/routing";
+import { ProjectGallery } from "@/components/project-gallery";
 import { portfolioItems, getPortfolioItem } from "@/data/portfolio";
+import { getImportedEntry } from "@/data/raul-portfolio-import";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -23,8 +25,9 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const item = getPortfolioItem(slug);
   if (!item) return {};
+  const imported = getImportedEntry(slug);
   const c = await getTranslations({ locale, namespace: "categories" });
-  return { title: `${c(item.category)} — Raul Architects` };
+  return { title: `${imported?.title ?? c(item.category)} — Raul Architects` };
 }
 
 export default async function PortfolioDetailPage({
@@ -39,12 +42,27 @@ export default async function PortfolioDetailPage({
   const t = await getTranslations("portfolioPage");
   const c = await getTranslations("categories");
   const co = await getTranslations("countries");
-  const location = co(item.country);
+  const imported = getImportedEntry(slug);
+  const location = item.country ? co(item.country) : null;
+  const title = imported?.title ?? c(item.category);
+  const importedGallery = imported?.gallery.map((image, index) => ({
+    src: image.src,
+    alt: `${title} ${image.kind} ${index + 1}`,
+    objectPosition: image.objectPosition,
+  })) ?? [];
 
   return (
     <>
       <section className="relative h-[70vh] w-full overflow-hidden sm:h-[92vh]">
-        <Image src={item.image} alt={c(item.category)} fill priority sizes="100vw" className="object-cover" />
+        <Image
+          src={imported?.hero.src ?? item.image}
+          alt={title}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+          style={imported ? { objectPosition: imported.hero.objectPosition } : undefined}
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal-dark/75 via-charcoal-dark/10 to-transparent" />
 
         <div className="absolute inset-x-0 top-0 p-6 sm:p-10">
@@ -58,9 +76,11 @@ export default async function PortfolioDetailPage({
         </div>
 
         <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14">
-          <span className="text-xs font-medium uppercase tracking-[0.24em] text-bronze-light/80">{location}</span>
-          <h1 className="mt-2 text-4xl font-semibold text-cream sm:text-6xl lg:text-7xl">
-            {c(item.category)}
+          {location ? (
+            <span className="text-xs font-medium uppercase tracking-[0.24em] text-bronze-light/80">{location}</span>
+          ) : null}
+          <h1 className={`${location ? "mt-2" : ""} text-4xl font-semibold text-cream sm:text-6xl lg:text-7xl`}>
+            {title}
           </h1>
           <span className="mt-3 block text-xs uppercase tracking-[0.16em] text-cream/60">
             {t("realProject")}
@@ -70,9 +90,11 @@ export default async function PortfolioDetailPage({
 
       <section className="bg-cream py-16 sm:py-24">
         <Container className="flex max-w-3xl flex-col items-start gap-10">
-          <p className="text-lg font-light leading-relaxed text-charcoal/70">
-            {t("detailIntro", { location })}
-          </p>
+          {location ? (
+            <p className="text-lg font-light leading-relaxed text-charcoal/70">
+              {t("detailIntro", { location })}
+            </p>
+          ) : null}
           <Link
             href="/elaqe"
             className="group inline-flex items-center gap-2 border border-charcoal bg-charcoal px-7 py-3.5 text-xs font-medium uppercase tracking-[0.22em] text-cream transition-all duration-300 hover:border-bronze-dark hover:bg-bronze-dark"
@@ -82,6 +104,14 @@ export default async function PortfolioDetailPage({
           </Link>
         </Container>
       </section>
+
+      {importedGallery.length > 0 ? (
+        <section className="bg-cream pb-16 sm:pb-24">
+          <Container>
+            <ProjectGallery images={importedGallery} />
+          </Container>
+        </section>
+      ) : null}
 
       <Footer />
     </>
