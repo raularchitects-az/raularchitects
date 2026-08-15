@@ -8,6 +8,7 @@ export type ProjectGalleryImage = {
   src: string;
   alt: string;
   objectPosition?: string;
+  caption?: string | null;
 };
 
 function GalleryGrid({
@@ -124,6 +125,11 @@ export function ProjectGallery({
                   style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined}
                 />
               </button>
+              {image.caption ? (
+                <span className="mt-2 block text-xs font-medium uppercase tracking-[0.18em] text-charcoal/60">
+                  {image.caption}
+                </span>
+              ) : null}
             </li>
           ))}
         </ul>

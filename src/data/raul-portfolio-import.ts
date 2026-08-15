@@ -29,6 +29,7 @@ export type ImportedMedia = {
 
 export type ImportedGalleryImage = ImportedMedia & {
   kind: ImportedGalleryKind;
+  caption?: string | null;
 };
 
 export type ImportedEntry = {

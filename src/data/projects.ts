@@ -1,5 +1,7 @@
 import { projectCategories, type Category } from "@/data/categories";
-import { getImportedEntry, importedProjectMetas } from "@/data/raul-portfolio-import";
+import { getImportedEntry } from "@/data/folder-imports";
+import { importedProjectMetas } from "@/data/raul-portfolio-import";
+import { imported13ProjectMetas } from "@/data/raul-13-project-import";
 
 export { projectCategories };
 export type ProjectCategory = Exclude<Category, "all">;
@@ -31,7 +33,11 @@ const existingProjects: ProjectMeta[] = [
   { slug: "ictimai-01", category: "ictimai", image: "/images/projects/ictimai.jpg" },
 ];
 
-export const projects: ProjectMeta[] = [...existingProjects, ...importedProjectMetas];
+export const projects: ProjectMeta[] = [
+  ...existingProjects,
+  ...importedProjectMetas,
+  ...imported13ProjectMetas,
+];
 
 export const categoryCoverImage: Record<ProjectCategory, string> = {
   villa: "/images/projects/premium-villa.jpg",

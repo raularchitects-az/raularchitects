@@ -1,0 +1,848 @@
+{
+  "source": "raul-13-project-import",
+  "projects": [
+    {
+      "source": "raul-13-project-import",
+      "slug": "casa-del-rio",
+      "section": "projects",
+      "category": "kottec",
+      "country": null,
+      "title": "Casa del Rio",
+      "note": null,
+      "used": [
+        "01 Casa del Rio\\Casa del Rio.jpg",
+        "01 Casa del Rio\\3D-construction.jpg",
+        "01 Casa del Rio\\Casa Del Rio-A3-Grundriss.pdf",
+        "01 Casa del Rio\\Casa Del Rio-A3-Ansichten(1).pdf",
+        "01 Casa del Rio\\Casa Del Rio-A3 Schnitte B.pdf",
+        "01 Casa del Rio\\videoplayback (2).mp4"
+      ],
+      "cover": {
+        "src": "/images/import-13/casa-del-rio/cover.webp",
+        "objectPosition": "center 52%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 290716,
+        "original": "Casa del Rio.jpg"
+      },
+      "hero": {
+        "src": "/images/import-13/casa-del-rio/hero.webp",
+        "objectPosition": "center 52%",
+        "width": 2400,
+        "height": 1350,
+        "bytes": 712486,
+        "original": "Casa del Rio.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import-13/casa-del-rio/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 950,
+          "bytes": 52080,
+          "original": "3D-construction.jpg"
+        },
+        {
+          "src": "/images/import-13/casa-del-rio/g02.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 1414,
+          "bytes": 86914,
+          "original": "Casa Del Rio-A3-Grundriss.pdf#page=1"
+        },
+        {
+          "src": "/images/import-13/casa-del-rio/g03.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 1414,
+          "bytes": 43850,
+          "original": "Casa Del Rio-A3-Ansichten(1).pdf#page=1"
+        },
+        {
+          "src": "/images/import-13/casa-del-rio/g04.webp",
+          "kind": "section",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 1414,
+          "bytes": 71460,
+          "original": "Casa Del Rio-A3 Schnitte B.pdf#page=1"
+        }
+      ],
+      "video": {
+        "src": "/videos/import-13/casa-del-rio.mp4",
+        "poster": "/images/import-13/casa-del-rio/video-poster.webp",
+        "width": 960,
+        "height": 540,
+        "bytes": 1066987,
+        "original": "videoplayback (2).mp4",
+        "posterWidth": 640,
+        "posterHeight": 360
+      }
+    },
+    {
+      "source": "raul-13-project-import",
+      "slug": "evolo-new-york",
+      "section": "projects",
+      "category": "ictimai",
+      "country": null,
+      "title": "New York eVolo Competition",
+      "note": "competition-concept",
+      "used": [
+        "03 New York e Volo competition\\0165-1.jpg",
+        "03 New York e Volo competition\\0165-1.jpg",
+        "03 New York e Volo competition\\DG.jpg",
+        "03 New York e Volo competition\\re.jpg"
+      ],
+      "cover": {
+        "src": "/images/import-13/evolo-new-york/cover.webp",
+        "objectPosition": "center 28%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 243778,
+        "original": "0165-1.jpg"
+      },
+      "hero": {
+        "src": "/images/import-13/evolo-new-york/hero.webp",
+        "objectPosition": "center 28%",
+        "width": 2400,
+        "height": 2229,
+        "bytes": 644466,
+        "original": "0165-1.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import-13/evolo-new-york/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 28%",
+          "caption": null,
+          "width": 2000,
+          "height": 1858,
+          "bytes": 522536,
+          "original": "0165-1.jpg"
+        },
+        {
+          "src": "/images/import-13/evolo-new-york/g02.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 1452,
+          "height": 1001,
+          "bytes": 185822,
+          "original": "DG.jpg"
+        },
+        {
+          "src": "/images/import-13/evolo-new-york/g03.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 624,
+          "height": 1604,
+          "bytes": 171158,
+          "original": "re.jpg"
+        }
+      ],
+      "video": null
+    },
+    {
+      "source": "raul-13-project-import",
+      "slug": "dag-evleri",
+      "section": "projects",
+      "category": "kottec",
+      "country": null,
+      "title": "Dağ Evləri — Üç Konsept",
+      "note": null,
+      "used": [
+        "04 Dag evi 3 eded\\Cliff.png",
+        "04 Dag evi 3 eded\\Cliff.png",
+        "04 Dag evi 3 eded\\Blanc.png",
+        "04 Dag evi 3 eded\\Tiny.jpg"
+      ],
+      "cover": {
+        "src": "/images/import-13/dag-evleri/cover.webp",
+        "objectPosition": "center 40%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 199806,
+        "original": "Cliff.png"
+      },
+      "hero": {
+        "src": "/images/import-13/dag-evleri/hero.webp",
+        "objectPosition": "center 40%",
+        "width": 1936,
+        "height": 1280,
+        "bytes": 347038,
+        "original": "Cliff.png"
+      },
+      "gallery": [
+        {
+          "src": "/images/import-13/dag-evleri/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 40%",
+          "caption": "Cliff",
+          "width": 1936,
+          "height": 1280,
+          "bytes": 347038,
+          "original": "Cliff.png"
+        },
+        {
+          "src": "/images/import-13/dag-evleri/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "caption": "Blanc",
+          "width": 1936,
+          "height": 1280,
+          "bytes": 170016,
+          "original": "Blanc.png"
+        },
+        {
+          "src": "/images/import-13/dag-evleri/g03.webp",
+          "kind": "exterior",
+          "objectPosition": "center 55%",
+          "caption": "Tiny",
+          "width": 2000,
+          "height": 1120,
+          "bytes": 582314,
+          "original": "Tiny.jpg"
+        }
+      ],
+      "video": null
+    },
+    {
+      "source": "raul-13-project-import",
+      "slug": "brizz-villa",
+      "section": "projects",
+      "category": "villa",
+      "country": null,
+      "title": "BRIZZ Villa",
+      "note": null,
+      "used": [
+        "05 BRIZZ\\MW-03.jpg",
+        "05 BRIZZ\\MW-01-B.jpg",
+        "05 BRIZZ\\MW-04.jpg",
+        "05 BRIZZ\\MW-05.jpg",
+        "05 BRIZZ\\MW-06.jpg"
+      ],
+      "cover": {
+        "src": "/images/import-13/brizz-villa/cover.webp",
+        "objectPosition": "center 46%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 146408,
+        "original": "MW-03.jpg"
+      },
+      "hero": {
+        "src": "/images/import-13/brizz-villa/hero.webp",
+        "objectPosition": "center 46%",
+        "width": 2400,
+        "height": 1350,
+        "bytes": 430374,
+        "original": "MW-03.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import-13/brizz-villa/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 55%",
+          "caption": null,
+          "width": 1920,
+          "height": 1176,
+          "bytes": 294884,
+          "original": "MW-01-B.jpg"
+        },
+        {
+          "src": "/images/import-13/brizz-villa/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 1063,
+          "bytes": 359582,
+          "original": "MW-04.jpg"
+        },
+        {
+          "src": "/images/import-13/brizz-villa/g03.webp",
+          "kind": "exterior",
+          "objectPosition": "center 55%",
+          "caption": null,
+          "width": 2000,
+          "height": 1125,
+          "bytes": 378464,
+          "original": "MW-05.jpg"
+        },
+        {
+          "src": "/images/import-13/brizz-villa/g04.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 1530,
+          "height": 1980,
+          "bytes": 611256,
+          "original": "MW-06.jpg"
+        }
+      ],
+      "video": null
+    },
+    {
+      "source": "raul-13-project-import",
+      "slug": "3x1-house",
+      "section": "projects",
+      "category": "ferdi-yasayis-evi",
+      "country": null,
+      "title": "3x1 House",
+      "note": null,
+      "used": [
+        "06 3x1\\Image.jpg",
+        "06 3x1\\Image.jpg",
+        "06 3x1\\Groundfloor.pdf",
+        "06 3x1\\Masterplan.pdf"
+      ],
+      "cover": {
+        "src": "/images/import-13/3x1-house/cover.webp",
+        "objectPosition": "center 48%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 204972,
+        "original": "Image.jpg"
+      },
+      "hero": {
+        "src": "/images/import-13/3x1-house/hero.webp",
+        "objectPosition": "center 48%",
+        "width": 1776,
+        "height": 1244,
+        "bytes": 349526,
+        "original": "Image.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import-13/3x1-house/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 48%",
+          "caption": null,
+          "width": 1776,
+          "height": 1244,
+          "bytes": 349526,
+          "original": "Image.jpg"
+        },
+        {
+          "src": "/images/import-13/3x1-house/g02.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 1415,
+          "bytes": 175188,
+          "original": "Groundfloor.pdf#page=1"
+        },
+        {
+          "src": "/images/import-13/3x1-house/g03.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 2829,
+          "bytes": 408482,
+          "original": "Masterplan.pdf#page=1"
+        }
+      ],
+      "video": null
+    },
+    {
+      "source": "raul-13-project-import",
+      "slug": "erkner-shehersalma",
+      "section": "projects",
+      "category": "ictimai",
+      "country": "germany",
+      "title": "Erkner Şəhərsalma Layihəsi",
+      "note": null,
+      "used": [
+        "07 Shehersalma Erkner Germany\\KunstStoff.jpg",
+        "07 Shehersalma Erkner Germany\\KunstStoff.jpg",
+        "07 Shehersalma Erkner Germany\\Masterplan.jpg",
+        "07 Shehersalma Erkner Germany\\picto-2.jpg",
+        "07 Shehersalma Erkner Germany\\picto-3.jpg",
+        "07 Shehersalma Erkner Germany\\picto-4c.jpg"
+      ],
+      "cover": {
+        "src": "/images/import-13/erkner-shehersalma/cover.webp",
+        "objectPosition": "center 45%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 185740,
+        "original": "KunstStoff.jpg"
+      },
+      "hero": {
+        "src": "/images/import-13/erkner-shehersalma/hero.webp",
+        "objectPosition": "center 45%",
+        "width": 2400,
+        "height": 1477,
+        "bytes": 513476,
+        "original": "KunstStoff.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import-13/erkner-shehersalma/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 45%",
+          "caption": null,
+          "width": 2000,
+          "height": 1231,
+          "bytes": 378200,
+          "original": "KunstStoff.jpg"
+        },
+        {
+          "src": "/images/import-13/erkner-shehersalma/g02.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 2828,
+          "bytes": 600608,
+          "original": "Masterplan.jpg"
+        },
+        {
+          "src": "/images/import-13/erkner-shehersalma/g03.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 1557,
+          "height": 1555,
+          "bytes": 77656,
+          "original": "picto-2.jpg"
+        },
+        {
+          "src": "/images/import-13/erkner-shehersalma/g04.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 1557,
+          "height": 1531,
+          "bytes": 115274,
+          "original": "picto-3.jpg"
+        },
+        {
+          "src": "/images/import-13/erkner-shehersalma/g05.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 1946,
+          "bytes": 383514,
+          "original": "picto-4c.jpg"
+        }
+      ],
+      "video": null
+    },
+    {
+      "source": "raul-13-project-import",
+      "slug": "helgoland-shehersalma",
+      "section": "projects",
+      "category": "ictimai",
+      "country": "germany",
+      "title": "Helgoland Şəhərsalma Layihəsi",
+      "note": null,
+      "used": [
+        "08 Shersalma Helgolan Germany\\lageplan-new-1-1000.jpg",
+        "08 Shersalma Helgolan Germany\\lageplan-new-1-1000.jpg",
+        "08 Shersalma Helgolan Germany\\Schwarzplan-1-5000.jpg"
+      ],
+      "cover": {
+        "src": "/images/import-13/helgoland-shehersalma/cover.webp",
+        "objectPosition": "center",
+        "width": 1200,
+        "height": 900,
+        "bytes": 81716,
+        "original": "lageplan-new-1-1000.jpg"
+      },
+      "hero": {
+        "src": "/images/import-13/helgoland-shehersalma/hero.webp",
+        "objectPosition": "center",
+        "width": 2200,
+        "height": 3110,
+        "bytes": 377918,
+        "original": "lageplan-new-1-1000.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import-13/helgoland-shehersalma/g01.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 2828,
+          "bytes": 299312,
+          "original": "lageplan-new-1-1000.jpg"
+        },
+        {
+          "src": "/images/import-13/helgoland-shehersalma/g02.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 2828,
+          "bytes": 181506,
+          "original": "Schwarzplan-1-5000.jpg"
+        }
+      ],
+      "video": null
+    },
+    {
+      "source": "raul-13-project-import",
+      "slug": "berlin-shehersalma",
+      "section": "projects",
+      "category": "ictimai",
+      "country": "germany",
+      "title": "Berlin Şəhərsalma Layihəsi",
+      "note": null,
+      "used": [
+        "09 Shersalma Berlin\\Masterplan.jpg",
+        "09 Shersalma Berlin\\Netzplan.jpg",
+        "09 Shersalma Berlin\\Nutzung.jpg",
+        "09 Shersalma Berlin\\Schwarzplan.jpg"
+      ],
+      "cover": {
+        "src": "/images/import-13/berlin-shehersalma/cover.webp",
+        "objectPosition": "center",
+        "width": 1200,
+        "height": 900,
+        "bytes": 144782,
+        "original": "Masterplan.jpg"
+      },
+      "hero": {
+        "src": "/images/import-13/berlin-shehersalma/hero.webp",
+        "objectPosition": "center",
+        "width": 2200,
+        "height": 1555,
+        "bytes": 287954,
+        "original": "Masterplan.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import-13/berlin-shehersalma/g01.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 1414,
+          "bytes": 136342,
+          "original": "Netzplan.jpg"
+        },
+        {
+          "src": "/images/import-13/berlin-shehersalma/g02.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 1414,
+          "bytes": 277488,
+          "original": "Nutzung.jpg"
+        },
+        {
+          "src": "/images/import-13/berlin-shehersalma/g03.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 1414,
+          "bytes": 215586,
+          "original": "Schwarzplan.jpg"
+        }
+      ],
+      "video": null
+    },
+    {
+      "source": "raul-13-project-import",
+      "slug": "amerika-gedenkbibliothek",
+      "section": "projects",
+      "category": "ictimai",
+      "country": "germany",
+      "title": "Amerika-Gedenkbibliothek",
+      "note": null,
+      "used": [
+        "010 American Gedenk Bibliothek\\image.jpg",
+        "010 American Gedenk Bibliothek\\image.jpg",
+        "010 American Gedenk Bibliothek\\interior.jpg",
+        "010 American Gedenk Bibliothek\\B1.jpg",
+        "010 American Gedenk Bibliothek\\pikto1.jpg",
+        "010 American Gedenk Bibliothek\\schnitt-1(1-200).jpg",
+        "010 American Gedenk Bibliothek\\eg.pdf"
+      ],
+      "cover": {
+        "src": "/images/import-13/amerika-gedenkbibliothek/cover.webp",
+        "objectPosition": "center 45%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 118458,
+        "original": "image.jpg"
+      },
+      "hero": {
+        "src": "/images/import-13/amerika-gedenkbibliothek/hero.webp",
+        "objectPosition": "center 45%",
+        "width": 2030,
+        "height": 1025,
+        "bytes": 192898,
+        "original": "image.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import-13/amerika-gedenkbibliothek/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 45%",
+          "caption": null,
+          "width": 2000,
+          "height": 1010,
+          "bytes": 187662,
+          "original": "image.jpg"
+        },
+        {
+          "src": "/images/import-13/amerika-gedenkbibliothek/g02.webp",
+          "kind": "interior",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 1728,
+          "height": 1316,
+          "bytes": 209786,
+          "original": "interior.jpg"
+        },
+        {
+          "src": "/images/import-13/amerika-gedenkbibliothek/g03.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 1379,
+          "bytes": 226204,
+          "original": "B1.jpg"
+        },
+        {
+          "src": "/images/import-13/amerika-gedenkbibliothek/g04.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 2434,
+          "bytes": 164238,
+          "original": "pikto1.jpg"
+        },
+        {
+          "src": "/images/import-13/amerika-gedenkbibliothek/g05.webp",
+          "kind": "section",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 791,
+          "bytes": 47690,
+          "original": "schnitt-1(1-200).jpg"
+        },
+        {
+          "src": "/images/import-13/amerika-gedenkbibliothek/g06.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 2828,
+          "bytes": 263798,
+          "original": "eg.pdf#page=1"
+        }
+      ],
+      "video": null
+    },
+    {
+      "source": "raul-13-project-import",
+      "slug": "senftenberg-shehersalma",
+      "section": "projects",
+      "category": "ictimai",
+      "country": "germany",
+      "title": "Senftenberg Şəhərsalma Layihəsi",
+      "note": null,
+      "used": [
+        "011 Shehersalma senftenberg germany\\master.jpg"
+      ],
+      "cover": {
+        "src": "/images/import-13/senftenberg-shehersalma/cover.webp",
+        "objectPosition": "center",
+        "width": 1200,
+        "height": 900,
+        "bytes": 136048,
+        "original": "master.jpg"
+      },
+      "hero": {
+        "src": "/images/import-13/senftenberg-shehersalma/hero.webp",
+        "objectPosition": "center",
+        "width": 2200,
+        "height": 2339,
+        "bytes": 351546,
+        "original": "master.jpg"
+      },
+      "gallery": [],
+      "video": null
+    },
+    {
+      "source": "raul-13-project-import",
+      "slug": "kita",
+      "section": "projects",
+      "category": "ictimai",
+      "country": null,
+      "title": "KITA Uşaq Bağçası",
+      "note": null,
+      "used": [
+        "012 KITA\\KITA.jpg",
+        "012 KITA\\KITA.jpg",
+        "012 KITA\\konzept-A1.jpg",
+        "012 KITA\\schnitt.jpg",
+        "012 KITA\\schwarzplan.jpg"
+      ],
+      "cover": {
+        "src": "/images/import-13/kita/cover.webp",
+        "objectPosition": "center 48%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 189254,
+        "original": "KITA.jpg"
+      },
+      "hero": {
+        "src": "/images/import-13/kita/hero.webp",
+        "objectPosition": "center 48%",
+        "width": 2208,
+        "height": 1184,
+        "bytes": 393036,
+        "original": "KITA.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import-13/kita/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 48%",
+          "caption": null,
+          "width": 2000,
+          "height": 1072,
+          "bytes": 330904,
+          "original": "KITA.jpg"
+        },
+        {
+          "src": "/images/import-13/kita/g02.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 1890,
+          "bytes": 207840,
+          "original": "konzept-A1.jpg"
+        },
+        {
+          "src": "/images/import-13/kita/g03.webp",
+          "kind": "section",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 516,
+          "bytes": 68648,
+          "original": "schnitt.jpg"
+        },
+        {
+          "src": "/images/import-13/kita/g04.webp",
+          "kind": "plan",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 1324,
+          "bytes": 62520,
+          "original": "schwarzplan.jpg"
+        }
+      ],
+      "video": null
+    },
+    {
+      "source": "raul-13-project-import",
+      "slug": "klassik-villa",
+      "section": "projects",
+      "category": "villa",
+      "country": null,
+      "title": "Klassik Villa",
+      "note": null,
+      "used": [
+        "13 Villa\\01_Interactive LightMix_cam01.jpg",
+        "13 Villa\\01_Interactive LightMix_cam01.jpg",
+        "13 Villa\\01_Interactive LightMix_cam04.jpg",
+        "13 Villa\\2option hall2.jpg",
+        "13 Villa\\bed0333.png",
+        "13 Villa\\rest.jpg"
+      ],
+      "cover": {
+        "src": "/images/import-13/klassik-villa/cover.webp",
+        "objectPosition": "center 48%",
+        "width": 1200,
+        "height": 900,
+        "bytes": 180050,
+        "original": "01_Interactive LightMix_cam01.jpg"
+      },
+      "hero": {
+        "src": "/images/import-13/klassik-villa/hero.webp",
+        "objectPosition": "center 48%",
+        "width": 2000,
+        "height": 1500,
+        "bytes": 405508,
+        "original": "01_Interactive LightMix_cam01.jpg"
+      },
+      "gallery": [
+        {
+          "src": "/images/import-13/klassik-villa/g01.webp",
+          "kind": "exterior",
+          "objectPosition": "center 48%",
+          "caption": null,
+          "width": 2000,
+          "height": 1500,
+          "bytes": 405508,
+          "original": "01_Interactive LightMix_cam01.jpg"
+        },
+        {
+          "src": "/images/import-13/klassik-villa/g02.webp",
+          "kind": "exterior",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 2000,
+          "height": 1500,
+          "bytes": 296756,
+          "original": "01_Interactive LightMix_cam04.jpg"
+        },
+        {
+          "src": "/images/import-13/klassik-villa/g03.webp",
+          "kind": "interior",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 1760,
+          "height": 1264,
+          "bytes": 118000,
+          "original": "2option hall2.jpg"
+        },
+        {
+          "src": "/images/import-13/klassik-villa/g04.webp",
+          "kind": "interior",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 1568,
+          "height": 1440,
+          "bytes": 199032,
+          "original": "bed0333.png"
+        },
+        {
+          "src": "/images/import-13/klassik-villa/g05.webp",
+          "kind": "interior",
+          "objectPosition": "center",
+          "caption": null,
+          "width": 1920,
+          "height": 1128,
+          "bytes": 203378,
+          "original": "rest.jpg"
+        }
+      ],
+      "video": null
+    }
+  ]
+}

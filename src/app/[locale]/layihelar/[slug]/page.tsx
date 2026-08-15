@@ -10,7 +10,7 @@ import { Footer } from "@/components/footer";
 import { routing } from "@/i18n/routing";
 import { ProjectGallery } from "@/components/project-gallery";
 import { projects, getProject, getProjectGalleryGroups } from "@/data/projects";
-import { getImportedEntry } from "@/data/raul-portfolio-import";
+import { getImportedEntry } from "@/data/folder-imports";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -41,10 +41,23 @@ export default async function ProjectDetailPage({
   if (!project) notFound();
 
   const t = await getTranslations("projectDetail");
+  const co = await getTranslations("countries");
   const imported = getImportedEntry(slug);
   const specs = imported ? [] : ((t.raw(`items.${slug}.specs`) as string[] | undefined) ?? []);
   const description = imported ? "" : t(`items.${slug}.description`);
   const title = imported?.title ?? t(`items.${slug}.title`);
+  const is13Import = imported?.source === "raul-13-project-import";
+  const location = is13Import && imported.country ? co(imported.country) : null;
+  const competitionNoteByLocale: Record<string, string> = {
+    az: "Müsabiqə konsepti",
+    en: "Competition concept",
+    ru: "Концепция конкурса",
+    de: "Wettbewerbskonzept",
+  };
+  const competitionNote = is13Import && imported.note === "competition-concept"
+    ? (competitionNoteByLocale[locale] ?? competitionNoteByLocale.en)
+    : null;
+  const importedVideo = is13Import ? imported.video : null;
   const groups = getProjectGalleryGroups(slug);
   const toCards = (sources: string[], label: string) =>
     sources.map((src, index) => ({ src, alt: `${title} ${label} ${index + 1}` }));
@@ -56,8 +69,9 @@ export default async function ProjectDetailPage({
   const gallery = galleryRows.flat();
   const importedGallery = imported?.gallery.map((image, index) => ({
     src: image.src,
-    alt: `${title} ${image.kind} ${index + 1}`,
+    alt: `${title}${image.caption ? ` — ${image.caption}` : ""} ${image.kind} ${index + 1}`,
     objectPosition: image.objectPosition,
+    caption: image.caption ?? null,
   })) ?? [];
   const hasSpecs = specs.length > 0;
   const hasDescription = description.trim().length > 0;
@@ -88,6 +102,11 @@ export default async function ProjectDetailPage({
 
         {imported ? (
           <div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-10 lg:p-14">
+            {location || competitionNote ? (
+              <p className="mb-3 text-xs font-medium uppercase tracking-[0.24em] text-bronze-light/80">
+                {[location, competitionNote].filter(Boolean).join(" · ")}
+              </p>
+            ) : null}
             <h1 className="text-4xl font-semibold text-cream sm:text-6xl lg:text-7xl">
               {title}
             </h1>
@@ -130,13 +149,28 @@ export default async function ProjectDetailPage({
         </section>
       ) : null}
 
-      {imported ? (
+      {imported && (importedGallery.length > 0 || importedVideo) ? (
         <section className="bg-cream py-10 sm:py-16">
           <Container>
             <ProjectGallery images={importedGallery} />
+            {importedVideo ? (
+              <div className="mt-8 sm:mt-10">
+                <video
+                  controls
+                  playsInline
+                  preload="metadata"
+                  poster={importedVideo.poster}
+                  width={importedVideo.width}
+                  height={importedVideo.height}
+                  className="h-auto w-full bg-charcoal"
+                >
+                  <source src={importedVideo.src} type="video/mp4" />
+                </video>
+              </div>
+            ) : null}
           </Container>
         </section>
-      ) : (
+      ) : imported ? null : (
         <section className="bg-cream py-10 md:hidden">
           <Container>
             <ProjectGallery images={gallery} rows={galleryRows} />

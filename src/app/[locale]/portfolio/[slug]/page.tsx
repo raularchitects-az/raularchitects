@@ -9,7 +9,7 @@ import { Footer } from "@/components/footer";
 import { routing } from "@/i18n/routing";
 import { ProjectGallery } from "@/components/project-gallery";
 import { portfolioItems, getPortfolioItem } from "@/data/portfolio";
-import { getImportedEntry } from "@/data/raul-portfolio-import";
+import { getImportedEntry } from "@/data/folder-imports";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
