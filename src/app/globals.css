@@ -110,10 +110,17 @@
   }
 
   @media (prefers-color-scheme: dark) {
+    :root,
     html,
-    body,
-    :root {
+    body {
       color-scheme: light !important;
+      --color-cream: #f7f2ec;
+      --color-cream-dark: #efe8df;
+      --color-bronze-light: #d3b79c;
+      --color-bronze: #c4a085;
+      --color-bronze-dark: #b58e72;
+      --color-charcoal: #47484c;
+      --color-charcoal-dark: #1c1c1e;
       background-color: #f7f2ec !important;
       color: #47484c !important;
     }
@@ -122,6 +129,69 @@
     body {
       -webkit-filter: none !important;
       filter: none !important;
+    }
+
+    header,
+    main,
+    section,
+    footer,
+    input,
+    textarea,
+    select,
+    button {
+      color-scheme: light !important;
+    }
+
+    header {
+      background-color: transparent !important;
+    }
+
+    .bg-cream {
+      background-color: #f7f2ec !important;
+    }
+
+    .bg-cream-dark {
+      background-color: #efe8df !important;
+    }
+
+    .bg-gradient-animated {
+      background-image: linear-gradient(
+        115deg,
+        #8f6b4f 0%,
+        #b58e72 22%,
+        #d3b79c 48%,
+        #c4a085 72%,
+        #9a7356 100%
+      ) !important;
+    }
+
+    .hero-photo-fade-mobile {
+      background: linear-gradient(
+        to bottom,
+        rgb(247 242 236 / 0%) 0%,
+        rgb(247 242 236 / 0%) 58%,
+        rgb(247 242 236 / 0.35) 78%,
+        #f7f2ec 100%
+      ) !important;
+    }
+
+    .hero-photo-fade-desktop {
+      background: linear-gradient(
+        to right,
+        rgb(247 242 236 / 0%) 0%,
+        rgb(247 242 236 / 0%) 42%,
+        rgb(247 242 236 / 0.18) 58%,
+        rgb(247 242 236 / 0.72) 74%,
+        #f7f2ec 90%
+      ) !important;
+    }
+
+    .hero-name-plate {
+      background-image: linear-gradient(105deg, #7a5a42 0%, #b58e72 55%, #c4a085 100%) !important;
+    }
+
+    .text-coffee-gradient {
+      background-image: linear-gradient(105deg, #6b4a32 0%, #8f6b4f 42%, #c4a085 100%) !important;
     }
   }
 }

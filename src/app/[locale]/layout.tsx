@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
@@ -29,14 +29,13 @@ export async function generateMetadata({
   return {
     title: t("title"),
     description: t("description"),
-    colorScheme: "only light",
-    themeColor: "#f7f2ec",
-    other: {
-      "color-scheme": "light only",
-      "supported-color-schemes": "light",
-    },
   };
 }
+
+export const viewport: Viewport = {
+  colorScheme: "light",
+  themeColor: "#f7f2ec",
+};
 
 export default async function LocaleLayout({
   children,
@@ -57,6 +56,9 @@ export default async function LocaleLayout({
       className={`${inter.variable} h-full antialiased`}
       style={{ colorScheme: "light" }}
     >
+      <head>
+        <meta name="color-scheme" content="light" />
+      </head>
       <body className="min-h-full bg-cream font-sans font-normal text-charcoal" style={{ colorScheme: "light" }}>
         <NextIntlClientProvider messages={messages}>
           <Navbar />
