@@ -2,6 +2,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+  --light-page-background: #f7f2ec;
   --color-cream: #f7f2ec;
   --color-cream-dark: #efe8df;
   --color-bronze-light: #d3b79c;
@@ -80,9 +81,10 @@
     border-color: #e4e2de;
   }
 
+  :root,
   html,
   body {
-    color-scheme: light !important;
+    color-scheme: only light !important;
   }
 
   html {
@@ -101,7 +103,7 @@
   textarea,
   select,
   button {
-    color-scheme: light !important;
+    color-scheme: only light !important;
   }
 
   ::selection {
@@ -113,7 +115,7 @@
     :root,
     html,
     body {
-      color-scheme: light !important;
+      color-scheme: only light !important;
       --color-cream: #f7f2ec;
       --color-cream-dark: #efe8df;
       --color-bronze-light: #d3b79c;
@@ -121,14 +123,8 @@
       --color-bronze-dark: #b58e72;
       --color-charcoal: #47484c;
       --color-charcoal-dark: #1c1c1e;
-      background-color: #f7f2ec !important;
+      background: var(--light-page-background) !important;
       color: #47484c !important;
-    }
-
-    html,
-    body {
-      -webkit-filter: none !important;
-      filter: none !important;
     }
 
     header,
@@ -139,7 +135,7 @@
     textarea,
     select,
     button {
-      color-scheme: light !important;
+      color-scheme: only light !important;
     }
 
     header {

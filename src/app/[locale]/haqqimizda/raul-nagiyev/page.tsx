@@ -41,12 +41,13 @@ export default async function RaulNagiyevPage({ params }: PageProps<"/[locale]/h
             <div className="flex flex-col gap-6">
               <div className="relative aspect-[4/5] w-full overflow-hidden bg-cream-dark">
                 <Image
-                  src="/images/raul-cutout.png"
+                  src="/images/raul-hero.jpg"
                   alt={t("title")}
                   fill
                   priority
+                  quality={95}
                   sizes="(min-width: 1024px) 22rem, 90vw"
-                  className="object-contain object-bottom p-4"
+                  className="object-cover object-[20%_center]"
                 />
               </div>
               <div className="flex flex-col gap-1">
