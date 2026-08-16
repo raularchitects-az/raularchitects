@@ -9,6 +9,7 @@
     "services": "Услуги",
     "about": "О нас",
     "contact": "Контакты",
+    "blog": "Блог",
     "menuOpen": "Меню",
     "menuClose": "Закрыть",
     "aboutStudio": "Raul Architects",
@@ -628,5 +629,26 @@
   },
   "languageSwitcher": {
     "label": "Язык"
+  },
+  "blog": {
+    "title": "Блог",
+    "eyebrow": "Блог",
+    "subtitle": "Практические материалы о BIM-архитектуре, проектировании, интерьере, градостроительстве и строительстве — для Баку и Азербайджана.",
+    "metaTitle": "Блог — BIM, архитектура и интерьер | Raul Architects",
+    "metaDescription": "Практические статьи о строительстве дома в Баку, BIM-архитектуре, дизайне интерьера, рабочих чертежах и градостроительстве. Блог Raul Architects.",
+    "allPosts": "Все статьи",
+    "read": "Читать",
+    "back": "Все статьи",
+    "related": "Связанные страницы",
+    "author": "Раул Нагиев",
+    "categories": {
+      "bim": "BIM",
+      "architecture": "Архитектура",
+      "interior": "Интерьер",
+      "construction": "Строительство",
+      "urban": "Градостроительство",
+      "visualization": "Визуализация",
+      "planning": "Планировка"
+    }
   }
 }

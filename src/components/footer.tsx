@@ -8,6 +8,7 @@ const links = [
   { href: "/layihelar", key: "projects" },
   { href: "/portfolio", key: "portfolio" },
   { href: "/haqqimizda", key: "about" },
+  { href: "/bloq", key: "blog" },
   { href: "/elaqe", key: "contact" },
 ] as const;
 

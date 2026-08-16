@@ -9,6 +9,7 @@
     "services": "Xidmətlər",
     "about": "Haqqımızda",
     "contact": "Əlaqə",
+    "blog": "Bloq",
     "menuOpen": "Menyu",
     "menuClose": "Bağla",
     "aboutStudio": "Raul Architects",
@@ -628,5 +629,26 @@
   },
   "languageSwitcher": {
     "label": "Dil"
+  },
+  "blog": {
+    "title": "Bloq",
+    "eyebrow": "Bloq",
+    "subtitle": "BIM memarlıq, layihələndirmə, interyer, şəhərsalma və tikinti haqqında praktik yazılar — Bakı və Azərbaycan üçün.",
+    "metaTitle": "Bloq — BIM, memarlıq və interyer | Raul Architects",
+    "metaDescription": "Bakıda ev tikdirmək, BIM memarlıq, interyer dizaynı, işçi çertyojlar və şəhərsalma haqqında praktik məqalələr. Raul Architects bloqu.",
+    "allPosts": "Bütün yazılar",
+    "read": "Oxu",
+    "back": "Bütün yazılar",
+    "related": "Əlaqəli səhifələr",
+    "author": "Raul Nağıyev",
+    "categories": {
+      "bim": "BIM",
+      "architecture": "Memarlıq",
+      "interior": "İnteryer",
+      "construction": "Tikinti",
+      "urban": "Şəhərsalma",
+      "visualization": "Vizualizasiya",
+      "planning": "Planlama"
+    }
   }
 }

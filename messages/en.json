@@ -9,6 +9,7 @@
     "services": "Services",
     "about": "About",
     "contact": "Contact",
+    "blog": "Blog",
     "menuOpen": "Menu",
     "menuClose": "Close",
     "aboutStudio": "Raul Architects",
@@ -628,5 +629,26 @@
   },
   "languageSwitcher": {
     "label": "Language"
+  },
+  "blog": {
+    "title": "Blog",
+    "eyebrow": "Blog",
+    "subtitle": "Practical notes on BIM architecture, design, interiors, urban planning and construction — written for Baku and Azerbaijan.",
+    "metaTitle": "Blog — BIM, architecture and interiors | Raul Architects",
+    "metaDescription": "Practical articles on building a house in Baku, BIM architecture, interior design, working drawings and urban planning. The Raul Architects blog.",
+    "allPosts": "All articles",
+    "read": "Read",
+    "back": "All articles",
+    "related": "Related pages",
+    "author": "Raul Naghiyev",
+    "categories": {
+      "bim": "BIM",
+      "architecture": "Architecture",
+      "interior": "Interior",
+      "construction": "Construction",
+      "urban": "Urban planning",
+      "visualization": "Visualization",
+      "planning": "Planning"
+    }
   }
 }
