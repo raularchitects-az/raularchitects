@@ -28,15 +28,23 @@ export function HomeHero({
   raulName,
   role1,
   role2,
+  roleLine2,
+  roleLine3,
   allServicesCta,
   services,
 }: {
   raulName: string;
   role1: string;
   role2: string;
+  roleLine2: string;
+  roleLine3: string;
   allServicesCta: string;
   services: HomeHeroService[];
 }) {
+  const [firstName, ...lastNameParts] = raulName.split(" ");
+  const lastName = lastNameParts.join(" ");
+  const mobileRoles = [role1, roleLine2, roleLine3];
+
   return (
     <section className="relative min-h-[calc(100dvh-5rem)] w-full overflow-hidden bg-cream lg:isolate">
       {/* LAYER 1 — photo (mask only on the image, not the name block) */}
@@ -64,16 +72,43 @@ export function HomeHero({
           <div aria-hidden="true" className="hero-photo-fade-desktop hidden lg:block" />
         </div>
 
-        {/* LAYER 3 — identity over photo */}
-        <div className="hero-layer-identity absolute bottom-0 left-6 z-10 max-w-[calc(100%-1.5rem)] pb-14 sm:left-8 lg:left-[22%] lg:max-w-[min(36rem,30%)] lg:pb-16 xl:left-[20%]">
+        {/* Mobile identity — reference layout, lg:hidden only */}
+        <Link
+          href="/haqqimizda/raul-nagiyev"
+          className="hero-layer-identity absolute top-[22%] right-3 z-10 w-[min(52%,13.75rem)] lg:hidden"
+        >
+          <span className="flex flex-col gap-[3px]">
+            <span className="hero-name-plate flex w-full items-center px-3.5 py-[7px] text-[1.25rem] font-bold uppercase leading-none tracking-[0.14em] text-white">
+              {firstName}
+            </span>
+            <span className="hero-name-plate flex w-full items-center px-3.5 py-[7px] text-[1.25rem] font-bold uppercase leading-none tracking-[0.14em] text-white">
+              {lastName}
+            </span>
+          </span>
+          <span className="mt-2.5 flex flex-col">
+            {mobileRoles.map((line, index) => (
+              <span
+                key={line}
+                className={`py-1.5 text-[11px] font-bold leading-snug text-white ${
+                  index > 0 ? "border-t border-white/40" : "pt-0"
+                }`}
+              >
+                {line}
+              </span>
+            ))}
+          </span>
+        </Link>
+
+        {/* Desktop identity — unchanged from original desktop treatment */}
+        <div className="hero-layer-identity absolute bottom-0 left-[22%] z-10 hidden max-w-[min(36rem,30%)] pb-16 lg:block xl:left-[20%]">
           <Link
             href="/haqqimizda/raul-nagiyev"
-            className="group inline-flex flex-col gap-2.5 sm:gap-3"
+            className="group inline-flex flex-col gap-3"
           >
-            <span className="hero-name-plate inline-flex w-fit px-4 py-2.5 text-sm font-bold uppercase tracking-[0.08em] text-white whitespace-nowrap sm:px-5 sm:py-3 sm:text-base lg:text-2xl lg:whitespace-normal">
+            <span className="hero-name-plate inline-flex w-fit px-5 py-3 text-2xl font-bold uppercase tracking-[0.08em] text-white">
               {raulName}
             </span>
-            <span className="hero-identity-roles flex flex-col gap-0.5 text-[13px] font-medium leading-snug text-[#f7f2ec] lg:text-[0.95rem] lg:text-white lg:drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)]">
+            <span className="hero-identity-roles flex flex-col gap-0.5 text-[0.95rem] font-medium leading-snug text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)]">
               <span>{role1}</span>
               <span>{role2}</span>
             </span>

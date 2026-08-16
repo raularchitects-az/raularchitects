@@ -14,11 +14,20 @@ type HomeMessages = {
   raulName: string;
   role1: string;
   role2: string;
+  roleLine2?: string;
+  roleLine3?: string;
   allServicesCta: string;
   svcTikinti: string;
   svcBim: string;
   svcInteryer: string;
   svcSehersalma: string;
+};
+
+const mobileRoleFallback: Record<string, { roleLine2: string; roleLine3: string }> = {
+  az: { roleLine2: "İnşaat mühəndisi", roleLine3: "BIM eksperti" },
+  en: { roleLine2: "Civil Engineer", roleLine3: "BIM Expert" },
+  ru: { roleLine2: "Инженер-строитель", roleLine3: "BIM-эксперт" },
+  de: { roleLine2: "Bauingenieur", roleLine3: "BIM-Experte" },
 };
 
 const serviceTitleFields = {
@@ -52,6 +61,8 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
         raulName={homeMsg.raulName}
         role1={homeMsg.role1}
         role2={homeMsg.role2}
+        roleLine2={homeMsg.roleLine2 ?? mobileRoleFallback[locale]?.roleLine2 ?? mobileRoleFallback.en.roleLine2}
+        roleLine3={homeMsg.roleLine3 ?? mobileRoleFallback[locale]?.roleLine3 ?? mobileRoleFallback.en.roleLine3}
         allServicesCta={homeMsg.allServicesCta}
         services={heroServices}
       />
