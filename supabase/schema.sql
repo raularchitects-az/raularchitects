@@ -194,6 +194,11 @@ as $$
   );
 $$;
 
+drop policy if exists "read own profile" on public.profiles;
+create policy "read own profile" on public.profiles
+for select to authenticated
+using (id = auth.uid());
+
 drop policy if exists "staff read profiles" on public.profiles;
 create policy "staff read profiles" on public.profiles for select to authenticated using (public.is_staff());
 drop policy if exists "admin write profiles" on public.profiles;

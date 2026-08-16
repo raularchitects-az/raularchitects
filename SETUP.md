@@ -13,7 +13,18 @@ Public sayt Supabase olmadan da mövcud statik kontentlə işləyir. Admin panel
 1. Supabase → **Authentication → Users → Add user**
    - Email və şifrə verin (məs. studio emailiniz).
    - **Auto Confirm User** aktiv olsun.
-2. **SQL Editor**-də istifadəçinin UUID-sini `auth.users` cədvəlindən kopyalayın, sonra:
+2. **SQL Editor**-də bu skripti Run edin (ən son Auth user-i admin edir):
+
+```sql
+insert into public.profiles (id, role, full_name)
+select id, 'admin'::public.user_role, coalesce(email, 'Admin')
+from auth.users
+order by created_at desc
+limit 1
+on conflict (id) do update set role = 'admin';
+```
+
+Və ya UUID-ni Authentication → Users-dən kopyalayıb belə yazın:
 
 ```sql
 insert into public.profiles (id, role, full_name)

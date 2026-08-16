@@ -8,6 +8,7 @@ import {
   isSecretSupabaseKey,
   isSupabaseProjectUrl,
 } from "@/lib/cms/env";
+import { loadProfileByUserId } from "@/lib/cms/auth";
 import { createUserServerClient } from "@/lib/cms/supabase";
 
 export type LoginState = { error: string } | null;
@@ -57,6 +58,32 @@ function authErrorMessage(error: { message?: string; code?: string; name?: strin
   return detail ? `Giriş alınmadı: ${detail}` : "Giriş alınmadı. Email, şifrə və Supabase ayarlarını yoxlayın.";
 }
 
+function profileErrorMessage(error: { message?: string; code?: string }) {
+  const message = (error.message ?? "").toLowerCase();
+  const code = (error.code ?? "").toLowerCase();
+  const detail = [error.code, error.message].filter(Boolean).join(" — ");
+
+  if (
+    code === "42p01" ||
+    code === "pgrst205" ||
+    message.includes("schema cache") ||
+    message.includes("does not exist") ||
+    message.includes("could not find the table")
+  ) {
+    return "profiles cədvəli yoxdur. Supabase → SQL Editor-də supabase/schema.sql faylını tam Run edin, sonra user-ə role = admin verin.";
+  }
+  if (message.includes("infinite recursion")) {
+    return "profiles RLS siyasəti döngüyə düşür. schema.sql-i yenidən Run edin.";
+  }
+  if (code === "42501" || message.includes("permission denied")) {
+    return "profiles oxumaq üçün icazə yoxdur. schema.sql-i Run edin və SUPABASE_SERVICE_ROLE_KEY dəyərini yoxlayın.";
+  }
+
+  return detail
+    ? `Profil yoxlanılmadı: ${detail}`
+    : "Profil yoxlanılmadı. Supabase SQL Editor-də schema.sql-i işlədin.";
+}
+
 export async function loginAction(prev: LoginState | FormData, formData?: FormData): Promise<LoginState> {
   if (!isCmsConfigured()) {
     return {
@@ -97,16 +124,12 @@ export async function loginAction(prev: LoginState | FormData, formData?: FormDa
       return { error: authErrorMessage(error ?? { message: "invalid login credentials" }) };
     }
 
-    const { data: profile, error: profileError } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", data.user.id)
-      .maybeSingle();
+    const { data: profile, error: profileError } = await loadProfileByUserId(data.user.id);
 
     if (profileError) {
       console.error("[admin login] profile", profileError.code, profileError.message);
       await supabase.auth.signOut();
-      return { error: "Profil yoxlanılmadı. Supabase SQL Editor-də schema.sql-i işlədin." };
+      return { error: profileErrorMessage(profileError) };
     }
 
     if (profile?.role !== "admin" && profile?.role !== "editor") {
