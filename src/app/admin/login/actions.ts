@@ -1,7 +1,13 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { getSupabaseAnonKey, getSupabaseUrl, isCmsConfigured, isSecretSupabaseKey } from "@/lib/cms/env";
+import {
+  getSupabaseAnonKey,
+  getSupabaseUrl,
+  isCmsConfigured,
+  isSecretSupabaseKey,
+  isSupabaseProjectUrl,
+} from "@/lib/cms/env";
 import { createUserServerClient } from "@/lib/cms/supabase";
 
 export type LoginState = { error: string } | null;
@@ -44,6 +50,9 @@ function authErrorMessage(error: { message?: string; code?: string; name?: strin
   if (message.includes("unexpected token") || message.includes("not valid json")) {
     return "Supabase URL səhvdir. Dəyər https://YOUR_PROJECT.supabase.co olmalıdır, sayt ünvanı yox.";
   }
+  if (message.includes("invalid path specified")) {
+    return "NEXT_PUBLIC_SUPABASE_URL səhvdir. Yalnız Project URL yazın: https://YOUR_PROJECT.supabase.co — sonda /auth/v1 və ya dashboard yolu olmasın. Sonra Redeploy edin.";
+  }
 
   return detail ? `Giriş alınmadı: ${detail}` : "Giriş alınmadı. Email, şifrə və Supabase ayarlarını yoxlayın.";
 }
@@ -64,9 +73,10 @@ export async function loginAction(prev: LoginState | FormData, formData?: FormDa
   if (!supabaseUrl.startsWith("https://")) {
     return { error: "NEXT_PUBLIC_SUPABASE_URL https:// ilə başlamalıdır." };
   }
-  if (!/supabase/i.test(supabaseUrl)) {
+  if (!isSupabaseProjectUrl(supabaseUrl)) {
     return {
-      error: "NEXT_PUBLIC_SUPABASE_URL səhvdir. Dəyər https://YOUR_PROJECT.supabase.co olmalıdır, sayt ünvanı yox.",
+      error:
+        "NEXT_PUBLIC_SUPABASE_URL səhvdir. Dəyər yalnız https://YOUR_PROJECT.supabase.co olmalıdır (sayt ünvanı, dashboard və ya /auth/v1 yolu yox).",
     };
   }
 

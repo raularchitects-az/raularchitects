@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin, requireStaff } from "./auth";
 import { createUserServerClient, createServiceClient } from "./supabase";
-import { mediaPublicUrl } from "./env";
+import { mediaPublicUrl } from "./media-url";
 import type { ContentStatus, EntityType } from "./queries";
 
 function slugify(value: string) {

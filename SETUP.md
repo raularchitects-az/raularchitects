@@ -38,7 +38,9 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_ANON_KEY
 SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
 ```
 
-- `NEXT_PUBLIC_SUPABASE_URL` — Project Settings → API → Project URL  
+- `NEXT_PUBLIC_SUPABASE_URL` — Project Settings → API → **Project URL** yalnız: `https://YOUR_PROJECT.supabase.co`  
+  Sonda `/auth/v1`, `/rest/v1`, dashboard linki (`supabase.com/dashboard/...`) və ya sayt ünvanı (`raularchitects.com`) olmasın. Bu səhv `Invalid path specified in request URL` xətası verir.  
+
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` — Project Settings → API → **anon public** və ya **publishable** (`eyJ...` JWT və ya `sb_publishable_...`)  
 - `SUPABASE_SERVICE_ROLE_KEY` — Project Settings → API → **service_role** və ya **secret** (`eyJ...` JWT və ya `sb_secret_...`). **server-only**, heç vaxt `NEXT_PUBLIC_` prefiksi olmasın
 
@@ -51,7 +53,7 @@ Project → Settings → Environment Variables. Production / Preview / Developme
 | Ad | Qeyd |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | `https://raularchitects.com` (canonical və OG üçün) |
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase Project URL |
+| `NEXT_PUBLIC_SUPABASE_URL` | Yalnız `https://xxxx.supabase.co` (path yox) |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | anon public **və ya** `sb_publishable_...` |
 | `SUPABASE_SERVICE_ROLE_KEY` | service_role **və ya** `sb_secret_...`, **server only** |
 

@@ -2,7 +2,7 @@ import { blogPosts as staticBlog, getBlogCopy, type BlogPost } from "@/data/blog
 import { portfolioItems as staticPortfolio, type PortfolioMeta } from "@/data/portfolio";
 import { projects as staticProjects, getProjectGalleryGroups, type ProjectMeta } from "@/data/projects";
 import { services as staticServices, type ServiceMeta } from "@/data/services";
-import { mediaPublicUrl } from "./env";
+import { mediaPublicUrl } from "./media-url";
 import { findRedirect, getPublished, getSettings } from "./queries";
 import type { CmsRow, TranslationBlock } from "./types";
 
