@@ -1,9 +1,9 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin, requireStaff } from "./auth";
-import { createUserServerClient, createServiceClient } from "./supabase";
+import { createAdminClient, createUserServerClient, createServiceClient } from "./supabase";
 import { mediaPublicUrl } from "./media-url";
 import type { ContentStatus, EntityType } from "./queries";
 
@@ -31,7 +31,7 @@ async function audit(
   after?: unknown,
 ) {
   const { user } = await requireStaff();
-  const supabase = await createUserServerClient();
+  const supabase = await createAdminClient();
   if (!supabase) return;
   await supabase.from("audit_logs").insert({
     user_id: user.id,
@@ -46,7 +46,7 @@ async function audit(
 
 async function saveRevision(entityType: string, entityId: string, payload: unknown) {
   const { user } = await requireStaff();
-  const supabase = await createUserServerClient();
+  const supabase = await createAdminClient();
   if (!supabase) return;
   await supabase.from("content_revisions").insert({
     entity_type: entityType,
@@ -57,6 +57,7 @@ async function saveRevision(entityType: string, entityId: string, payload: unkno
 }
 
 function revalidatePublic() {
+  revalidateTag("cms", "max");
   revalidatePath("/", "layout");
   revalidatePath("/admin", "layout");
 }
@@ -157,7 +158,7 @@ function pickColumns(table: EntityType, payload: Record<string, unknown>) {
 
 export async function upsertRecord(table: EntityType, id: string | null, payload: Record<string, unknown>) {
   await requireStaff();
-  const supabase = await createUserServerClient();
+  const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
 
   const row = pickColumns(table, payload);
@@ -199,7 +200,7 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
 
 export async function setStatus(table: EntityType, id: string, status: ContentStatus) {
   await requireStaff();
-  const supabase = await createUserServerClient();
+  const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
   const patch: Record<string, unknown> = { status, updated_at: new Date().toISOString() };
   if (status === "published") patch.published_at = new Date().toISOString();
@@ -211,7 +212,7 @@ export async function setStatus(table: EntityType, id: string, status: ContentSt
 
 export async function setActive(table: EntityType, id: string, isActive: boolean) {
   await requireStaff();
-  const supabase = await createUserServerClient();
+  const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
   const { error } = await supabase.from(table).update({ is_active: isActive, updated_at: new Date().toISOString() }).eq("id", id);
   if (error) throw error;
@@ -225,7 +226,7 @@ export async function archiveRecord(table: EntityType, id: string) {
 
 export async function deleteRecord(table: EntityType, id: string) {
   await requireStaff();
-  const supabase = await createUserServerClient();
+  const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
   const { data: existing } = await supabase.from(table).select("*").eq("id", id).maybeSingle();
   if (existing && existing.status !== "archived") {
@@ -241,7 +242,7 @@ export async function deleteRecord(table: EntityType, id: string) {
 
 export async function duplicateRecord(table: EntityType, id: string) {
   await requireStaff();
-  const supabase = await createUserServerClient();
+  const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
   const { data: existing } = await supabase.from(table).select("*").eq("id", id).maybeSingle();
   if (!existing) throw new Error("Tapılmadı");
@@ -261,7 +262,7 @@ export async function duplicateRecord(table: EntityType, id: string) {
 
 export async function restoreRevision(revisionId: string) {
   await requireStaff();
-  const supabase = await createUserServerClient();
+  const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
   const { data: rev } = await supabase.from("content_revisions").select("*").eq("id", revisionId).maybeSingle();
   if (!rev) throw new Error("Versiya tapılmadı");
@@ -276,7 +277,7 @@ export async function restoreRevision(revisionId: string) {
 
 export async function saveSettings(key: string, value: Record<string, unknown>) {
   await requireStaff();
-  const supabase = await createUserServerClient();
+  const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
   const { error } = await supabase.from("site_settings").upsert({ key, value, updated_at: new Date().toISOString() });
   if (error) throw error;
@@ -286,7 +287,7 @@ export async function saveSettings(key: string, value: Record<string, unknown>) 
 
 export async function reorder(table: EntityType, orderedIds: string[]) {
   await requireStaff();
-  const supabase = await createUserServerClient();
+  const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
   await Promise.all(
     orderedIds.map((id, index) =>
@@ -299,7 +300,7 @@ export async function reorder(table: EntityType, orderedIds: string[]) {
 
 export async function uploadMedia(formData: FormData) {
   const { user } = await requireStaff();
-  const supabase = await createUserServerClient();
+  const supabase = await createAdminClient();
   const service = createServiceClient();
   if (!supabase || !service) throw new Error("CMS configured deyil");
 
@@ -346,7 +347,7 @@ export async function uploadMedia(formData: FormData) {
 
 export async function deleteMedia(id: string) {
   await requireStaff();
-  const supabase = await createUserServerClient();
+  const supabase = await createAdminClient();
   const service = createServiceClient();
   if (!supabase || !service) throw new Error("CMS configured deyil");
   const { data } = await supabase.from("media").select("*").eq("id", id).maybeSingle();
@@ -359,14 +360,14 @@ export async function deleteMedia(id: string) {
 
 export async function updateMediaAlt(id: string, alt: string) {
   await requireStaff();
-  const supabase = await createUserServerClient();
+  const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
   await supabase.from("media").update({ alt_text: alt }).eq("id", id);
 }
 
 export async function updateUserRole(userId: string, role: "admin" | "editor") {
   await requireAdmin();
-  const supabase = await createUserServerClient();
+  const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
   const { error } = await supabase.from("profiles").update({ role, updated_at: new Date().toISOString() }).eq("id", userId);
   if (error) throw error;
@@ -394,7 +395,7 @@ function blocksToMarkdown(
 
 export async function importStaticContent() {
   await requireAdmin();
-  const supabase = await createUserServerClient();
+  const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
 
   const { projects } = await import("@/data/projects");

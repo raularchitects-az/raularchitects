@@ -124,7 +124,11 @@ export function EntityTable({
           })}
         </tbody>
       </table>
-      {ordered.length === 0 ? <p className="px-4 py-8 text-sm text-charcoal/50">Hələ qeyd yoxdur.</p> : null}
+      {ordered.length === 0 ? (
+        <p className="px-4 py-8 text-sm text-charcoal/50">
+          Hələ qeyd yoxdur. Dashboard-da «Mövcud saytı import et» düyməsi ilə canlı sayt kontentini gətirin.
+        </p>
+      ) : null}
     </div>
   );
 }

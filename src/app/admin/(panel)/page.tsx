@@ -22,6 +22,22 @@ export default async function AdminDashboardPage() {
         <h1 className="text-3xl font-semibold">Dashboard</h1>
         <p className="mt-2 text-sm text-charcoal/60">Kontent statistikası və son dəyişikliklər</p>
       </div>
+      {stats.projects.total + stats.portfolio.total + stats.blog.total === 0 ? (
+        <div className="border border-charcoal/10 bg-white p-6">
+          <h2 className="text-lg font-medium">CMS hələ boşdur</h2>
+          <p className="mt-2 max-w-2xl text-sm text-charcoal/60">
+            Canlı saytdakı layihə, portfolio və bloq hələ də statik fayllardadır. Onları adminə draft kimi
+            gətirmək üçün import edin, yoxlayın, sonra Publish edin. Publish etmədən public sayt dəyişmir.
+          </p>
+          {profile.role === "admin" ? (
+            <div className="mt-5">
+              <ImportStaticButton prominent />
+            </div>
+          ) : (
+            <p className="mt-4 text-sm text-charcoal/50">Import üçün admin hesabı lazımdır.</p>
+          )}
+        </div>
+      ) : null}
       <div className="grid gap-4 sm:grid-cols-3">
         {cards.map((card) => (
           <Link key={card.label} href={card.href} className="border border-charcoal/10 bg-white p-5">
