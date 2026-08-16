@@ -1,14 +1,21 @@
+function readPublicEnv(name: string) {
+  return (process.env[name] ?? "")
+    .trim()
+    .replace(/^["']+|["']+$/g, "")
+    .trim();
+}
+
 export function isCmsConfigured() {
   return Boolean(getSupabaseUrl() && getSupabaseAnonKey());
 }
 
 export function getSupabaseUrl() {
-  return process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() ?? "";
+  return readPublicEnv("NEXT_PUBLIC_SUPABASE_URL").replace(/\/+$/, "");
 }
 
 /** Legacy JWT `eyJ...` or current `sb_publishable_...`. Never a secret key. */
 export function getSupabaseAnonKey() {
-  return process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim() ?? "";
+  return readPublicEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY");
 }
 
 export function isSecretSupabaseKey(key: string) {
