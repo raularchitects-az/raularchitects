@@ -129,7 +129,13 @@ export function HomeHero({
       <div className="relative z-10 flex min-h-[42svh] items-center bg-cream px-6 py-10 sm:px-8 lg:ml-auto lg:min-h-[calc(100dvh-5rem)] lg:w-[48%] lg:bg-transparent lg:px-10 lg:py-16 xl:w-[46%] xl:pr-14">
         {/* LAYER 2 — logo-mark triangle */}
         <div aria-hidden="true" className="hero-triangle-wrap pointer-events-none absolute inset-0">
-          <div className="hero-triangle-mark" />
+          <Image
+            src="/brand/land-page-triangle.png"
+            alt=""
+            width={1022}
+            height={1024}
+            className="hero-triangle-mark"
+          />
         </div>
 
         <div className="relative z-10 w-full max-w-xl lg:max-w-none">
