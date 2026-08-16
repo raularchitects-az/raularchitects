@@ -4,8 +4,11 @@ import { useActionState } from "react";
 import { Field, SubmitButton, TextInput } from "@/components/admin/fields";
 import { loginAction, type LoginState } from "./actions";
 
-export function LoginForm() {
+export function LoginForm({ configured }: { configured: boolean }) {
   const [state, formAction] = useActionState(loginAction, null as LoginState);
+  const error = state?.error || (!configured
+    ? "Lokal Supabase ayarları yoxdur. Layihə kökündə .env.local yaradıb Vercel-dəki 3 dəyişəni yazın, sonra npm run dev-i yenidən başladın."
+    : "");
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#f7f2ec] p-6">
@@ -19,7 +22,7 @@ export function LoginForm() {
           <Field label="Şifrə">
             <TextInput name="password" type="password" required autoComplete="current-password" />
           </Field>
-          {state?.error ? <p className="text-sm text-red-700">{state.error}</p> : null}
+          {error ? <p className="text-sm text-red-700">{error}</p> : null}
           <SubmitButton>Daxil ol</SubmitButton>
         </div>
       </form>
