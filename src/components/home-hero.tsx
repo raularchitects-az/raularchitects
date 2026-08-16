@@ -72,32 +72,35 @@ export function HomeHero({
           <div aria-hidden="true" className="hero-photo-fade-desktop hidden lg:block" />
         </div>
 
-        {/* Mobile identity — reference layout, lg:hidden only */}
-        <Link
-          href="/haqqimizda/raul-nagiyev"
-          className="hero-layer-identity absolute top-[22%] right-3 z-10 w-[min(52%,13.75rem)] lg:hidden"
-        >
-          <span className="flex flex-col gap-[3px]">
-            <span className="hero-name-plate flex w-full items-center px-3.5 py-[7px] text-[1.25rem] font-bold uppercase leading-none tracking-[0.14em] text-white">
-              {firstName}
-            </span>
-            <span className="hero-name-plate flex w-full items-center px-3.5 py-[7px] text-[1.25rem] font-bold uppercase leading-none tracking-[0.14em] text-white">
-              {lastName}
-            </span>
-          </span>
-          <span className="mt-2.5 flex flex-col">
-            {mobileRoles.map((line, index) => (
-              <span
-                key={line}
-                className={`py-1.5 text-[11px] font-bold leading-snug text-white ${
-                  index > 0 ? "border-t border-white/40" : "pt-0"
-                }`}
-              >
-                {line}
+        {/* Mobile identity — right-column safe zone only */}
+        <div className="pointer-events-none absolute inset-0 z-10 grid grid-cols-[52%_48%] lg:hidden">
+          <span aria-hidden="true" />
+          <Link
+            href="/haqqimizda/raul-nagiyev"
+            className="hero-layer-identity pointer-events-auto mr-[clamp(0.75rem,3.8vw,1rem)] mt-[clamp(4.5rem,15svh,7rem)] min-w-0 self-start"
+          >
+            <span className="flex min-w-0 flex-col gap-[3px]">
+              <span className="hero-name-plate flex w-full min-w-0 items-center px-[clamp(0.55rem,2.2vw,0.9rem)] py-[clamp(0.32rem,1.15vw,0.5rem)] text-[clamp(0.95rem,4.4vw,1.3rem)] font-bold uppercase leading-none tracking-[clamp(0.06em,0.32vw,0.12em)] text-white">
+                {firstName}
               </span>
-            ))}
-          </span>
-        </Link>
+              <span className="hero-name-plate flex w-full min-w-0 items-center px-[clamp(0.55rem,2.2vw,0.9rem)] py-[clamp(0.32rem,1.15vw,0.5rem)] text-[clamp(0.95rem,4.4vw,1.3rem)] font-bold uppercase leading-none tracking-[clamp(0.06em,0.32vw,0.12em)] text-white">
+                {lastName}
+              </span>
+            </span>
+            <span className="mt-[clamp(0.4rem,1.5vw,0.7rem)] flex min-w-0 flex-col">
+              {mobileRoles.map((line, index) => (
+                <span
+                  key={line}
+                  className={`break-words py-[clamp(0.28rem,1vw,0.42rem)] text-[clamp(0.6rem,2.7vw,0.72rem)] font-bold leading-snug text-white ${
+                    index > 0 ? "border-t border-white/40" : "pt-0"
+                  }`}
+                >
+                  {line}
+                </span>
+              ))}
+            </span>
+          </Link>
+        </div>
 
         {/* Desktop identity — unchanged from original desktop treatment */}
         <div className="hero-layer-identity absolute bottom-0 left-[22%] z-10 hidden max-w-[min(36rem,30%)] pb-16 lg:block xl:left-[20%]">
