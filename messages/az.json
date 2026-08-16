@@ -17,11 +17,11 @@
   },
   "home": {
     "raulName": "Raul NAĞIYEV",
-    "role1": "Beynəlxalq dərəcəli Memar, Mühəndis",
-    "role2": "Avropa dərəcəli İnşaat Mühəndisi və BIM Eksperti",
+    "role1": "Avropa və beynəlxalq səviyyədə sertifikatlı memar",
+    "role2": "İnşaat mühəndisi və BIM eksperti",
     "allServicesCta": "Bütün xidmətlər",
     "svcTikinti": "Tikinti Təmir",
-    "svcBim": "BIM Layihələndirmə",
+    "svcBim": "BIM Memarlığı",
     "svcInteryer": "İnteryer Dizayn",
     "svcSehersalma": "Şəhərsalma Həlləri"
   },
@@ -460,7 +460,7 @@
         "title": "Tikinti və Təmir"
       },
       "bim-ile-layihelendirme": {
-        "title": "BIM Metodu ilə Layihələndirmə"
+        "title": "BIM Memarlığı"
       },
       "interyer-dizayn": {
         "title": "İnteryer Dizayn"
@@ -486,7 +486,7 @@
         ]
       },
       "bim-ile-layihelendirme": {
-        "title": "BIM Metodu ilə Layihələndirmə",
+        "title": "BIM Memarlığı",
         "intro": "Tikintidən əvvəl binanın tam rəqəmsal ikizi. Kolliziyasız, dəqiq və proqnozlaşdırıla bilən icra.",
         "points": [
           "3D ağıllı model və kolliziya analizi",
@@ -549,7 +549,7 @@
   "raulPage": {
     "backLabel": "Raul Architects",
     "title": "Raul Nağıyev",
-    "role": "Beynəlxalq dərəcəli Memar, Mühəndis, İnteryer Dizayner və BIM Eksperti",
+    "role": "Avropa və beynəlxalq səviyyədə sertifikatlı memar, inşaat mühəndisi və BIM eksperti",
     "sections": {
       "bio": {
         "title": "Bioqrafiya",
@@ -579,7 +579,9 @@
           "DIN — Deutsches Institut für Normung",
           "SIA — İsveçrə Memarlar Standartı",
           "Passive House",
-          "Enerji-Səmərəli və Smart Home prinsipləri"
+          "Enerji-Səmərəli və Smart Home prinsipləri",
+          "Architektenkammer Berlin — Start in den Beruf",
+          "ZinCo Gründach-Seminar"
         ]
       },
       "achievements": {

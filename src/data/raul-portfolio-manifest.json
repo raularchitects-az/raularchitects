@@ -1305,6 +1305,33 @@
       },
       {
         "source": "raul-portfolio-folder-2026",
+        "id": "interior-designer",
+        "src": "/images/import/certificates/interior-designer.webp",
+        "alt": "Interior Designer diploma",
+        "width": 1600,
+        "height": 1132,
+        "original": "Interior Designer-Diplom.jpg"
+      },
+      {
+        "source": "raul-portfolio-folder-2026",
+        "id": "vorkurs",
+        "src": "/images/import/certificates/vorkurs.webp",
+        "alt": "Vorkurs certificate",
+        "width": 1600,
+        "height": 2262,
+        "original": "Certificate-Vorkurs.jpg"
+      },
+      {
+        "source": "raul-certificate-upload-2026",
+        "id": "architektenkammer-berlin",
+        "src": "/images/import/certificates/architektenkammer-berlin.webp",
+        "alt": "Architektenkammer Berlin — Start in den Beruf",
+        "width": 733,
+        "height": 1024,
+        "original": "WhatsApp Architektenkammer Berlin certificate"
+      },
+      {
+        "source": "raul-portfolio-folder-2026",
         "id": "allplan-architecture",
         "src": "/images/import/certificates/allplan-architecture.webp",
         "alt": "Allplan Architecture certificate",
@@ -1322,13 +1349,13 @@
         "original": "certificate-Archicad BIM.jpg"
       },
       {
-        "source": "raul-portfolio-folder-2026",
-        "id": "vorkurs",
-        "src": "/images/import/certificates/vorkurs.webp",
-        "alt": "Vorkurs certificate",
-        "width": 1600,
-        "height": 2262,
-        "original": "Certificate-Vorkurs.jpg"
+        "source": "raul-certificate-upload-2026",
+        "id": "zinco-gruendach",
+        "src": "/images/import/certificates/zinco-gruendach.webp",
+        "alt": "ZinCo Gründach-Seminar 2023",
+        "width": 723,
+        "height": 1024,
+        "original": "WhatsApp ZinCo Gründach-Seminar certificate"
       },
       {
         "source": "raul-portfolio-folder-2026",
@@ -1338,21 +1365,12 @@
         "width": 1000,
         "height": 1409,
         "original": "Competition-Certificate.jpg"
-      },
-      {
-        "source": "raul-portfolio-folder-2026",
-        "id": "interior-designer",
-        "src": "/images/import/certificates/interior-designer.webp",
-        "alt": "Interior Designer diploma",
-        "width": 1600,
-        "height": 1132,
-        "original": "Interior Designer-Diplom.jpg"
       }
     ],
     "skipped": [
       "1687792387340.jpg — unclear document, not labeled",
       "Pre-foto.JPG — portrait photo, not a certificate",
-      "Sertifikat.pdf / ZINCO sertifikat.pdf / Wallwachhaus PDF — originals left as PDF"
+      "Sertifikat.pdf / Wallwachhaus PDF — originals left as PDF"
     ]
   }
 }

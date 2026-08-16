@@ -45,7 +45,7 @@ export type ImportedEntry = {
 };
 
 export type ImportedCertificate = {
-  source: typeof RAUL_PORTFOLIO_IMPORT_SOURCE;
+  source: string;
   id: string;
   src: string;
   alt: string;

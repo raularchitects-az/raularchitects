@@ -17,11 +17,11 @@
   },
   "home": {
     "raulName": "Raul NAGHIYEV",
-    "role1": "Internationally licensed Architect, Engineer",
-    "role2": "European-certified Civil Engineer and BIM Expert",
+    "role1": "European- and Internationally Certified Architect",
+    "role2": "Civil Engineer and BIM Expert",
     "allServicesCta": "All services",
     "svcTikinti": "Construction & Repair",
-    "svcBim": "BIM Design",
+    "svcBim": "BIM Architecture",
     "svcInteryer": "Interior Design",
     "svcSehersalma": "Urban Projects"
   },
@@ -460,7 +460,7 @@
         "title": "Construction & Renovation"
       },
       "bim-ile-layihelendirme": {
-        "title": "BIM-Based Design"
+        "title": "BIM Architecture"
       },
       "interyer-dizayn": {
         "title": "Interior Design"
@@ -486,7 +486,7 @@
         ]
       },
       "bim-ile-layihelendirme": {
-        "title": "BIM-Based Design",
+        "title": "BIM Architecture",
         "intro": "A complete digital twin of the building before construction. Clash-free, precise and predictable execution.",
         "points": [
           "3D smart model and clash detection",
@@ -549,7 +549,7 @@
   "raulPage": {
     "backLabel": "Raul Architects",
     "title": "Raul Naghiyev",
-    "role": "Internationally licensed Architect, Engineer, Interior Designer and BIM Expert",
+    "role": "European- and Internationally Certified Architect, Civil Engineer, and BIM Expert",
     "sections": {
       "bio": {
         "title": "Biography",
@@ -579,7 +579,9 @@
           "DIN — Deutsches Institut für Normung",
           "SIA — Swiss Society of Engineers and Architects standard",
           "Passive House",
-          "Energy-efficient and Smart Home principles"
+          "Energy-efficient and Smart Home principles",
+          "Architektenkammer Berlin — Start in den Beruf",
+          "ZinCo Gründach-Seminar"
         ]
       },
       "achievements": {

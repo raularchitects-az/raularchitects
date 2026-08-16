@@ -5,8 +5,8 @@ export type ServiceMeta = {
 };
 
 export const services: ServiceMeta[] = [
-  { slug: "tikinti-ve-temir", number: "01", icon: "HardHat" },
-  { slug: "bim-ile-layihelendirme", number: "02", icon: "Boxes" },
+  { slug: "bim-ile-layihelendirme", number: "01", icon: "Boxes" },
+  { slug: "tikinti-ve-temir", number: "02", icon: "HardHat" },
   { slug: "interyer-dizayn", number: "03", icon: "Sofa" },
   { slug: "seherselme-layiheleri", number: "04", icon: "Building2" },
 ];
