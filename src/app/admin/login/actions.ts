@@ -6,8 +6,10 @@ import {
   getSupabaseUrl,
   isCmsConfigured,
   isSecretSupabaseKey,
+  isServiceRoleKey,
   isSupabaseProjectUrl,
 } from "@/lib/cms/env";
+import { getSupabaseServiceRoleKey } from "@/lib/cms/env-server";
 import { loadProfileByUserId } from "@/lib/cms/auth";
 import { createUserServerClient } from "@/lib/cms/supabase";
 
@@ -76,7 +78,14 @@ function profileErrorMessage(error: { message?: string; code?: string }) {
     return "profiles RLS siyasəti döngüyə düşür. schema.sql-i yenidən Run edin.";
   }
   if (code === "42501" || message.includes("permission denied")) {
-    return "profiles oxumaq üçün icazə yoxdur. schema.sql-i Run edin və SUPABASE_SERVICE_ROLE_KEY dəyərini yoxlayın.";
+    const serviceKey = getSupabaseServiceRoleKey();
+    if (!serviceKey) {
+      return "Vercel-də SUPABASE_SERVICE_ROLE_KEY yoxdur. API → secret / service_role açarını əlavə edib Redeploy edin.";
+    }
+    if (!isServiceRoleKey(serviceKey)) {
+      return "SUPABASE_SERVICE_ROLE_KEY publishable/anon açardır. sb_secret_... və ya service_role JWT yazın, sonra Redeploy edin.";
+    }
+    return "profiles üçün SQL icazəsi yoxdur. SQL Editor-də schema.sql-i yenidən Run edin.";
   }
 
   return detail
@@ -124,7 +133,10 @@ export async function loginAction(prev: LoginState | FormData, formData?: FormDa
       return { error: authErrorMessage(error ?? { message: "invalid login credentials" }) };
     }
 
-    const { data: profile, error: profileError } = await loadProfileByUserId(data.user.id);
+    const { data: profile, error: profileError } = await loadProfileByUserId(
+      data.user.id,
+      data.session?.access_token,
+    );
 
     if (profileError) {
       console.error("[admin login] profile", profileError.code, profileError.message);

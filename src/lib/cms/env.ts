@@ -39,8 +39,25 @@ export function getSupabaseAnonKey() {
   return readPublicEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY");
 }
 
+export function jwtRole(key: string) {
+  if (!key.startsWith("eyJ")) return null;
+  try {
+    const payload = key.split(".")[1] ?? "";
+    const padded = payload.replace(/-/g, "+").replace(/_/g, "/");
+    const json = atob(padded);
+    return (JSON.parse(json) as { role?: string }).role ?? null;
+  } catch {
+    return null;
+  }
+}
+
 export function isSecretSupabaseKey(key: string) {
-  return key.startsWith("sb_secret_");
+  return key.startsWith("sb_secret_") || jwtRole(key) === "service_role";
+}
+
+export function isServiceRoleKey(key: string) {
+  if (!key || key.startsWith("sb_publishable_")) return false;
+  return key.startsWith("sb_secret_") || jwtRole(key) === "service_role";
 }
 
 export function isPublicSupabaseKey(key: string) {

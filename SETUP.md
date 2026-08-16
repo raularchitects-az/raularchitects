@@ -53,7 +53,7 @@ SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
   Sonda `/auth/v1`, `/rest/v1`, dashboard linki (`supabase.com/dashboard/...`) və ya sayt ünvanı (`raularchitects.com`) olmasın. Bu səhv `Invalid path specified in request URL` xətası verir.  
 
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` — Project Settings → API → **anon public** və ya **publishable** (`eyJ...` JWT və ya `sb_publishable_...`)  
-- `SUPABASE_SERVICE_ROLE_KEY` — Project Settings → API → **service_role** və ya **secret** (`eyJ...` JWT və ya `sb_secret_...`). **server-only**, heç vaxt `NEXT_PUBLIC_` prefiksi olmasın
+- `SUPABASE_SERVICE_ROLE_KEY` — Project Settings → API → **service_role** və ya **secret** (`eyJ...` JWT və ya `sb_secret_...`). **server-only**, heç vaxt `NEXT_PUBLIC_` prefiksi olmasın. Publishable (`sb_publishable_...`) və ya anon açarı bura yazmaq olmaz.
 
 `anon` açarı yalnız login cookie sessiyası üçündür. Kontent yazmaq/oxumaq server-side gedir; service role brauzerə çıxmır.
 

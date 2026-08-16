@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import { getSupabaseAnonKey, getSupabaseUrl, isCmsConfigured } from "./env";
+import { getSupabaseAnonKey, getSupabaseUrl, isCmsConfigured, isServiceRoleKey } from "./env";
 import { getSupabaseServiceRoleKey } from "./env-server";
 
 export async function createUserServerClient() {
@@ -30,8 +30,23 @@ export async function createUserServerClient() {
 export function createServiceClient() {
   const url = getSupabaseUrl();
   const key = getSupabaseServiceRoleKey();
-  if (!url || !key) return null;
+  if (!url || !isServiceRoleKey(key)) return null;
   return createClient(url, key, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
+}
+
+export function createAuthedClient(accessToken: string) {
+  const url = getSupabaseUrl();
+  const anon = getSupabaseAnonKey();
+  if (!url || !anon || !accessToken) return null;
+  return createClient(url, anon, {
+    auth: { persistSession: false, autoRefreshToken: false },
+    global: { headers: { Authorization: `Bearer ${accessToken}` } },
+  });
+}
+
+/** Staff pages already ran requireStaff. Prefer service role so RLS/JWT gaps don't hide rows. */
+export async function createAdminClient() {
+  return createServiceClient() ?? (await createUserServerClient());
 }

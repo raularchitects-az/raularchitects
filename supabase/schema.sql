@@ -155,6 +155,21 @@ create index if not exists blog_status_idx on public.blog_posts (status, is_acti
 create index if not exists audit_created_idx on public.audit_logs (created_at desc);
 create index if not exists revisions_entity_idx on public.content_revisions (entity_type, entity_id, created_at desc);
 
+grant usage on schema public to anon, authenticated, service_role;
+grant all on table
+  public.profiles,
+  public.media,
+  public.projects,
+  public.portfolio,
+  public.blog_posts,
+  public.services,
+  public.site_settings,
+  public.redirects,
+  public.audit_logs,
+  public.content_revisions
+to postgres, authenticated, service_role;
+grant usage, select on all sequences in schema public to authenticated, service_role;
+
 alter table public.profiles enable row level security;
 alter table public.media enable row level security;
 alter table public.projects enable row level security;
@@ -193,6 +208,9 @@ as $$
       and p.role = 'admin'
   );
 $$;
+
+grant execute on function public.is_staff() to authenticated, service_role;
+grant execute on function public.is_admin() to authenticated, service_role;
 
 drop policy if exists "read own profile" on public.profiles;
 create policy "read own profile" on public.profiles
