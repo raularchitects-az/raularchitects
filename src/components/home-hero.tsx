@@ -43,13 +43,22 @@ export function HomeHero({
       <div className="relative h-[58svh] w-full lg:absolute lg:inset-0 lg:h-full">
         <div className="hero-photo absolute inset-0">
           <Image
+            src="/images/raul-hero-mobile.jpg"
+            alt={raulName}
+            fill
+            priority
+            quality={95}
+            sizes="100vw"
+            className="object-cover object-[center_18%] lg:hidden"
+          />
+          <Image
             src="/images/raul-hero.jpg"
             alt={raulName}
             fill
             priority
             quality={95}
             sizes="(min-width: 1024px) 70vw, 100vw"
-            className="object-cover object-[20%_center] lg:object-left"
+            className="hidden object-cover object-left lg:block"
           />
           <div aria-hidden="true" className="hero-photo-fade-mobile lg:hidden" />
           <div aria-hidden="true" className="hero-photo-fade-desktop hidden lg:block" />
