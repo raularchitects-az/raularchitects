@@ -39,8 +39,8 @@ SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
 ```
 
 - `NEXT_PUBLIC_SUPABASE_URL` — Project Settings → API → Project URL  
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY` — Project Settings → API → anon public  
-- `SUPABASE_SERVICE_ROLE_KEY` — Project Settings → API → service_role (**server-only**, heç vaxt `NEXT_PUBLIC_` prefiksi olmasın)
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` — Project Settings → API → **anon public** və ya **publishable** (`eyJ...` JWT və ya `sb_publishable_...`)  
+- `SUPABASE_SERVICE_ROLE_KEY` — Project Settings → API → **service_role** və ya **secret** (`eyJ...` JWT və ya `sb_secret_...`). **server-only**, heç vaxt `NEXT_PUBLIC_` prefiksi olmasın
 
 `anon` açarı yalnız login cookie sessiyası üçündür. Kontent yazmaq/oxumaq server-side gedir; service role brauzerə çıxmır.
 
@@ -52,8 +52,8 @@ Project → Settings → Environment Variables. Production / Preview / Developme
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | `https://raularchitects.com` (canonical və OG üçün) |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase Project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | anon public key |
-| `SUPABASE_SERVICE_ROLE_KEY` | service_role key, **server only** |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | anon public **və ya** `sb_publishable_...` |
+| `SUPABASE_SERVICE_ROLE_KEY` | service_role **və ya** `sb_secret_...`, **server only** |
 
 Deploy-dan sonra `/admin/login` yoxlayın.
 

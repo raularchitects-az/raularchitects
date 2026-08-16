@@ -2,12 +2,28 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { getSupabaseAnonKey, getSupabaseUrl, isCmsConfigured } from "./env";
 
+function isLoginPath(pathname: string) {
+  return pathname === "/admin/login" || pathname.startsWith("/admin/login/");
+}
+
+function isServerActionRequest(request: NextRequest) {
+  return (
+    request.method === "POST" &&
+    (request.headers.has("next-action") || request.headers.has("Next-Action"))
+  );
+}
+
 export async function protectAdmin(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const isLogin = pathname === "/admin/login" || pathname.startsWith("/admin/login/");
 
   if (!isCmsConfigured()) {
-    return NextResponse.next({ request });
+    return NextResponse.next();
+  }
+
+  // Login Server Actions POST to this URL. Recreating the middleware
+  // response here drops the action and surfaces React error #441.
+  if (isLoginPath(pathname) && isServerActionRequest(request)) {
+    return NextResponse.next();
   }
 
   let response = NextResponse.next({ request });
@@ -43,13 +59,13 @@ export async function protectAdmin(request: NextRequest) {
     }
   }
 
-  if ((!user || !isStaff) && !isLogin) {
+  if ((!user || !isStaff) && !isLoginPath(pathname)) {
     const url = request.nextUrl.clone();
     url.pathname = "/admin/login";
     return NextResponse.redirect(url);
   }
 
-  if (user && isStaff && isLogin) {
+  if (user && isStaff && isLoginPath(pathname)) {
     const url = request.nextUrl.clone();
     url.pathname = "/admin";
     return NextResponse.redirect(url);

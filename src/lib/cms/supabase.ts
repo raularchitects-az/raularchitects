@@ -1,12 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import {
-  getSupabaseAnonKey,
-  getSupabaseServiceRoleKey,
-  getSupabaseUrl,
-  isCmsConfigured,
-} from "./env";
+import { getSupabaseAnonKey, getSupabaseUrl, isCmsConfigured } from "./env";
+import { getSupabaseServiceRoleKey } from "./env-server";
 
 export async function createUserServerClient() {
   if (!isCmsConfigured()) return null;
@@ -21,8 +17,10 @@ export async function createUserServerClient() {
           cookiesToSet.forEach(({ name, value, options }) => {
             cookieStore.set(name, value, options);
           });
-        } catch {
-          /* set from Server Component — middleware refreshes session */
+        } catch (error) {
+          const message = error instanceof Error ? error.message : "";
+          if (message.includes("Cookies can only be modified")) return;
+          throw error;
         }
       },
     },

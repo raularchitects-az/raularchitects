@@ -373,25 +373,6 @@ export async function updateUserRole(userId: string, role: "admin" | "editor") {
   await audit("role", "profiles", userId, `role → ${role}`);
 }
 
-export async function loginAction(formData: FormData) {
-  const email = String(formData.get("email") ?? "");
-  const password = String(formData.get("password") ?? "");
-  const supabase = await createUserServerClient();
-  if (!supabase) throw new Error("Supabase environment variables yoxdur");
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error || !data.user) throw new Error("Email və ya şifrə yalnışdır");
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", data.user.id)
-    .maybeSingle();
-  if (profile?.role !== "admin" && profile?.role !== "editor") {
-    await supabase.auth.signOut();
-    throw new Error("Bu hesabın admin paneli üçün icazəsi yoxdur");
-  }
-  redirect("/admin");
-}
-
 export async function logoutAction() {
   const supabase = await createUserServerClient();
   if (supabase) await supabase.auth.signOut();
