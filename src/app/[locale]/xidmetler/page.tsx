@@ -4,8 +4,8 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { Footer } from "@/components/footer";
-import { services } from "@/data/services";
+import { SiteFooter } from "@/components/site-footer";
+import { getPublicServices } from "@/lib/cms/public";
 
 export async function generateMetadata({
   params,
@@ -21,6 +21,8 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/xidm
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("servicesPage");
+  const cmsServices = await getPublicServices(locale);
+  const list = cmsServices;
 
   return (
     <>
@@ -29,7 +31,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/xidm
           <SectionHeading eyebrow={t("eyebrow")} title={t("title")} />
 
           <div className="mt-16 flex flex-col border-t border-charcoal/10">
-            {services.map((service) => (
+            {list.map((service) => (
               <Link
                 key={service.slug}
                 href={`/xidmetler/${service.slug}`}
@@ -38,7 +40,9 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/xidm
                 <div className="flex items-baseline gap-4 sm:gap-8">
                   <span className="text-sm text-bronze-dark">{service.number}</span>
                   <span className="text-3xl font-semibold text-charcoal transition-colors duration-300 group-hover:text-cream sm:text-5xl">
-                    {t(`items.${service.slug}.title`)}
+                    {service.title && service.title !== service.slug
+                      ? service.title
+                      : t(`items.${service.slug}.title`)}
                   </span>
                 </div>
                 <ArrowUpRight
@@ -50,7 +54,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/xidm
           </div>
         </Container>
       </section>
-      <Footer />
+      <SiteFooter />
     </>
   );
 }

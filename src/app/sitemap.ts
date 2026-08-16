@@ -5,6 +5,7 @@ import { projects } from "@/data/projects";
 import { portfolioItems } from "@/data/portfolio";
 import { blogPosts } from "@/data/blog";
 import { absoluteUrl } from "@/lib/site";
+import { getPublicBlogPosts, getPublicPortfolio, getPublicProjects, getPublicServices } from "@/lib/cms/public";
 
 function localizedEntry(path: string, lastModified?: string): MetadataRoute.Sitemap[number] {
   const languages: Record<string, string> = {
@@ -23,7 +24,19 @@ function localizedEntry(path: string, lastModified?: string): MetadataRoute.Site
   };
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [cmsProjects, cmsPortfolio, cmsBlog, cmsServices] = await Promise.all([
+    getPublicProjects("en"),
+    getPublicPortfolio("en"),
+    getPublicBlogPosts(),
+    getPublicServices("en"),
+  ]);
+
+  const projectList = cmsProjects.length ? cmsProjects : projects;
+  const portfolioList = cmsPortfolio.length ? cmsPortfolio : portfolioItems;
+  const blogList = cmsBlog.length ? cmsBlog : blogPosts;
+  const serviceList = cmsServices.length ? cmsServices : services;
+
   const staticPaths = [
     "/",
     "/xidmetler",
@@ -37,9 +50,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...staticPaths.map((path) => localizedEntry(path)),
-    ...services.map((service) => localizedEntry(`/xidmetler/${service.slug}`)),
-    ...projects.map((project) => localizedEntry(`/layihelar/${project.slug}`)),
-    ...portfolioItems.map((item) => localizedEntry(`/portfolio/${item.slug}`)),
-    ...blogPosts.map((post) => localizedEntry(`/bloq/${post.slug}`, post.publishedAt)),
+    ...serviceList.map((service) => localizedEntry(`/xidmetler/${service.slug}`)),
+    ...projectList.map((project) => localizedEntry(`/layihelar/${project.slug}`)),
+    ...portfolioList.map((item) => localizedEntry(`/portfolio/${item.slug}`)),
+    ...blogList.map((post) => localizedEntry(`/bloq/${post.slug}`, "publishedAt" in post ? post.publishedAt : undefined)),
   ];
 }

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
-import { Footer } from "@/components/footer";
+import { SiteFooter } from "@/components/site-footer";
 import { routing } from "@/i18n/routing";
-import { blogPosts, formatBlogDate, getBlogCopy, getBlogImageAlt, getBlogPost } from "@/data/blog";
+import { blogPosts as staticBlog, formatBlogDate, getBlogCopy, getBlogImageAlt, getBlogPost as getStaticBlogPost } from "@/data/blog";
+import { getPublicBlogPost, getPublicBlogPosts, resolveSlugRedirect } from "@/lib/cms/public";
 import { BlogBody } from "@/lib/blog-body";
 import {
   SITE_NAME,
@@ -17,9 +18,11 @@ import {
   ogLocale,
 } from "@/lib/site";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const cms = await getPublicBlogPosts();
+  const slugs = cms.length ? cms : staticBlog;
   return routing.locales.flatMap((locale) =>
-    blogPosts.map((post) => ({ locale, slug: post.slug })),
+    slugs.map((post) => ({ locale, slug: post.slug })),
   );
 }
 
@@ -29,7 +32,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const post = getBlogPost(slug);
+  const post = (await getPublicBlogPost(slug)) ?? getStaticBlogPost(slug);
   if (!post) return {};
 
   const copy = getBlogCopy(post, locale);
@@ -76,7 +79,13 @@ export default async function BlogPostPage({
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const post = getBlogPost(slug);
+  const redirected = await resolveSlugRedirect("bloq", slug);
+  if (redirected) {
+    const path = redirected.to_path;
+    redirect(locale === routing.defaultLocale ? path : `/${locale}${path}`);
+  }
+
+  const post = (await getPublicBlogPost(slug)) ?? getStaticBlogPost(slug);
   if (!post) notFound();
 
   const t = await getTranslations("blog");
@@ -196,7 +205,7 @@ export default async function BlogPostPage({
         </Container>
       </article>
 
-      <Footer />
+      <SiteFooter />
     </>
   );
 }

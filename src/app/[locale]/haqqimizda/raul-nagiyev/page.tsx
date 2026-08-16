@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { TriangleMark } from "@/components/ui/triangle-mark";
-import { Footer } from "@/components/footer";
+import { SiteFooter } from "@/components/site-footer";
 import { importedCertificates } from "@/data/raul-portfolio-import";
 
 const sectionKeys = ["bio", "education", "experience", "certificates", "achievements"] as const;
@@ -103,7 +103,7 @@ export default async function RaulNagiyevPage({ params }: PageProps<"/[locale]/h
           </div>
         </Container>
       </section>
-      <Footer />
+      <SiteFooter />
     </>
   );
 }

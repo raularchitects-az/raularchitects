@@ -9,10 +9,10 @@ import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { categories, type Category } from "@/data/categories";
-import { portfolioItems } from "@/data/portfolio";
+import { portfolioItems as fallbackItems, type PortfolioMeta } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
-export function PortfolioGrid() {
+export function PortfolioGrid({ items }: { items?: PortfolioMeta[] }) {
   const t = useTranslations("portfolioPage");
   const c = useTranslations("categories");
   const co = useTranslations("countries");
@@ -25,6 +25,7 @@ export function PortfolioGrid() {
 
   const [active, setActive] = useState<Category>(initial);
 
+  const portfolioItems = items ?? fallbackItems;
   const filtered = active === "all" ? portfolioItems : portfolioItems.filter((item) => item.category === active);
 
   return (

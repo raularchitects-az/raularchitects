@@ -12,7 +12,7 @@ const links = [
   { href: "/elaqe", key: "contact" },
 ] as const;
 
-export function Footer() {
+export function Footer({ credit }: { credit?: string }) {
   const t = useTranslations("nav");
   const year = new Date().getFullYear();
 
@@ -36,6 +36,7 @@ export function Footer() {
         </div>
 
         <div className="mt-10 border-t border-charcoal/10 pt-6 text-center text-xs text-charcoal/40 sm:text-left">
+          {credit ? <p className="mb-2">{credit}</p> : null}
           <span>
             © {year} Designed and developed by{" "}
             <a

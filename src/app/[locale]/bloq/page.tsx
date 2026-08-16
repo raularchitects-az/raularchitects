@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Container } from "@/components/ui/container";
-import { Footer } from "@/components/footer";
+import { SiteFooter } from "@/components/site-footer";
 import { BlogCard } from "@/components/blog-card";
-import { blogPosts } from "@/data/blog";
+import { getPublicBlogPosts } from "@/lib/cms/public";
 import { absoluteUrl, languageAlternates } from "@/lib/site";
+
+export const revalidate = 60;
 
 export async function generateMetadata({
   params,
@@ -39,6 +41,7 @@ export default async function BlogIndexPage({ params }: PageProps<"/[locale]/blo
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("blog");
+  const blogPosts = await getPublicBlogPosts();
 
   return (
     <>
@@ -69,7 +72,7 @@ export default async function BlogIndexPage({ params }: PageProps<"/[locale]/blo
           </div>
         </Container>
       </section>
-      <Footer />
+      <SiteFooter />
     </>
   );
 }

@@ -1,20 +1,24 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, redirect as nextRedirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
-import { Footer } from "@/components/footer";
+import { SiteFooter } from "@/components/site-footer";
 import { routing } from "@/i18n/routing";
 import { ProjectGallery } from "@/components/project-gallery";
 import { portfolioItems, getPortfolioItem } from "@/data/portfolio";
 import { getImportedEntry } from "@/data/folder-imports";
+import { getPublicPortfolio, getPublicPortfolioItem, resolveSlugRedirect } from "@/lib/cms/public";
+import { entryMetadata } from "@/lib/cms/metadata";
+import { mediaPublicUrl } from "@/lib/cms/media-url";
+import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
 
-export function generateStaticParams() {
-  return routing.locales.flatMap((locale) =>
-    portfolioItems.map((item) => ({ locale, slug: item.slug })),
-  );
+export async function generateStaticParams() {
+  const cms = await getPublicPortfolio("en");
+  const slugs = new Set([...portfolioItems.map((item) => item.slug), ...cms.map((item) => item.slug)]);
+  return routing.locales.flatMap((locale) => [...slugs].map((slug) => ({ locale, slug })));
 }
 
 export async function generateMetadata({
@@ -23,11 +27,20 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
+  const cms = await getPublicPortfolioItem(slug, locale);
   const item = getPortfolioItem(slug);
-  if (!item) return {};
+  if (!item && !cms) return {};
   const imported = getImportedEntry(slug);
   const c = await getTranslations({ locale, namespace: "categories" });
-  return { title: `${imported?.title ?? c(item.category)} — Raul Architects` };
+  const title = cms?.seoTitle || cms?.title || imported?.title || (item ? c(item.category) : slug);
+  return entryMetadata({
+    locale,
+    path: `/portfolio/${slug}`,
+    title,
+    description: cms?.metaDescription || cms?.description,
+    image: cms?.ogImage || cms?.image || item?.image,
+    canonicalUrl: cms?.canonicalUrl,
+  });
 }
 
 export default async function PortfolioDetailPage({
@@ -36,7 +49,13 @@ export default async function PortfolioDetailPage({
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const item = getPortfolioItem(slug);
+  const redirected = await resolveSlugRedirect("portfolio", slug);
+  if (redirected) {
+    nextRedirect(locale === routing.defaultLocale ? redirected.to_path : `/${locale}${redirected.to_path}`);
+  }
+
+  const cmsItem = await getPublicPortfolioItem(slug, locale);
+  const item = getPortfolioItem(slug) ?? cmsItem;
   if (!item) notFound();
 
   const t = await getTranslations("portfolioPage");
@@ -44,18 +63,37 @@ export default async function PortfolioDetailPage({
   const co = await getTranslations("countries");
   const imported = getImportedEntry(slug);
   const location = item.country ? co(item.country) : null;
-  const title = imported?.title ?? c(item.category);
+  const title = cmsItem?.title || imported?.title || c(item.category);
+  const description = cmsItem?.description || "";
   const importedGallery = imported?.gallery.map((image, index) => ({
     src: image.src,
     alt: `${title} ${image.kind} ${index + 1}`,
     objectPosition: image.objectPosition,
   })) ?? [];
+  const cmsGallery = (cmsItem?.gallery ?? []).map((src, index) => ({
+    src,
+    alt: `${title} ${index + 1}`,
+  }));
+  const gallery = importedGallery.length ? importedGallery : cmsGallery;
+  const videoUrl = cmsItem?.videoUrl ?? null;
+  const canonical = cmsItem?.canonicalUrl || absoluteUrl(locale, `/portfolio/${slug}`);
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: title,
+    description,
+    url: canonical,
+    image: cmsItem?.image || item.image,
+    inLanguage: locale,
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+  };
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <section className="relative h-[70vh] w-full overflow-hidden sm:h-[92vh]">
         <Image
-          src={imported?.hero.src ?? item.image}
+          src={imported?.hero.src ?? cmsItem?.image ?? item.image}
           alt={title}
           fill
           priority
@@ -90,7 +128,9 @@ export default async function PortfolioDetailPage({
 
       <section className="bg-cream py-16 sm:py-24">
         <Container className="flex max-w-3xl flex-col items-start gap-10">
-          {location ? (
+          {description ? (
+            <p className="text-lg font-light leading-relaxed text-charcoal/70">{description}</p>
+          ) : location ? (
             <p className="text-lg font-light leading-relaxed text-charcoal/70">
               {t("detailIntro", { location })}
             </p>
@@ -105,15 +145,22 @@ export default async function PortfolioDetailPage({
         </Container>
       </section>
 
-      {importedGallery.length > 0 ? (
+      {gallery.length > 0 || videoUrl ? (
         <section className="bg-cream pb-16 sm:pb-24">
           <Container>
-            <ProjectGallery images={importedGallery} />
+            {gallery.length > 0 ? <ProjectGallery images={gallery} /> : null}
+            {videoUrl ? (
+              <div className="mt-8 sm:mt-10">
+                <video controls playsInline preload="metadata" className="h-auto w-full bg-charcoal">
+                  <source src={mediaPublicUrl(videoUrl)} />
+                </video>
+              </div>
+            ) : null}
           </Container>
         </section>
       ) : null}
 
-      <Footer />
+      <SiteFooter />
     </>
   );
 }

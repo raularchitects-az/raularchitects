@@ -32,6 +32,9 @@ export function HomeHero({
   roleLine3,
   allServicesCta,
   services,
+  photoDesktop = "/images/raul-hero.jpg",
+  photoMobile = "/images/raul-hero-mobile.jpg",
+  identityHref = "/haqqimizda/raul-nagiyev",
 }: {
   raulName: string;
   role1: string;
@@ -40,6 +43,9 @@ export function HomeHero({
   roleLine3: string;
   allServicesCta: string;
   services: HomeHeroService[];
+  photoDesktop?: string;
+  photoMobile?: string;
+  identityHref?: string;
 }) {
   const [firstName, ...lastNameParts] = raulName.split(" ");
   const lastName = lastNameParts.join(" ");
@@ -51,7 +57,7 @@ export function HomeHero({
       <div className="relative h-[58svh] w-full lg:absolute lg:inset-0 lg:h-full">
         <div className="hero-photo absolute inset-0">
           <Image
-            src="/images/raul-hero-mobile.jpg"
+            src={photoMobile}
             alt={raulName}
             fill
             priority
@@ -60,7 +66,7 @@ export function HomeHero({
             className="object-cover object-[center_18%] lg:hidden"
           />
           <Image
-            src="/images/raul-hero.jpg"
+            src={photoDesktop}
             alt={raulName}
             fill
             priority
@@ -76,7 +82,7 @@ export function HomeHero({
         <div className="pointer-events-none absolute inset-0 z-10 grid grid-cols-[46%_54%] lg:hidden">
           <span aria-hidden="true" />
           <Link
-            href="/haqqimizda/raul-nagiyev"
+            href={identityHref}
             className="hero-layer-identity pointer-events-auto group mr-[clamp(0.75rem,3.8vw,1rem)] mt-[clamp(4.5rem,15svh,7rem)] flex min-w-0 flex-col self-start"
           >
             <span className="flex min-w-0 flex-col gap-[3.5px]">
@@ -111,7 +117,7 @@ export function HomeHero({
         {/* Desktop identity — unchanged from original desktop treatment */}
         <div className="hero-layer-identity absolute bottom-0 left-[22%] z-10 hidden max-w-[min(36rem,30%)] pb-16 lg:block xl:left-[20%]">
           <Link
-            href="/haqqimizda/raul-nagiyev"
+            href={identityHref}
             className="group inline-flex flex-col gap-3"
           >
             <span className="hero-name-plate inline-flex w-fit px-5 py-3 text-2xl font-bold uppercase tracking-[0.08em] text-white">

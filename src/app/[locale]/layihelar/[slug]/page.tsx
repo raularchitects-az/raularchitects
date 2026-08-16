@@ -1,21 +1,25 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, redirect as nextRedirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowLeft, ArrowRight, MessageCircle } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { ProjectLeadForm } from "@/components/project-lead-form";
-import { Footer } from "@/components/footer";
+import { SiteFooter } from "@/components/site-footer";
 import { routing } from "@/i18n/routing";
 import { ProjectGallery } from "@/components/project-gallery";
 import { projects, getProject, getProjectGalleryGroups } from "@/data/projects";
 import { getImportedEntry } from "@/data/folder-imports";
+import { getPublicContact, getPublicProject, getPublicProjects, resolveSlugRedirect } from "@/lib/cms/public";
+import { entryMetadata, whatsappHref } from "@/lib/cms/metadata";
+import { mediaPublicUrl } from "@/lib/cms/media-url";
+import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
 
-export function generateStaticParams() {
-  return routing.locales.flatMap((locale) =>
-    projects.map((project) => ({ locale, slug: project.slug })),
-  );
+export async function generateStaticParams() {
+  const cms = await getPublicProjects("en");
+  const slugs = new Set([...projects.map((project) => project.slug), ...cms.map((project) => project.slug)]);
+  return routing.locales.flatMap((locale) => [...slugs].map((slug) => ({ locale, slug })));
 }
 
 export async function generateMetadata({
@@ -24,11 +28,20 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
+  const cms = await getPublicProject(slug, locale);
   const project = getProject(slug);
-  if (!project) return {};
+  if (!project && !cms) return {};
   const imported = getImportedEntry(slug);
   const t = await getTranslations({ locale, namespace: "projectDetail" });
-  return { title: `${imported?.title ?? t(`items.${slug}.title`)} — Raul Architects` };
+  const title = cms?.seoTitle || cms?.title || imported?.title || (project ? t(`items.${slug}.title`) : slug);
+  return entryMetadata({
+    locale,
+    path: `/layihelar/${slug}`,
+    title,
+    description: cms?.metaDescription || cms?.description,
+    image: cms?.ogImage || cms?.image || project?.image,
+    canonicalUrl: cms?.canonicalUrl,
+  });
 }
 
 export default async function ProjectDetailPage({
@@ -37,17 +50,45 @@ export default async function ProjectDetailPage({
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const project = getProject(slug);
+  const redirected = await resolveSlugRedirect("layihelar", slug);
+  if (redirected) {
+    nextRedirect(locale === routing.defaultLocale ? redirected.to_path : `/${locale}${redirected.to_path}`);
+  }
+
+  const cmsProject = await getPublicProject(slug, locale);
+  const project = getProject(slug) ?? (cmsProject
+    ? {
+        slug,
+        category: cmsProject.category,
+        image: cmsProject.image,
+        title: cmsProject.title,
+      }
+    : null);
   if (!project) notFound();
 
   const t = await getTranslations("projectDetail");
   const co = await getTranslations("countries");
+  const contact = await getPublicContact();
   const imported = getImportedEntry(slug);
-  const specs = imported ? [] : ((t.raw(`items.${slug}.specs`) as string[] | undefined) ?? []);
-  const description = imported ? "" : t(`items.${slug}.description`);
-  const title = imported?.title ?? t(`items.${slug}.title`);
+  const staticSpecs = imported || !getProject(slug)
+    ? []
+    : ((t.raw(`items.${slug}.specs`) as string[] | undefined) ?? []);
+  const specs = staticSpecs.length
+    ? staticSpecs
+    : [cmsProject && "location" in cmsProject ? cmsProject.location : null, cmsProject && "area" in cmsProject ? cmsProject.area : null].filter(
+        (value): value is string => Boolean(value),
+      );
+  const description = (cmsProject && "description" in cmsProject && cmsProject.description)
+    ? String(cmsProject.description)
+    : imported
+      ? ""
+      : getProject(slug)
+        ? t(`items.${slug}.description`)
+        : "";
+  const title = cmsProject?.title || imported?.title || (getProject(slug) ? t(`items.${slug}.title`) : slug);
   const is13Import = imported?.source === "raul-13-project-import";
-  const location = is13Import && imported.country ? co(imported.country) : null;
+  const location = (is13Import && imported.country ? co(imported.country) : null)
+    || (cmsProject && "location" in cmsProject ? cmsProject.location : null);
   const competitionNoteByLocale: Record<string, string> = {
     az: "Müsabiqə konsepti",
     en: "Competition concept",
@@ -58,7 +99,24 @@ export default async function ProjectDetailPage({
     ? (competitionNoteByLocale[locale] ?? competitionNoteByLocale.en)
     : null;
   const importedVideo = is13Import ? imported.video : null;
-  const groups = getProjectGalleryGroups(slug);
+  const cmsVideo = cmsProject?.videoUrl ?? null;
+  const sectionUrls = (key: "exterior" | "interior" | "plan" | "bim") =>
+    (cmsProject?.sections?.[key]?.media ?? []).map((item) => mediaPublicUrl(item.path)).filter(Boolean);
+  const cmsGallery = cmsProject?.gallery ?? [];
+  const hasCmsMedia = Boolean(
+    sectionUrls("exterior").length ||
+      sectionUrls("interior").length ||
+      sectionUrls("plan").length ||
+      sectionUrls("bim").length ||
+      cmsGallery.length,
+  );
+  const groups = hasCmsMedia
+    ? {
+        exteriorImages: sectionUrls("exterior").length ? sectionUrls("exterior") : cmsGallery,
+        interiorImages: sectionUrls("interior"),
+        planningImages: sectionUrls("plan").length ? sectionUrls("plan") : sectionUrls("bim"),
+      }
+    : getProjectGalleryGroups(slug);
   const toCards = (sources: string[], label: string) =>
     sources.map((src, index) => ({ src, alt: `${title} ${label} ${index + 1}` }));
   const galleryRows = [
@@ -75,12 +133,24 @@ export default async function ProjectDetailPage({
   })) ?? [];
   const hasSpecs = specs.length > 0;
   const hasDescription = description.trim().length > 0;
+  const canonical = cmsProject?.canonicalUrl || absoluteUrl(locale, `/layihelar/${slug}`);
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: title,
+    description,
+    url: canonical,
+    image: cmsProject?.image || project.image,
+    inLanguage: locale,
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+  };
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <section className="relative h-[70vh] w-full overflow-hidden sm:h-[92vh]">
         <Image
-          src={imported?.hero.src ?? project.image}
+          src={imported?.hero.src ?? cmsProject?.image ?? project.image}
           alt={title}
           fill
           priority
@@ -115,7 +185,7 @@ export default async function ProjectDetailPage({
           <div className="absolute inset-0 z-10 flex">
             <div className="flex w-[40%] items-end p-6 sm:p-10 lg:w-[38%] lg:p-14">
               <h1 className="text-4xl font-semibold text-cream sm:text-6xl lg:text-7xl">
-                {t(`items.${slug}.title`)}
+                {title}
               </h1>
             </div>
             <div className="hidden w-[60%] items-center justify-center px-5 py-24 md:flex lg:px-8 lg:py-20 xl:px-12">
@@ -174,9 +244,26 @@ export default async function ProjectDetailPage({
         <section className="bg-cream py-10 md:hidden">
           <Container>
             <ProjectGallery images={gallery} rows={galleryRows} />
+            {cmsVideo ? (
+              <div className="mt-8 sm:mt-10">
+                <video controls playsInline preload="metadata" className="h-auto w-full bg-charcoal">
+                  <source src={cmsVideo} />
+                </video>
+              </div>
+            ) : null}
           </Container>
         </section>
       )}
+
+      {!imported && cmsVideo ? (
+        <section className="hidden bg-cream pb-16 md:block">
+          <Container>
+            <video controls playsInline preload="metadata" className="h-auto w-full bg-charcoal">
+              <source src={cmsVideo} />
+            </video>
+          </Container>
+        </section>
+      ) : null}
 
       <section className="bg-charcoal py-24 sm:py-32">
         <Container className="max-w-3xl">
@@ -191,7 +278,7 @@ export default async function ProjectDetailPage({
                 <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
               </a>
               <a
-                href="https://wa.me/491578970708"
+                href={whatsappHref(contact.whatsapp)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center justify-center gap-2 border border-cream/25 px-7 py-3.5 text-xs font-medium uppercase tracking-[0.22em] text-cream transition-all duration-300 hover:border-bronze-light hover:text-bronze-light"
@@ -208,7 +295,7 @@ export default async function ProjectDetailPage({
         </Container>
       </section>
 
-      <Footer />
+      <SiteFooter />
     </>
   );
 }

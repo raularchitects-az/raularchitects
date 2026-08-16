@@ -3,7 +3,8 @@ import { ArrowUpRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
-import { Footer } from "@/components/footer";
+import { SiteFooter } from "@/components/site-footer";
+import { getSiteSettings } from "@/lib/cms/public";
 
 export async function generateMetadata({
   params,
@@ -21,6 +22,13 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/haqqimi
   const t = await getTranslations("aboutPage");
   const countries = t.raw("countries") as string[];
   const blockKeys = ["raul", "team", "international", "bim"] as const;
+  const settings = await getSiteSettings();
+  const intro = typeof settings.about?.intro === "string" && settings.about.intro.trim()
+    ? String(settings.about.intro)
+    : t("intro");
+  const certificates = typeof settings.about?.certificates === "string"
+    ? settings.about.certificates.split("\n").map((line) => line.trim()).filter(Boolean)
+    : [];
 
   return (
     <>
@@ -40,8 +48,15 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/haqqimi
               ))}
             </div>
             <p className="max-w-xl text-base font-light leading-relaxed text-charcoal/70 sm:text-lg">
-              {t("intro")}
+              {intro}
             </p>
+            {certificates.length > 0 ? (
+              <ul className="mt-4 flex max-w-xl flex-col gap-2 text-sm text-charcoal/65">
+                {certificates.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            ) : null}
           </div>
 
           <div className="mt-20 grid gap-x-10 gap-y-12 border-t border-charcoal/10 pt-16 sm:grid-cols-2">
@@ -67,7 +82,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/haqqimi
           </Link>
         </Container>
       </section>
-      <Footer />
+      <SiteFooter />
     </>
   );
 }

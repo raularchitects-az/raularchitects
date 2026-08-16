@@ -4,11 +4,13 @@ import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { TriangleMark } from "@/components/ui/triangle-mark";
 import { Reveal } from "@/components/ui/reveal";
-import { Footer } from "@/components/footer";
+import { SiteFooter } from "@/components/site-footer";
 import { HomeHero } from "@/components/home-hero";
 import { services } from "@/data/services";
 import { projectCategories, categoryCoverImage as projectCoverImage } from "@/data/projects";
 import { categoryCoverImage as portfolioCoverImage } from "@/data/portfolio";
+import { getHomeBlogPosts, getPublicServices, getSiteSettings } from "@/lib/cms/public";
+import { BlogCard } from "@/components/blog-card";
 
 type HomeMessages = {
   raulName: string;
@@ -55,19 +57,42 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
     };
   });
 
+  const settings = await getSiteSettings();
+  const cmsServices = await getPublicServices(locale);
+  const homeFlags = settings.home ?? {};
+  const hero = settings.hero ?? {};
+  const homePosts = homeFlags.showBlog === true ? await getHomeBlogPosts() : [];
+  const blogT = homePosts.length ? await getTranslations("blog") : null;
+  const visibleServices =
+    cmsServices.some((item) => item.title && item.title !== item.slug)
+      ? cmsServices
+          .filter((item) => item.home !== false)
+          .map((item) => ({
+            slug: item.slug,
+            title: item.title,
+            icon: item.icon,
+          }))
+      : heroServices.filter((item) => {
+          const match = cmsServices.find((s) => s.slug === item.slug);
+          return !match || match.home !== false;
+        });
+
   return (
     <main>
       <HomeHero
-        raulName={homeMsg.raulName}
-        role1={homeMsg.role1}
-        role2={homeMsg.role2}
-        roleLine2={homeMsg.roleLine2 ?? mobileRoleFallback[locale]?.roleLine2 ?? mobileRoleFallback.en.roleLine2}
-        roleLine3={homeMsg.roleLine3 ?? mobileRoleFallback[locale]?.roleLine3 ?? mobileRoleFallback.en.roleLine3}
+        raulName={String(hero.raulName || homeMsg.raulName)}
+        role1={String(hero.role1 || homeMsg.role1)}
+        role2={String(hero.role2 || homeMsg.role2)}
+        roleLine2={String(hero.roleLine2 || homeMsg.roleLine2 || mobileRoleFallback[locale]?.roleLine2 || mobileRoleFallback.en.roleLine2)}
+        roleLine3={String(hero.roleLine3 || homeMsg.roleLine3 || mobileRoleFallback[locale]?.roleLine3 || mobileRoleFallback.en.roleLine3)}
         allServicesCta={homeMsg.allServicesCta}
-        services={heroServices}
+        services={homeFlags.showServices === false ? [] : visibleServices}
+        photoDesktop={typeof hero.photoDesktop === "string" && hero.photoDesktop ? hero.photoDesktop : undefined}
+        photoMobile={typeof hero.photoMobile === "string" && hero.photoMobile ? hero.photoMobile : undefined}
+        identityHref={typeof hero.identityHref === "string" && hero.identityHref ? hero.identityHref : undefined}
       />
 
-      {/* LAYİHƏLƏR */}
+      {homeFlags.showProjects !== false ? (
       <section className="relative bg-cream py-20 sm:py-28">
         <Container>
           <Reveal>
@@ -101,8 +126,9 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
           </div>
         </Container>
       </section>
+      ) : null}
 
-      {/* PORTFOLIO — bronze animated block */}
+      {homeFlags.showPortfolio !== false ? (
       <section className="relative overflow-hidden py-20 sm:py-28">
         <div className="absolute inset-0 bg-gradient-animated" />
         <Container className="relative">
@@ -137,8 +163,33 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
           </div>
         </Container>
       </section>
+      ) : null}
 
-      <Footer />
+      {homeFlags.showBlog === true && homePosts.length > 0 && blogT ? (
+      <section className="relative bg-cream py-20 sm:py-28">
+        <Container>
+          <Reveal>
+            <h2 className="inline-flex items-center gap-3 text-3xl font-semibold uppercase tracking-wide text-charcoal sm:text-4xl">
+              {nav("blog")}
+              <TriangleMark size={18} />
+            </h2>
+          </Reveal>
+          <div className="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            {homePosts.slice(0, 3).map((post) => (
+              <BlogCard
+                key={post.slug}
+                post={post}
+                locale={locale}
+                categoryLabel={blogT(`categories.${post.category}`)}
+                readLabel={blogT("read")}
+              />
+            ))}
+          </div>
+        </Container>
+      </section>
+      ) : null}
+
+      <SiteFooter />
     </main>
   );
 }

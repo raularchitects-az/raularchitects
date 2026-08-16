@@ -3,7 +3,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { InquiryForm } from "@/components/inquiry-form";
-import { Footer } from "@/components/footer";
+import { SiteFooter } from "@/components/site-footer";
+import { getPublicContact } from "@/lib/cms/public";
 
 export async function generateMetadata({
   params,
@@ -19,6 +20,14 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/elaqe
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("contactPage");
+  const contact = await getPublicContact();
+  const email = contact.email || "office@raularchitects.com";
+  const azPhone = contact.azerbaijan.phone || t("azerbaijan.phone");
+  const azAddress = contact.azerbaijan.address || t("azerbaijan.address");
+  const dePhone = contact.germany.phone || t("germany.phone");
+  const deAddress = contact.germany.address || t("germany.address");
+  const chPhone = contact.switzerland.phone || t("switzerland.phone");
+  const chAddress = contact.switzerland.address || t("switzerland.address");
 
   return (
     <>
@@ -36,11 +45,11 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/elaqe
               <div className="flex flex-col gap-10">
                 <div className="flex flex-col gap-3 border-t border-charcoal/10 pt-6">
                   <a
-                    href="mailto:office@raularchitects.com"
+                    href={`mailto:${email}`}
                     className="group inline-flex items-center gap-3 text-base tabular-nums text-charcoal/75 transition-colors duration-300 hover:text-bronze-dark"
                   >
                     <Mail className="h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
-                    office@raularchitects.com
+                    {email}
                   </a>
                 </div>
 
@@ -49,15 +58,15 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/elaqe
                     {t("azerbaijan.label")}
                   </h3>
                   <a
-                    href={`tel:${t("azerbaijan.phone").replace(/\s/g, "")}`}
+                    href={`tel:${azPhone.replace(/\s/g, "")}`}
                     className="group inline-flex items-center gap-3 text-base tabular-nums text-charcoal/75 transition-colors duration-300 hover:text-bronze-dark"
                   >
                     <Phone className="h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
-                    {t("azerbaijan.phone")}
+                    {azPhone}
                   </a>
                   <p className="inline-flex items-start gap-3 text-base tabular-nums text-charcoal/75">
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
-                    <span>{t("azerbaijan.address")}</span>
+                    <span>{azAddress}</span>
                   </p>
                 </div>
 
@@ -66,15 +75,15 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/elaqe
                     {t("germany.label")}
                   </h3>
                   <a
-                    href={`tel:${t("germany.phone").replace(/\s/g, "")}`}
+                    href={`tel:${dePhone.replace(/\s/g, "")}`}
                     className="group inline-flex items-center gap-3 text-base tabular-nums text-charcoal/75 transition-colors duration-300 hover:text-bronze-dark"
                   >
                     <Phone className="h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
-                    {t("germany.phone")}
+                    {dePhone}
                   </a>
                   <p className="inline-flex items-start gap-3 text-base tabular-nums text-charcoal/75">
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
-                    <span>{t("germany.address")}</span>
+                    <span>{deAddress}</span>
                   </p>
                 </div>
 
@@ -83,15 +92,15 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/elaqe
                     {t("switzerland.label")}
                   </h3>
                   <a
-                    href={`tel:${t("switzerland.phone").replace(/\s/g, "")}`}
+                    href={`tel:${chPhone.replace(/\s/g, "")}`}
                     className="group inline-flex items-center gap-3 text-base tabular-nums text-charcoal/75 transition-colors duration-300 hover:text-bronze-dark"
                   >
                     <Phone className="h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
-                    {t("switzerland.phone")}
+                    {chPhone}
                   </a>
                   <p className="inline-flex items-start gap-3 text-base tabular-nums text-charcoal/75">
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
-                    <span>{t("switzerland.address")}</span>
+                    <span>{chAddress}</span>
                   </p>
                 </div>
               </div>
@@ -101,7 +110,7 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/elaqe
           </div>
         </Container>
       </section>
-      <Footer />
+      <SiteFooter />
     </>
   );
 }

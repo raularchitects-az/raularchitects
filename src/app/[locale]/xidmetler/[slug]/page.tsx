@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect as nextRedirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowLeft, ArrowRight, HardHat, Boxes, Sofa, Building2, Check, type LucideIcon } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
-import { Footer } from "@/components/footer";
+import { SiteFooter } from "@/components/site-footer";
 import { routing } from "@/i18n/routing";
 import { services, getService } from "@/data/services";
+import { getPublicService, getPublicServices, resolveSlugRedirect } from "@/lib/cms/public";
+import { entryMetadata } from "@/lib/cms/metadata";
+import { mediaPublicUrl } from "@/lib/cms/media-url";
 
 const icons: Record<string, LucideIcon> = { HardHat, Boxes, Sofa, Building2 };
 
-export function generateStaticParams() {
-  return routing.locales.flatMap((locale) =>
-    services.map((service) => ({ locale, slug: service.slug })),
-  );
+export async function generateStaticParams() {
+  const cms = await getPublicServices("en");
+  const slugs = new Set([...services.map((service) => service.slug), ...cms.map((service) => service.slug)]);
+  return routing.locales.flatMap((locale) => [...slugs].map((slug) => ({ locale, slug })));
 }
 
 export async function generateMetadata({
@@ -22,9 +25,18 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  if (!getService(slug)) return {};
+  const cms = await getPublicService(slug, locale);
+  if (!getService(slug) && !cms) return {};
   const t = await getTranslations({ locale, namespace: "serviceDetail" });
-  return { title: `${t(`items.${slug}.title`)} — Raul Architects` };
+  const title = cms?.seoTitle
+    || (cms?.title && cms.title !== slug ? cms.title : getService(slug) ? t(`items.${slug}.title`) : slug);
+  return entryMetadata({
+    locale,
+    path: `/xidmetler/${slug}`,
+    title,
+    description: cms?.metaDescription || cms?.intro,
+    image: cms?.image,
+  });
 }
 
 export default async function ServiceDetailPage({
@@ -33,12 +45,21 @@ export default async function ServiceDetailPage({
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const service = getService(slug);
+  const redirected = await resolveSlugRedirect("xidmetler", slug);
+  if (redirected) {
+    nextRedirect(locale === routing.defaultLocale ? redirected.to_path : `/${locale}${redirected.to_path}`);
+  }
+
+  const cms = await getPublicService(slug, locale);
+  const service = getService(slug) ?? (cms ? { slug: cms.slug, number: cms.number, icon: cms.icon } : null);
   if (!service) notFound();
 
   const t = await getTranslations("serviceDetail");
   const Icon = icons[service.icon] ?? Building2;
-  const points = t.raw(`items.${slug}.points`) as string[];
+  const points = getService(slug) ? ((t.raw(`items.${slug}.points`) as string[] | undefined) ?? []) : [];
+  const body = cms?.body?.trim() ?? "";
+  const image = cms?.image ? mediaPublicUrl(cms.image) : "";
+  const videoUrl = cms?.videoUrl ? mediaPublicUrl(cms.videoUrl) : "";
 
   return (
     <>
@@ -55,9 +76,11 @@ export default async function ServiceDetailPage({
           <div className="mt-10 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
             <div className="flex flex-col gap-4">
               <span className="text-sm text-bronze-light">{service.number}</span>
-              <h1 className="text-4xl font-semibold text-cream sm:text-6xl">{t(`items.${slug}.title`)}</h1>
+              <h1 className="text-4xl font-semibold text-cream sm:text-6xl">
+                {cms?.title && cms.title !== slug ? cms.title : t(`items.${slug}.title`)}
+              </h1>
               <p className="max-w-xl text-base font-light leading-relaxed text-cream/65 sm:text-lg">
-                {t(`items.${slug}.intro`)}
+                {cms?.intro || t(`items.${slug}.intro`)}
               </p>
             </div>
             <span className="flex h-16 w-16 shrink-0 items-center justify-center border border-bronze-light/30 text-bronze-light">
@@ -80,6 +103,26 @@ export default async function ServiceDetailPage({
             ))}
           </div>
 
+          {body ? (
+            <div className="mt-12 max-w-3xl whitespace-pre-wrap text-base leading-relaxed text-charcoal/75">
+              {body}
+            </div>
+          ) : null}
+
+          {image || videoUrl ? (
+            <div className="mt-12">
+              {image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={image} alt="" className="mb-8 w-full object-cover" />
+              ) : null}
+              {videoUrl ? (
+                <video controls playsInline preload="metadata" className="h-auto w-full bg-charcoal">
+                  <source src={videoUrl} />
+                </video>
+              ) : null}
+            </div>
+          ) : null}
+
           <div className="mt-16 flex flex-col items-start gap-6 border-t border-charcoal/10 pt-10">
             <h2 className="text-2xl font-semibold text-charcoal sm:text-3xl">{t("ctaTitle")}</h2>
             <Link
@@ -93,7 +136,7 @@ export default async function ServiceDetailPage({
         </Container>
       </section>
 
-      <Footer />
+      <SiteFooter />
     </>
   );
 }
