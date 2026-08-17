@@ -51,7 +51,7 @@ export function Footer({ credit }: { credit?: string }) {
               </a>
             </span>
           </div>
-          <SocialLinks />
+          <SocialLinks className="md:mr-36 lg:mr-44" />
         </div>
       </Container>
     </footer>
