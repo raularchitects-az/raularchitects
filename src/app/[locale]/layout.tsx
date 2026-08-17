@@ -5,6 +5,7 @@ import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Navbar } from "@/components/navbar";
+import { WhatsAppFloat } from "@/components/whatsapp-float";
 import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -48,6 +49,7 @@ export default async function LocaleLayout({
       />
       <Navbar />
       <div className="pt-20">{children}</div>
+      <WhatsAppFloat />
     </NextIntlClientProvider>
   );
 }
