@@ -109,7 +109,7 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/elaqe
                   <h3 className="text-xs font-medium uppercase tracking-[0.2em] text-charcoal/50">
                     {t("socials")}
                   </h3>
-                  <SocialLinks className="-ml-2" />
+                  <SocialLinks />
                 </div>
               </div>
             </div>

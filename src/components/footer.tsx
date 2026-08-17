@@ -23,35 +23,35 @@ export function Footer({ credit }: { credit?: string }) {
         <div className="flex flex-col items-center gap-8 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
           <Logo />
 
-          <div className="flex flex-col items-center gap-5 sm:items-end lg:flex-row lg:items-center lg:gap-8">
-            <nav className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
-              {links.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-xs font-medium uppercase tracking-[0.18em] text-charcoal/60 transition-colors duration-300 hover:text-bronze-dark"
-                >
-                  {t(link.key)}
-                </Link>
-              ))}
-            </nav>
-            <SocialLinks />
-          </div>
+          <nav className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-xs font-medium uppercase tracking-[0.18em] text-charcoal/60 transition-colors duration-300 hover:text-bronze-dark"
+              >
+                {t(link.key)}
+              </Link>
+            ))}
+          </nav>
         </div>
 
-        <div className="mt-10 border-t border-charcoal/10 pt-6 text-center text-xs text-charcoal/40 sm:text-left">
-          {credit ? <p className="mb-2">{credit}</p> : null}
-          <span>
-            © {year} Designed and developed by{" "}
-            <a
-              href="https://media7.az"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-charcoal/55 transition-colors duration-300 hover:text-bronze-dark"
-            >
-              media7.az
-            </a>
-          </span>
+        <div className="mt-10 flex flex-col items-center gap-4 border-t border-charcoal/10 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+          <div className="text-xs text-charcoal/40">
+            {credit ? <p className="mb-2">{credit}</p> : null}
+            <span>
+              © {year} Designed and developed by{" "}
+              <a
+                href="https://media7.az"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-charcoal/55 transition-colors duration-300 hover:text-bronze-dark"
+              >
+                media7.az
+              </a>
+            </span>
+          </div>
+          <SocialLinks />
         </div>
       </Container>
     </footer>
