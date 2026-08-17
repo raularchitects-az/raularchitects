@@ -1,4 +1,4 @@
-function InstagramIcon() {
+/** Inline SVGs — lucide-react 1.x has no Instagram/Linkedin exports. */
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[18px] w-[18px] shrink-0" fill="none" stroke="currentColor" strokeWidth="1.5">
       <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
