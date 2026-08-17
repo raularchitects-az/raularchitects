@@ -26,9 +26,9 @@ type HomeMessages = {
 };
 
 const mobileRoleFallback: Record<string, { roleLine2: string; roleLine3: string }> = {
-  az: { roleLine2: "İnşaat mühəndisi", roleLine3: "BIM eksperti" },
+  az: { roleLine2: "İnşaat Mühəndisi", roleLine3: "BIM Eksperti" },
   en: { roleLine2: "Civil Engineer", roleLine3: "BIM Expert" },
-  ru: { roleLine2: "Инженер-строитель", roleLine3: "BIM-эксперт" },
+  ru: { roleLine2: "Инженер-строитель", roleLine3: "BIM-Эксперт" },
   de: { roleLine2: "Bauingenieur", roleLine3: "BIM-Experte" },
 };
 
@@ -80,11 +80,11 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
   return (
     <main>
       <HomeHero
-        raulName={String(hero.raulName || homeMsg.raulName)}
-        role1={String(hero.role1 || homeMsg.role1)}
-        role2={String(hero.role2 || homeMsg.role2)}
-        roleLine2={String(hero.roleLine2 || homeMsg.roleLine2 || mobileRoleFallback[locale]?.roleLine2 || mobileRoleFallback.en.roleLine2)}
-        roleLine3={String(hero.roleLine3 || homeMsg.roleLine3 || mobileRoleFallback[locale]?.roleLine3 || mobileRoleFallback.en.roleLine3)}
+        raulName={homeMsg.raulName}
+        role1={homeMsg.role1}
+        role2={homeMsg.role2}
+        roleLine2={homeMsg.roleLine2 || mobileRoleFallback[locale]?.roleLine2 || mobileRoleFallback.en.roleLine2}
+        roleLine3={homeMsg.roleLine3 || mobileRoleFallback[locale]?.roleLine3 || mobileRoleFallback.en.roleLine3}
         allServicesCta={homeMsg.allServicesCta}
         services={homeFlags.showServices === false ? [] : visibleServices}
         photoDesktop={typeof hero.photoDesktop === "string" && hero.photoDesktop ? hero.photoDesktop : undefined}

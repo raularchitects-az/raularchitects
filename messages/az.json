@@ -17,11 +17,11 @@
     "allServices": "Bütün xidmətlər"
   },
   "home": {
-    "raulName": "Raul NAĞIYEV",
-    "role1": "Avropa və beynəlxalq səviyyədə sertifikatlı memar",
-    "role2": "İnşaat mühəndisi və BIM eksperti",
-    "roleLine2": "İnşaat mühəndisi",
-    "roleLine3": "BIM eksperti",
+    "raulName": "Raul NAGHIYEV",
+    "role1": "Avropa və Beynəlxalq Səviyyədə Sertifikatlı Memar",
+    "role2": "İnşaat Mühəndisi və BIM Eksperti",
+    "roleLine2": "İnşaat Mühəndisi",
+    "roleLine3": "BIM Eksperti",
     "allServicesCta": "Bütün xidmətlər",
     "svcTikinti": "Tikinti Təmir",
     "svcBim": "BIM Memarlığı",
@@ -552,7 +552,7 @@
   "raulPage": {
     "backLabel": "Raul Architects",
     "title": "Raul Nağıyev",
-    "role": "Avropa və beynəlxalq səviyyədə sertifikatlı memar, inşaat mühəndisi və BIM eksperti",
+    "role": "Avropa və Beynəlxalq Səviyyədə Sertifikatlı Memar, İnşaat Mühəndisi və BIM Eksperti",
     "sections": {
       "bio": {
         "title": "Bioqrafiya",

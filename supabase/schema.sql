@@ -316,7 +316,7 @@ alter table public.services add column if not exists og_image_path text;
 alter table public.services add column if not exists canonical_url text;
 
 insert into public.site_settings (key, value) values
-  ('hero', '{"raulName":"Raul NAĞIYEV","role1":"","role2":"","roleLine2":"","roleLine3":"","photoDesktop":"/images/raul-hero.jpg","photoMobile":"/images/raul-hero-mobile.jpg","identityHref":"/haqqimizda/raul-nagiyev"}'::jsonb),
+  ('hero', '{"raulName":"Raul NAGHIYEV","role1":"","role2":"","roleLine2":"","roleLine3":"","photoDesktop":"/images/raul-hero.jpg","photoMobile":"/images/raul-hero-mobile.jpg","identityHref":"/haqqimizda/raul-nagiyev"}'::jsonb),
   ('contact', '{"email":"office@raularchitects.com","whatsapp":"","azerbaijan":{"phone":"","address":""},"germany":{"phone":"","address":""},"switzerland":{"phone":"","address":""}}'::jsonb),
   ('about', '{"intro":"","blocks":[]}'::jsonb),
   ('footer', '{"credit":""}'::jsonb),

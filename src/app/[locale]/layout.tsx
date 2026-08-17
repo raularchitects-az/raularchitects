@@ -42,11 +42,6 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `document.documentElement.lang=${JSON.stringify(locale)};`,
-        }}
-      />
       <Navbar />
       <div className="pt-20">{children}</div>
       <WhatsAppFloat />
