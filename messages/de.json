@@ -622,7 +622,8 @@
       "message": "Kurzbeschreibung Ihres Projekts",
       "submit": "Senden",
       "success": "Vielen Dank! Wir melden uns in Kürze bei Ihnen."
-    }
+    },
+    "socials": "Soziale Netzwerke"
   },
   "footerMini": {
     "rights": "Alle Rechte vorbehalten."

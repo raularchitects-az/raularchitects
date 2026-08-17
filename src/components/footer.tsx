@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/ui/logo";
 import { Container } from "@/components/ui/container";
+import { SocialLinks } from "@/components/social-links";
 
 const links = [
   { href: "/xidmetler", key: "services" },
@@ -22,17 +23,20 @@ export function Footer({ credit }: { credit?: string }) {
         <div className="flex flex-col items-center gap-8 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
           <Logo />
 
-          <nav className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-xs font-medium uppercase tracking-[0.18em] text-charcoal/60 transition-colors duration-300 hover:text-bronze-dark"
-              >
-                {t(link.key)}
-              </Link>
-            ))}
-          </nav>
+          <div className="flex flex-col items-center gap-5 sm:items-end lg:flex-row lg:items-center lg:gap-8">
+            <nav className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
+              {links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-xs font-medium uppercase tracking-[0.18em] text-charcoal/60 transition-colors duration-300 hover:text-bronze-dark"
+                >
+                  {t(link.key)}
+                </Link>
+              ))}
+            </nav>
+            <SocialLinks />
+          </div>
         </div>
 
         <div className="mt-10 border-t border-charcoal/10 pt-6 text-center text-xs text-charcoal/40 sm:text-left">

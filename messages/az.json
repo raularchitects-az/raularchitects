@@ -622,7 +622,8 @@
       "message": "Layihəniz haqqında qısa məlumat",
       "submit": "Göndər",
       "success": "Təşəkkürlər! Tezliklə sizinlə əlaqə saxlayacağıq."
-    }
+    },
+    "socials": "Sosial şəbəkələr"
   },
   "footerMini": {
     "rights": "Bütün hüquqlar qorunur."

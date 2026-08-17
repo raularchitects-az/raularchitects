@@ -4,6 +4,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { InquiryForm } from "@/components/inquiry-form";
 import { SiteFooter } from "@/components/site-footer";
+import { SocialLinks } from "@/components/social-links";
 import { getPublicContact } from "@/lib/cms/public";
 
 export async function generateMetadata({
@@ -102,6 +103,13 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/elaqe
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-bronze-dark" strokeWidth={1.5} />
                     <span>{chAddress}</span>
                   </p>
+                </div>
+
+                <div className="flex flex-col gap-3 border-t border-charcoal/10 pt-6">
+                  <h3 className="text-xs font-medium uppercase tracking-[0.2em] text-charcoal/50">
+                    {t("socials")}
+                  </h3>
+                  <SocialLinks className="-ml-2" />
                 </div>
               </div>
             </div>

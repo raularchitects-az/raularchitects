@@ -622,7 +622,8 @@
       "message": "Brief description of your project",
       "submit": "Submit",
       "success": "Thank you! We will get back to you shortly."
-    }
+    },
+    "socials": "Social"
   },
   "footerMini": {
     "rights": "All rights reserved."
