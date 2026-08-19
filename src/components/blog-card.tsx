@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { formatBlogDate, type BlogPost, getBlogCopy, getBlogImageAlt } from "@/data/blog";
+import { toDisplayUpperCase } from "@/lib/locale-text";
 
 export function BlogCard({
   post,
@@ -29,8 +30,8 @@ export function BlogCard({
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
         />
       </span>
-      <span className="text-xs font-medium uppercase tracking-[0.22em] text-bronze-dark">
-        {categoryLabel}
+      <span className="text-xs font-medium tracking-[0.22em] text-bronze-dark">
+        {toDisplayUpperCase(categoryLabel, locale)}
       </span>
       <h3 className="mt-3 text-xl font-semibold leading-snug text-charcoal transition-colors duration-300 group-hover:text-bronze-dark sm:text-[1.35rem]">
         {copy.title}
@@ -42,8 +43,8 @@ export function BlogCard({
         <time dateTime={post.publishedAt} className="text-xs text-charcoal/45">
           {formatBlogDate(post.publishedAt, locale)}
         </time>
-        <span className="text-xs font-medium uppercase tracking-[0.18em] text-bronze-dark transition-transform duration-300 group-hover:translate-x-0.5">
-          {readLabel} →
+        <span className="text-xs font-medium tracking-[0.18em] text-bronze-dark transition-transform duration-300 group-hover:translate-x-0.5">
+          {toDisplayUpperCase(readLabel, locale)} →
         </span>
       </div>
     </Link>

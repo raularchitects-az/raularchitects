@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { toDisplayUpperCase } from "@/lib/locale-text";
 import { X, ArrowUpRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -33,6 +34,8 @@ const menuItems = [
 export function MegaMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const t = useTranslations("nav");
   const s = useTranslations("servicesPage");
+  const locale = useLocale();
+  const upper = (text: string) => toDisplayUpperCase(text, locale);
 
   useEffect(() => {
     if (!open) return;
@@ -56,9 +59,9 @@ export function MegaMenu({ open, onClose }: { open: boolean; onClose: () => void
             type="button"
             onClick={onClose}
             aria-label={t("menuClose")}
-            className="flex items-center gap-2 border border-cream/20 px-3 py-2 text-xs font-medium uppercase tracking-[0.2em] text-cream transition-colors duration-300 hover:border-bronze-light hover:text-bronze-light"
+            className="flex items-center gap-2 border border-cream/20 px-3 py-2 text-xs font-medium tracking-[0.2em] text-cream transition-colors duration-300 hover:border-bronze-light hover:text-bronze-light"
           >
-            {t("menuClose")}
+            {upper(t("menuClose"))}
             <X className="h-3.5 w-3.5" strokeWidth={1.5} />
           </button>
         </div>
@@ -88,9 +91,9 @@ export function MegaMenu({ open, onClose }: { open: boolean; onClose: () => void
                       key={child.href}
                       href={child.href}
                       onClick={onClose}
-                      className="text-xs uppercase tracking-[0.16em] text-cream/50 transition-colors duration-300 hover:text-bronze-light"
+                      className="text-xs tracking-[0.16em] text-cream/50 transition-colors duration-300 hover:text-bronze-light"
                     >
-                      {"slug" in child ? s(`items.${child.slug}.title`) : t(child.key)}
+                      {upper("slug" in child ? s(`items.${child.slug}.title`) : t(child.key))}
                     </Link>
                   ))}
                 </div>

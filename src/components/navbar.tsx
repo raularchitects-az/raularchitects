@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { toDisplayUpperCase } from "@/lib/locale-text";
 import { Menu } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/ui/logo";
@@ -16,7 +17,9 @@ const primaryLinks = [
 
 export function Navbar() {
   const t = useTranslations("nav");
+  const locale = useLocale();
   const [open, setOpen] = useState(false);
+  const upper = (text: string) => toDisplayUpperCase(text, locale);
 
   return (
     <>
@@ -34,9 +37,9 @@ export function Navbar() {
               <Link
                 key={item.key}
                 href={item.href}
-                className="text-xs font-medium uppercase tracking-[0.22em] text-cream/90 transition-colors duration-300 hover:text-cream"
+                className="text-xs font-medium tracking-[0.22em] text-cream/90 transition-colors duration-300 hover:text-cream"
               >
-                {t(item.key)}
+                {upper(t(item.key))}
               </Link>
             ))}
           </div>
@@ -47,9 +50,9 @@ export function Navbar() {
               type="button"
               onClick={() => setOpen(true)}
               aria-label={t("menuOpen")}
-              className="flex items-center gap-2 border border-cream/30 px-4 py-2.5 text-xs font-medium uppercase tracking-[0.2em] text-cream transition-colors duration-300 hover:border-cream hover:bg-cream/10"
+              className="flex items-center gap-2 border border-cream/30 px-4 py-2.5 text-xs font-medium tracking-[0.2em] text-cream transition-colors duration-300 hover:border-cream hover:bg-cream/10"
             >
-              <span className="hidden sm:inline">{t("menuOpen")}</span>
+              <span className="hidden sm:inline">{upper(t("menuOpen"))}</span>
               <Menu className="h-3.5 w-3.5" strokeWidth={1.5} />
             </button>
           </div>

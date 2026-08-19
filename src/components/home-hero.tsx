@@ -9,7 +9,9 @@ import {
   LayoutGrid,
   type LucideIcon,
 } from "lucide-react";
+import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { toDisplayUpperCase } from "@/lib/locale-text";
 
 const serviceIcons: Record<string, LucideIcon> = {
   "tikinti-ve-temir": Building2,
@@ -47,9 +49,11 @@ export function HomeHero({
   photoMobile?: string;
   identityHref?: string;
 }) {
+  const locale = useLocale();
   const [firstName, ...lastNameParts] = raulName.split(" ");
   const lastName = lastNameParts.join(" ");
   const mobileRoles = [role1, roleLine2, roleLine3];
+  const upper = (text: string) => toDisplayUpperCase(text, locale);
 
   return (
     <section className="relative min-h-[calc(100dvh-5rem)] w-full overflow-hidden bg-cream lg:isolate">
@@ -86,11 +90,11 @@ export function HomeHero({
             className="hero-layer-identity pointer-events-auto group mr-[clamp(0.75rem,3.8vw,1rem)] mt-[clamp(4.5rem,15svh,7rem)] flex min-w-0 flex-col self-start"
           >
             <span className="flex min-w-0 flex-col gap-[3.5px]">
-              <span className="hero-name-plate flex w-full min-w-0 items-center px-[clamp(0.62rem,2.46vw,1.01rem)] py-[clamp(0.36rem,1.29vw,0.56rem)] text-[clamp(1.06rem,4.93vw,1.46rem)] font-bold uppercase leading-none tracking-[clamp(0.067em,0.36vw,0.13em)] text-white">
-                {firstName}
+              <span className="hero-name-plate flex w-full min-w-0 items-center px-[clamp(0.62rem,2.46vw,1.01rem)] py-[clamp(0.36rem,1.29vw,0.56rem)] text-[clamp(1.06rem,4.93vw,1.46rem)] font-bold leading-none tracking-[clamp(0.067em,0.36vw,0.13em)] text-white">
+                {upper(firstName)}
               </span>
-              <span className="hero-name-plate flex w-full min-w-0 items-center px-[clamp(0.62rem,2.46vw,1.01rem)] py-[clamp(0.36rem,1.29vw,0.56rem)] text-[clamp(1.06rem,4.93vw,1.46rem)] font-bold uppercase leading-none tracking-[clamp(0.067em,0.36vw,0.13em)] text-white">
-                {lastName}
+              <span className="hero-name-plate flex w-full min-w-0 items-center px-[clamp(0.62rem,2.46vw,1.01rem)] py-[clamp(0.36rem,1.29vw,0.56rem)] text-[clamp(1.06rem,4.93vw,1.46rem)] font-bold leading-none tracking-[clamp(0.067em,0.36vw,0.13em)] text-white">
+                {upper(lastName)}
               </span>
             </span>
             <span className="mt-[clamp(0.45rem,1.68vw,0.78rem)] flex min-w-0 flex-col">
@@ -120,8 +124,8 @@ export function HomeHero({
             href={identityHref}
             className="group inline-flex flex-col gap-3"
           >
-            <span className="hero-name-plate inline-flex w-fit px-5 py-3 text-2xl font-bold uppercase tracking-[0.08em] text-white">
-              {raulName}
+            <span className="hero-name-plate inline-flex w-fit px-5 py-3 text-2xl font-bold tracking-[0.08em] text-white">
+              {upper(raulName)}
             </span>
             <span className="hero-identity-roles flex flex-col gap-0.5 text-[0.95rem] font-medium leading-snug text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)]">
               <span>{role1}</span>
@@ -159,8 +163,11 @@ export function HomeHero({
                     className="h-5 w-5 shrink-0 text-[#8f6b4f] transition-transform duration-500 ease-out group-hover:translate-x-0.5 sm:h-6 sm:w-6"
                     strokeWidth={1.35}
                   />
-                  <span className="text-coffee-gradient text-[1.7rem] font-bold uppercase leading-[1.12] tracking-[-0.02em] transition-[filter] duration-500 group-hover:brightness-110 sm:text-4xl lg:text-[2.65rem] xl:text-[2.9rem]">
-                    {service.title}
+                  <span
+                    lang={locale}
+                    className="text-coffee-gradient text-[1.7rem] font-bold leading-[1.22] tracking-[-0.02em] transition-[filter] duration-500 group-hover:brightness-110 sm:text-4xl lg:text-[2.65rem] xl:text-[2.9rem]"
+                  >
+                    {upper(service.title)}
                   </span>
                   <ArrowRight
                     className="ml-auto h-4 w-4 shrink-0 text-[#8f6b4f]/55 transition-transform duration-500 ease-out group-hover:translate-x-1 sm:h-5 sm:w-5"
@@ -173,9 +180,9 @@ export function HomeHero({
 
           <Link
             href="/xidmetler"
-            className="hero-all-services mt-10 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.32em] text-[#8f6b4f] transition-colors duration-300 hover:text-[#6b4a32] sm:mt-14"
+            className="hero-all-services mt-10 inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-[#8f6b4f] transition-colors duration-300 hover:text-[#6b4a32] sm:mt-14"
           >
-            {allServicesCta}
+            {upper(allServicesCta)}
             <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} />
           </Link>
         </div>

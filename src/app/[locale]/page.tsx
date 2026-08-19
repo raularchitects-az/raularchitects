@@ -11,6 +11,7 @@ import { projectCategories, categoryCoverImage as projectCoverImage } from "@/da
 import { categoryCoverImage as portfolioCoverImage } from "@/data/portfolio";
 import { getHomeBlogPosts, getPublicServices, getSiteSettings } from "@/lib/cms/public";
 import { BlogCard } from "@/components/blog-card";
+import { toDisplayUpperCase } from "@/lib/locale-text";
 
 type HomeMessages = {
   raulName: string;
@@ -40,8 +41,9 @@ const serviceTitleFields = {
 } as const;
 
 export default async function Home({ params }: PageProps<"/[locale]">) {
-  const { locale } = await params;
+  const locale = (await params).locale;
   setRequestLocale(locale);
+  const upper = (text: string) => toDisplayUpperCase(text, locale);
 
   const messages = await getMessages();
   const homeMsg = messages.home as HomeMessages;
@@ -96,8 +98,8 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
       <section className="relative bg-cream py-20 sm:py-28">
         <Container>
           <Reveal>
-            <h2 className="inline-flex items-center gap-3 text-3xl font-semibold uppercase tracking-wide text-charcoal sm:text-4xl">
-              {nav("projects")}
+            <h2 className="inline-flex items-center gap-3 text-3xl font-semibold tracking-wide text-charcoal sm:text-4xl">
+              {upper(nav("projects"))}
               <TriangleMark size={18} />
             </h2>
           </Reveal>
@@ -117,8 +119,8 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal-dark/80 via-charcoal-dark/10 to-transparent transition-colors duration-300 group-hover:from-bronze-dark/90" />
-                  <span className="absolute inset-x-0 bottom-0 p-3 text-xs font-medium uppercase tracking-[0.14em] text-cream sm:p-4 sm:text-sm">
-                    {c(category)}
+                  <span className="absolute inset-x-0 bottom-0 p-3 text-xs font-medium tracking-[0.14em] text-cream sm:p-4 sm:text-sm">
+                    {upper(c(category))}
                   </span>
                 </Link>
               </Reveal>
@@ -133,8 +135,8 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
         <div className="absolute inset-0 bg-gradient-animated" />
         <Container className="relative">
           <Reveal>
-            <h2 className="inline-flex items-center gap-3 text-3xl font-semibold uppercase tracking-wide text-cream sm:text-4xl">
-              {nav("portfolio")}
+            <h2 className="inline-flex items-center gap-3 text-3xl font-semibold tracking-wide text-cream sm:text-4xl">
+              {upper(nav("portfolio"))}
               <TriangleMark size={18} className="brightness-0 invert" />
             </h2>
           </Reveal>
@@ -154,8 +156,8 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal-dark/80 via-charcoal-dark/10 to-transparent transition-colors duration-300 group-hover:from-charcoal-dark/90" />
-                  <span className="absolute inset-x-0 bottom-0 p-3 text-xs font-medium uppercase tracking-[0.14em] text-cream sm:p-4 sm:text-sm">
-                    {c(category)}
+                  <span className="absolute inset-x-0 bottom-0 p-3 text-xs font-medium tracking-[0.14em] text-cream sm:p-4 sm:text-sm">
+                    {upper(c(category))}
                   </span>
                 </Link>
               </Reveal>
@@ -169,8 +171,8 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
       <section className="relative bg-cream py-20 sm:py-28">
         <Container>
           <Reveal>
-            <h2 className="inline-flex items-center gap-3 text-3xl font-semibold uppercase tracking-wide text-charcoal sm:text-4xl">
-              {nav("blog")}
+            <h2 className="inline-flex items-center gap-3 text-3xl font-semibold tracking-wide text-charcoal sm:text-4xl">
+              {upper(nav("blog"))}
               <TriangleMark size={18} />
             </h2>
           </Reveal>

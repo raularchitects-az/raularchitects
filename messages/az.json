@@ -24,7 +24,7 @@
     "roleLine3": "BIM Eksperti",
     "allServicesCta": "Bütün xidmətlər",
     "svcTikinti": "Tikinti Təmir",
-    "svcBim": "BIM Memarlığı",
+    "svcBim": "BIM Memarlıq",
     "svcInteryer": "İnteryer Dizayn",
     "svcSehersalma": "Şəhərsalma Həlləri"
   },
@@ -463,7 +463,7 @@
         "title": "Tikinti və Təmir"
       },
       "bim-ile-layihelendirme": {
-        "title": "BIM Memarlığı"
+        "title": "BIM Memarlıq"
       },
       "interyer-dizayn": {
         "title": "İnteryer Dizayn"
@@ -489,7 +489,7 @@
         ]
       },
       "bim-ile-layihelendirme": {
-        "title": "BIM Memarlığı",
+        "title": "BIM Memarlıq",
         "intro": "Tikintidən əvvəl binanın tam rəqəmsal ikizi. Kolliziyasız, dəqiq və proqnozlaşdırıla bilən icra.",
         "points": [
           "3D ağıllı model və kolliziya analizi",

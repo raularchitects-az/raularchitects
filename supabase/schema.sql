@@ -282,7 +282,7 @@ values
     'Boxes',
     '01',
     1,
-    '{"az":{"title":"BIM Memarlığı","intro":"","body":""},"en":{"title":"BIM Architecture","intro":"","body":""},"de":{"title":"BIM-Architektur","intro":"","body":""},"ru":{"title":"BIM-архитектура","intro":"","body":""}}'::jsonb
+    '{"az":{"title":"BIM Memarlıq","intro":"","body":""},"en":{"title":"BIM Architecture","intro":"","body":""},"de":{"title":"BIM-Architektur","intro":"","body":""},"ru":{"title":"BIM-архитектура","intro":"","body":""}}'::jsonb
   ),
   (
     'tikinti-ve-temir',

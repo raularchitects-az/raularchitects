@@ -1,4 +1,5 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { toDisplayUpperCase } from "@/lib/locale-text";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/ui/logo";
 import { Container } from "@/components/ui/container";
@@ -15,7 +16,9 @@ const links = [
 
 export function Footer({ credit }: { credit?: string }) {
   const t = useTranslations("nav");
+  const locale = useLocale();
   const year = new Date().getFullYear();
+  const upper = (text: string) => toDisplayUpperCase(text, locale);
 
   return (
     <footer className="border-t border-charcoal/10 bg-cream py-12">
@@ -28,9 +31,9 @@ export function Footer({ credit }: { credit?: string }) {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-xs font-medium uppercase tracking-[0.18em] text-charcoal/60 transition-colors duration-300 hover:text-bronze-dark"
+                className="text-xs font-medium tracking-[0.18em] text-charcoal/60 transition-colors duration-300 hover:text-bronze-dark"
               >
-                {t(link.key)}
+                {upper(t(link.key))}
               </Link>
             ))}
           </nav>

@@ -253,6 +253,8 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    overflow: visible;
+    padding-top: 0.12em;
   }
 
   .hero-name-plate {
