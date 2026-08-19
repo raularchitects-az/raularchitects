@@ -12,10 +12,11 @@ import { BlogBody } from "@/lib/blog-body";
 import {
   SITE_NAME,
   SITE_URL,
-  absoluteUrl,
+  absoluteMediaUrl,
   languageAlternates,
   ogAlternateLocales,
   ogLocale,
+  productionAbsoluteUrl,
 } from "@/lib/site";
 
 export async function generateStaticParams() {
@@ -37,19 +38,22 @@ export async function generateMetadata({
 
   const copy = getBlogCopy(post, locale);
   const path = `/bloq/${slug}`;
-  const canonical = absoluteUrl(locale, path);
+  const canonical = productionAbsoluteUrl(locale, path);
+  const imageUrl = absoluteMediaUrl(post.image);
+  const title = copy.seoTitle || copy.title;
+  const description = copy.description || copy.excerpt;
 
   return {
-    title: copy.seoTitle,
-    description: copy.description,
+    title,
+    description,
     alternates: {
       canonical,
       languages: languageAlternates(path),
     },
     openGraph: {
       type: "article",
-      title: copy.seoTitle,
-      description: copy.description,
+      title,
+      description,
       url: canonical,
       siteName: SITE_NAME,
       locale: ogLocale(locale),
@@ -58,16 +62,16 @@ export async function generateMetadata({
       modifiedTime: post.publishedAt,
       images: [
         {
-          url: post.image,
+          url: imageUrl,
           alt: getBlogImageAlt(post, locale),
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: copy.seoTitle,
-      description: copy.description,
-      images: [post.image],
+      title,
+      description,
+      images: [imageUrl],
     },
     robots: { index: true, follow: true },
   };
@@ -92,7 +96,7 @@ export default async function BlogPostPage({
   const nav = await getTranslations("nav");
   const services = await getTranslations("servicesPage");
   const copy = getBlogCopy(post, locale);
-  const canonical = absoluteUrl(locale, `/bloq/${slug}`);
+  const canonical = productionAbsoluteUrl(locale, `/bloq/${slug}`);
 
   const relatedLabels: Record<string, string> = {
     "/elaqe": nav("contact"),
@@ -117,7 +121,7 @@ export default async function BlogPostPage({
     url: canonical,
     image: {
       "@type": "ImageObject",
-      url: `${SITE_URL}${post.image}`,
+      url: absoluteMediaUrl(post.image),
       caption: getBlogImageAlt(post, locale),
     },
     mainEntityOfPage: {
@@ -127,7 +131,7 @@ export default async function BlogPostPage({
     author: {
       "@type": "Person",
       name: t("author"),
-      url: absoluteUrl(locale, "/haqqimizda/raul-nagiyev"),
+      url: productionAbsoluteUrl(locale, "/haqqimizda/raul-nagiyev"),
     },
     publisher: {
       "@type": "Organization",

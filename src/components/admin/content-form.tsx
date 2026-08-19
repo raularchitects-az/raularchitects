@@ -38,6 +38,7 @@ export function ContentForm({
   const router = useRouter();
   const translations = row?.translations ?? emptyT();
   const [error, setError] = useState("");
+  const [editorLocale, setEditorLocale] = useState<(typeof ADMIN_LOCALES)[number]>("az");
 
   async function onSubmit(formData: FormData) {
     setError("");
@@ -61,7 +62,7 @@ export function ContentForm({
     if (table === "blog_posts") {
       next.az = {
         ...next.az,
-        linkedinText: String(formData.get("linkedin_text") ?? ""),
+        linkedinText: translations.az?.linkedinText ?? "",
       };
     }
     const payload: Record<string, unknown> = {
@@ -301,6 +302,8 @@ export function ContentForm({
       ) : null}
 
       <LocaleTabs
+        locale={editorLocale}
+        onLocaleChange={setEditorLocale}
         render={(locale) => {
           const t = translations[locale] ?? {};
           return (
@@ -345,13 +348,15 @@ export function ContentForm({
 
       {table === "blog_posts" ? (
         <LinkedInShareSection
-          savedText={translations.az?.linkedinText ?? ""}
-          savedPublished={row?.status === "published"}
-          initialSlug={row?.slug ?? ""}
-          initialTitle={translations.az?.title || translations.az?.name || ""}
-          initialExcerpt={translations.az?.short || translations.az?.excerpt || translations.az?.intro || ""}
-          initialCategory={row?.category ?? "architecture"}
-          initialStatus={row?.status ?? "draft"}
+          key={editorLocale}
+          editorLocale={editorLocale}
+          published={row?.status === "published"}
+          slug={row?.slug ?? ""}
+          localeTitles={{
+            az: translations.az?.title || translations.az?.name || "",
+            en: translations.en?.title || translations.en?.name || "",
+            de: translations.de?.title || translations.de?.name || "",
+          }}
         />
       ) : null}
 

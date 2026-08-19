@@ -43,6 +43,13 @@ export function productionAbsoluteUrl(locale: string, path: string) {
   return `${productionSiteUrl()}${localePath(locale, path)}`;
 }
 
+export function absoluteMediaUrl(src: string) {
+  if (!src) return src;
+  if (/^https?:\/\//i.test(src)) return src;
+  const origin = productionSiteUrl();
+  return src.startsWith("/") ? `${origin}${src}` : `${origin}/${src}`;
+}
+
 export function languageAlternates(path: string) {
   const languages: Record<string, string> = {
     "x-default": absoluteUrl(routing.defaultLocale, path),

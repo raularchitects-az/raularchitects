@@ -103,8 +103,8 @@ export function cmsBlogToPost(row: CmsRow): BlogPost {
         locale,
         {
           title,
-          seoTitle: row.seo_title || t.seoTitle || title,
-          description: row.meta_description || t.description || t.excerpt || "",
+          seoTitle: t.seoTitle || (locale === "az" ? row.seo_title : "") || title,
+          description: t.description || t.excerpt || t.short || (locale === "az" ? row.meta_description || "" : ""),
           excerpt: t.excerpt || t.short || "",
           ctaLabel: t.ctaLabel || "",
           ctaText: t.ctaText || "",

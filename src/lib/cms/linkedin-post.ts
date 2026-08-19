@@ -1,44 +1,38 @@
 import { productionAbsoluteUrl } from "@/lib/site";
 
-export const LINKEDIN_COMPANY_URL = "https://www.linkedin.com/company/raularchitects/";
+export const LINKEDIN_SHARE_OFFSITE = "https://www.linkedin.com/sharing/share-offsite/";
 
-const HASHTAGS_BY_CATEGORY: Record<string, readonly [string, string]> = {
-  bim: ["#BIM", "#Memarliq"],
-  architecture: ["#Memarliq", "#Architecture"],
-  interior: ["#InteriorDesign", "#Memarliq"],
-  construction: ["#Tikinti", "#Memarliq"],
-  urban: ["#UrbanDesign", "#Memarliq"],
-  visualization: ["#3DVisualization", "#Memarliq"],
-  planning: ["#Planning", "#Memarliq"],
+export const LINKEDIN_SHARE_LOCALES = ["az", "en", "de"] as const;
+export type LinkedInShareLocale = (typeof LINKEDIN_SHARE_LOCALES)[number];
+
+export const LINKEDIN_SHARE_LOCALE_LABELS: Record<LinkedInShareLocale, string> = {
+  az: "Azərbaycan dili",
+  en: "English",
+  de: "Deutsch",
 };
 
-export function publicBlogPostUrl(slug: string) {
+export const LINKEDIN_SHARE_BUTTON_LABELS: Record<LinkedInShareLocale, string> = {
+  az: "LinkedIn-də post kimi paylaş",
+  en: "Share as a LinkedIn post",
+  de: "Als LinkedIn-Beitrag teilen",
+};
+
+export function publicBlogPostUrl(locale: LinkedInShareLocale, slug: string) {
   const trimmed = slug.trim();
   if (!trimmed) return "";
-  return productionAbsoluteUrl("az", `/bloq/${trimmed}`);
+  return productionAbsoluteUrl(locale, `/bloq/${trimmed}`);
 }
 
-export function linkedInHashtags(category?: string | null): string[] {
-  const pair = HASHTAGS_BY_CATEGORY[category ?? ""] ?? HASHTAGS_BY_CATEGORY.architecture;
-  return [pair[0], pair[1], "#RaulArchitects"].slice(0, 3);
+export function linkedInShareOffsiteUrl(locale: LinkedInShareLocale, slug: string) {
+  const url = publicBlogPostUrl(locale, slug);
+  if (!url) return "";
+  return `${LINKEDIN_SHARE_OFFSITE}?url=${encodeURIComponent(url)}`;
 }
 
-export function defaultLinkedInPost({
-  title,
-  excerpt,
-  slug,
-  category,
-}: {
-  title: string;
-  excerpt: string;
-  slug: string;
-  category?: string | null;
-}) {
-  const url = publicBlogPostUrl(slug);
-  const tags = linkedInHashtags(category).join(" ");
-  return [title.trim(), excerpt.trim(), url, tags].filter(Boolean).join("\n\n");
+export function localeHasBlogVersion(title: string | undefined) {
+  return Boolean(title?.trim());
 }
 
-export function canShareLinkedInPost(status: string | undefined, slug: string) {
-  return status === "published" && Boolean(slug.trim());
+export function canShareLinkedInPost(status: string | undefined, slug: string, title?: string) {
+  return status === "published" && Boolean(slug.trim()) && localeHasBlogVersion(title);
 }

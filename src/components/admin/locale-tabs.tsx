@@ -3,12 +3,25 @@
 import { useState } from "react";
 import { ADMIN_LOCALES } from "@/lib/cms/types";
 
+type AdminLocale = (typeof ADMIN_LOCALES)[number];
+
 export function LocaleTabs({
+  locale: localeProp,
+  onLocaleChange,
   render,
 }: {
-  render: (locale: (typeof ADMIN_LOCALES)[number]) => React.ReactNode;
+  locale?: AdminLocale;
+  onLocaleChange?: (locale: AdminLocale) => void;
+  render: (locale: AdminLocale) => React.ReactNode;
 }) {
-  const [locale, setLocale] = useState<(typeof ADMIN_LOCALES)[number]>("az");
+  const [internal, setInternal] = useState<AdminLocale>("az");
+  const locale = localeProp ?? internal;
+
+  function setLocale(next: AdminLocale) {
+    onLocaleChange?.(next);
+    if (localeProp === undefined) setInternal(next);
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex gap-2">
