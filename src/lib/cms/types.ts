@@ -14,6 +14,7 @@ export type TranslationBlock = {
   imageAlt?: string;
   ctaLabel?: string;
   ctaText?: string;
+  linkedinText?: string;
 };
 
 export type Translations = Record<string, TranslationBlock>;

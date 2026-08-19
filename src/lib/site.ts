@@ -22,6 +22,27 @@ export function absoluteUrl(locale: string, path: string) {
   return `${SITE_URL}${localePath(locale, path)}`;
 }
 
+function isLocalOrigin(value: string) {
+  try {
+    const host = new URL(value.includes("://") ? value : `https://${value}`).hostname;
+    return host === "localhost" || host === "127.0.0.1" || host === "::1" || host.endsWith(".local");
+  } catch {
+    return /localhost|127\.0\.0\.1/i.test(value);
+  }
+}
+
+/** Live site origin for share links. Never returns localhost. */
+export function productionSiteUrl() {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, "") ?? "";
+  if (raw && !isLocalOrigin(raw)) return raw;
+  if (!isLocalOrigin(SITE_URL)) return SITE_URL;
+  return "https://www.raularchitects.com";
+}
+
+export function productionAbsoluteUrl(locale: string, path: string) {
+  return `${productionSiteUrl()}${localePath(locale, path)}`;
+}
+
 export function languageAlternates(path: string) {
   const languages: Record<string, string> = {
     "x-default": absoluteUrl(routing.defaultLocale, path),

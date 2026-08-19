@@ -8,6 +8,7 @@ import type { CmsRow, MediaRow, Translations } from "@/lib/cms/types";
 import { ADMIN_LOCALES, BLOG_CATEGORIES, COUNTRIES, PROJECT_CATEGORIES, SERVICE_FILTERS } from "@/lib/cms/types";
 import { Field, Select, SubmitButton, TextArea, TextInput } from "./fields";
 import { GalleryPicker } from "./gallery-picker";
+import { LinkedInShareSection } from "./linkedin-share-section";
 import { LocaleTabs } from "./locale-tabs";
 import { MediaPicker } from "./media-picker";
 
@@ -55,6 +56,12 @@ export function ContentForm({
         imageAlt: String(formData.get(`${locale}_imageAlt`) ?? ""),
         ctaLabel: String(formData.get(`${locale}_ctaLabel`) ?? ""),
         ctaText: String(formData.get(`${locale}_ctaText`) ?? ""),
+      };
+    }
+    if (table === "blog_posts") {
+      next.az = {
+        ...next.az,
+        linkedinText: String(formData.get("linkedin_text") ?? ""),
       };
     }
     const payload: Record<string, unknown> = {
@@ -335,6 +342,18 @@ export function ContentForm({
           );
         }}
       />
+
+      {table === "blog_posts" ? (
+        <LinkedInShareSection
+          savedText={translations.az?.linkedinText ?? ""}
+          savedPublished={row?.status === "published"}
+          initialSlug={row?.slug ?? ""}
+          initialTitle={translations.az?.title || translations.az?.name || ""}
+          initialExcerpt={translations.az?.short || translations.az?.excerpt || translations.az?.intro || ""}
+          initialCategory={row?.category ?? "architecture"}
+          initialStatus={row?.status ?? "draft"}
+        />
+      ) : null}
 
       <div className="flex gap-3">
         <SubmitButton>Saxla</SubmitButton>
