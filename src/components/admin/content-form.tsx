@@ -6,6 +6,9 @@ import { restoreRevision, upsertRecord } from "@/lib/cms/actions";
 import type { EntityType } from "@/lib/cms/queries";
 import type { CmsRow, MediaRow, Translations } from "@/lib/cms/types";
 import { ADMIN_LOCALES, BLOG_CATEGORIES, COUNTRIES, PROJECT_CATEGORIES, SERVICE_FILTERS } from "@/lib/cms/types";
+import { fallbackBlogSlugs } from "@/lib/blog-urls";
+import { productionAbsoluteUrl } from "@/lib/site";
+import type { Locale } from "@/i18n/routing";
 import { Field, Select, SubmitButton, TextArea, TextInput } from "./fields";
 import { GalleryPicker } from "./gallery-picker";
 import { LinkedInShareSection } from "./linkedin-share-section";
@@ -43,7 +46,7 @@ export function ContentForm({
   async function onSubmit(formData: FormData) {
     setError("");
     const next: Translations = emptyT();
-    for (const locale of [...ADMIN_LOCALES, "ru"] as const) {
+    for (const locale of ADMIN_LOCALES) {
       next[locale] = {
         title: String(formData.get(`${locale}_title`) ?? ""),
         name: String(formData.get(`${locale}_title`) ?? ""),
@@ -57,6 +60,8 @@ export function ContentForm({
         imageAlt: String(formData.get(`${locale}_imageAlt`) ?? ""),
         ctaLabel: String(formData.get(`${locale}_ctaLabel`) ?? ""),
         ctaText: String(formData.get(`${locale}_ctaText`) ?? ""),
+        slug: String(formData.get(`${locale}_slug`) ?? ""),
+        published: table === "blog_posts" ? formData.get(`${locale}_published`) === "on" : undefined,
       };
     }
     if (table === "blog_posts") {
@@ -66,7 +71,7 @@ export function ContentForm({
       };
     }
     const payload: Record<string, unknown> = {
-      slug: String(formData.get("slug") ?? ""),
+      slug: table === "blog_posts" ? String(formData.get("az_slug") ?? "") : String(formData.get("slug") ?? ""),
       status: String(formData.get("status") ?? "draft"),
       is_active: formData.get("is_active") === "on",
       sort_order: Number(formData.get("sort_order") ?? 0),
@@ -135,9 +140,11 @@ export function ContentForm({
     <form action={onSubmit} className="flex max-w-4xl flex-col gap-6">
       {error ? <p className="text-sm text-red-700">{error}</p> : null}
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="URL slug">
-          <TextInput name="slug" required defaultValue={row?.slug} placeholder="bim-memarliq-nedir" />
-        </Field>
+        {table === "blog_posts" ? null : (
+          <Field label="URL slug">
+            <TextInput name="slug" required defaultValue={row?.slug} placeholder="bim-memarliq-nedir" />
+          </Field>
+        )}
         <Field label="Status">
           <Select name="status" defaultValue={row?.status ?? "draft"}>
             <option value="draft">Draft</option>
@@ -330,6 +337,37 @@ export function ContentForm({
               </Field>
               {table === "blog_posts" ? (
                 <>
+                  <Field label={`Public slug (${locale})`}>
+                    <TextInput
+                      name={`${locale}_slug`}
+                      required={locale === "az"}
+                      defaultValue={
+                        t.slug ||
+                        fallbackBlogSlugs(row?.slug ?? "")[locale as Locale] ||
+                        (locale === "az" ? row?.slug : "") ||
+                        ""
+                      }
+                      placeholder={`${locale}-slug`}
+                    />
+                  </Field>
+                  <p className="text-xs text-charcoal/45">
+                    Public URL: {productionAbsoluteUrl(locale, `/bloq/${t.slug || fallbackBlogSlugs(row?.slug ?? "")[locale as Locale] || row?.slug || "slug"}`)}
+                  </p>
+                  <label className="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      name={`${locale}_published`}
+                      defaultChecked={t.published !== false && Boolean(t.title || t.name)}
+                    />
+                    Bu dil versiyasını dərc et
+                  </label>
+                  <p className="text-xs text-charcoal/45">
+                    {!(t.title || t.name)
+                      ? "Status: tərcümə yoxdur"
+                      : row?.status !== "published" || t.published === false
+                        ? "Status: dərc olunmayıb"
+                        : "Status: dərc olunub"}
+                  </p>
                   <Field label={`Şəkil alt (${locale})`}>
                     <TextInput name={`${locale}_imageAlt`} defaultValue={t.imageAlt || ""} />
                   </Field>
@@ -351,11 +389,17 @@ export function ContentForm({
           key={editorLocale}
           editorLocale={editorLocale}
           published={row?.status === "published"}
-          slug={row?.slug ?? ""}
           localeTitles={{
             az: translations.az?.title || translations.az?.name || "",
             en: translations.en?.title || translations.en?.name || "",
             de: translations.de?.title || translations.de?.name || "",
+            ru: translations.ru?.title || translations.ru?.name || "",
+          }}
+          localeSlugs={{
+            az: translations.az?.slug || fallbackBlogSlugs(row?.slug ?? "").az || row?.slug || "",
+            en: translations.en?.slug || fallbackBlogSlugs(row?.slug ?? "").en,
+            de: translations.de?.slug || fallbackBlogSlugs(row?.slug ?? "").de,
+            ru: translations.ru?.slug || fallbackBlogSlugs(row?.slug ?? "").ru,
           }}
         />
       ) : null}

@@ -641,6 +641,8 @@
     "read": "Lesen",
     "back": "Alle Artikel",
     "related": "Verwandte Seiten",
+    "unavailableTitle": "Dieser Artikel ist in dieser Sprache nicht verfügbar",
+    "unavailableBody": "Diese Sprachversion wurde noch nicht veröffentlicht. Wechseln Sie die Sprache oder kehren Sie zur Blogübersicht zurück.",
     "author": "Raul Naghiyev",
     "categories": {
       "bim": "BIM",

@@ -51,7 +51,7 @@ export default async function PortfolioDetailPage({
 
   const redirected = await resolveSlugRedirect("portfolio", slug);
   if (redirected) {
-    nextRedirect(locale === routing.defaultLocale ? redirected.to_path : `/${locale}${redirected.to_path}`);
+    nextRedirect(`/${locale}${redirected.to_path}`);
   }
 
   const cmsItem = await getPublicPortfolioItem(slug, locale);

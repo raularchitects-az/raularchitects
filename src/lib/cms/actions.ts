@@ -5,22 +5,11 @@ import { redirect } from "next/navigation";
 import { requireAdmin, requireStaff } from "./auth";
 import { createAdminClient, createUserServerClient, createServiceClient } from "./supabase";
 import { mediaPublicUrl } from "./media-url";
+import { slugify } from "@/lib/slugify";
+import { routing } from "@/i18n/routing";
+import { fallbackBlogSlugs } from "@/lib/blog-urls";
 import type { ContentStatus, EntityType } from "./queries";
-
-function slugify(value: string) {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/[ə]/g, "e")
-    .replace(/[ı]/g, "i")
-    .replace(/[ö]/g, "o")
-    .replace(/[ü]/g, "u")
-    .replace(/[ç]/g, "c")
-    .replace(/[ş]/g, "s")
-    .replace(/[ğ]/g, "g")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-}
+import type { Translations } from "./types";
 
 async function audit(
   action: string,
@@ -169,6 +158,32 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
     row.published_at = new Date().toISOString();
   }
 
+  if (table === "blog_posts") {
+    const translations = (row.translations ?? {}) as Translations;
+    for (const locale of routing.locales) {
+      const block = translations[locale] ?? {};
+      if (block.slug) block.slug = slugify(String(block.slug));
+      translations[locale] = block;
+    }
+    const azSlug = translations.az?.slug || String(row.slug ?? "");
+    row.slug = slugify(azSlug);
+    row.translations = translations;
+    if (!row.slug) throw new Error("AZ slug tələb olunur");
+
+    const { data: others } = await supabase.from("blog_posts").select("id, slug, translations");
+    for (const locale of routing.locales) {
+      const candidate = translations[locale]?.slug?.trim();
+      if (!candidate) continue;
+      const clash = (others ?? []).some((other) => {
+        if (id && other.id === id) return false;
+        if (other.slug === candidate) return true;
+        const otherT = (other.translations ?? {}) as Translations;
+        return routing.locales.some((code) => otherT[code]?.slug === candidate);
+      });
+      if (clash) throw new Error(`“${candidate}” slug-u (${locale}) artıq mövcuddur`);
+    }
+  }
+
   if (id) {
     const { data: existing } = await supabase.from(table).select("*").eq("id", id).maybeSingle();
     if (existing) {
@@ -182,6 +197,21 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
           { from_path: from, to_path: to, status_code: 301 },
           { onConflict: "from_path" },
         );
+      }
+      if (table === "blog_posts") {
+        const prevT = (existing.translations ?? {}) as Translations;
+        const nextT = (row.translations ?? {}) as Translations;
+        const mapped = fallbackBlogSlugs(String(oldSlug || newSlug || ""));
+        for (const locale of routing.locales) {
+          const previous = prevT[locale]?.slug || mapped[locale] || oldSlug;
+          const next = nextT[locale]?.slug || newSlug;
+          if (previous && next && previous !== next) {
+            await supabase.from("redirects").upsert(
+              { from_path: `/bloq/${previous}`, to_path: `/bloq/${next}`, status_code: 301 },
+              { onConflict: "from_path" },
+            );
+          }
+        }
       }
     }
     const { error } = await supabase.from(table).update(row).eq("id", id);
@@ -458,6 +488,8 @@ export async function importStaticContent() {
             imageAlt: post.imageAlt[locale],
             ctaLabel: copy.ctaLabel,
             ctaText: copy.ctaText,
+            slug: post.slugs?.[locale] || post.slug,
+            published: true,
           },
         ];
       }),

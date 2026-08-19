@@ -1,7 +1,8 @@
-import { blogPosts as staticBlog, getBlogCopy, type BlogPost } from "@/data/blog";
+import { blogPosts as staticBlog, type BlogPost } from "@/data/blog";
 import { portfolioItems as staticPortfolio, type PortfolioMeta } from "@/data/portfolio";
 import { projects as staticProjects, getProjectGalleryGroups, type ProjectMeta } from "@/data/projects";
 import { services as staticServices, type ServiceMeta } from "@/data/services";
+import { fallbackBlogSlugs, findBlogByAnySlug, getBlogLocaleSlug, isBlogLocaleLive } from "@/lib/blog-urls";
 import { mediaPublicUrl } from "./media-url";
 import { findRedirect, getPublished, getSettings } from "./queries";
 import type { CmsRow, TranslationBlock } from "./types";
@@ -9,6 +10,10 @@ import type { CmsRow, TranslationBlock } from "./types";
 function pickT(row: CmsRow, locale: string): TranslationBlock {
   const t = row.translations ?? {};
   return t[locale] ?? t.az ?? t.en ?? t.de ?? {};
+}
+
+function pickLocaleT(row: CmsRow, locale: string): TranslationBlock {
+  return row.translations?.[locale] ?? {};
 }
 
 function cover(row: CmsRow) {
@@ -95,10 +100,22 @@ function markdownToBlocks(body: string) {
 
 export function cmsBlogToPost(row: CmsRow): BlogPost {
   const locales = ["az", "en", "ru", "de"] as const;
+  const mapped = fallbackBlogSlugs(row.slug);
+  const slugs = Object.fromEntries(
+    locales.map((locale) => {
+      const t = pickLocaleT(row, locale);
+      const explicit = t.slug?.trim();
+      if (explicit) return [locale, explicit];
+      if (mapped[locale] && mapped[locale] !== row.slug) return [locale, mapped[locale]];
+      if (t.title?.trim() || locale === "az") return [locale, row.slug];
+      return [locale, ""];
+    }),
+  ) as BlogPost["slugs"];
+
   const copy = Object.fromEntries(
     locales.map((locale) => {
-      const t = pickT(row, locale);
-      const title = t.title || row.slug;
+      const t = pickLocaleT(row, locale);
+      const title = t.title?.trim() || "";
       return [
         locale,
         {
@@ -109,6 +126,7 @@ export function cmsBlogToPost(row: CmsRow): BlogPost {
           ctaLabel: t.ctaLabel || "",
           ctaText: t.ctaText || "",
           blocks: markdownToBlocks(t.body || t.full || ""),
+          published: t.published !== false,
         },
       ];
     }),
@@ -116,13 +134,14 @@ export function cmsBlogToPost(row: CmsRow): BlogPost {
 
   return {
     slug: row.slug,
+    slugs,
     publishedAt: row.published_at?.slice(0, 10) || row.created_at.slice(0, 10),
     image: cover(row),
     imageAlt: {
-      az: pickT(row, "az").imageAlt || pickT(row, "az").title || row.slug,
-      en: pickT(row, "en").imageAlt || pickT(row, "en").title || row.slug,
-      ru: pickT(row, "ru").imageAlt || pickT(row, "en").title || row.slug,
-      de: pickT(row, "de").imageAlt || pickT(row, "de").title || row.slug,
+      az: pickLocaleT(row, "az").imageAlt || pickLocaleT(row, "az").title || row.slug,
+      en: pickLocaleT(row, "en").imageAlt || pickLocaleT(row, "en").title || row.slug,
+      ru: pickLocaleT(row, "ru").imageAlt || pickLocaleT(row, "ru").title || row.slug,
+      de: pickLocaleT(row, "de").imageAlt || pickLocaleT(row, "de").title || row.slug,
     },
     category: (row.category as BlogPost["category"]) || "architecture",
     serviceSlug: "bim-ile-layihelendirme",
@@ -205,10 +224,10 @@ export async function getPublicBlogPosts(): Promise<BlogPost[]> {
 export async function getPublicBlogPost(slug: string) {
   const rows = await getPublished("blog_posts");
   if (rows.length) {
-    const row = rows.find((item) => item.slug === slug);
-    return row ? cmsBlogToPost(row) : null;
+    const posts = rows.map(cmsBlogToPost);
+    return findBlogByAnySlug(posts, slug);
   }
-  return staticBlog.find((post) => post.slug === slug) ?? null;
+  return findBlogByAnySlug(staticBlog, slug);
 }
 
 export async function getPublicServices(locale: string) {
@@ -285,6 +304,22 @@ export async function getPublicContact() {
 
 export async function resolveSlugRedirect(kind: "layihelar" | "portfolio" | "bloq" | "xidmetler", slug: string) {
   return findRedirect(`/${kind}/${slug}`);
+}
+
+export async function resolvePublicBlog(locale: string, slug: string) {
+  const redirected = await resolveSlugRedirect("bloq", slug);
+  const viaRedirect = redirected?.to_path.replace(/^\/bloq\//, "") ?? "";
+  const post =
+    (await getPublicBlogPost(slug)) ??
+    (viaRedirect ? await getPublicBlogPost(viaRedirect) : null);
+  if (!post) return { post: null as BlogPost | null, live: false, redirectTo: null as string | null };
+
+  const live = isBlogLocaleLive(post, locale);
+  const canonicalSlug = getBlogLocaleSlug(post, locale);
+  if (live && canonicalSlug && canonicalSlug !== slug) {
+    return { post, live, redirectTo: `/bloq/${canonicalSlug}` };
+  }
+  return { post, live, redirectTo: null as string | null };
 }
 
 export { getPublished };

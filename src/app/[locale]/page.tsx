@@ -10,6 +10,7 @@ import { services } from "@/data/services";
 import { projectCategories, categoryCoverImage as projectCoverImage } from "@/data/projects";
 import { categoryCoverImage as portfolioCoverImage } from "@/data/portfolio";
 import { getHomeBlogPosts, getPublicServices, getSiteSettings } from "@/lib/cms/public";
+import { isBlogLocaleLive } from "@/lib/blog-urls";
 import { BlogCard } from "@/components/blog-card";
 import { toDisplayUpperCase } from "@/lib/locale-text";
 
@@ -63,7 +64,9 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
   const cmsServices = await getPublicServices(locale);
   const homeFlags = settings.home ?? {};
   const hero = settings.hero ?? {};
-  const homePosts = homeFlags.showBlog === true ? await getHomeBlogPosts() : [];
+  const homePosts = (homeFlags.showBlog === true ? await getHomeBlogPosts() : []).filter((post) =>
+    isBlogLocaleLive(post, locale),
+  );
   const blogT = homePosts.length ? await getTranslations("blog") : null;
   const visibleServices =
     cmsServices.some((item) => item.title && item.title !== item.slug)

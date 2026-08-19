@@ -6,17 +6,18 @@ import { portfolioItems } from "@/data/portfolio";
 import { blogPosts } from "@/data/blog";
 import { absoluteUrl } from "@/lib/site";
 import { getPublicBlogPosts, getPublicPortfolio, getPublicProjects, getPublicServices } from "@/lib/cms/public";
+import { blogLanguageAlternates, blogPostPath, isBlogLocaleLive } from "@/lib/blog-urls";
 
 function localizedEntry(path: string, lastModified?: string): MetadataRoute.Sitemap[number] {
   const languages: Record<string, string> = {
-    "x-default": absoluteUrl(routing.defaultLocale, path),
+    "x-default": absoluteUrl("en", path),
   };
   for (const locale of routing.locales) {
     languages[locale] = absoluteUrl(locale, path);
   }
 
   return {
-    url: absoluteUrl(routing.defaultLocale, path),
+    url: absoluteUrl("en", path),
     lastModified,
     changeFrequency: path.startsWith("/bloq") ? "weekly" : "monthly",
     priority: path === "/" ? 1 : path === "/bloq" ? 0.8 : 0.7,
@@ -53,6 +54,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...serviceList.map((service) => localizedEntry(`/xidmetler/${service.slug}`)),
     ...projectList.map((project) => localizedEntry(`/layihelar/${project.slug}`)),
     ...portfolioList.map((item) => localizedEntry(`/portfolio/${item.slug}`)),
-    ...blogList.map((post) => localizedEntry(`/bloq/${post.slug}`, "publishedAt" in post ? post.publishedAt : undefined)),
+    ...blogList.flatMap((post) =>
+      routing.locales
+        .filter((locale) => isBlogLocaleLive(post, locale))
+        .map((locale) => {
+          const path = blogPostPath(post, locale);
+          return {
+            url: absoluteUrl(locale, path),
+            lastModified: "publishedAt" in post ? post.publishedAt : undefined,
+            changeFrequency: "weekly" as const,
+            priority: 0.7,
+            alternates: { languages: blogLanguageAlternates(post) },
+          };
+        }),
+    ),
   ];
 }

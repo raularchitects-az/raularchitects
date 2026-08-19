@@ -14,28 +14,29 @@ import { Field, Select } from "./fields";
 export function LinkedInShareSection({
   editorLocale,
   published,
-  slug,
   localeTitles,
+  localeSlugs,
 }: {
   editorLocale: LinkedInShareLocale;
   published: boolean;
-  slug: string;
   localeTitles: Record<LinkedInShareLocale, string>;
+  localeSlugs: Record<LinkedInShareLocale, string>;
 }) {
   const [shareLocale, setShareLocale] = useState<LinkedInShareLocale>(editorLocale);
 
   const availableLocales = useMemo(
     () =>
       LINKEDIN_SHARE_LOCALES.filter((locale) =>
-        canShareLinkedInPost(published ? "published" : "draft", slug, localeTitles[locale]),
+        canShareLinkedInPost(published ? "published" : "draft", localeSlugs[locale], localeTitles[locale]),
       ),
-    [localeTitles, published, slug],
+    [localeSlugs, localeTitles, published],
   );
 
-  const options = published && availableLocales.length > 0 ? availableLocales : LINKEDIN_SHARE_LOCALES;
+  const options = published && availableLocales.length > 0 ? availableLocales : [...LINKEDIN_SHARE_LOCALES];
   const selected = options.includes(shareLocale) ? shareLocale : (options[0] ?? editorLocale);
-  const canShare = canShareLinkedInPost(published ? "published" : "draft", slug, localeTitles[selected]);
-  const shareHref = canShare ? linkedInShareOffsiteUrl(selected, slug) : "";
+  const selectedSlug = localeSlugs[selected] ?? "";
+  const canShare = canShareLinkedInPost(published ? "published" : "draft", selectedSlug, localeTitles[selected]);
+  const shareHref = canShare ? linkedInShareOffsiteUrl(selected, selectedSlug) : "";
   const selectorDisabled = !canShare;
   const buttonClass =
     "inline-flex w-fit items-center justify-center bg-charcoal px-5 py-2.5 text-xs font-medium tracking-[0.12em] text-cream disabled:cursor-not-allowed disabled:opacity-60";
@@ -56,6 +57,9 @@ export function LinkedInShareSection({
           ))}
         </Select>
       </Field>
+      {selectedSlug ? (
+        <p className="break-all text-xs text-charcoal/45">{linkedInShareOffsiteUrl(selected, selectedSlug)}</p>
+      ) : null}
       {canShare ? (
         <a href={shareHref} target="_blank" rel="noopener noreferrer" className={buttonClass}>
           {LINKEDIN_SHARE_BUTTON_LABELS[selected]}

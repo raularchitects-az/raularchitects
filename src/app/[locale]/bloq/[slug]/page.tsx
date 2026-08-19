@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { SiteFooter } from "@/components/site-footer";
-import { routing } from "@/i18n/routing";
-import { blogPosts as staticBlog, formatBlogDate, getBlogCopy, getBlogImageAlt, getBlogPost as getStaticBlogPost } from "@/data/blog";
-import { getPublicBlogPost, getPublicBlogPosts, resolveSlugRedirect } from "@/lib/cms/public";
+import { BlogLocaleSwitch } from "@/components/locale-switch-context";
+import { routing, type Locale } from "@/i18n/routing";
+import { blogPosts as staticBlog, formatBlogDate, getBlogCopy, getBlogImageAlt } from "@/data/blog";
+import { getPublicBlogPosts, resolvePublicBlog } from "@/lib/cms/public";
+import { blogLanguageAlternates, blogPostPath, getBlogLocaleSlug } from "@/lib/blog-urls";
 import { BlogBody } from "@/lib/blog-body";
 import {
   SITE_NAME,
   SITE_URL,
   absoluteMediaUrl,
-  languageAlternates,
   ogAlternateLocales,
   ogLocale,
   productionAbsoluteUrl,
@@ -21,10 +22,16 @@ import {
 
 export async function generateStaticParams() {
   const cms = await getPublicBlogPosts();
-  const slugs = cms.length ? cms : staticBlog;
-  return routing.locales.flatMap((locale) =>
-    slugs.map((post) => ({ locale, slug: post.slug })),
-  );
+  const posts = cms.length ? cms : staticBlog;
+  return routing.locales.flatMap((locale) => {
+    const slugs = new Set<string>();
+    for (const post of posts) {
+      slugs.add(post.slug);
+      const localized = getBlogLocaleSlug(post, locale);
+      if (localized) slugs.add(localized);
+    }
+    return [...slugs].map((slug) => ({ locale, slug }));
+  });
 }
 
 export async function generateMetadata({
@@ -33,13 +40,26 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const post = (await getPublicBlogPost(slug)) ?? getStaticBlogPost(slug);
-  if (!post) return {};
+  const resolved = await resolvePublicBlog(locale, slug);
+  if (resolved.redirectTo) {
+    permanentRedirect(`/${locale}${resolved.redirectTo}`);
+  }
+  if (!resolved.post) return {};
 
-  const copy = getBlogCopy(post, locale);
-  const path = `/bloq/${slug}`;
+  const t = await getTranslations({ locale, namespace: "blog" });
+  if (!resolved.live) {
+    return {
+      title: t("unavailableTitle"),
+      robots: { index: false, follow: true },
+    };
+  }
+
+  const copy = getBlogCopy(resolved.post, locale);
+  if (!copy) return { robots: { index: false, follow: true } };
+
+  const path = blogPostPath(resolved.post, locale);
   const canonical = productionAbsoluteUrl(locale, path);
-  const imageUrl = absoluteMediaUrl(post.image);
+  const imageUrl = absoluteMediaUrl(resolved.post.image);
   const title = copy.seoTitle || copy.title;
   const description = copy.description || copy.excerpt;
 
@@ -48,7 +68,7 @@ export async function generateMetadata({
     description,
     alternates: {
       canonical,
-      languages: languageAlternates(path),
+      languages: blogLanguageAlternates(resolved.post),
     },
     openGraph: {
       type: "article",
@@ -58,12 +78,12 @@ export async function generateMetadata({
       siteName: SITE_NAME,
       locale: ogLocale(locale),
       alternateLocale: ogAlternateLocales(locale),
-      publishedTime: post.publishedAt,
-      modifiedTime: post.publishedAt,
+      publishedTime: resolved.post.publishedAt,
+      modifiedTime: resolved.post.publishedAt,
       images: [
         {
           url: imageUrl,
-          alt: getBlogImageAlt(post, locale),
+          alt: getBlogImageAlt(resolved.post, locale),
         },
       ],
     },
@@ -83,20 +103,50 @@ export default async function BlogPostPage({
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const redirected = await resolveSlugRedirect("bloq", slug);
-  if (redirected) {
-    const path = redirected.to_path;
-    redirect(locale === routing.defaultLocale ? path : `/${locale}${path}`);
+  const resolved = await resolvePublicBlog(locale, slug);
+  if (resolved.redirectTo) {
+    permanentRedirect(`/${locale}${resolved.redirectTo}`);
+  }
+  if (!resolved.post) notFound();
+
+  const post = resolved.post;
+  const t = await getTranslations("blog");
+  const switchPaths = Object.fromEntries(
+    routing.locales.map((code) => {
+      const localeSlug = getBlogLocaleSlug(post, code) || post.slug;
+      return [code, localeSlug ? `/bloq/${localeSlug}` : "/bloq"];
+    }),
+  ) as Record<Locale, string>;
+
+  if (!resolved.live) {
+    return (
+      <>
+        <BlogLocaleSwitch paths={switchPaths} />
+        <section className="bg-cream py-24 sm:py-32">
+          <Container>
+            <div className="mx-auto max-w-3xl">
+              <Link
+                href="/bloq"
+                className="text-xs font-medium uppercase tracking-[0.2em] text-charcoal/50 transition-colors duration-300 hover:text-bronze-dark"
+              >
+                ← {t("back")}
+              </Link>
+              <h1 className="mt-10 text-3xl font-semibold text-charcoal sm:text-5xl">{t("unavailableTitle")}</h1>
+              <p className="mt-6 text-base font-light leading-relaxed text-charcoal/70">{t("unavailableBody")}</p>
+            </div>
+          </Container>
+        </section>
+        <SiteFooter />
+      </>
+    );
   }
 
-  const post = (await getPublicBlogPost(slug)) ?? getStaticBlogPost(slug);
-  if (!post) notFound();
-
-  const t = await getTranslations("blog");
   const nav = await getTranslations("nav");
   const services = await getTranslations("servicesPage");
   const copy = getBlogCopy(post, locale);
-  const canonical = productionAbsoluteUrl(locale, `/bloq/${slug}`);
+  if (!copy) notFound();
+
+  const canonical = productionAbsoluteUrl(locale, blogPostPath(post, locale));
 
   const relatedLabels: Record<string, string> = {
     "/elaqe": nav("contact"),
@@ -142,6 +192,7 @@ export default async function BlogPostPage({
 
   return (
     <>
+      <BlogLocaleSwitch paths={switchPaths} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}

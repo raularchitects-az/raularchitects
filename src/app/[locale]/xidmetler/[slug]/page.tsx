@@ -47,7 +47,7 @@ export default async function ServiceDetailPage({
 
   const redirected = await resolveSlugRedirect("xidmetler", slug);
   if (redirected) {
-    nextRedirect(locale === routing.defaultLocale ? redirected.to_path : `/${locale}${redirected.to_path}`);
+    nextRedirect(`/${locale}${redirected.to_path}`);
   }
 
   const cms = await getPublicService(slug, locale);

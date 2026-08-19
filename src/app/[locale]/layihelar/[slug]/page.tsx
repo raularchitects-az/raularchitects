@@ -52,7 +52,7 @@ export default async function ProjectDetailPage({
 
   const redirected = await resolveSlugRedirect("layihelar", slug);
   if (redirected) {
-    nextRedirect(locale === routing.defaultLocale ? redirected.to_path : `/${locale}${redirected.to_path}`);
+    nextRedirect(`/${locale}${redirected.to_path}`);
   }
 
   const cmsProject = await getPublicProject(slug, locale);

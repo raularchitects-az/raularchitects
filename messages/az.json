@@ -641,6 +641,8 @@
     "read": "Oxu",
     "back": "Bütün yazılar",
     "related": "Əlaqəli səhifələr",
+    "unavailableTitle": "Bu yazı bu dildə mövcud deyil",
+    "unavailableBody": "Bu məqalənin seçilmiş dil versiyası hələ dərc olunmayıb. Dil seçimindən başqa dilə keçin və ya bloq siyahısına qayıdın.",
     "author": "Raul Nağıyev",
     "categories": {
       "bim": "BIM",

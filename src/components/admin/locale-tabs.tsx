@@ -38,7 +38,13 @@ export function LocaleTabs({
           </button>
         ))}
       </div>
-      <div>{render(locale)}</div>
+      <div>
+        {ADMIN_LOCALES.map((code) => (
+          <div key={code} hidden={code !== locale}>
+            {render(code)}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

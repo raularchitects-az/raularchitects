@@ -5,12 +5,14 @@ import { useState, useRef, useEffect } from "react";
 import { Globe, ChevronDown } from "lucide-react";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { locales, localeLabels, localeNames, type Locale } from "@/i18n/routing";
+import { useLocaleSwitchPaths } from "@/components/locale-switch-context";
 import { cn } from "@/lib/utils";
 
 export function LanguageSwitcher({ tone = "dark" }: { tone?: "dark" | "light" }) {
   const locale = useLocale() as Locale;
   const pathname = usePathname();
   const router = useRouter();
+  const switchPaths = useLocaleSwitchPaths();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -26,6 +28,11 @@ export function LanguageSwitcher({ tone = "dark" }: { tone?: "dark" | "light" })
 
   function handleSelect(next: Locale) {
     setOpen(false);
+    const override = switchPaths?.[next];
+    if (override) {
+      router.replace(override, { locale: next });
+      return;
+    }
     router.replace(pathname, { locale: next });
   }
 

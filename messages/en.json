@@ -641,6 +641,8 @@
     "read": "Read",
     "back": "All articles",
     "related": "Related pages",
+    "unavailableTitle": "This article is not available in this language",
+    "unavailableBody": "This language version has not been published yet. Switch language or return to the blog list.",
     "author": "Raul Naghiyev",
     "categories": {
       "bim": "BIM",

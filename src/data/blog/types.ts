@@ -26,10 +26,12 @@ export type BlogLocaleCopy = {
   ctaLabel: string;
   ctaText: string;
   blocks: BlogBlock[];
+  published?: boolean;
 };
 
 export type BlogPost = {
   slug: string;
+  slugs?: Record<Locale, string>;
   publishedAt: string;
   image: string;
   imageAlt: Record<Locale, string>;

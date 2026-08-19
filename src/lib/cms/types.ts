@@ -15,6 +15,8 @@ export type TranslationBlock = {
   ctaLabel?: string;
   ctaText?: string;
   linkedinText?: string;
+  slug?: string;
+  published?: boolean;
 };
 
 export type Translations = Record<string, TranslationBlock>;
@@ -125,4 +127,4 @@ export const SERVICE_FILTERS = [
   { value: "construction", label: "Construction" },
 ] as const;
 
-export const ADMIN_LOCALES = ["az", "en", "de"] as const;
+export const ADMIN_LOCALES = ["az", "en", "de", "ru"] as const;

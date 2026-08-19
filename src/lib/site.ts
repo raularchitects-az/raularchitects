@@ -14,7 +14,7 @@ const ogLocales: Record<Locale, string> = {
 
 export function localePath(locale: string, path: string) {
   const normalized = path.startsWith("/") ? path : `/${path}`;
-  if (locale === routing.defaultLocale) return normalized;
+  if (normalized === "/") return `/${locale}`;
   return `/${locale}${normalized}`;
 }
 
@@ -52,7 +52,7 @@ export function absoluteMediaUrl(src: string) {
 
 export function languageAlternates(path: string) {
   const languages: Record<string, string> = {
-    "x-default": absoluteUrl(routing.defaultLocale, path),
+    "x-default": absoluteUrl("en", path),
   };
   for (const locale of routing.locales) {
     languages[locale] = absoluteUrl(locale, path);

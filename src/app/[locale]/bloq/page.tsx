@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { BlogCard } from "@/components/blog-card";
 import { getPublicBlogPosts } from "@/lib/cms/public";
 import { absoluteUrl, languageAlternates } from "@/lib/site";
+import { isBlogLocaleLive } from "@/lib/blog-urls";
 
 export const revalidate = 60;
 
@@ -41,7 +42,8 @@ export default async function BlogIndexPage({ params }: PageProps<"/[locale]/blo
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("blog");
-  const blogPosts = await getPublicBlogPosts();
+  const allPosts = await getPublicBlogPosts();
+  const blogPosts = allPosts.filter((post) => isBlogLocaleLive(post, locale));
 
   return (
     <>
