@@ -6,19 +6,26 @@ import { Container } from "@/components/ui/container";
 import { SiteFooter } from "@/components/site-footer";
 import { getSiteSettings } from "@/lib/cms/public";
 import { safeRawArray } from "@/lib/i18n/safe-raw";
+import { asLocale } from "@/i18n/routing";
+import { entryMetadata } from "@/lib/cms/metadata";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = await params;
+  const locale = asLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: "aboutPage" });
-  return { title: `${t("title")} — Raul Architects` };
+  return entryMetadata({
+    locale,
+    path: "/haqqimizda",
+    title: t("title"),
+    description: t("metaDescription"),
+  });
 }
 
 export default async function AboutPage({ params }: PageProps<"/[locale]/haqqimizda">) {
-  const { locale } = await params;
+  const locale = asLocale((await params).locale);
   setRequestLocale(locale);
   const t = await getTranslations("aboutPage");
   const countries = safeRawArray(t, "countries");

@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ComponentProps } from "react";
 import type { Locale } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 
-export type LocaleSwitchPaths = Partial<Record<Locale, string | null>>;
+export type LocaleSwitchHref = ComponentProps<typeof Link>["href"];
+export type LocaleSwitchPaths = Partial<Record<Locale, LocaleSwitchHref | null>>;
 
 let currentPaths: LocaleSwitchPaths | null = null;
 const listeners = new Set<() => void>();

@@ -7,6 +7,7 @@ import { createAdminClient, createUserServerClient, createServiceClient } from "
 import { mediaPublicUrl } from "./media-url";
 import { slugify } from "@/lib/slugify";
 import { routing } from "@/i18n/routing";
+import { localizePublicPath } from "@/lib/public-paths";
 import { fallbackBlogSlugs } from "@/lib/blog-urls";
 import {
   LEGACY_HIDDEN_SETTINGS_KEY,
@@ -74,10 +75,28 @@ function revalidatePublic(table?: EntityType, slug?: string) {
     revalidatePath(`/${locale}/portfolio`, "layout");
     revalidatePath(`/${locale}/bloq`, "layout");
     revalidatePath(`/${locale}/xidmetler`, "layout");
-    if (table === "projects" && slug) revalidatePath(`/${locale}/layihelar/${slug}`);
-    if (table === "portfolio" && slug) revalidatePath(`/${locale}/portfolio/${slug}`);
-    if (table === "blog_posts" && slug) revalidatePath(`/${locale}/bloq/${slug}`);
-    if (table === "services" && slug) revalidatePath(`/${locale}/xidmetler/${slug}`);
+    revalidatePath(localizePublicPath(locale, "/layihelar"), "layout");
+    revalidatePath(localizePublicPath(locale, "/portfolio"), "layout");
+    revalidatePath(localizePublicPath(locale, "/bloq"), "layout");
+    revalidatePath(localizePublicPath(locale, "/xidmetler"), "layout");
+    revalidatePath(localizePublicPath(locale, "/haqqimizda"), "layout");
+    revalidatePath(localizePublicPath(locale, "/elaqe"), "layout");
+    if (table === "projects" && slug) {
+      revalidatePath(`/${locale}/layihelar/${slug}`);
+      revalidatePath(localizePublicPath(locale, `/layihelar/${slug}`));
+    }
+    if (table === "portfolio" && slug) {
+      revalidatePath(`/${locale}/portfolio/${slug}`);
+      revalidatePath(localizePublicPath(locale, `/portfolio/${slug}`));
+    }
+    if (table === "blog_posts" && slug) {
+      revalidatePath(`/${locale}/bloq/${slug}`);
+      revalidatePath(localizePublicPath(locale, `/bloq/${slug}`));
+    }
+    if (table === "services" && slug) {
+      revalidatePath(`/${locale}/xidmetler/${slug}`);
+      revalidatePath(localizePublicPath(locale, `/xidmetler/${slug}`));
+    }
   }
 }
 

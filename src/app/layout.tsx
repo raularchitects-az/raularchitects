@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { getLocale } from "next-intl/server";
-import { SITE_URL } from "@/lib/site";
+import { PRODUCTION_SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(PRODUCTION_SITE_URL),
 };
 
 export const viewport: Viewport = {

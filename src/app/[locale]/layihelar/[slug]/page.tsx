@@ -7,14 +7,15 @@ import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { ProjectLeadForm } from "@/components/project-lead-form";
 import { SiteFooter } from "@/components/site-footer";
-import { routing } from "@/i18n/routing";
+import { routing, asLocale } from "@/i18n/routing";
 import { ProjectGallery } from "@/components/project-gallery";
 import { getProject, getProjectGalleryGroups } from "@/data/projects";
 import { getImportedEntry } from "@/data/folder-imports";
 import { getPublicContact, getPublicProject, getPublicProjects, resolveSlugRedirect } from "@/lib/cms/public";
 import { entryMetadata, whatsappHref } from "@/lib/cms/metadata";
 import { mediaPublicUrl } from "@/lib/cms/media-url";
-import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
+import { SITE_NAME, SITE_URL, publicCanonicalUrl } from "@/lib/site";
+import { localizePublicPath } from "@/lib/public-paths";
 import { safeRawArray } from "@/lib/i18n/safe-raw";
 
 export async function generateStaticParams() {
@@ -28,7 +29,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { locale, slug } = await params;
+  const { locale: localeParam, slug } = await params;
+  const locale = asLocale(localeParam);
   const cms = await getPublicProject(slug, locale);
   if (!cms) return {};
   const project = getProject(slug);
@@ -48,12 +50,13 @@ export async function generateMetadata({
 export default async function ProjectDetailPage({
   params,
 }: PageProps<"/[locale]/layihelar/[slug]">) {
-  const { locale, slug } = await params;
+  const { locale: localeParam, slug } = await params;
+  const locale = asLocale(localeParam);
   setRequestLocale(locale);
 
   const redirected = await resolveSlugRedirect("layihelar", slug);
   if (redirected) {
-    nextRedirect(`/${locale}${redirected.to_path}`);
+    nextRedirect(localizePublicPath(locale, redirected.to_path));
   }
 
   const cmsProject = await getPublicProject(slug, locale);
@@ -132,7 +135,7 @@ export default async function ProjectDetailPage({
   })) ?? [];
   const hasSpecs = specs.length > 0;
   const hasDescription = description.trim().length > 0;
-  const canonical = cmsProject?.canonicalUrl || absoluteUrl(locale, `/layihelar/${slug}`);
+  const canonical = publicCanonicalUrl(locale, `/layihelar/${slug}`, cmsProject?.canonicalUrl);
   const schema = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",

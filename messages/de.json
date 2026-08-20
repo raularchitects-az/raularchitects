@@ -466,6 +466,7 @@
   "servicesPage": {
     "eyebrow": "Leistungen",
     "title": "Leistungen",
+    "metaDescription": "Architektur, BIM-Planung, Interior Design, Bau und Städtebau von Raul Architects.",
     "items": {
       "tikinti-ve-temir": {
         "title": "Bau und Renovierung"
@@ -531,6 +532,7 @@
   "aboutPage": {
     "eyebrow": "Über uns",
     "title": "Raul Architects",
+    "metaDescription": "Eine Praxis, gegründet von Raul Naghiyev — Absolvent der Brandenburg Technical University (Deutschland), international erfahrener Architekt, Ingenieur und BIM-Experte.",
     "countries": [
       "Deutschland",
       "Schweiz",
@@ -560,6 +562,7 @@
   "raulPage": {
     "backLabel": "Raul Architects",
     "title": "Raul Naghiyev",
+    "metaDescription": "Raul Naghiyev ist ein europäisch und international zertifizierter Architekt, Bauingenieur und BIM-Experte in Deutschland, der Schweiz und Aserbaidschan.",
     "role": "Europäisch und International Zertifizierter Architekt, Bauingenieur und BIM-Experte",
     "sections": {
       "bio": {
@@ -608,6 +611,7 @@
   "contactPage": {
     "eyebrow": "Kontakt",
     "title": "Lassen Sie uns Ihr Projekt besprechen.",
+    "metaDescription": "Kontaktieren Sie Raul Architects in Aserbaidschan, Deutschland und der Schweiz, um Ihr Projekt zu besprechen.",
     "azerbaijan": {
       "label": "Aserbaidschan",
       "phone": "+994 10 413 26 96",

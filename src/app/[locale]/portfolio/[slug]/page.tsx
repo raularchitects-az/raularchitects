@@ -6,14 +6,15 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { SiteFooter } from "@/components/site-footer";
-import { routing } from "@/i18n/routing";
+import { routing, asLocale } from "@/i18n/routing";
 import { ProjectGallery } from "@/components/project-gallery";
 import { getPortfolioItem } from "@/data/portfolio";
 import { getImportedEntry } from "@/data/folder-imports";
 import { getPublicPortfolio, getPublicPortfolioItem, resolveSlugRedirect } from "@/lib/cms/public";
 import { entryMetadata } from "@/lib/cms/metadata";
 import { mediaPublicUrl } from "@/lib/cms/media-url";
-import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
+import { SITE_NAME, SITE_URL, publicCanonicalUrl } from "@/lib/site";
+import { localizePublicPath } from "@/lib/public-paths";
 
 export async function generateStaticParams() {
   const cms = await getPublicPortfolio("en");
@@ -26,7 +27,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { locale, slug } = await params;
+  const { locale: localeParam, slug } = await params;
+  const locale = asLocale(localeParam);
   const cms = await getPublicPortfolioItem(slug, locale);
   if (!cms) return {};
   const item = getPortfolioItem(slug);
@@ -46,12 +48,13 @@ export async function generateMetadata({
 export default async function PortfolioDetailPage({
   params,
 }: PageProps<"/[locale]/portfolio/[slug]">) {
-  const { locale, slug } = await params;
+  const { locale: localeParam, slug } = await params;
+  const locale = asLocale(localeParam);
   setRequestLocale(locale);
 
   const redirected = await resolveSlugRedirect("portfolio", slug);
   if (redirected) {
-    nextRedirect(`/${locale}${redirected.to_path}`);
+    nextRedirect(localizePublicPath(locale, redirected.to_path));
   }
 
   const cmsItem = await getPublicPortfolioItem(slug, locale);
@@ -76,7 +79,7 @@ export default async function PortfolioDetailPage({
   }));
   const gallery = importedGallery.length ? importedGallery : cmsGallery;
   const videoUrl = cmsItem?.videoUrl ?? null;
-  const canonical = cmsItem?.canonicalUrl || absoluteUrl(locale, `/portfolio/${slug}`);
+  const canonical = publicCanonicalUrl(locale, `/portfolio/${slug}`, cmsItem?.canonicalUrl);
   const schema = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",

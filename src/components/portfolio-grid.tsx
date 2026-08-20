@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { toIntlHref } from "@/lib/public-paths";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { categories, type Category } from "@/data/categories";
@@ -53,7 +54,7 @@ export function PortfolioGrid({ items = [] }: { items?: PortfolioMeta[] }) {
 
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((item) => (
-            <Link key={item.slug} href={`/portfolio/${item.slug}`} className="group flex flex-col gap-5">
+            <Link key={item.slug} href={toIntlHref(`/portfolio/${item.slug}`)} className="group flex flex-col gap-5">
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-charcoal/5">
                 <Image
                   src={item.image}

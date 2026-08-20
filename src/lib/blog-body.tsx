@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
+import { toIntlHref } from "@/lib/public-paths";
 import type { BlogBlock } from "@/data/blog/types";
 
 const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
@@ -18,7 +19,7 @@ function RichText({ text }: { text: string }) {
     nodes.push(
       <Link
         key={`${href}-${match.index}`}
-        href={href}
+        href={toIntlHref(href)}
         className="text-bronze-dark underline decoration-bronze-dark/30 underline-offset-4 transition-colors duration-300 hover:decoration-bronze-dark"
       >
         {label}

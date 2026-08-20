@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { formatBlogDate, type BlogPost, getBlogCopy, getBlogImageAlt } from "@/data/blog";
 import { getBlogLocaleSlug } from "@/lib/blog-urls";
+import { toIntlHref } from "@/lib/public-paths";
 import { toDisplayUpperCase } from "@/lib/locale-text";
 
 export function BlogCard({
@@ -17,11 +18,9 @@ export function BlogCard({
 }) {
   const copy = getBlogCopy(post, locale);
   if (!copy) return null;
-  const href = `/bloq/${getBlogLocaleSlug(post, locale) || post.slug}`;
-
   return (
     <Link
-      href={href}
+      href={toIntlHref(`/bloq/${getBlogLocaleSlug(post, locale) || post.slug}`)}
       className="group flex flex-col border-t border-charcoal/10 pt-6 transition-colors duration-300"
     >
       <span className="relative mb-5 block aspect-[16/10] overflow-hidden bg-cream-dark">

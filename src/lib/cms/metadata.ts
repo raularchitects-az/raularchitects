@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import {
+  DEFAULT_OG_IMAGE,
   SITE_NAME,
-  absoluteUrl,
+  absoluteMediaUrl,
   languageAlternates,
   ogAlternateLocales,
   ogLocale,
+  publicCanonicalUrl,
 } from "@/lib/site";
 import { mediaPublicUrl } from "./media-url";
 
@@ -15,6 +17,7 @@ export function entryMetadata({
   description,
   image,
   canonicalUrl,
+  type = "website",
 }: {
   locale: string;
   path: string;
@@ -22,9 +25,10 @@ export function entryMetadata({
   description?: string | null;
   image?: string | null;
   canonicalUrl?: string | null;
+  type?: "website" | "article";
 }): Metadata {
-  const canonical = canonicalUrl || absoluteUrl(locale, path);
-  const imageUrl = image ? mediaPublicUrl(image) : undefined;
+  const canonical = publicCanonicalUrl(locale, path, canonicalUrl);
+  const imageUrl = absoluteMediaUrl(image ? mediaPublicUrl(image) || image : DEFAULT_OG_IMAGE);
   const fullTitle = title.includes("Raul Architects") ? title : `${title} — Raul Architects`;
 
   return {
@@ -35,13 +39,20 @@ export function entryMetadata({
       languages: languageAlternates(path),
     },
     openGraph: {
+      type,
       title: fullTitle,
       description: description || undefined,
       url: canonical,
       siteName: SITE_NAME,
       locale: ogLocale(locale),
       alternateLocale: ogAlternateLocales(locale),
-      images: imageUrl ? [{ url: imageUrl }] : undefined,
+      images: [{ url: imageUrl }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: fullTitle,
+      description: description || undefined,
+      images: [imageUrl],
     },
     robots: { index: true, follow: true },
   };

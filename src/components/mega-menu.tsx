@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { toDisplayUpperCase } from "@/lib/locale-text";
 import { X, ArrowUpRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { toIntlHref } from "@/lib/public-paths";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { services } from "@/data/services";
 import { cn } from "@/lib/utils";
@@ -89,7 +90,7 @@ export function MegaMenu({ open, onClose }: { open: boolean; onClose: () => void
                   {item.children.map((child) => (
                     <Link
                       key={child.href}
-                      href={child.href}
+                      href={toIntlHref(child.href)}
                       onClick={onClose}
                       className="text-xs tracking-[0.16em] text-cream/50 transition-colors duration-300 hover:text-bronze-light"
                     >

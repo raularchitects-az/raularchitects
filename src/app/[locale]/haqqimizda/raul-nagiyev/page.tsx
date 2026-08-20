@@ -8,6 +8,8 @@ import { TriangleMark } from "@/components/ui/triangle-mark";
 import { SiteFooter } from "@/components/site-footer";
 import { importedCertificates } from "@/data/raul-portfolio-import";
 import { safeRawArray } from "@/lib/i18n/safe-raw";
+import { asLocale } from "@/i18n/routing";
+import { entryMetadata } from "@/lib/cms/metadata";
 
 const sectionKeys = ["bio", "education", "experience", "certificates", "achievements"] as const;
 
@@ -16,13 +18,18 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = await params;
+  const locale = asLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: "raulPage" });
-  return { title: `${t("title")} — Raul Architects` };
+  return entryMetadata({
+    locale,
+    path: "/haqqimizda/raul-nagiyev",
+    title: t("title"),
+    description: t("metaDescription"),
+  });
 }
 
 export default async function RaulNagiyevPage({ params }: PageProps<"/[locale]/haqqimizda/raul-nagiyev">) {
-  const { locale } = await params;
+  const locale = asLocale((await params).locale);
   setRequestLocale(locale);
   const t = await getTranslations("raulPage");
 

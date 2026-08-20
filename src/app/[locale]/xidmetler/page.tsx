@@ -2,24 +2,32 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { toIntlHref } from "@/lib/public-paths";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SiteFooter } from "@/components/site-footer";
 import { getPublicServices } from "@/lib/cms/public";
 import { safeMessage } from "@/lib/i18n/safe-raw";
+import { asLocale } from "@/i18n/routing";
+import { entryMetadata } from "@/lib/cms/metadata";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = await params;
+  const locale = asLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: "servicesPage" });
-  return { title: `${t("title")} — Raul Architects` };
+  return entryMetadata({
+    locale,
+    path: "/xidmetler",
+    title: t("title"),
+    description: t("metaDescription"),
+  });
 }
 
 export default async function ServicesPage({ params }: PageProps<"/[locale]/xidmetler">) {
-  const { locale } = await params;
+  const locale = asLocale((await params).locale);
   setRequestLocale(locale);
   const t = await getTranslations("servicesPage");
   const cmsServices = await getPublicServices(locale);
@@ -35,7 +43,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/xidm
             {list.map((service) => (
               <Link
                 key={service.slug}
-                href={`/xidmetler/${service.slug}`}
+                href={toIntlHref(`/xidmetler/${service.slug}`)}
                 className="group flex items-center justify-between gap-6 border-b border-charcoal/10 py-8 transition-colors duration-300 hover:bg-charcoal sm:py-10"
               >
                 <div className="flex items-baseline gap-4 sm:gap-8">

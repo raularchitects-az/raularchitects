@@ -30,10 +30,10 @@ export function LanguageSwitcher({ tone = "dark" }: { tone?: "dark" | "light" })
     setOpen(false);
     const override = switchPaths?.[next];
     if (override) {
-      router.replace(override, { locale: next });
+      router.replace(override as never, { locale: next });
       return;
     }
-    router.replace(pathname, { locale: next });
+    router.replace(pathname as never, { locale: next });
   }
 
   return (

@@ -17,6 +17,35 @@ function pickLocaleT(row: CmsRow, locale: string): TranslationBlock {
   return row.translations?.[locale] ?? {};
 }
 
+function text(value: unknown) {
+  return typeof value === "string" && value.trim() ? value.trim() : "";
+}
+
+function localeHasCopy(block: TranslationBlock) {
+  return Boolean(
+    text(block.title) ||
+      text(block.name) ||
+      text(block.seoTitle) ||
+      text(block.description) ||
+      text(block.short) ||
+      text(block.full) ||
+      text(block.intro) ||
+      text(block.body) ||
+      text(block.excerpt),
+  );
+}
+
+function localizedField(row: CmsRow, locale: string, keys: (keyof TranslationBlock)[], rowFallback?: string | null) {
+  const loc = pickLocaleT(row, locale);
+  const source = localeHasCopy(loc) ? loc : pickT(row, locale);
+  for (const key of keys) {
+    const value = text(source[key]);
+    if (value) return value;
+  }
+  if (!localeHasCopy(loc) && text(rowFallback)) return text(rowFallback);
+  return "";
+}
+
 function cover(row: CmsRow) {
   return mediaPublicUrl(row.cover_path) || mediaPublicUrl(row.image_path) || "";
 }
@@ -40,17 +69,16 @@ export function cmsProjectToMeta(row: CmsRow, locale: string): ProjectMeta & {
   sections: NonNullable<CmsRow["sections"]>;
   ogImage?: string;
 } {
-  const t = pickT(row, locale);
   const gallery = galleryUrls(row);
   return {
     slug: row.slug,
     category: (row.category ?? "villa") as ProjectMeta["category"],
     image: cover(row) || gallery[0] || "/images/projects/compact-villa.jpg",
     source: "cms",
-    title: t.name || t.title || row.slug,
-    description: t.full || t.short || "",
-    seoTitle: row.seo_title || t.seoTitle || t.title,
-    metaDescription: row.meta_description || t.description || t.short,
+    title: localizedField(row, locale, ["name", "title"]) || row.slug,
+    description: localizedField(row, locale, ["full", "short"]),
+    seoTitle: localizedField(row, locale, ["seoTitle", "title", "name"], locale === "az" ? row.seo_title : null),
+    metaDescription: localizedField(row, locale, ["description", "short"], locale === "az" ? row.meta_description : null),
     canonicalUrl: row.canonical_url,
     videoUrl: row.video_url,
     location: row.location,
@@ -70,7 +98,6 @@ export function cmsPortfolioToMeta(row: CmsRow, locale: string): PortfolioMeta &
   ogImage?: string;
   gallery: string[];
 } {
-  const t = pickT(row, locale);
   const gallery = galleryUrls(row);
   return {
     slug: row.slug,
@@ -78,10 +105,10 @@ export function cmsPortfolioToMeta(row: CmsRow, locale: string): PortfolioMeta &
     country: (row.country as PortfolioMeta["country"]) ?? null,
     image: cover(row) || gallery[0] || "/images/portfolio/azerbaijan-01.jpg",
     source: "cms",
-    title: t.name || t.title || row.slug,
-    description: t.full || t.short || "",
-    seoTitle: row.seo_title || t.seoTitle,
-    metaDescription: row.meta_description || t.description,
+    title: localizedField(row, locale, ["name", "title"]) || row.slug,
+    description: localizedField(row, locale, ["full", "short"]),
+    seoTitle: localizedField(row, locale, ["seoTitle", "title", "name"], locale === "az" ? row.seo_title : null),
+    metaDescription: localizedField(row, locale, ["description", "short"], locale === "az" ? row.meta_description : null),
     canonicalUrl: row.canonical_url,
     videoUrl: row.video_url,
     ogImage: mediaPublicUrl(row.og_image_path) || cover(row),
@@ -170,17 +197,16 @@ export function cmsBlogToPost(row: CmsRow): BlogPost {
 }
 
 export function cmsServiceToPublic(row: CmsRow, locale: string) {
-  const t = pickT(row, locale);
   return {
     slug: row.slug,
     number: row.number || "",
     icon: row.icon || "Boxes",
-    title: t.title || row.slug,
-    intro: t.intro || t.short || "",
-    body: t.body || t.full || "",
+    title: localizedField(row, locale, ["title", "name"]) || row.slug,
+    intro: localizedField(row, locale, ["intro", "short"]),
+    body: localizedField(row, locale, ["body", "full"]),
     home: row.show_on_home !== false,
-    seoTitle: row.seo_title || t.seoTitle,
-    metaDescription: row.meta_description || t.description,
+    seoTitle: localizedField(row, locale, ["seoTitle", "title"], locale === "az" ? row.seo_title : null) || undefined,
+    metaDescription: localizedField(row, locale, ["description", "intro", "short"], locale === "az" ? row.meta_description : null) || undefined,
     image: mediaPublicUrl(row.image_path),
     videoUrl: row.video_url,
   };

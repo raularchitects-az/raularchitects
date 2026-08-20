@@ -466,6 +466,7 @@
   "servicesPage": {
     "eyebrow": "Xidmətlər",
     "title": "Xidmətlər",
+    "metaDescription": "Raul Architects-dən memarlıq, BIM layihələndirmə, interyer dizayn, tikinti və şəhərsalma xidmətləri.",
     "items": {
       "tikinti-ve-temir": {
         "title": "Tikinti və Təmir"
@@ -531,6 +532,7 @@
   "aboutPage": {
     "eyebrow": "Haqqımızda",
     "title": "Raul Architects",
+    "metaDescription": "Brandenburg Technical University, Germany məzunu, beynəlxalq təcrübəyə malik memar, mühəndis və BIM eksperti Raul Nağıyev tərəfindən qurulan praktika.",
     "countries": [
       "Almaniya",
       "İsveçrə",
@@ -560,6 +562,7 @@
   "raulPage": {
     "backLabel": "Raul Architects",
     "title": "Raul Nağıyev",
+    "metaDescription": "Raul Nağıyev Avropa və beynəlxalq səviyyədə sertifikatlı memar, inşaat mühəndisi və BIM ekspertidir; Almaniya, İsveçrə və Azərbaycanda fəaliyyət göstərir.",
     "role": "Avropa və Beynəlxalq Səviyyədə Sertifikatlı Memar, İnşaat Mühəndisi və BIM Eksperti",
     "sections": {
       "bio": {
@@ -608,6 +611,7 @@
   "contactPage": {
     "eyebrow": "Əlaqə",
     "title": "Layihənizi müzakirə edək.",
+    "metaDescription": "Layihənizi müzakirə etmək üçün Azərbaycan, Almaniya və İsveçrədə Raul Architects ilə əlaqə saxlayın.",
     "azerbaijan": {
       "label": "Azərbaycan",
       "phone": "+994 10 413 26 96",

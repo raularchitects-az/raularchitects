@@ -6,7 +6,8 @@ import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { SiteFooter } from "@/components/site-footer";
 import { BlogLocaleSwitch } from "@/components/locale-switch-context";
-import { routing, type Locale } from "@/i18n/routing";
+import { routing, type Locale, asLocale } from "@/i18n/routing";
+import { localizePublicPath, toIntlHref } from "@/lib/public-paths";
 import { formatBlogDate, getBlogCopy, getBlogImageAlt } from "@/data/blog";
 import { getPublicBlogPosts, resolvePublicBlog } from "@/lib/cms/public";
 import { blogLanguageAlternates, blogPostPath, getBlogLocaleSlug } from "@/lib/blog-urls";
@@ -38,10 +39,11 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { locale, slug } = await params;
+  const { locale: localeParam, slug } = await params;
+  const locale = asLocale(localeParam);
   const resolved = await resolvePublicBlog(locale, slug);
   if (resolved.redirectTo) {
-    permanentRedirect(`/${locale}${resolved.redirectTo}`);
+    permanentRedirect(localizePublicPath(locale, resolved.redirectTo));
   }
   if (!resolved.post) return {};
 
@@ -99,12 +101,13 @@ export async function generateMetadata({
 export default async function BlogPostPage({
   params,
 }: PageProps<"/[locale]/bloq/[slug]">) {
-  const { locale, slug } = await params;
+  const { locale: localeParam, slug } = await params;
+  const locale = asLocale(localeParam);
   setRequestLocale(locale);
 
   const resolved = await resolvePublicBlog(locale, slug);
   if (resolved.redirectTo) {
-    permanentRedirect(`/${locale}${resolved.redirectTo}`);
+    permanentRedirect(localizePublicPath(locale, resolved.redirectTo));
   }
   if (!resolved.post) notFound();
 
@@ -113,9 +116,9 @@ export default async function BlogPostPage({
   const switchPaths = Object.fromEntries(
     routing.locales.map((code) => {
       const localeSlug = getBlogLocaleSlug(post, code) || post.slug;
-      return [code, localeSlug ? `/bloq/${localeSlug}` : "/bloq"];
+      return [code, localeSlug ? { pathname: "/bloq/[slug]", params: { slug: localeSlug } } : "/bloq"];
     }),
-  ) as Record<Locale, string>;
+  ) as Record<Locale, "/bloq" | { pathname: "/bloq/[slug]"; params: { slug: string } }>;
 
   if (!resolved.live) {
     return (
@@ -237,7 +240,7 @@ export default async function BlogPostPage({
             <div className="mt-16 border-t border-charcoal/10 pt-10">
               <p className="text-base leading-relaxed text-charcoal/75">{copy.ctaText}</p>
               <Link
-                href={`/xidmetler/${post.serviceSlug}`}
+                href={toIntlHref(`/xidmetler/${post.serviceSlug}`)}
                 className="mt-6 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.22em] text-bronze-dark transition-colors duration-300 hover:text-[#6b4a32]"
               >
                 {copy.ctaLabel} →
@@ -248,7 +251,7 @@ export default async function BlogPostPage({
               {post.relatedHrefs.map((href) => (
                 <Link
                   key={href}
-                  href={href}
+                  href={toIntlHref(href)}
                   className="text-xs font-medium uppercase tracking-[0.18em] text-charcoal/55 transition-colors duration-300 hover:text-bronze-dark"
                 >
                   {relatedLabels[href] ?? href}

@@ -5,19 +5,26 @@ import { Container } from "@/components/ui/container";
 import { InquiryForm } from "@/components/inquiry-form";
 import { SiteFooter } from "@/components/site-footer";
 import { getPublicContact } from "@/lib/cms/public";
+import { asLocale } from "@/i18n/routing";
+import { entryMetadata } from "@/lib/cms/metadata";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = await params;
+  const locale = asLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: "contactPage" });
-  return { title: `${t("title")} — Raul Architects` };
+  return entryMetadata({
+    locale,
+    path: "/elaqe",
+    title: t("title"),
+    description: t("metaDescription"),
+  });
 }
 
 export default async function ContactPage({ params }: PageProps<"/[locale]/elaqe">) {
-  const { locale } = await params;
+  const locale = asLocale((await params).locale);
   setRequestLocale(locale);
   const t = await getTranslations("contactPage");
   const contact = await getPublicContact();

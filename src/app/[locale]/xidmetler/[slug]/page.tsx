@@ -5,11 +5,12 @@ import { ArrowLeft, ArrowRight, HardHat, Boxes, Sofa, Building2, Check, type Luc
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { SiteFooter } from "@/components/site-footer";
-import { routing } from "@/i18n/routing";
+import { routing, asLocale } from "@/i18n/routing";
 import { getService } from "@/data/services";
 import { getPublicService, getPublicServices, resolveSlugRedirect } from "@/lib/cms/public";
 import { entryMetadata } from "@/lib/cms/metadata";
 import { mediaPublicUrl } from "@/lib/cms/media-url";
+import { localizePublicPath } from "@/lib/public-paths";
 import { safeMessage, safeRawArray } from "@/lib/i18n/safe-raw";
 
 const icons: Record<string, LucideIcon> = { HardHat, Boxes, Sofa, Building2 };
@@ -25,7 +26,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { locale, slug } = await params;
+  const { locale: localeParam, slug } = await params;
+  const locale = asLocale(localeParam);
   const cms = await getPublicService(slug, locale);
   if (!cms) return {};
   const t = await getTranslations({ locale, namespace: "serviceDetail" });
@@ -43,12 +45,13 @@ export async function generateMetadata({
 export default async function ServiceDetailPage({
   params,
 }: PageProps<"/[locale]/xidmetler/[slug]">) {
-  const { locale, slug } = await params;
+  const { locale: localeParam, slug } = await params;
+  const locale = asLocale(localeParam);
   setRequestLocale(locale);
 
   const redirected = await resolveSlugRedirect("xidmetler", slug);
   if (redirected) {
-    nextRedirect(`/${locale}${redirected.to_path}`);
+    nextRedirect(localizePublicPath(locale, redirected.to_path));
   }
 
   const cms = await getPublicService(slug, locale);

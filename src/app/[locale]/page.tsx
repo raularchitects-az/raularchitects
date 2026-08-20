@@ -1,6 +1,8 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { setRequestLocale, getTranslations, getMessages } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { toIntlHref } from "@/lib/public-paths";
 import { Container } from "@/components/ui/container";
 import { TriangleMark } from "@/components/ui/triangle-mark";
 import { Reveal } from "@/components/ui/reveal";
@@ -13,6 +15,8 @@ import { getHomeBlogPosts, getPublicServices, getSiteSettings } from "@/lib/cms/
 import { isBlogLocaleLive } from "@/lib/blog-urls";
 import { BlogCard } from "@/components/blog-card";
 import { toDisplayUpperCase } from "@/lib/locale-text";
+import { asLocale } from "@/i18n/routing";
+import { entryMetadata } from "@/lib/cms/metadata";
 
 type HomeMessages = {
   raulName: string;
@@ -41,8 +45,24 @@ const serviceTitleFields = {
   "seherselme-layiheleri": "svcSehersalma",
 } as const;
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const locale = asLocale((await params).locale);
+  const t = await getTranslations({ locale, namespace: "meta" });
+  return entryMetadata({
+    locale,
+    path: "/",
+    title: t("title"),
+    description: t("description"),
+    image: "/images/raul-hero.jpg",
+  });
+}
+
 export default async function Home({ params }: PageProps<"/[locale]">) {
-  const locale = (await params).locale;
+  const locale = asLocale((await params).locale);
   setRequestLocale(locale);
   const upper = (text: string) => toDisplayUpperCase(text, locale);
 
@@ -109,7 +129,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
             {projectCategories.map((category, index) => (
               <Reveal key={category} delay={index * 40}>
                 <Link
-                  href={`/layihelar?category=${category}`}
+                  href={toIntlHref(`/layihelar?category=${category}`)}
                   className="group relative block aspect-[4/5] overflow-hidden rounded-md border border-charcoal/15 bg-cream shadow-sm transition-shadow duration-300 hover:shadow-lg"
                 >
                   <Image
@@ -146,7 +166,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
             {projectCategories.map((category, index) => (
               <Reveal key={category} delay={index * 40}>
                 <Link
-                  href={`/portfolio?category=${category}`}
+                  href={toIntlHref(`/portfolio?category=${category}`)}
                   className="group relative block aspect-[4/5] overflow-hidden rounded-md border border-cream/25 bg-bronze shadow-sm transition-shadow duration-300 hover:shadow-xl"
                 >
                   <Image

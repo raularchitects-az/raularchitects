@@ -3,6 +3,8 @@ import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ProjectsCatalog } from "@/components/projects-catalog";
 import { SiteFooter } from "@/components/site-footer";
+import { asLocale } from "@/i18n/routing";
+import { entryMetadata } from "@/lib/cms/metadata";
 import { getPublicProjects } from "@/lib/cms/public";
 
 export const revalidate = 60;
@@ -12,13 +14,18 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = await params;
+  const locale = asLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: "projectsPage" });
-  return { title: `${t("title")} — Raul Architects` };
+  return entryMetadata({
+    locale,
+    path: "/layihelar",
+    title: t("title"),
+    description: t("subtitle"),
+  });
 }
 
 export default async function ProjectsPage({ params }: PageProps<"/[locale]/layihelar">) {
-  const { locale } = await params;
+  const locale = asLocale((await params).locale);
   setRequestLocale(locale);
   const items = await getPublicProjects(locale);
 

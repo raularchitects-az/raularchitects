@@ -4,8 +4,9 @@ import { Container } from "@/components/ui/container";
 import { SiteFooter } from "@/components/site-footer";
 import { BlogCard } from "@/components/blog-card";
 import { getPublicBlogPosts } from "@/lib/cms/public";
-import { absoluteUrl, languageAlternates } from "@/lib/site";
 import { isBlogLocaleLive } from "@/lib/blog-urls";
+import { asLocale } from "@/i18n/routing";
+import { entryMetadata } from "@/lib/cms/metadata";
 
 export const revalidate = 60;
 
@@ -14,32 +15,18 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = await params;
+  const locale = asLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: "blog" });
-  const path = "/bloq";
-  const canonical = absoluteUrl(locale, path);
-
-  return {
+  return entryMetadata({
+    locale,
+    path: "/bloq",
     title: t("metaTitle"),
     description: t("metaDescription"),
-    alternates: {
-      canonical,
-      languages: languageAlternates(path),
-    },
-    openGraph: {
-      type: "website",
-      title: t("metaTitle"),
-      description: t("metaDescription"),
-      url: canonical,
-      siteName: "Raul Architects",
-      locale,
-    },
-    robots: { index: true, follow: true },
-  };
+  });
 }
 
 export default async function BlogIndexPage({ params }: PageProps<"/[locale]/bloq">) {
-  const { locale } = await params;
+  const locale = asLocale((await params).locale);
   setRequestLocale(locale);
   const t = await getTranslations("blog");
   const allPosts = await getPublicBlogPosts();

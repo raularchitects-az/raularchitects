@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { toIntlHref } from "@/lib/public-paths";
 import { toDisplayUpperCase } from "@/lib/locale-text";
 
 const serviceIcons: Record<string, LucideIcon> = {
@@ -86,7 +87,7 @@ export function HomeHero({
         <div className="pointer-events-none absolute inset-0 z-10 grid grid-cols-[46%_54%] lg:hidden">
           <span aria-hidden="true" />
           <Link
-            href={identityHref}
+            href={toIntlHref(identityHref)}
             className="hero-layer-identity pointer-events-auto group mr-[clamp(0.75rem,3.8vw,1rem)] mt-[clamp(4.5rem,15svh,7rem)] flex min-w-0 flex-col self-start"
           >
             <span className="flex min-w-0 flex-col gap-[3.5px]">
@@ -121,7 +122,7 @@ export function HomeHero({
         {/* Desktop identity — unchanged from original desktop treatment */}
         <div className="hero-layer-identity absolute bottom-0 left-[22%] z-10 hidden max-w-[min(36rem,30%)] pb-16 lg:block xl:left-[20%]">
           <Link
-            href={identityHref}
+            href={toIntlHref(identityHref)}
             className="group inline-flex flex-col gap-3"
           >
             <span className="hero-name-plate inline-flex w-fit px-5 py-3 text-2xl font-bold tracking-[0.08em] text-white">
@@ -155,7 +156,7 @@ export function HomeHero({
               return (
                 <Link
                   key={service.slug}
-                  href={`/xidmetler/${service.slug}`}
+                  href={toIntlHref(`/xidmetler/${service.slug}`)}
                   className="hero-service-row group flex items-center gap-4 sm:gap-5"
                   style={{ animationDelay: `${0.78 + index * 0.12}s` }}
                 >

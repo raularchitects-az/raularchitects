@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { toIntlHref } from "@/lib/public-paths";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { categories, type Category } from "@/data/categories";
@@ -73,7 +74,7 @@ export function ProjectsCatalog({ items = [] }: { items?: ProjectMeta[] }) {
             return (
             <Link
               key={project.slug}
-              href={`/layihelar/${project.slug}`}
+              href={toIntlHref(`/layihelar/${project.slug}`)}
               className="group flex flex-col gap-5"
             >
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-cream-dark">
