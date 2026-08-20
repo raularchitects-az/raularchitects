@@ -68,6 +68,8 @@ export function cmsProjectToMeta(row: CmsRow, locale: string): ProjectMeta & {
   gallery: string[];
   sections: NonNullable<CmsRow["sections"]>;
   ogImage?: string;
+  publishedAt: string | null;
+  createdAt: string | null;
 } {
   const gallery = galleryUrls(row);
   return {
@@ -86,6 +88,8 @@ export function cmsProjectToMeta(row: CmsRow, locale: string): ProjectMeta & {
     gallery,
     sections: row.sections ?? {},
     ogImage: mediaPublicUrl(row.og_image_path) || cover(row),
+    publishedAt: row.published_at ?? null,
+    createdAt: row.created_at ?? null,
   };
 }
 
@@ -97,6 +101,8 @@ export function cmsPortfolioToMeta(row: CmsRow, locale: string): PortfolioMeta &
   videoUrl?: string | null;
   ogImage?: string;
   gallery: string[];
+  publishedAt: string | null;
+  createdAt: string | null;
 } {
   const gallery = galleryUrls(row);
   return {
@@ -113,6 +119,8 @@ export function cmsPortfolioToMeta(row: CmsRow, locale: string): PortfolioMeta &
     videoUrl: row.video_url,
     ogImage: mediaPublicUrl(row.og_image_path) || cover(row),
     gallery,
+    publishedAt: row.published_at ?? null,
+    createdAt: row.created_at ?? null,
   };
 }
 
@@ -239,6 +247,8 @@ export function staticProjectPublic(item: ProjectMeta) {
     area: null as string | null,
     ogImage: item.heroImage || item.image,
     gallery: [...groups.exteriorImages, ...groups.interiorImages, ...groups.planningImages],
+    publishedAt: null as string | null,
+    createdAt: null as string | null,
     sections: {
       exterior: { media: groups.exteriorImages.map((path) => ({ path })) },
       interior: { media: groups.interiorImages.map((path) => ({ path })) },
@@ -258,6 +268,8 @@ export function staticPortfolioPublic(item: PortfolioMeta) {
     videoUrl: null as string | null,
     ogImage: item.heroImage || item.image,
     gallery: [] as string[],
+    publishedAt: null as string | null,
+    createdAt: null as string | null,
   };
 }
 

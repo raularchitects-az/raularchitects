@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 import { setRequestLocale, getTranslations, getMessages } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { toIntlHref } from "@/lib/public-paths";
@@ -9,14 +10,21 @@ import { Reveal } from "@/components/ui/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { HomeHero } from "@/components/home-hero";
 import { services } from "@/data/services";
-import { projectCategories, categoryCoverImage as projectCoverImage } from "@/data/projects";
-import { categoryCoverImage as portfolioCoverImage } from "@/data/portfolio";
-import { getHomeBlogPosts, getPublicServices, getSiteSettings } from "@/lib/cms/public";
+import {
+  getHomeBlogPosts,
+  getPublicPortfolio,
+  getPublicProjects,
+  getPublicServices,
+  getSiteSettings,
+  takeLatestPublic,
+} from "@/lib/cms/public";
 import { isBlogLocaleLive } from "@/lib/blog-urls";
 import { BlogCard } from "@/components/blog-card";
 import { toDisplayUpperCase } from "@/lib/locale-text";
 import { asLocale } from "@/i18n/routing";
 import { entryMetadata } from "@/lib/cms/metadata";
+
+export const revalidate = 60;
 
 type HomeMessages = {
   raulName: string;
@@ -25,6 +33,8 @@ type HomeMessages = {
   roleLine2?: string;
   roleLine3?: string;
   allServicesCta: string;
+  allProjectsCta: string;
+  allPortfolioCta: string;
   svcTikinti: string;
   svcBim: string;
   svcInteryer: string;
@@ -81,7 +91,13 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
   });
 
   const settings = await getSiteSettings();
-  const cmsServices = await getPublicServices(locale);
+  const [cmsServices, publicProjects, publicPortfolio] = await Promise.all([
+    getPublicServices(locale),
+    getPublicProjects(locale),
+    getPublicPortfolio(locale),
+  ]);
+  const latestProjects = takeLatestPublic(publicProjects, 10);
+  const latestPortfolio = takeLatestPublic(publicPortfolio, 10);
   const homeFlags = settings.home ?? {};
   const hero = settings.hero ?? {};
   const homePosts = (homeFlags.showBlog === true ? await getHomeBlogPosts() : []).filter((post) =>
@@ -124,29 +140,44 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
               <TriangleMark size={18} />
             </h2>
           </Reveal>
+          <Link
+            href="/layihelar"
+            className="mt-6 inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-bronze-dark transition-colors duration-300 hover:text-[#6b4a32]"
+          >
+            {upper(homeMsg.allProjectsCta)}
+            <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} />
+          </Link>
 
+          {latestProjects.length > 0 ? (
           <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
-            {projectCategories.map((category, index) => (
-              <Reveal key={category} delay={index * 40}>
+            {latestProjects.map((project, index) => (
+              <Reveal key={project.slug} delay={index * 40}>
                 <Link
-                  href={toIntlHref(`/layihelar?category=${category}`)}
+                  href={toIntlHref(`/layihelar/${project.slug}`)}
                   className="group relative block aspect-[4/5] overflow-hidden rounded-md border border-charcoal/15 bg-cream shadow-sm transition-shadow duration-300 hover:shadow-lg"
                 >
                   <Image
-                    src={projectCoverImage[category]}
-                    alt={c(category)}
+                    src={project.image}
+                    alt={project.title || project.slug}
                     fill
                     sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                    style={project.objectPosition ? { objectPosition: project.objectPosition } : undefined}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal-dark/80 via-charcoal-dark/10 to-transparent transition-colors duration-300 group-hover:from-bronze-dark/90" />
-                  <span className="absolute inset-x-0 bottom-0 p-3 text-xs font-medium tracking-[0.14em] text-cream sm:p-4 sm:text-sm">
-                    {upper(c(category))}
+                  <span className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
+                    <span className="block text-[10px] font-medium tracking-[0.18em] text-cream/70">
+                      {upper(c(project.category))}
+                    </span>
+                    <span className="mt-1 block text-xs font-medium tracking-[0.14em] text-cream sm:text-sm">
+                      {project.title || project.slug}
+                    </span>
                   </span>
                 </Link>
               </Reveal>
             ))}
           </div>
+          ) : null}
         </Container>
       </section>
       ) : null}
@@ -161,29 +192,44 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
               <TriangleMark size={18} className="brightness-0 invert" />
             </h2>
           </Reveal>
+          <Link
+            href="/portfolio"
+            className="mt-6 inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-cream/80 transition-colors duration-300 hover:text-cream"
+          >
+            {upper(homeMsg.allPortfolioCta)}
+            <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} />
+          </Link>
 
+          {latestPortfolio.length > 0 ? (
           <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
-            {projectCategories.map((category, index) => (
-              <Reveal key={category} delay={index * 40}>
+            {latestPortfolio.map((item, index) => (
+              <Reveal key={item.slug} delay={index * 40}>
                 <Link
-                  href={toIntlHref(`/portfolio?category=${category}`)}
+                  href={toIntlHref(`/portfolio/${item.slug}`)}
                   className="group relative block aspect-[4/5] overflow-hidden rounded-md border border-cream/25 bg-bronze shadow-sm transition-shadow duration-300 hover:shadow-xl"
                 >
                   <Image
-                    src={portfolioCoverImage[category]}
-                    alt={c(category)}
+                    src={item.image}
+                    alt={item.title || item.slug}
                     fill
                     sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                    style={item.objectPosition ? { objectPosition: item.objectPosition } : undefined}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal-dark/80 via-charcoal-dark/10 to-transparent transition-colors duration-300 group-hover:from-charcoal-dark/90" />
-                  <span className="absolute inset-x-0 bottom-0 p-3 text-xs font-medium tracking-[0.14em] text-cream sm:p-4 sm:text-sm">
-                    {upper(c(category))}
+                  <span className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
+                    <span className="block text-[10px] font-medium tracking-[0.18em] text-cream/70">
+                      {upper(c(item.category))}
+                    </span>
+                    <span className="mt-1 block text-xs font-medium tracking-[0.14em] text-cream sm:text-sm">
+                      {item.title || item.slug}
+                    </span>
                   </span>
                 </Link>
               </Reveal>
             ))}
           </div>
+          ) : null}
         </Container>
       </section>
       ) : null}

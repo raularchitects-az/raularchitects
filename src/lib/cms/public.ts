@@ -15,6 +15,7 @@ export {
   getPublicProjects,
   getPublicService,
   getPublicServices,
+  takeLatestPublic,
 } from "./public-lists";
 
 /** True when CMS env is configured. Public listings still merge with unmigrated legacy items. */

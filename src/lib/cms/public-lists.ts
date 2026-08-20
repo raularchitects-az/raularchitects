@@ -248,6 +248,33 @@ export async function getPublicService(slug: string, locale: string) {
   return all.find((item) => item.slug === slug) ?? null;
 }
 
+function timestamp(value?: string | null) {
+  if (!value) return 0;
+  const ms = Date.parse(value);
+  return Number.isNaN(ms) ? 0 : ms;
+}
+
+function publicDate(item: unknown, key: "publishedAt" | "createdAt") {
+  if (!item || typeof item !== "object") return null;
+  const value = (item as Record<string, unknown>)[key];
+  return typeof value === "string" ? value : null;
+}
+
+/** Newest public catalog items. Dates DESC, then the loader’s existing order. */
+export function takeLatestPublic<T>(items: T[], limit = 10): T[] {
+  return items
+    .map((item, index) => ({ item, index }))
+    .sort((a, b) => {
+      const published = timestamp(publicDate(b.item, "publishedAt")) - timestamp(publicDate(a.item, "publishedAt"));
+      if (published) return published;
+      const created = timestamp(publicDate(b.item, "createdAt")) - timestamp(publicDate(a.item, "createdAt"));
+      if (created) return created;
+      return a.index - b.index;
+    })
+    .slice(0, Math.max(0, limit))
+    .map(({ item }) => item);
+}
+
 export async function getHomeBlogPosts() {
   const rows = await getCatalogRows("blog_posts");
   return rows
