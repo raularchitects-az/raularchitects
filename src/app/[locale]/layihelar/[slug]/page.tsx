@@ -15,6 +15,7 @@ import { getPublicContact, getPublicProject, getPublicProjects, resolveSlugRedir
 import { entryMetadata, whatsappHref } from "@/lib/cms/metadata";
 import { mediaPublicUrl } from "@/lib/cms/media-url";
 import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
+import { safeRawArray } from "@/lib/i18n/safe-raw";
 
 export async function generateStaticParams() {
   const cms = await getPublicProjects("en");
@@ -29,8 +30,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   const cms = await getPublicProject(slug, locale);
+  if (!cms) return {};
   const project = getProject(slug);
-  if (!cms && !project) return {};
   const imported = getImportedEntry(slug);
   const t = await getTranslations({ locale, namespace: "projectDetail" });
   const title = cms?.seoTitle || cms?.title || imported?.title || (project ? t(`items.${slug}.title`) : slug);
@@ -70,14 +71,7 @@ export default async function ProjectDetailPage({
   const imported = getImportedEntry(slug);
   const staticSpecs = imported || !getProject(slug) || cmsProject?.source === "cms"
     ? []
-    : (() => {
-        try {
-          const raw = t.raw(`items.${slug}.specs`);
-          return Array.isArray(raw) ? raw.filter((item): item is string => typeof item === "string") : [];
-        } catch {
-          return [] as string[];
-        }
-      })();
+    : safeRawArray(t, `items.${slug}.specs`);
   const specs = staticSpecs.length
     ? staticSpecs
     : [cmsProject && "location" in cmsProject ? cmsProject.location : null, cmsProject && "area" in cmsProject ? cmsProject.area : null].filter(

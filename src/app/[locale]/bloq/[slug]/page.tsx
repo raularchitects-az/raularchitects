@@ -7,7 +7,7 @@ import { Container } from "@/components/ui/container";
 import { SiteFooter } from "@/components/site-footer";
 import { BlogLocaleSwitch } from "@/components/locale-switch-context";
 import { routing, type Locale } from "@/i18n/routing";
-import { blogPosts as staticBlog, formatBlogDate, getBlogCopy, getBlogImageAlt } from "@/data/blog";
+import { formatBlogDate, getBlogCopy, getBlogImageAlt } from "@/data/blog";
 import { getPublicBlogPosts, resolvePublicBlog } from "@/lib/cms/public";
 import { blogLanguageAlternates, blogPostPath, getBlogLocaleSlug } from "@/lib/blog-urls";
 import { BlogBody } from "@/lib/blog-body";
@@ -21,8 +21,7 @@ import {
 } from "@/lib/site";
 
 export async function generateStaticParams() {
-  const cms = await getPublicBlogPosts();
-  const posts = cms.length ? cms : staticBlog;
+  const posts = await getPublicBlogPosts();
   return routing.locales.flatMap((locale) => {
     const slugs = new Set<string>();
     for (const post of posts) {

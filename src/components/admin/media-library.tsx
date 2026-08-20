@@ -1,20 +1,36 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { deleteMedia, updateMediaAlt, uploadMedia } from "@/lib/cms/actions";
 import { mediaPublicUrl } from "@/lib/cms/media-url";
 import type { MediaRow } from "@/lib/cms/types";
 import { ConfirmButton, Field, inputClass } from "@/components/admin/fields";
 
+function errorMessage(error: unknown) {
+  return error instanceof Error && error.message ? error.message : "Əməliyyat alınmadı";
+}
+
 export function MediaLibrary({ items }: { items: MediaRow[] }) {
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
   return (
     <div className="flex flex-col gap-6">
+      {error ? (
+        <p className="border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
+          {error}
+        </p>
+      ) : null}
       <form
         action={async (formData) => {
-          await uploadMedia(formData);
-          router.refresh();
+          setError(null);
+          try {
+            await uploadMedia(formData);
+            router.refresh();
+          } catch (caught) {
+            setError(errorMessage(caught));
+          }
         }}
         className="flex flex-col gap-3 border border-charcoal/10 bg-white p-5 sm:flex-row sm:items-end"
       >
@@ -42,8 +58,13 @@ export function MediaLibrary({ items }: { items: MediaRow[] }) {
             <p className="truncate text-[11px] text-charcoal/50">{item.path}</p>
             <form
               action={async (formData) => {
-                await updateMediaAlt(item.id, String(formData.get("alt") ?? ""));
-                router.refresh();
+                setError(null);
+                try {
+                  await updateMediaAlt(item.id, String(formData.get("alt") ?? ""));
+                  router.refresh();
+                } catch (caught) {
+                  setError(errorMessage(caught));
+                }
               }}
               className="mt-2 flex gap-2"
             >

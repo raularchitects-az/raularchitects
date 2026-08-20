@@ -49,7 +49,9 @@ export const getPublished = cache(async (table: "projects" | "portfolio" | "blog
   })(),
 );
 
-async function fetchCatalogRows(table: "projects" | "portfolio") {
+export type CatalogTable = "projects" | "portfolio" | "blog_posts" | "services";
+
+async function fetchCatalogRows(table: CatalogTable) {
   const client = createServiceClient() ?? createPublicReadClient();
   if (!client) return [] as CmsRow[];
   const { data, error } = await client.from(table).select("*").order("sort_order", { ascending: true });
@@ -60,7 +62,7 @@ async function fetchCatalogRows(table: "projects" | "portfolio") {
   return (data ?? []) as CmsRow[];
 }
 
-export const getCatalogRows = cache(async (table: "projects" | "portfolio") =>
+export const getCatalogRows = cache(async (table: CatalogTable) =>
   unstable_cache(() => fetchCatalogRows(table), ["cms-catalog", table], {
     revalidate: 60,
     tags: ["cms", `cms-${table}`],

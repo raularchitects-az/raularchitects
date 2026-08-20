@@ -6,17 +6,18 @@ import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { SiteFooter } from "@/components/site-footer";
 import { routing } from "@/i18n/routing";
-import { services, getService } from "@/data/services";
+import { getService } from "@/data/services";
 import { getPublicService, getPublicServices, resolveSlugRedirect } from "@/lib/cms/public";
 import { entryMetadata } from "@/lib/cms/metadata";
 import { mediaPublicUrl } from "@/lib/cms/media-url";
+import { safeMessage, safeRawArray } from "@/lib/i18n/safe-raw";
 
 const icons: Record<string, LucideIcon> = { HardHat, Boxes, Sofa, Building2 };
 
 export async function generateStaticParams() {
   const cms = await getPublicServices("en");
-  const slugs = new Set([...services.map((service) => service.slug), ...cms.map((service) => service.slug)]);
-  return routing.locales.flatMap((locale) => [...slugs].map((slug) => ({ locale, slug })));
+  const slugs = [...new Set(cms.map((service) => service.slug))];
+  return routing.locales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
 }
 
 export async function generateMetadata({
@@ -26,10 +27,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   const cms = await getPublicService(slug, locale);
-  if (!getService(slug) && !cms) return {};
+  if (!cms) return {};
   const t = await getTranslations({ locale, namespace: "serviceDetail" });
-  const title = cms?.seoTitle
-    || (cms?.title && cms.title !== slug ? cms.title : getService(slug) ? t(`items.${slug}.title`) : slug);
+  const title = cms.seoTitle
+    || (cms.title && cms.title !== slug ? cms.title : getService(slug) ? t(`items.${slug}.title`) : slug);
   return entryMetadata({
     locale,
     path: `/xidmetler/${slug}`,
@@ -51,15 +52,15 @@ export default async function ServiceDetailPage({
   }
 
   const cms = await getPublicService(slug, locale);
-  const service = getService(slug) ?? (cms ? { slug: cms.slug, number: cms.number, icon: cms.icon } : null);
-  if (!service) notFound();
+  if (!cms) notFound();
+  const service = getService(slug) ?? { slug: cms.slug, number: cms.number, icon: cms.icon };
 
   const t = await getTranslations("serviceDetail");
   const Icon = icons[service.icon] ?? Building2;
-  const points = getService(slug) ? ((t.raw(`items.${slug}.points`) as string[] | undefined) ?? []) : [];
-  const body = cms?.body?.trim() ?? "";
-  const image = cms?.image ? mediaPublicUrl(cms.image) : "";
-  const videoUrl = cms?.videoUrl ? mediaPublicUrl(cms.videoUrl) : "";
+  const points = safeRawArray(t, `items.${slug}.points`);
+  const body = cms.body?.trim() ?? "";
+  const image = cms.image ? mediaPublicUrl(cms.image) : "";
+  const videoUrl = cms.videoUrl ? mediaPublicUrl(cms.videoUrl) : "";
 
   return (
     <>
@@ -77,10 +78,10 @@ export default async function ServiceDetailPage({
             <div className="flex flex-col gap-4">
               <span className="text-sm text-bronze-light">{service.number}</span>
               <h1 className="text-4xl font-semibold text-cream sm:text-6xl">
-                {cms?.title && cms.title !== slug ? cms.title : t(`items.${slug}.title`)}
+                {cms.title && cms.title !== slug ? cms.title : safeMessage((key) => t(key), `items.${slug}.title`, slug)}
               </h1>
               <p className="max-w-xl text-base font-light leading-relaxed text-cream/65 sm:text-lg">
-                {cms?.intro || t(`items.${slug}.intro`)}
+                {cms.intro || safeMessage((key) => t(key), `items.${slug}.intro`, "")}
               </p>
             </div>
             <span className="flex h-16 w-16 shrink-0 items-center justify-center border border-bronze-light/30 text-bronze-light">

@@ -68,19 +68,17 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
     isBlogLocaleLive(post, locale),
   );
   const blogT = homePosts.length ? await getTranslations("blog") : null;
-  const visibleServices =
-    cmsServices.some((item) => item.title && item.title !== item.slug)
-      ? cmsServices
-          .filter((item) => item.home !== false)
-          .map((item) => ({
-            slug: item.slug,
-            title: item.title,
-            icon: item.icon,
-          }))
-      : heroServices.filter((item) => {
-          const match = cmsServices.find((s) => s.slug === item.slug);
-          return !match || match.home !== false;
-        });
+  const visibleServices = cmsServices
+    .filter((item) => item.home !== false)
+    .map((item) => {
+      const hero = heroServices.find((service) => service.slug === item.slug);
+      const cmsTitle = item.title && item.title !== item.slug ? item.title : "";
+      return {
+        slug: item.slug,
+        title: cmsTitle || hero?.title || item.title,
+        icon: item.icon || hero?.icon || "Boxes",
+      };
+    });
 
   return (
     <main>

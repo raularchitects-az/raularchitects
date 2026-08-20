@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { SiteFooter } from "@/components/site-footer";
 import { getSiteSettings } from "@/lib/cms/public";
+import { safeRawArray } from "@/lib/i18n/safe-raw";
 
 export async function generateMetadata({
   params,
@@ -20,7 +21,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/haqqimi
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("aboutPage");
-  const countries = t.raw("countries") as string[];
+  const countries = safeRawArray(t, "countries");
   const blockKeys = ["raul", "team", "international", "bim"] as const;
   const settings = await getSiteSettings();
   const intro = typeof settings.about?.intro === "string" && settings.about.intro.trim()

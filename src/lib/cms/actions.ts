@@ -474,11 +474,13 @@ export async function reorder(table: EntityType, orderedIds: string[]) {
   await requireStaff();
   const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
-  await Promise.all(
+  const results = await Promise.all(
     orderedIds.map((id, index) =>
       supabase.from(table).update({ sort_order: index, updated_at: new Date().toISOString() }).eq("id", id),
     ),
   );
+  const failed = results.find((result) => result.error);
+  if (failed?.error) throw failed.error;
   await audit("reorder", table, null, "sıra yeniləndi");
   revalidatePublic(table);
 }
@@ -547,7 +549,8 @@ export async function updateMediaAlt(id: string, alt: string) {
   await requireStaff();
   const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
-  await supabase.from("media").update({ alt_text: alt }).eq("id", id);
+  const { error } = await supabase.from("media").update({ alt_text: alt }).eq("id", id);
+  if (error) throw error;
 }
 
 export async function updateUserRole(userId: string, role: "admin" | "editor") {

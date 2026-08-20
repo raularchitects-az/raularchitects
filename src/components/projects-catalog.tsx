@@ -11,6 +11,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { categories, type Category } from "@/data/categories";
 import { type ProjectMeta } from "@/data/projects";
 import { cn } from "@/lib/utils";
+import { safeRawArray } from "@/lib/i18n/safe-raw";
 
 function catalogTitle(t: ReturnType<typeof useTranslations>, project: ProjectMeta) {
   if (project.title) return project.title;
@@ -23,12 +24,7 @@ function catalogTitle(t: ReturnType<typeof useTranslations>, project: ProjectMet
 
 function catalogSpecs(t: ReturnType<typeof useTranslations>, project: ProjectMeta) {
   if (project.source) return [] as string[];
-  try {
-    const raw = t.raw(`items.${project.slug}.specs`);
-    return Array.isArray(raw) ? raw.filter((item): item is string => typeof item === "string") : [];
-  } catch {
-    return [];
-  }
+  return safeRawArray(t, `items.${project.slug}.specs`);
 }
 
 export function ProjectsCatalog({ items = [] }: { items?: ProjectMeta[] }) {

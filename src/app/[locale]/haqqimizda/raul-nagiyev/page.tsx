@@ -7,6 +7,7 @@ import { Container } from "@/components/ui/container";
 import { TriangleMark } from "@/components/ui/triangle-mark";
 import { SiteFooter } from "@/components/site-footer";
 import { importedCertificates } from "@/data/raul-portfolio-import";
+import { safeRawArray } from "@/lib/i18n/safe-raw";
 
 const sectionKeys = ["bio", "education", "experience", "certificates", "achievements"] as const;
 
@@ -59,7 +60,7 @@ export default async function RaulNagiyevPage({ params }: PageProps<"/[locale]/h
             <div className="flex flex-col divide-y divide-charcoal/10 border-t border-charcoal/10">
               {sectionKeys.map((key) => {
                 const isBio = key === "bio";
-                const items = isBio ? null : (t.raw(`sections.${key}.items`) as string[]);
+                const items = isBio ? null : safeRawArray(t, `sections.${key}.items`);
                 return (
                   <div key={key} className="grid gap-4 py-10 sm:grid-cols-[10rem_1fr] sm:gap-8">
                     <h2 className="inline-flex items-start gap-2 text-xl font-semibold text-charcoal sm:text-2xl">

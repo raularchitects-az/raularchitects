@@ -6,6 +6,7 @@ import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SiteFooter } from "@/components/site-footer";
 import { getPublicServices } from "@/lib/cms/public";
+import { safeMessage } from "@/lib/i18n/safe-raw";
 
 export async function generateMetadata({
   params,
@@ -42,7 +43,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/xidm
                   <span className="text-3xl font-semibold text-charcoal transition-colors duration-300 group-hover:text-cream sm:text-5xl">
                     {service.title && service.title !== service.slug
                       ? service.title
-                      : t(`items.${service.slug}.title`)}
+                      : safeMessage((key) => t(key), `items.${service.slug}.title`, service.slug)}
                   </span>
                 </div>
                 <ArrowUpRight

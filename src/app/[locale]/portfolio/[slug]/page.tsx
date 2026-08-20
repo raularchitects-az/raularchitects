@@ -28,8 +28,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   const cms = await getPublicPortfolioItem(slug, locale);
+  if (!cms) return {};
   const item = getPortfolioItem(slug);
-  if (!cms && !item) return {};
   const imported = getImportedEntry(slug);
   const c = await getTranslations({ locale, namespace: "categories" });
   const title = cms?.seoTitle || cms?.title || imported?.title || (item ? c(item.category) : slug);

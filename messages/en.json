@@ -3,6 +3,14 @@
     "title": "Raul Architects — Architecture, BIM & Interior Design",
     "description": "Architectural design, BIM-based execution and interior design services in Germany, Switzerland and Azerbaijan."
   },
+  "errors": {
+    "title": "This page could not load",
+    "body": "We could not show this page right now. Return home and try again.",
+    "home": "Home",
+    "retry": "Try again",
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "The address you requested does not exist or is no longer published."
+  },
   "nav": {
     "projects": "Projects",
     "portfolio": "Portfolio",

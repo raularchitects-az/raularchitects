@@ -3,6 +3,14 @@
     "title": "Raul Architects — Memarlıq, BIM və İnteryer Dizayn",
     "description": "Almaniya, İsveçrə və Azərbaycanda memarlıq layihələndirməsi, BIM əsaslı icra və interyer dizayn xidmətləri."
   },
+  "errors": {
+    "title": "Səhifə yüklənmədi",
+    "body": "Bu səhifəni indi göstərmək mümkün olmadı. Ana səhifəyə qayıdıb yenidən cəhd edin.",
+    "home": "Ana səhifə",
+    "retry": "Yenidən yoxla",
+    "notFoundTitle": "Səhifə tapılmadı",
+    "notFoundBody": "Axtardığınız ünvan mövcud deyil və ya artıq yayımlanmır."
+  },
   "nav": {
     "projects": "Layihələr",
     "portfolio": "Portfolio",
