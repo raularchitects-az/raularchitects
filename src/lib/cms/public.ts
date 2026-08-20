@@ -1,11 +1,17 @@
 import { blogPosts as staticBlog, type BlogPost } from "@/data/blog";
 import { portfolioItems as staticPortfolio, type PortfolioMeta } from "@/data/portfolio";
 import { projects as staticProjects, getProjectGalleryGroups, type ProjectMeta } from "@/data/projects";
-import { services as staticServices, type ServiceMeta } from "@/data/services";
+import { services as staticServices } from "@/data/services";
 import { fallbackBlogSlugs, findBlogByAnySlug, getBlogLocaleSlug, isBlogLocaleLive } from "@/lib/blog-urls";
+import { isCmsConfigured } from "./env";
 import { mediaPublicUrl } from "./media-url";
 import { findRedirect, getPublished, getSettings } from "./queries";
 import type { CmsRow, TranslationBlock } from "./types";
+
+/** When CMS env is set, public projects/portfolio never fall back to static catalogs. */
+export function isPublicCmsLive() {
+  return isCmsConfigured();
+}
 
 function pickT(row: CmsRow, locale: string): TranslationBlock {
   const t = row.translations ?? {};
@@ -152,13 +158,13 @@ export function cmsBlogToPost(row: CmsRow): BlogPost {
 
 export async function getPublicProjects(locale: string) {
   const rows = await getPublished("projects");
-  if (rows.length) return rows.map((row) => cmsProjectToMeta(row, locale));
+  if (isPublicCmsLive()) return rows.map((row) => cmsProjectToMeta(row, locale));
   return staticProjects;
 }
 
 export async function getPublicProject(slug: string, locale: string) {
   const rows = await getPublished("projects");
-  if (rows.length) {
+  if (isPublicCmsLive()) {
     const row = rows.find((item) => item.slug === slug);
     return row ? cmsProjectToMeta(row, locale) : null;
   }
@@ -187,13 +193,13 @@ export async function getPublicProject(slug: string, locale: string) {
 
 export async function getPublicPortfolio(locale: string) {
   const rows = await getPublished("portfolio");
-  if (rows.length) return rows.map((row) => cmsPortfolioToMeta(row, locale));
+  if (isPublicCmsLive()) return rows.map((row) => cmsPortfolioToMeta(row, locale));
   return staticPortfolio;
 }
 
 export async function getPublicPortfolioItem(slug: string, locale: string) {
   const rows = await getPublished("portfolio");
-  if (rows.length) {
+  if (isPublicCmsLive()) {
     const row = rows.find((item) => item.slug === slug);
     return row ? cmsPortfolioToMeta(row, locale) : null;
   }

@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath, refresh, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin, requireStaff } from "./auth";
 import { createAdminClient, createUserServerClient, createServiceClient } from "./supabase";
@@ -45,10 +45,68 @@ async function saveRevision(entityType: string, entityId: string, payload: unkno
   });
 }
 
-function revalidatePublic() {
-  revalidateTag("cms", "max");
+function revalidatePublic(table?: EntityType, slug?: string) {
+  updateTag("cms");
+  if (table) updateTag(`cms-${table}`);
+  refresh();
   revalidatePath("/", "layout");
   revalidatePath("/admin", "layout");
+  for (const locale of routing.locales) {
+    revalidatePath(`/${locale}`);
+    revalidatePath(`/${locale}/layihelar`);
+    revalidatePath(`/${locale}/portfolio`);
+    revalidatePath(`/${locale}/bloq`);
+    if (table === "projects" && slug) {
+      revalidatePath(`/${locale}/layihelar/${slug}`);
+    }
+    if (table === "portfolio" && slug) {
+      revalidatePath(`/${locale}/portfolio/${slug}`);
+    }
+    if (table === "blog_posts" && slug) {
+      revalidatePath(`/${locale}/bloq/${slug}`);
+    }
+  }
+}
+
+function throwIfError(error: { message?: string } | null, fallback: string) {
+  if (error) throw new Error(error.message || fallback);
+}
+
+function storageObjectPath(path: string | null | undefined) {
+  if (!path) return "";
+  if (path.startsWith("http://") || path.startsWith("https://") || path.startsWith("/")) return "";
+  return path;
+}
+
+function collectStoragePaths(row: Record<string, unknown>) {
+  const paths = new Set<string>();
+  const add = (value: unknown) => {
+    if (typeof value !== "string") return;
+    const path = storageObjectPath(value);
+    if (path) paths.add(path);
+  };
+  add(row.cover_path);
+  add(row.og_image_path);
+  add(row.image_path);
+  add(row.video_url);
+  const gallery = row.gallery;
+  if (Array.isArray(gallery)) {
+    for (const item of gallery) {
+      if (item && typeof item === "object" && "path" in item) add((item as { path?: string }).path);
+      else add(item);
+    }
+  }
+  const sections = row.sections;
+  if (sections && typeof sections === "object") {
+    for (const block of Object.values(sections as Record<string, { media?: { path?: string }[] }>)) {
+      for (const item of block?.media ?? []) add(item?.path);
+    }
+  }
+  return [...paths];
+}
+
+function rowUsesStoragePath(row: Record<string, unknown>, path: string) {
+  return collectStoragePaths(row).includes(path);
 }
 
 function publicPathFor(table: EntityType, slug?: string) {
@@ -214,17 +272,19 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
         }
       }
     }
-    const { error } = await supabase.from(table).update(row).eq("id", id);
-    if (error) throw error;
+    const { data: updated, error } = await supabase.from(table).update(row).eq("id", id).select("id, slug").maybeSingle();
+    throwIfError(error, "Yenilənmədi");
+    if (!updated) throw new Error("Qeyd tapılmadı və ya icazə yoxdur");
     await audit("update", table, id, `${table} yeniləndi`, existing, row);
-    revalidatePublic();
+    revalidatePublic(table, String(updated.slug ?? row.slug ?? existing?.slug ?? ""));
     return id;
   }
 
-  const { data, error } = await supabase.from(table).insert(row).select("id").single();
-  if (error) throw error;
+  const { data, error } = await supabase.from(table).insert(row).select("id, slug").single();
+  throwIfError(error, "Yaradılmadı");
+  if (!data) throw new Error("Yaradılmadı");
   await audit("create", table, data.id, `${table} yaradıldı`, null, row);
-  revalidatePublic();
+  revalidatePublic(table, String(data.slug ?? row.slug ?? ""));
   return data.id as string;
 }
 
@@ -234,24 +294,62 @@ export async function setStatus(table: EntityType, id: string, status: ContentSt
   if (!supabase) throw new Error("CMS configured deyil");
   const patch: Record<string, unknown> = { status, updated_at: new Date().toISOString() };
   if (status === "published") patch.published_at = new Date().toISOString();
-  const { error } = await supabase.from(table).update(patch).eq("id", id);
-  if (error) throw error;
+  const { data, error } = await supabase.from(table).update(patch).eq("id", id).select("id, slug, status").maybeSingle();
+  throwIfError(error, "Status yenilənmədi");
+  if (!data) throw new Error("Qeyd tapılmadı və ya status yazılmadı");
   await audit("status", table, id, `status → ${status}`);
-  revalidatePublic();
+  revalidatePublic(table, data.slug);
 }
 
 export async function setActive(table: EntityType, id: string, isActive: boolean) {
   await requireStaff();
   const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
-  const { error } = await supabase.from(table).update({ is_active: isActive, updated_at: new Date().toISOString() }).eq("id", id);
-  if (error) throw error;
+  const { data, error } = await supabase
+    .from(table)
+    .update({ is_active: isActive, updated_at: new Date().toISOString() })
+    .eq("id", id)
+    .select("id, slug, is_active")
+    .maybeSingle();
+  throwIfError(error, "Aktiv statusu yenilənmədi");
+  if (!data) throw new Error("Qeyd tapılmadı və ya aktiv statusu yazılmadı");
+  if (data.is_active !== isActive) throw new Error("Aktiv statusu bazada dəyişmədi");
   await audit("active", table, id, `active → ${isActive}`);
-  revalidatePublic();
+  revalidatePublic(table, data.slug);
 }
 
 export async function archiveRecord(table: EntityType, id: string) {
   await setStatus(table, id, "archived");
+}
+
+async function removeUnusedStorageFiles(
+  supabase: NonNullable<Awaited<ReturnType<typeof createAdminClient>>>,
+  table: EntityType,
+  id: string,
+  row: Record<string, unknown>,
+) {
+  const service = createServiceClient();
+  const paths = collectStoragePaths(row);
+  if (!paths.length) return;
+
+  const otherTables: EntityType[] = ["projects", "portfolio", "blog_posts", "services"];
+  const others: Record<string, unknown>[] = [];
+  for (const otherTable of otherTables) {
+    const { data } = await supabase.from(otherTable).select("*");
+    for (const item of data ?? []) {
+      if (otherTable === table && item.id === id) continue;
+      others.push(item as Record<string, unknown>);
+    }
+  }
+
+  for (const path of paths) {
+    if (others.some((item) => rowUsesStoragePath(item, path))) continue;
+    if (service) {
+      const { error } = await service.storage.from("media").remove([path]);
+      if (error) console.error("[cms] storage remove", path, error.message);
+    }
+    await supabase.from("media").delete().eq("path", path);
+  }
 }
 
 export async function deleteRecord(table: EntityType, id: string) {
@@ -259,14 +357,23 @@ export async function deleteRecord(table: EntityType, id: string) {
   const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
   const { data: existing } = await supabase.from(table).select("*").eq("id", id).maybeSingle();
-  if (existing && existing.status !== "archived") {
+  if (!existing) throw new Error("Qeyd tapılmadı");
+
+  const hardDelete = table === "projects" || table === "portfolio";
+  if (!hardDelete && existing.status !== "archived") {
     await archiveRecord(table, id);
     return "archived";
   }
-  const { error } = await supabase.from(table).delete().eq("id", id);
-  if (error) throw error;
+
+  if (hardDelete) {
+    await removeUnusedStorageFiles(supabase, table, id, existing as Record<string, unknown>);
+  }
+
+  const { data: deleted, error } = await supabase.from(table).delete().eq("id", id).select("id, slug").maybeSingle();
+  throwIfError(error, "Silinmədi");
+  if (!deleted) throw new Error("Qeyd silinmədi — icazə və ya RLS yoxlanışı alınmadı");
   await audit("delete", table, id, `${table} silindi`, existing, null);
-  revalidatePublic();
+  revalidatePublic(table, deleted.slug ?? existing.slug);
   return "deleted";
 }
 
@@ -285,8 +392,9 @@ export async function duplicateRecord(table: EntityType, id: string) {
   copy.updated_at = new Date().toISOString();
   const { data, error } = await supabase.from(table).insert(copy).select("id").single();
   if (error) throw error;
+  if (!data) throw new Error("Dublikat yaradılmadı");
   await audit("duplicate", table, data.id, `${existing.slug} dublikat`);
-  revalidatePublic();
+  revalidatePublic(table, String(copy.slug));
   return data.id as string;
 }
 
@@ -302,7 +410,7 @@ export async function restoreRevision(revisionId: string) {
   const { error } = await supabase.from(rev.entity_type).update({ ...payload, updated_at: new Date().toISOString() }).eq("id", id);
   if (error) throw error;
   await audit("restore", rev.entity_type, id, "əvvəlki versiyaya qayıdıldı");
-  revalidatePublic();
+  revalidatePublic(rev.entity_type as EntityType, String(payload.slug ?? ""));
 }
 
 export async function saveSettings(key: string, value: Record<string, unknown>) {
@@ -325,7 +433,7 @@ export async function reorder(table: EntityType, orderedIds: string[]) {
     ),
   );
   await audit("reorder", table, null, "sıra yeniləndi");
-  revalidatePublic();
+  revalidatePublic(table);
 }
 
 export async function uploadMedia(formData: FormData) {

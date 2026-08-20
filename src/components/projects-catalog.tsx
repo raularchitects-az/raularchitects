@@ -9,10 +9,10 @@ import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { categories, type Category } from "@/data/categories";
-import { projects as fallbackProjects, type ProjectMeta } from "@/data/projects";
+import { type ProjectMeta } from "@/data/projects";
 import { cn } from "@/lib/utils";
 
-export function ProjectsCatalog({ items }: { items?: ProjectMeta[] }) {
+export function ProjectsCatalog({ items = [] }: { items?: ProjectMeta[] }) {
   const t = useTranslations("projectsPage");
   const c = useTranslations("categories");
   const searchParams = useSearchParams();
@@ -24,7 +24,7 @@ export function ProjectsCatalog({ items }: { items?: ProjectMeta[] }) {
 
   const [active, setActive] = useState<Category>(initial);
 
-  const projects = items ?? fallbackProjects;
+  const projects = items;
   const filtered = active === "all" ? projects : projects.filter((p) => p.category === active);
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { uploadMedia } from "@/lib/cms/actions";
 import { mediaPublicUrl } from "@/lib/cms/media-url";
 import type { MediaRow } from "@/lib/cms/types";
@@ -21,10 +21,12 @@ export function MediaPicker({
   const [open, setOpen] = useState(false);
   const [alt, setAlt] = useState("");
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    setPath(defaultPath ?? "");
-  }, [defaultPath]);
+  const nextPath = defaultPath ?? "";
+  const [seenPath, setSeenPath] = useState(nextPath);
+  if (nextPath !== seenPath) {
+    setSeenPath(nextPath);
+    setPath(nextPath);
+  }
 
   async function onUpload(file: File) {
     setError("");

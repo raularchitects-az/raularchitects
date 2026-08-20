@@ -1,8 +1,6 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 import { services } from "@/data/services";
-import { projects } from "@/data/projects";
-import { portfolioItems } from "@/data/portfolio";
 import { blogPosts } from "@/data/blog";
 import { absoluteUrl } from "@/lib/site";
 import { getPublicBlogPosts, getPublicPortfolio, getPublicProjects, getPublicServices } from "@/lib/cms/public";
@@ -33,8 +31,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getPublicServices("en"),
   ]);
 
-  const projectList = cmsProjects.length ? cmsProjects : projects;
-  const portfolioList = cmsPortfolio.length ? cmsPortfolio : portfolioItems;
+  const projectList = cmsProjects;
+  const portfolioList = cmsPortfolio;
   const blogList = cmsBlog.length ? cmsBlog : blogPosts;
   const serviceList = cmsServices.length ? cmsServices : services;
 

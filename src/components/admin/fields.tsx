@@ -49,19 +49,23 @@ export function ConfirmButton({
   label,
   confirm,
   className,
+  disabled,
   onConfirm,
 }: {
   label: string;
   confirm: string;
   className?: string;
+  disabled?: boolean;
   onConfirm: () => void | Promise<void>;
 }) {
   return (
     <button
       type="button"
       className={className}
-      onClick={() => {
-        if (window.confirm(confirm)) void onConfirm();
+      disabled={disabled}
+      onClick={async () => {
+        if (!window.confirm(confirm)) return;
+        await onConfirm();
       }}
     >
       {label}

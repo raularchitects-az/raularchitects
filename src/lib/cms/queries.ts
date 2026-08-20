@@ -1,6 +1,6 @@
 import { unstable_cache } from "next/cache";
 import { cache } from "react";
-import { createAdminClient, createServiceClient } from "./supabase";
+import { createAdminClient, createPublicReadClient } from "./supabase";
 import type { AuditRow, CmsRow, ContentStatus, MediaRow } from "./types";
 
 export type { CmsRow, ContentStatus };
@@ -27,15 +27,18 @@ export async function getEntity(table: EntityType, id: string) {
 }
 
 async function fetchPublished(table: "projects" | "portfolio" | "blog_posts" | "services") {
-  const service = createServiceClient();
-  if (!service) return [] as CmsRow[];
-  const { data, error } = await service
+  const client = createPublicReadClient();
+  if (!client) return [] as CmsRow[];
+  const { data, error } = await client
     .from(table)
     .select("*")
     .eq("status", "published")
     .eq("is_active", true)
     .order("sort_order", { ascending: true });
-  if (error) return [] as CmsRow[];
+  if (error) {
+    console.error(`[cms] public ${table}`, error.code, error.message);
+    return [] as CmsRow[];
+  }
   return (data ?? []) as CmsRow[];
 }
 
@@ -57,9 +60,9 @@ export async function getPublishedBySlug(
 export const findRedirect = cache(async (fromPath: string) =>
   unstable_cache(
     async () => {
-      const service = createServiceClient();
-      if (!service) return null;
-      const { data } = await service.from("redirects").select("*").eq("from_path", fromPath).maybeSingle();
+      const client = createPublicReadClient();
+      if (!client) return null;
+      const { data } = await client.from("redirects").select("*").eq("from_path", fromPath).maybeSingle();
       return (data as { to_path: string; status_code: number } | null) ?? null;
     },
     ["cms-redirect", fromPath],
@@ -77,9 +80,9 @@ export async function getSettingsAdmin(key: string) {
 export const getSettings = cache(async (key: string) =>
   unstable_cache(
     async () => {
-      const service = createServiceClient();
-      if (!service) return null;
-      const { data } = await service.from("site_settings").select("value").eq("key", key).maybeSingle();
+      const client = createPublicReadClient();
+      if (!client) return null;
+      const { data } = await client.from("site_settings").select("value").eq("key", key).maybeSingle();
       return (data?.value as Record<string, unknown> | undefined) ?? null;
     },
     ["cms-settings", key],

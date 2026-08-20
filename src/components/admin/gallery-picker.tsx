@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { uploadMedia } from "@/lib/cms/actions";
 import { mediaPublicUrl } from "@/lib/cms/media-url";
 import type { MediaRow } from "@/lib/cms/types";
@@ -21,10 +21,12 @@ export function GalleryPicker({
   const [open, setOpen] = useState(false);
   const [alt, setAlt] = useState("");
   const [error, setError] = useState("");
-
-  useEffect(() => {
+  const pathSig = (defaultPaths ?? []).join("\n");
+  const [seenSig, setSeenSig] = useState(pathSig);
+  if (pathSig !== seenSig) {
+    setSeenSig(pathSig);
     setPaths(defaultPaths ?? []);
-  }, [defaultPaths]);
+  }
 
   async function onUpload(file: File) {
     setError("");

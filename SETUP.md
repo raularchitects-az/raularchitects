@@ -78,11 +78,11 @@ Schema `media` adlı public bucket yaradır. Yüklənən şəkil/video orada sax
 
 ## 5. Public sayt davranışı
 
-- CMS-də **Published + Aktiv** olmayan layihə, portfolio, blog və xidmət public-də görünmür.
-- Həmin kontent növündə heç bir published qeyd yoxdursa (və ya env yoxdursa), sayt mövcud statik kataloqa düşür — canlı sayt boş qalmır.
-- **Bir dəfə** published qeyd olanda həmin bölmənin mənbəyi CMS olur. Ona görə əvvəl Dashboard-dan **Mövcud saytı import et** düyməsi ilə statik kontenti draft kimi gətirin, redaktə edin, sonra publish edin.
+- CMS env qurulanda layihə və portfolio **yalnız** Supabase-dən oxunur. Deaktiv və ya silinmiş qeyd statik kataloqa düşmür.
+- CMS-də **Published + Aktiv** olmayan layihə, portfolio, blog və xidmət public-də görünmür; detail URL `notFound` qaytarır.
+- Env yoxdursa (lokal build), sayt mövcud statik kataloqa düşür.
 - Slug dəyişəndə köhnə URL `redirects` cədvəlinə 301 kimi yazılır.
-- Silmə əvvəl **Archived** edir; arxivdən ikinci silmə həmişəlik silir.
+- Layihə və portfolio **Sil** həmişəlik silir (təsdiqdən sonra). Bloq silmə əvvəl **Archived** edir; arxivdən ikinci silmə həmişəlik silir.
 - Hər yaddaşda revision saxlanır; admin formanın altından son versiyaya qayıtmaq olar.
 - Bloq preview: `/admin/preview/blog/[id]` (draft da görünür; public-də yalnız published).
 

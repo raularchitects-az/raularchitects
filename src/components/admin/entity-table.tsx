@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { archiveRecord, deleteRecord, duplicateRecord, reorder, setActive, setStatus } from "@/lib/cms/actions";
 import type { CmsRow, ContentStatus, EntityType } from "@/lib/cms/queries";
@@ -24,18 +24,35 @@ export function EntityTable({
   const router = useRouter();
   const [ordered, setOrdered] = useState(rows);
   const [dragId, setDragId] = useState<string | null>(null);
-
-  useEffect(() => {
+  const [error, setError] = useState<string | null>(null);
+  const [busyId, setBusyId] = useState<string | null>(null);
+  const rowSig = rows.map((row) => `${row.id}:${row.status}:${row.is_active}:${row.sort_order}:${row.updated_at}`).join("|");
+  const [seenSig, setSeenSig] = useState(rowSig);
+  if (rowSig !== seenSig) {
+    setSeenSig(rowSig);
     setOrdered(rows);
-  }, [rows]);
+  }
 
-  async function run(fn: () => Promise<unknown>) {
-    await fn();
-    router.refresh();
+  const hardDelete = table === "projects" || table === "portfolio";
+
+  async function run(id: string, fn: () => Promise<unknown>) {
+    setError(null);
+    setBusyId(id);
+    try {
+      await fn();
+      router.refresh();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Əməliyyat alınmadı");
+    } finally {
+      setBusyId(null);
+    }
   }
 
   return (
     <div className="overflow-x-auto border border-charcoal/10 bg-white">
+      {error ? (
+        <p className="border-b border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>
+      ) : null}
       <table className="w-full min-w-[720px] text-left text-sm">
         <thead className="border-b border-charcoal/10 text-[11px] uppercase tracking-[0.14em] text-charcoal/50">
           <tr>
@@ -54,10 +71,11 @@ export function EntityTable({
               row.translations?.az?.name ||
               row.translations?.en?.title ||
               row.slug;
+            const busy = busyId === row.id;
             return (
               <tr
                 key={row.id}
-                draggable
+                draggable={!busy}
                 onDragStart={() => setDragId(row.id)}
                 onDragOver={(event) => event.preventDefault()}
                 onDrop={() => {
@@ -70,7 +88,7 @@ export function EntityTable({
                   next.splice(to, 0, moved);
                   setOrdered(next);
                   setDragId(null);
-                  void run(() => reorder(table, next.map((item) => item.id)));
+                  void run(row.id, () => reorder(table, next.map((item) => item.id)));
                 }}
                 className="border-b border-charcoal/5 cursor-grab"
               >
@@ -85,37 +103,41 @@ export function EntityTable({
                 <td className="px-4 py-3">{row.is_active ? "Bəli" : "Xeyr"}</td>
                 <td className="px-4 py-3">{row.sort_order}</td>
                 <td className="px-4 py-3">
-                  <div className="flex flex-wrap gap-2 text-[11px] uppercase tracking-[0.12em]">
+                  <div className={`flex flex-wrap gap-2 text-[11px] uppercase tracking-[0.12em] ${busy ? "opacity-50" : ""}`}>
                     <a href={`${editBase}/${row.id}`}>Redaktə</a>
-                    <button type="button" onClick={() => run(() => duplicateRecord(table, row.id))}>
+                    <button type="button" disabled={busy} onClick={() => run(row.id, () => duplicateRecord(table, row.id))}>
                       Duplikat
                     </button>
                     {row.status !== "published" ? (
-                      <button type="button" onClick={() => run(() => setStatus(table, row.id, "published"))}>
+                      <button type="button" disabled={busy} onClick={() => run(row.id, () => setStatus(table, row.id, "published"))}>
                         Publish
                       </button>
                     ) : (
-                      <button type="button" onClick={() => run(() => setStatus(table, row.id, "draft"))}>
+                      <button type="button" disabled={busy} onClick={() => run(row.id, () => setStatus(table, row.id, "draft"))}>
                         Unpublish
                       </button>
                     )}
-                    <button type="button" onClick={() => run(() => setActive(table, row.id, !row.is_active))}>
+                    <button type="button" disabled={busy} onClick={() => run(row.id, () => setActive(table, row.id, !row.is_active))}>
                       {row.is_active ? "Deaktiv" : "Aktiv"}
                     </button>
                     <ConfirmButton
                       label="Arxiv"
-                      confirm="Arxivlənsin?"
-                      onConfirm={() => run(() => archiveRecord(table, row.id))}
+                      confirm="Arxivlənsin? Public saytdan çıxacaq, admin-də qalacaq."
+                      disabled={busy}
+                      onConfirm={() => run(row.id, () => archiveRecord(table, row.id))}
                     />
                     <ConfirmButton
                       label="Sil"
                       confirm={
-                        row.status === "archived"
-                          ? "Həmişəlik silinsin?"
-                          : "Əvvəlcə arxivlənəcək. Davam?"
+                        hardDelete
+                          ? `“${title}” həmişəlik silinsin? Bu əməliyyat geri qaytarılmır.`
+                          : row.status === "archived"
+                            ? "Həmişəlik silinsin?"
+                            : "Əvvəlcə arxivlənəcək. Davam?"
                       }
                       className="text-red-700"
-                      onConfirm={() => run(() => deleteRecord(table, row.id))}
+                      disabled={busy}
+                      onConfirm={() => run(row.id, () => deleteRecord(table, row.id))}
                     />
                   </div>
                 </td>

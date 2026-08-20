@@ -36,6 +36,18 @@ export function createServiceClient() {
   });
 }
 
+/** Public reads: service role if present, otherwise anon (RLS must allow published+active). */
+export function createPublicReadClient() {
+  const service = createServiceClient();
+  if (service) return service;
+  const url = getSupabaseUrl();
+  const anon = getSupabaseAnonKey();
+  if (!url || !anon) return null;
+  return createClient(url, anon, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+}
+
 export function createAuthedClient(accessToken: string) {
   const url = getSupabaseUrl();
   const anon = getSupabaseAnonKey();

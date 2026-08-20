@@ -11,15 +11,17 @@ import { routing } from "@/i18n/routing";
 import { ProjectGallery } from "@/components/project-gallery";
 import { projects, getProject, getProjectGalleryGroups } from "@/data/projects";
 import { getImportedEntry } from "@/data/folder-imports";
-import { getPublicContact, getPublicProject, getPublicProjects, resolveSlugRedirect } from "@/lib/cms/public";
+import { getPublicContact, getPublicProject, getPublicProjects, isPublicCmsLive, resolveSlugRedirect } from "@/lib/cms/public";
 import { entryMetadata, whatsappHref } from "@/lib/cms/metadata";
 import { mediaPublicUrl } from "@/lib/cms/media-url";
 import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
 
 export async function generateStaticParams() {
   const cms = await getPublicProjects("en");
-  const slugs = new Set([...projects.map((project) => project.slug), ...cms.map((project) => project.slug)]);
-  return routing.locales.flatMap((locale) => [...slugs].map((slug) => ({ locale, slug })));
+  const slugs = isPublicCmsLive()
+    ? cms.map((project) => project.slug)
+    : [...new Set([...projects.map((project) => project.slug), ...cms.map((project) => project.slug)])];
+  return routing.locales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
 }
 
 export async function generateMetadata({
@@ -30,7 +32,7 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const cms = await getPublicProject(slug, locale);
   const project = getProject(slug);
-  if (!project && !cms) return {};
+  if (!cms && (isPublicCmsLive() || !project)) return {};
   const imported = getImportedEntry(slug);
   const t = await getTranslations({ locale, namespace: "projectDetail" });
   const title = cms?.seoTitle || cms?.title || imported?.title || (project ? t(`items.${slug}.title`) : slug);
@@ -56,15 +58,13 @@ export default async function ProjectDetailPage({
   }
 
   const cmsProject = await getPublicProject(slug, locale);
-  const project = getProject(slug) ?? (cmsProject
-    ? {
-        slug,
-        category: cmsProject.category,
-        image: cmsProject.image,
-        title: cmsProject.title,
-      }
-    : null);
-  if (!project) notFound();
+  if (!cmsProject) notFound();
+  const project = getProject(slug) ?? {
+    slug,
+    category: cmsProject.category,
+    image: cmsProject.image,
+    title: cmsProject.title,
+  };
 
   const t = await getTranslations("projectDetail");
   const co = await getTranslations("countries");

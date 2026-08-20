@@ -10,15 +10,17 @@ import { routing } from "@/i18n/routing";
 import { ProjectGallery } from "@/components/project-gallery";
 import { portfolioItems, getPortfolioItem } from "@/data/portfolio";
 import { getImportedEntry } from "@/data/folder-imports";
-import { getPublicPortfolio, getPublicPortfolioItem, resolveSlugRedirect } from "@/lib/cms/public";
+import { getPublicPortfolio, getPublicPortfolioItem, isPublicCmsLive, resolveSlugRedirect } from "@/lib/cms/public";
 import { entryMetadata } from "@/lib/cms/metadata";
 import { mediaPublicUrl } from "@/lib/cms/media-url";
 import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
 
 export async function generateStaticParams() {
   const cms = await getPublicPortfolio("en");
-  const slugs = new Set([...portfolioItems.map((item) => item.slug), ...cms.map((item) => item.slug)]);
-  return routing.locales.flatMap((locale) => [...slugs].map((slug) => ({ locale, slug })));
+  const slugs = isPublicCmsLive()
+    ? cms.map((item) => item.slug)
+    : [...new Set([...portfolioItems.map((item) => item.slug), ...cms.map((item) => item.slug)])];
+  return routing.locales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
 }
 
 export async function generateMetadata({
@@ -29,7 +31,7 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const cms = await getPublicPortfolioItem(slug, locale);
   const item = getPortfolioItem(slug);
-  if (!item && !cms) return {};
+  if (!cms && (isPublicCmsLive() || !item)) return {};
   const imported = getImportedEntry(slug);
   const c = await getTranslations({ locale, namespace: "categories" });
   const title = cms?.seoTitle || cms?.title || imported?.title || (item ? c(item.category) : slug);
@@ -55,8 +57,8 @@ export default async function PortfolioDetailPage({
   }
 
   const cmsItem = await getPublicPortfolioItem(slug, locale);
+  if (!cmsItem) notFound();
   const item = getPortfolioItem(slug) ?? cmsItem;
-  if (!item) notFound();
 
   const t = await getTranslations("portfolioPage");
   const c = await getTranslations("categories");

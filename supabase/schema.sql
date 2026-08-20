@@ -169,6 +169,14 @@ grant all on table
   public.content_revisions
 to postgres, authenticated, service_role;
 grant usage, select on all sequences in schema public to authenticated, service_role;
+grant select on table
+  public.projects,
+  public.portfolio,
+  public.blog_posts,
+  public.services,
+  public.site_settings,
+  public.redirects
+to anon;
 
 alter table public.profiles enable row level security;
 alter table public.media enable row level security;
@@ -227,21 +235,41 @@ create policy "staff media" on public.media for all to authenticated using (publ
 
 drop policy if exists "staff projects" on public.projects;
 create policy "staff projects" on public.projects for all to authenticated using (public.is_staff()) with check (public.is_staff());
+drop policy if exists "public read published projects" on public.projects;
+create policy "public read published projects" on public.projects
+for select to anon, authenticated
+using (status = 'published' and is_active = true);
 
 drop policy if exists "staff portfolio" on public.portfolio;
 create policy "staff portfolio" on public.portfolio for all to authenticated using (public.is_staff()) with check (public.is_staff());
+drop policy if exists "public read published portfolio" on public.portfolio;
+create policy "public read published portfolio" on public.portfolio
+for select to anon, authenticated
+using (status = 'published' and is_active = true);
 
 drop policy if exists "staff blog" on public.blog_posts;
 create policy "staff blog" on public.blog_posts for all to authenticated using (public.is_staff()) with check (public.is_staff());
+drop policy if exists "public read published blog" on public.blog_posts;
+create policy "public read published blog" on public.blog_posts
+for select to anon, authenticated
+using (status = 'published' and is_active = true);
 
 drop policy if exists "staff services" on public.services;
 create policy "staff services" on public.services for all to authenticated using (public.is_staff()) with check (public.is_staff());
+drop policy if exists "public read published services" on public.services;
+create policy "public read published services" on public.services
+for select to anon, authenticated
+using (status = 'published' and is_active = true);
 
 drop policy if exists "staff settings" on public.site_settings;
 create policy "staff settings" on public.site_settings for all to authenticated using (public.is_staff()) with check (public.is_staff());
+drop policy if exists "public read settings" on public.site_settings;
+create policy "public read settings" on public.site_settings for select to anon, authenticated using (true);
 
 drop policy if exists "staff redirects" on public.redirects;
 create policy "staff redirects" on public.redirects for all to authenticated using (public.is_staff()) with check (public.is_staff());
+drop policy if exists "public read redirects" on public.redirects;
+create policy "public read redirects" on public.redirects for select to anon, authenticated using (true);
 
 drop policy if exists "staff audit read" on public.audit_logs;
 create policy "staff audit read" on public.audit_logs for select to authenticated using (public.is_staff());
