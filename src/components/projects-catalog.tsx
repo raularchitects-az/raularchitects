@@ -12,6 +12,25 @@ import { categories, type Category } from "@/data/categories";
 import { type ProjectMeta } from "@/data/projects";
 import { cn } from "@/lib/utils";
 
+function catalogTitle(t: ReturnType<typeof useTranslations>, project: ProjectMeta) {
+  if (project.title) return project.title;
+  try {
+    return t(`items.${project.slug}.title`);
+  } catch {
+    return project.slug;
+  }
+}
+
+function catalogSpecs(t: ReturnType<typeof useTranslations>, project: ProjectMeta) {
+  if (project.source) return [] as string[];
+  try {
+    const raw = t.raw(`items.${project.slug}.specs`);
+    return Array.isArray(raw) ? raw.filter((item): item is string => typeof item === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
 export function ProjectsCatalog({ items = [] }: { items?: ProjectMeta[] }) {
   const t = useTranslations("projectsPage");
   const c = useTranslations("categories");
@@ -52,10 +71,8 @@ export function ProjectsCatalog({ items = [] }: { items?: ProjectMeta[] }) {
 
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((project, index) => {
-            const title = project.title ?? t(`items.${project.slug}.title`);
-            const specs = project.source
-              ? []
-              : ((t.raw(`items.${project.slug}.specs`) as string[] | undefined) ?? []);
+            const title = catalogTitle(t, project);
+            const specs = catalogSpecs(t, project);
 
             return (
             <Link

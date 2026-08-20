@@ -68,9 +68,16 @@ export default async function ProjectDetailPage({
   const co = await getTranslations("countries");
   const contact = await getPublicContact();
   const imported = getImportedEntry(slug);
-  const staticSpecs = imported || !getProject(slug)
+  const staticSpecs = imported || !getProject(slug) || cmsProject?.source === "cms"
     ? []
-    : ((t.raw(`items.${slug}.specs`) as string[] | undefined) ?? []);
+    : (() => {
+        try {
+          const raw = t.raw(`items.${slug}.specs`);
+          return Array.isArray(raw) ? raw.filter((item): item is string => typeof item === "string") : [];
+        } catch {
+          return [] as string[];
+        }
+      })();
   const specs = staticSpecs.length
     ? staticSpecs
     : [cmsProject && "location" in cmsProject ? cmsProject.location : null, cmsProject && "area" in cmsProject ? cmsProject.area : null].filter(
