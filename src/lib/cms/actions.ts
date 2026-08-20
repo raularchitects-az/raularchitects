@@ -520,3 +520,55 @@ export async function importStaticContent() {
     blog: blogRows.length,
   };
 }
+
+export async function importDraftBlogPosts() {
+  await requireAdmin();
+  const supabase = await createAdminClient();
+  if (!supabase) throw new Error("CMS configured deyil");
+
+  const { allDraftBlogPosts } = await import("@/data/blog/draft-posts-index");
+  const blogRows = allDraftBlogPosts.map((post, index) => ({
+    slug: post.slug,
+    category: post.category,
+    cover_path: post.image,
+    status: "draft" as const,
+    is_active: true,
+    show_on_home: false,
+    featured: false,
+    sort_order: 100 + index,
+    published_at: post.publishedAt,
+    seo_title: post.copy.az.seoTitle,
+    meta_description: post.copy.az.description,
+    translations: Object.fromEntries(
+      (["az", "en", "ru", "de"] as const).map((locale) => {
+        const copy = post.copy[locale];
+        return [
+          locale,
+          {
+            title: copy.title,
+            short: copy.excerpt,
+            excerpt: copy.excerpt,
+            body: blocksToMarkdown(copy.blocks),
+            seoTitle: copy.seoTitle,
+            description: copy.description,
+            imageAlt: post.imageAlt[locale],
+            ctaLabel: copy.ctaLabel,
+            ctaText: copy.ctaText,
+            slug: post.slugs?.[locale] || post.slug,
+            published: true,
+          },
+        ];
+      }),
+    ),
+  }));
+
+  const { error } = await supabase.from("blog_posts").upsert(blogRows, {
+    onConflict: "slug",
+    ignoreDuplicates: true,
+  });
+  if (error) throw error;
+
+  await audit("import", "blog_posts", null, `${blogRows.length} yeni bloq qaralama kimi əlavə edildi`);
+  revalidatePublic();
+  return { blog: blogRows.length };
+}
