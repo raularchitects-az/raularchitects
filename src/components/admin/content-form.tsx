@@ -62,6 +62,7 @@ export function ContentForm({
         ctaText: String(formData.get(`${locale}_ctaText`) ?? ""),
         slug: String(formData.get(`${locale}_slug`) ?? ""),
         published: table === "blog_posts" ? formData.get(`${locale}_published`) === "on" : undefined,
+        legacySourceId: translations[locale]?.legacySourceId,
       };
     }
     if (table === "blog_posts") {

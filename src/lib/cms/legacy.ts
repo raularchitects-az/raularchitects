@@ -3,7 +3,7 @@ import type { CmsRow, Translations } from "./types";
 export const LEGACY_HIDDEN_SETTINGS_KEY = "legacy_hidden";
 export const LEGACY_MIGRATION_SETTINGS_KEY = "legacy_migration";
 
-export type LegacyKind = "project" | "portfolio";
+export type LegacyKind = "project" | "portfolio" | "blog" | "service";
 
 export function legacySourceId(kind: LegacyKind, slug: string) {
   return `${kind}:${slug}`;
@@ -123,4 +123,32 @@ export function parseHiddenLegacyIds(value: Record<string, unknown> | null | und
   const raw = value?.ids;
   if (!Array.isArray(raw)) return [] as string[];
   return raw.filter((item): item is string => typeof item === "string" && item.length > 0);
+}
+
+export function legacyKindForTable(table: string): LegacyKind | null {
+  if (table === "projects") return "project";
+  if (table === "portfolio") return "portfolio";
+  if (table === "blog_posts") return "blog";
+  if (table === "services") return "service";
+  return null;
+}
+
+export function legacyHiddenKeysForRow(kind: LegacyKind, row: { slug: string; translations?: Translations | null }) {
+  const keys = new Set<string>([readLegacySourceId(row, kind), legacySourceId(kind, row.slug)]);
+  if (kind === "blog") {
+    for (const locale of ["az", "en", "de", "ru"] as const) {
+      const slug = row.translations?.[locale]?.slug?.trim();
+      if (slug) keys.add(legacySourceId("blog", slug));
+    }
+  }
+  return [...keys];
+}
+
+export function hiddenSetHasLegacy(hiddenIds: Iterable<string>, kind: LegacyKind, slug: string, aliases: Iterable<string> = []) {
+  const hidden = hiddenIds instanceof Set ? hiddenIds : new Set(hiddenIds);
+  if (hidden.has(legacySourceId(kind, slug))) return true;
+  for (const alias of aliases) {
+    if (alias && hidden.has(legacySourceId(kind, alias))) return true;
+  }
+  return false;
 }

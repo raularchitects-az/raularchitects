@@ -78,8 +78,13 @@ export function MediaLibrary({ items }: { items: MediaRow[] }) {
               confirm="Media silinsin?"
               className="mt-2 text-[11px] uppercase text-red-700"
               onConfirm={async () => {
-                await deleteMedia(item.id);
-                router.refresh();
+                setError(null);
+                try {
+                  await deleteMedia(item.id);
+                  router.refresh();
+                } catch (caught) {
+                  setError(errorMessage(caught));
+                }
               }}
             />
           </article>

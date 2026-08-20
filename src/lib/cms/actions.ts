@@ -11,13 +11,16 @@ import { fallbackBlogSlugs } from "@/lib/blog-urls";
 import {
   LEGACY_HIDDEN_SETTINGS_KEY,
   LEGACY_MIGRATION_SETTINGS_KEY,
-  hasExplicitLegacySourceId,
+  legacyHiddenKeysForRow,
+  legacyKindForTable,
   legacySourceId,
   parseHiddenLegacyIds,
+  pickPublicCatalogRow,
   readLegacySourceId,
-  withLegacySourceId,
+  relatedCatalogRows,
   type LegacyKind,
 } from "./legacy";
+import { collectStoragePaths, findMediaUsages, formatMediaUsageError } from "./media-usage";
 import { buildLegacyPortfolioRows, buildLegacyProjectRows, listLegacyCatalogCounts } from "./legacy-import";
 import type { ContentStatus, EntityType } from "./queries";
 import type { Translations } from "./types";
@@ -58,25 +61,30 @@ async function saveRevision(entityType: string, entityId: string, payload: unkno
 
 function revalidatePublic(table?: EntityType, slug?: string) {
   updateTag("cms");
+  updateTag("cms-settings");
   if (table) updateTag(`cms-${table}`);
   refresh();
   revalidatePath("/", "layout");
   revalidatePath("/admin", "layout");
+  revalidatePath("/sitemap.xml");
   for (const locale of routing.locales) {
     revalidatePath(`/${locale}`);
-    revalidatePath(`/${locale}/layihelar`);
-    revalidatePath(`/${locale}/portfolio`);
-    revalidatePath(`/${locale}/bloq`);
-    if (table === "projects" && slug) {
-      revalidatePath(`/${locale}/layihelar/${slug}`);
-    }
-    if (table === "portfolio" && slug) {
-      revalidatePath(`/${locale}/portfolio/${slug}`);
-    }
-    if (table === "blog_posts" && slug) {
-      revalidatePath(`/${locale}/bloq/${slug}`);
-    }
+    revalidatePath(`/${locale}/layihelar`, "layout");
+    revalidatePath(`/${locale}/portfolio`, "layout");
+    revalidatePath(`/${locale}/bloq`, "layout");
+    revalidatePath(`/${locale}/xidmetler`, "layout");
+    if (table === "projects" && slug) revalidatePath(`/${locale}/layihelar/${slug}`);
+    if (table === "portfolio" && slug) revalidatePath(`/${locale}/portfolio/${slug}`);
+    if (table === "blog_posts" && slug) revalidatePath(`/${locale}/bloq/${slug}`);
+    if (table === "services" && slug) revalidatePath(`/${locale}/xidmetler/${slug}`);
   }
+}
+
+function revalidateMedia() {
+  updateTag("cms");
+  updateTag("cms-settings");
+  revalidatePath("/admin/media");
+  revalidatePublic();
 }
 
 function throwIfError(error: { message?: string } | null, fallback: string) {
@@ -84,67 +92,62 @@ function throwIfError(error: { message?: string } | null, fallback: string) {
 }
 
 function kindForTable(table: EntityType): LegacyKind | null {
-  if (table === "projects") return "project";
-  if (table === "portfolio") return "portfolio";
-  return null;
+  return legacyKindForTable(table);
+}
+
+function preserveLegacyStamps(next: Translations, prev?: Translations | null): Translations {
+  const merged: Translations = { ...next };
+  for (const locale of ["az", "en", "de", "ru"] as const) {
+    merged[locale] = {
+      ...(merged[locale] ?? {}),
+      legacySourceId: merged[locale]?.legacySourceId?.trim() || prev?.[locale]?.legacySourceId?.trim(),
+    };
+  }
+  return merged;
 }
 
 async function syncLegacyHidden(
   supabase: NonNullable<Awaited<ReturnType<typeof createAdminClient>>>,
   table: EntityType,
   row: { slug: string; translations?: Translations | null },
-  hide: boolean,
+  options: { deleted?: boolean; forceHide?: boolean } = {},
 ) {
   const kind = kindForTable(table);
   if (!kind) return;
-  const id = readLegacySourceId(row, kind);
-  const { data } = await supabase.from("site_settings").select("value").eq("key", LEGACY_HIDDEN_SETTINGS_KEY).maybeSingle();
+  const { data: remaining, error: readError } = await supabase
+    .from(table)
+    .select("id, slug, status, is_active, translations, sort_order")
+    .order("sort_order", { ascending: true });
+  throwIfError(readError, "CMS qeydləri oxunmadı");
+  const related = relatedCatalogRows({
+    kind,
+    slug: row.slug,
+    cmsRows: remaining ?? [],
+  });
+  const publicRow = pickPublicCatalogRow(related);
+  const catalogKind = kind === "project" || kind === "portfolio";
+  let hide: boolean | "unchanged";
+  if (publicRow) hide = false;
+  else if (options.deleted || options.forceHide) hide = true;
+  else if (catalogKind) hide = true;
+  else hide = "unchanged";
+  if (hide === "unchanged") return;
+  const { data, error: hiddenReadError } = await supabase
+    .from("site_settings")
+    .select("value")
+    .eq("key", LEGACY_HIDDEN_SETTINGS_KEY)
+    .maybeSingle();
+  throwIfError(hiddenReadError, "Legacy gizlətmə siyahısı oxunmadı");
   const ids = new Set(parseHiddenLegacyIds((data?.value ?? {}) as Record<string, unknown>));
-  if (hide) ids.add(id);
-  else ids.delete(id);
+  const keys = legacyHiddenKeysForRow(kind, row);
+  if (hide) keys.forEach((id) => ids.add(id));
+  else keys.forEach((id) => ids.delete(id));
   const { error } = await supabase.from("site_settings").upsert({
     key: LEGACY_HIDDEN_SETTINGS_KEY,
     value: { ids: [...ids] },
     updated_at: new Date().toISOString(),
   });
   throwIfError(error, "Legacy gizlətmə siyahısı yazılmadı");
-}
-
-function storageObjectPath(path: string | null | undefined) {
-  if (!path) return "";
-  if (path.startsWith("http://") || path.startsWith("https://") || path.startsWith("/")) return "";
-  return path;
-}
-
-function collectStoragePaths(row: Record<string, unknown>) {
-  const paths = new Set<string>();
-  const add = (value: unknown) => {
-    if (typeof value !== "string") return;
-    const path = storageObjectPath(value);
-    if (path) paths.add(path);
-  };
-  add(row.cover_path);
-  add(row.og_image_path);
-  add(row.image_path);
-  add(row.video_url);
-  const gallery = row.gallery;
-  if (Array.isArray(gallery)) {
-    for (const item of gallery) {
-      if (item && typeof item === "object" && "path" in item) add((item as { path?: string }).path);
-      else add(item);
-    }
-  }
-  const sections = row.sections;
-  if (sections && typeof sections === "object") {
-    for (const block of Object.values(sections as Record<string, { media?: { path?: string }[] }>)) {
-      for (const item of block?.media ?? []) add(item?.path);
-    }
-  }
-  return [...paths];
-}
-
-function rowUsesStoragePath(row: Record<string, unknown>, path: string) {
-  return collectStoragePaths(row).includes(path);
 }
 
 function publicPathFor(table: EntityType, slug?: string) {
@@ -280,8 +283,18 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
     }
   }
 
+  const existing = id
+    ? ((await supabase.from(table).select("*").eq("id", id).maybeSingle()).data as Record<string, unknown> | null)
+    : null;
+  if (id && !existing) throw new Error("Qeyd tapılmadı");
+  if (row.translations && typeof row.translations === "object") {
+    row.translations = preserveLegacyStamps(
+      row.translations as Translations,
+      (existing?.translations as Translations | null) ?? null,
+    );
+  }
+
   if (id) {
-    const { data: existing } = await supabase.from(table).select("*").eq("id", id).maybeSingle();
     if (existing) {
       await saveRevision(table, id, existing);
       const oldSlug = existing.slug as string | undefined;
@@ -289,10 +302,11 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
       if (oldSlug && newSlug && oldSlug !== newSlug) {
         const from = publicPathFor(table, oldSlug);
         const to = publicPathFor(table, newSlug);
-        await supabase.from("redirects").upsert(
+        const { error: redirectError } = await supabase.from("redirects").upsert(
           { from_path: from, to_path: to, status_code: 301 },
           { onConflict: "from_path" },
         );
+        throwIfError(redirectError, "Yönləndirmə yazılmadı");
       }
       if (table === "blog_posts") {
         const prevT = (existing.translations ?? {}) as Translations;
@@ -302,25 +316,33 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
           const previous = prevT[locale]?.slug || mapped[locale] || oldSlug;
           const next = nextT[locale]?.slug || newSlug;
           if (previous && next && previous !== next) {
-            await supabase.from("redirects").upsert(
+            const { error: blogRedirectError } = await supabase.from("redirects").upsert(
               { from_path: `/bloq/${previous}`, to_path: `/bloq/${next}`, status_code: 301 },
               { onConflict: "from_path" },
             );
+            throwIfError(blogRedirectError, "Bloq yönləndirməsi yazılmadı");
           }
         }
       }
     }
-    const { data: updated, error } = await supabase.from(table).update(row).eq("id", id).select("id, slug").maybeSingle();
+    const { data: updated, error } = await supabase
+      .from(table)
+      .update(row)
+      .eq("id", id)
+      .select("id, slug, status, is_active, translations")
+      .maybeSingle();
     throwIfError(error, "Yenilənmədi");
     if (!updated) throw new Error("Qeyd tapılmadı və ya icazə yoxdur");
+    await syncLegacyHidden(supabase, table, updated);
     await audit("update", table, id, `${table} yeniləndi`, existing, row);
     revalidatePublic(table, String(updated.slug ?? row.slug ?? existing?.slug ?? ""));
     return id;
   }
 
-  const { data, error } = await supabase.from(table).insert(row).select("id, slug").single();
+  const { data, error } = await supabase.from(table).insert(row).select("id, slug, status, is_active, translations").single();
   throwIfError(error, "Yaradılmadı");
   if (!data) throw new Error("Yaradılmadı");
+  await syncLegacyHidden(supabase, table, data);
   await audit("create", table, data.id, `${table} yaradıldı`, null, row);
   revalidatePublic(table, String(data.slug ?? row.slug ?? ""));
   return data.id as string;
@@ -335,10 +357,8 @@ export async function setStatus(table: EntityType, id: string, status: ContentSt
   const { data, error } = await supabase.from(table).update(patch).eq("id", id).select("id, slug, status, is_active, translations").maybeSingle();
   throwIfError(error, "Status yenilənmədi");
   if (!data) throw new Error("Qeyd tapılmadı və ya status yazılmadı");
-  if (table === "projects" || table === "portfolio") {
-    const hide = data.status === "archived" || data.is_active === false || (hasExplicitLegacySourceId(data) && data.status !== "published");
-    await syncLegacyHidden(supabase, table, data, hide);
-  }
+  if (data.status !== status) throw new Error("Status bazada dəyişmədi");
+  await syncLegacyHidden(supabase, table, data, { forceHide: status !== "published" });
   await audit("status", table, id, `status → ${status}`);
   revalidatePublic(table, data.slug);
 }
@@ -356,10 +376,7 @@ export async function setActive(table: EntityType, id: string, isActive: boolean
   throwIfError(error, "Aktiv statusu yenilənmədi");
   if (!data) throw new Error("Qeyd tapılmadı və ya aktiv statusu yazılmadı");
   if (data.is_active !== isActive) throw new Error("Aktiv statusu bazada dəyişmədi");
-  if (table === "projects" || table === "portfolio") {
-    const hide = !isActive || data.status === "archived" || (hasExplicitLegacySourceId(data) && data.status !== "published");
-    await syncLegacyHidden(supabase, table, data, hide);
-  }
+  await syncLegacyHidden(supabase, table, data, { forceHide: !isActive });
   await audit("active", table, id, `active → ${isActive}`);
   revalidatePublic(table, data.slug);
 }
@@ -370,55 +387,53 @@ export async function archiveRecord(table: EntityType, id: string) {
 
 async function removeUnusedStorageFiles(
   supabase: NonNullable<Awaited<ReturnType<typeof createAdminClient>>>,
-  table: EntityType,
-  id: string,
+  _table: EntityType,
+  _id: string,
   row: Record<string, unknown>,
 ) {
   const service = createServiceClient();
   const paths = collectStoragePaths(row);
   if (!paths.length) return;
 
-  const otherTables: EntityType[] = ["projects", "portfolio", "blog_posts", "services"];
-  const others: Record<string, unknown>[] = [];
-  for (const otherTable of otherTables) {
-    const { data } = await supabase.from(otherTable).select("*");
-    for (const item of data ?? []) {
-      if (otherTable === table && item.id === id) continue;
-      others.push(item as Record<string, unknown>);
-    }
-  }
-
   for (const path of paths) {
-    if (others.some((item) => rowUsesStoragePath(item, path))) continue;
+    const usages = (await findMediaUsages(supabase, path)).filter(
+      (usage) => !(usage.slug === String(row.slug ?? "")),
+    );
+    if (usages.length) continue;
     if (service) {
       const { error } = await service.storage.from("media").remove([path]);
       if (error) console.error("[cms] storage remove", path, error.message);
     }
-    await supabase.from("media").delete().eq("path", path);
+    const { error: mediaDeleteError } = await supabase.from("media").delete().eq("path", path);
+    if (mediaDeleteError) console.error("[cms] media row remove", path, mediaDeleteError.message);
   }
 }
 
 export async function deleteRecord(table: EntityType, id: string) {
-  await requireStaff();
+  const { profile } = await requireStaff();
   const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
-  const { data: existing } = await supabase.from(table).select("*").eq("id", id).maybeSingle();
+  const { data: existing, error: readError } = await supabase.from(table).select("*").eq("id", id).maybeSingle();
+  throwIfError(readError, "Qeyd oxunmadı");
   if (!existing) throw new Error("Qeyd tapılmadı");
 
   const hardDelete = table === "projects" || table === "portfolio";
+  if (hardDelete && profile.role !== "admin") {
+    throw new Error("Layihə və portfolio-nu həmişəlik yalnız admin silə bilər");
+  }
   if (!hardDelete && existing.status !== "archived") {
     await archiveRecord(table, id);
     return "archived";
   }
 
   if (hardDelete) {
-    await syncLegacyHidden(supabase, table, existing, true);
     await removeUnusedStorageFiles(supabase, table, id, existing as Record<string, unknown>);
   }
 
   const { data: deleted, error } = await supabase.from(table).delete().eq("id", id).select("id, slug").maybeSingle();
   throwIfError(error, "Silinmədi");
   if (!deleted) throw new Error("Qeyd silinmədi — icazə və ya RLS yoxlanışı alınmadı");
+  await syncLegacyHidden(supabase, table, existing, { deleted: true });
   await audit("delete", table, id, `${table} silindi`, existing, null);
   revalidatePublic(table, deleted.slug ?? existing.slug);
   return "deleted";
@@ -437,9 +452,10 @@ export async function duplicateRecord(table: EntityType, id: string) {
   copy.is_active = false;
   copy.created_at = new Date().toISOString();
   copy.updated_at = new Date().toISOString();
-  const { data, error } = await supabase.from(table).insert(copy).select("id").single();
+  const { data, error } = await supabase.from(table).insert(copy).select("id, slug, status, is_active, translations").single();
   if (error) throw error;
   if (!data) throw new Error("Dublikat yaradılmadı");
+  await syncLegacyHidden(supabase, table, data);
   await audit("duplicate", table, data.id, `${existing.slug} dublikat`);
   revalidatePublic(table, String(copy.slug));
   return data.id as string;
@@ -454,10 +470,14 @@ export async function restoreRevision(revisionId: string) {
   const payload = { ...(rev.payload as Record<string, unknown>) };
   const id = rev.entity_id as string;
   delete payload.id;
-  const { error } = await supabase.from(rev.entity_type).update({ ...payload, updated_at: new Date().toISOString() }).eq("id", id);
+  const { data: updated, error } = await supabase.from(rev.entity_type).update({ ...payload, updated_at: new Date().toISOString() }).eq("id", id).select("id, slug, status, is_active, translations").maybeSingle();
   if (error) throw error;
+  if (!updated) throw new Error("Versiya bərpa olunmadı");
+  await syncLegacyHidden(supabase, rev.entity_type as EntityType, updated, {
+    forceHide: updated.status === "archived" || updated.is_active === false,
+  });
   await audit("restore", rev.entity_type, id, "əvvəlki versiyaya qayıdıldı");
-  revalidatePublic(rev.entity_type as EntityType, String(payload.slug ?? ""));
+  revalidatePublic(rev.entity_type as EntityType, String(payload.slug ?? updated.slug ?? ""));
 }
 
 export async function saveSettings(key: string, value: Record<string, unknown>) {
@@ -527,8 +547,9 @@ export async function uploadMedia(formData: FormData) {
     .select("*")
     .single();
   if (error) throw error;
+  if (!data) throw new Error("Media qeydi yazılmadı");
   await audit("upload", "media", data.id, file.name);
-  revalidatePath("/admin/media");
+  revalidateMedia();
   return { ...data, url: mediaPublicUrl(path) };
 }
 
@@ -537,20 +558,28 @@ export async function deleteMedia(id: string) {
   const supabase = await createAdminClient();
   const service = createServiceClient();
   if (!supabase || !service) throw new Error("CMS configured deyil");
-  const { data } = await supabase.from("media").select("*").eq("id", id).maybeSingle();
-  if (!data) return;
-  await service.storage.from("media").remove([data.path]);
-  await supabase.from("media").delete().eq("id", id);
+  const { data, error: readError } = await supabase.from("media").select("*").eq("id", id).maybeSingle();
+  throwIfError(readError, "Media oxunmadı");
+  if (!data) throw new Error("Media tapılmadı");
+  const usages = await findMediaUsages(supabase, data.path);
+  if (usages.length) throw new Error(formatMediaUsageError(usages));
+  const { error: storageError } = await service.storage.from("media").remove([data.path]);
+  throwIfError(storageError, "Fayl storage-dən silinmədi");
+  const { data: deleted, error } = await supabase.from("media").delete().eq("id", id).select("id").maybeSingle();
+  throwIfError(error, "Media qeydi silinmədi");
+  if (!deleted) throw new Error("Media silinmədi");
   await audit("delete", "media", id, data.path);
-  revalidatePath("/admin/media");
+  revalidateMedia();
 }
 
 export async function updateMediaAlt(id: string, alt: string) {
   await requireStaff();
   const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
-  const { error } = await supabase.from("media").update({ alt_text: alt }).eq("id", id);
-  if (error) throw error;
+  const { data, error } = await supabase.from("media").update({ alt_text: alt }).eq("id", id).select("id").maybeSingle();
+  throwIfError(error, "Alt text yazılmadı");
+  if (!data) throw new Error("Alt text yazılmadı");
+  revalidateMedia();
 }
 
 export async function updateUserRole(userId: string, role: "admin" | "editor") {
@@ -735,7 +764,6 @@ export async function migrateLegacyCatalog() {
   await requireAdmin();
   const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
-  const db = supabase;
 
   const found = listLegacyCatalogCounts();
   const projectPayloads = buildLegacyProjectRows();
@@ -750,15 +778,26 @@ export async function migrateLegacyCatalog() {
 
   const result = {
     found,
-    projects: { imported: 0, updated: 0, skipped: 0, failed: [] as { slug: string; error: string }[] },
-    portfolio: { imported: 0, updated: 0, skipped: 0, failed: [] as { slug: string; error: string }[] },
+    projects: {
+      imported: 0,
+      updated: 0,
+      skipped: 0,
+      pending: [] as { slug: string }[],
+      failed: [] as { slug: string; error: string }[],
+    },
+    portfolio: {
+      imported: 0,
+      updated: 0,
+      skipped: 0,
+      pending: [] as { slug: string }[],
+      failed: [] as { slug: string; error: string }[],
+    },
   };
 
-  async function upsertKind(
-    table: "projects" | "portfolio",
+  function inspectKind(
     kind: LegacyKind,
     payloads: Record<string, unknown>[],
-    existing: Array<{ id: string; slug: string; status: string; is_active: boolean; translations?: Translations | null }> | null,
+    existing: Array<{ id: string; slug: string; translations?: Translations | null }> | null,
     bucket: typeof result.projects,
   ) {
     for (const payload of payloads) {
@@ -767,54 +806,26 @@ export async function migrateLegacyCatalog() {
       const match =
         existing?.find((row) => readLegacySourceId(row, kind) === id) ??
         existing?.find((row) => row.slug === slug);
-      try {
-        if (match?.status === "published" && match.is_active && hasExplicitLegacySourceId(match)) {
-          bucket.skipped += 1;
-          continue;
-        }
-        if (match?.status === "published" && match.is_active && !hasExplicitLegacySourceId(match)) {
-          const { error } = await db
-            .from(table)
-            .update({
-              translations: withLegacySourceId(match.translations ?? {}, id),
-              updated_at: new Date().toISOString(),
-            })
-            .eq("id", match.id);
-          throwIfError(error, "legacy id yazılmadı");
-          bucket.skipped += 1;
-          continue;
-        }
-        if (match) {
-          const { error } = await db
-            .from(table)
-            .update({ ...payload, updated_at: new Date().toISOString() })
-            .eq("id", match.id);
-          throwIfError(error, "yenilənmədi");
-          await syncLegacyHidden(db, table, { slug, translations: payload.translations as Translations }, false);
-          bucket.updated += 1;
-          continue;
-        }
-        const { error } = await db.from(table).insert(payload);
-        throwIfError(error, "əlavə olunmadı");
-        await syncLegacyHidden(db, table, { slug, translations: payload.translations as Translations }, false);
-        bucket.imported += 1;
-      } catch (caught) {
-        bucket.failed.push({ slug, error: caught instanceof Error ? caught.message : "xəta" });
+      if (match) {
+        bucket.skipped += 1;
+        continue;
       }
+      bucket.pending.push({ slug });
     }
   }
 
-  await upsertKind("projects", "project", projectPayloads, existingProjects, result.projects);
-  await upsertKind("portfolio", "portfolio", portfolioPayloads, existingPortfolio, result.portfolio);
+  inspectKind("project", projectPayloads, existingProjects, result.projects);
+  inspectKind("portfolio", portfolioPayloads, existingPortfolio, result.portfolio);
 
   const { error: settingsError } = await supabase.from("site_settings").upsert({
     key: LEGACY_MIGRATION_SETTINGS_KEY,
     value: {
       ...found,
-      projectsImported: result.projects.imported + result.projects.updated,
-      portfolioImported: result.portfolio.imported + result.portfolio.updated,
-      completedAt: new Date().toISOString(),
-      failed: [...result.projects.failed, ...result.portfolio.failed],
+      mode: "skip-only",
+      projectsSkipped: result.projects.skipped,
+      portfolioSkipped: result.portfolio.skipped,
+      pending: [...result.projects.pending, ...result.portfolio.pending],
+      checkedAt: new Date().toISOString(),
     },
     updated_at: new Date().toISOString(),
   });
@@ -824,7 +835,7 @@ export async function migrateLegacyCatalog() {
     "import",
     "site_settings",
     null,
-    `legacy catalog: +${result.projects.imported + result.portfolio.imported} / upd ${result.projects.updated + result.portfolio.updated}`,
+    `legacy catalog skip-only: skipped ${result.projects.skipped + result.portfolio.skipped}, pending ${result.projects.pending.length + result.portfolio.pending.length}`,
   );
   revalidatePublic("projects");
   revalidatePublic("portfolio");

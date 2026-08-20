@@ -19,7 +19,7 @@ export function MigrateLegacyButton() {
         onClick={async () => {
           if (
             !window.confirm(
-              "Mövcud statik layihə və portfolio CMS-ə published/aktiv kimi köçürüləcək. Eyni slug təkrar yaradılmayacaq. Davam?",
+              "Mövcud CMS qeydləri dəyişməyəcək, overwrite olmayacaq və heç bir qeyd published edilməyəcək. Yalnız əskik slug-lar siyahılanacaq. Davam?",
             )
           ) {
             return;
@@ -29,15 +29,13 @@ export function MigrateLegacyButton() {
           setFailed(false);
           try {
             const result = await migrateLegacyCatalog();
-            const failedCount = result.projects.failed.length + result.portfolio.failed.length;
+            const pendingCount = result.projects.pending.length + result.portfolio.pending.length;
             setMessage(
-              `Tapıldı: ${result.found.projects} layihə, ${result.found.portfolio} portfolio. ` +
-                `Yeni: ${result.projects.imported + result.portfolio.imported}. ` +
-                `Yeniləndi: ${result.projects.updated + result.portfolio.updated}. ` +
-                `Ötürüldü: ${result.projects.skipped + result.portfolio.skipped}.` +
-                (failedCount ? ` Xəta: ${failedCount}.` : ""),
+              `Mövcud CMS dəyişmədi. Ötürüldü: ${result.projects.skipped + result.portfolio.skipped}. ` +
+                `Əskik (avtomatik əlavə olunmadı): ${pendingCount}.` +
+                (pendingCount ? " Əskik item-ləri tək-tək Yeni ilə əlavə edib Publish edin." : ""),
             );
-            if (failedCount) setFailed(true);
+            if (pendingCount) setFailed(false);
             router.refresh();
           } catch (error) {
             setFailed(true);

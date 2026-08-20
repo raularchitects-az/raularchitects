@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { EntityTable } from "@/components/admin/entity-table";
+import { requireStaff } from "@/lib/cms/auth";
 import { listEntity, type EntityType } from "@/lib/cms/queries";
 
 export async function AdminListPage({
@@ -17,6 +18,7 @@ export async function AdminListPage({
   actions?: ReactNode;
 }) {
   const rows = await listEntity(table);
+  const { profile } = await requireStaff();
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -28,7 +30,7 @@ export async function AdminListPage({
           {actions}
         </div>
       </div>
-      <EntityTable rows={rows} table={table} editBase={editBase} />
+      <EntityTable rows={rows} table={table} editBase={editBase} canHardDelete={profile.role === "admin"} />
     </div>
   );
 }

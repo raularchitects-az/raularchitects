@@ -13,8 +13,8 @@ export async function UnmigratedLegacyList({ table }: { table: "projects" | "por
     <div className="border border-charcoal/10 bg-white p-5">
       <h2 className="text-sm font-medium uppercase tracking-[0.16em]">Legacy / hələ köçürülməyib</h2>
       <p className="mt-2 text-sm text-charcoal/60">
-        CMS managed: {migrated}. Public sayt köçürülməyən item-ləri statik kataloqdan göstərməyə davam edir.
-        Legacy-only qeydlər burada silinmir — əvvəl «Legacy kataloqu CMS-ə köçür».
+        CMS-ə bağlı: {migrated}. Public sayt CMS-də olmayan item-ləri statik kataloqdan göstərir.
+        Mövcud CMS qeydləri «Legacy kataloqu CMS-ə köçür» ilə overwrite olunmur.
       </p>
       {unmigrated.length === 0 ? (
         <p className="mt-3 text-sm text-charcoal/50">Bütün statik qeydlər CMS-ə bağlıdır.</p>

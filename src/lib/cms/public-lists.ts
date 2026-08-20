@@ -7,6 +7,7 @@ import { findBlogByAnySlug } from "@/lib/blog-urls";
 import {
   cmsHidesUnpublishedLegacy,
   cmsTakesPublic,
+  hiddenSetHasLegacy,
   pickPublicCatalogRow,
   resolveCatalogItem,
   type LegacyKind,
@@ -177,11 +178,13 @@ export async function getPublicPortfolioItem(slug: string, locale: string) {
 }
 
 export async function getPublicBlogPosts(): Promise<BlogPost[]> {
-  const rows = await getCatalogRows("blog_posts");
+  const [rows, hidden] = await Promise.all([getCatalogRows("blog_posts"), hiddenLegacyIdsForMerge()]);
+  const hiddenIds = new Set(hidden);
   const used = new Set<string>();
   const merged: BlogPost[] = [];
 
   for (const item of staticBlog) {
+    if (hiddenSetHasLegacy(hiddenIds, "blog", item.slug, blogAliases(item))) continue;
     const related = relatedBlogRows(item, rows);
     const publicRow = pickPublicCatalogRow(related);
     if (publicRow) {
@@ -198,6 +201,7 @@ export async function getPublicBlogPosts(): Promise<BlogPost[]> {
 
   for (const row of rows) {
     if (!cmsTakesPublic(row) || used.has(row.id)) continue;
+    if (hiddenSetHasLegacy(hiddenIds, "blog", row.slug)) continue;
     const mapped = mapOrSkip(row, cmsBlogToPost);
     if (mapped) merged.push(mapped);
   }
@@ -209,11 +213,13 @@ export async function getPublicBlogPost(slug: string) {
 }
 
 export async function getPublicServices(locale: string) {
-  const rows = await getCatalogRows("services");
+  const [rows, hidden] = await Promise.all([getCatalogRows("services"), hiddenLegacyIdsForMerge()]);
+  const hiddenIds = new Set(hidden);
   const used = new Set<string>();
   const merged: ReturnType<typeof cmsServiceToPublic>[] = [];
 
   for (const item of staticServices) {
+    if (hiddenSetHasLegacy(hiddenIds, "service", item.slug)) continue;
     const related = relatedServiceRows(item.slug, rows);
     const publicRow = pickPublicCatalogRow(related);
     if (publicRow) {
@@ -230,6 +236,7 @@ export async function getPublicServices(locale: string) {
 
   for (const row of rows) {
     if (!cmsTakesPublic(row) || used.has(row.id)) continue;
+    if (hiddenSetHasLegacy(hiddenIds, "service", row.slug)) continue;
     const mapped = mapOrSkip(row, (item) => cmsServiceToPublic(item, locale));
     if (mapped) merged.push(mapped);
   }

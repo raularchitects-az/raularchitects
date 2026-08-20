@@ -5,7 +5,7 @@ import az from "../../../messages/az.json";
 import de from "../../../messages/de.json";
 import en from "../../../messages/en.json";
 import ru from "../../../messages/ru.json";
-import { hasExplicitLegacySourceId, legacySourceId, withLegacySourceId, type LegacyKind } from "./legacy";
+import { legacySourceId, withLegacySourceId, type LegacyKind } from "./legacy";
 import type { Translations } from "./types";
 
 const messages = { az, en, de, ru } as const;
@@ -53,7 +53,7 @@ export function listUnmigratedSlugs(
       const match =
         cmsRows.find((row) => ["az", "en", "de", "ru"].some((locale) => row.translations?.[locale]?.legacySourceId === id)) ??
         cmsRows.find((row) => row.slug === item.slug);
-      return !match || !hasExplicitLegacySourceId(match);
+      return !match;
     })
     .map((item) => ({ slug: item.slug, title: item.title || item.slug }));
 }

@@ -17,10 +17,12 @@ export function EntityTable({
   rows,
   table,
   editBase,
+  canHardDelete = false,
 }: {
   rows: CmsRow[];
   table: EntityType;
   editBase: string;
+  canHardDelete?: boolean;
 }) {
   const router = useRouter();
   const [ordered, setOrdered] = useState(rows);
@@ -135,19 +137,23 @@ export function EntityTable({
                       disabled={busy}
                       onConfirm={() => run(row.id, () => archiveRecord(table, row.id))}
                     />
-                    <ConfirmButton
-                      label="Sil"
-                      confirm={
-                        hardDelete
-                          ? `“${title}” həmişəlik silinsin? Bu əməliyyat geri qaytarılmır.`
-                          : row.status === "archived"
-                            ? "Həmişəlik silinsin?"
-                            : "Əvvəlcə arxivlənəcək. Davam?"
-                      }
-                      className="text-red-700"
-                      disabled={busy}
-                      onConfirm={() => run(row.id, () => deleteRecord(table, row.id))}
-                    />
+                    {hardDelete && !canHardDelete ? (
+                      <span className="text-charcoal/35">Sil (admin)</span>
+                    ) : (
+                      <ConfirmButton
+                        label="Sil"
+                        confirm={
+                          hardDelete
+                            ? `“${title}” həmişəlik silinsin? Bu əməliyyat geri qaytarılmır.`
+                            : row.status === "archived"
+                              ? "Həmişəlik silinsin?"
+                              : "Əvvəlcə arxivlənəcək. Davam?"
+                        }
+                        className="text-red-700"
+                        disabled={busy}
+                        onConfirm={() => run(row.id, () => deleteRecord(table, row.id))}
+                      />
+                    )}
                   </div>
                 </td>
               </tr>
