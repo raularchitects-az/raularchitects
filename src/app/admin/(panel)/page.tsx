@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ImportStaticButton } from "@/components/admin/import-static-button";
+import { MigrateLegacyButton } from "@/components/admin/migrate-legacy-button";
 import { requireStaff } from "@/lib/cms/auth";
 import { dashboardStats, recentAudit } from "@/lib/cms/queries";
 import { isCmsConfigured } from "@/lib/cms/env";
@@ -59,7 +60,12 @@ export default async function AdminDashboardPage() {
         <Link href="/admin/blog/new" className="border border-charcoal px-4 py-2.5 text-xs uppercase tracking-[0.16em]">
           Yeni blog yazısı
         </Link>
-        {profile.role === "admin" ? <ImportStaticButton /> : null}
+        {profile.role === "admin" ? (
+          <>
+            <ImportStaticButton />
+            <MigrateLegacyButton />
+          </>
+        ) : null}
       </div>
       <section>
         <h2 className="mb-4 text-sm font-medium uppercase tracking-[0.16em]">Son dəyişikliklər</h2>

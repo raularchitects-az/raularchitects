@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { archiveRecord, deleteRecord, duplicateRecord, reorder, setActive, setStatus } from "@/lib/cms/actions";
+import { hasExplicitLegacySourceId } from "@/lib/cms/legacy";
 import type { CmsRow, ContentStatus, EntityType } from "@/lib/cms/queries";
 import { ConfirmButton } from "./fields";
 
@@ -60,6 +61,7 @@ export function EntityTable({
             <th className="px-4 py-3">Ad / slug</th>
             <th className="px-4 py-3">Status</th>
             <th className="px-4 py-3">Aktiv</th>
+            <th className="px-4 py-3">Mənbə</th>
             <th className="px-4 py-3">Sıra</th>
             <th className="px-4 py-3">Əməliyyat</th>
           </tr>
@@ -101,6 +103,13 @@ export function EntityTable({
                 </td>
                 <td className="px-4 py-3">{statusLabel[row.status] ?? row.status ?? "—"}</td>
                 <td className="px-4 py-3">{row.is_active ? "Bəli" : "Xeyr"}</td>
+                <td className="px-4 py-3 text-xs text-charcoal/60">
+                  {table === "projects" || table === "portfolio"
+                    ? hasExplicitLegacySourceId(row)
+                      ? "CMS managed"
+                      : "CMS · slug match"
+                    : "—"}
+                </td>
                 <td className="px-4 py-3">{row.sort_order}</td>
                 <td className="px-4 py-3">
                   <div className={`flex flex-wrap gap-2 text-[11px] uppercase tracking-[0.12em] ${busy ? "opacity-50" : ""}`}>

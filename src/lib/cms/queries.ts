@@ -1,6 +1,6 @@
 import { unstable_cache } from "next/cache";
 import { cache } from "react";
-import { createAdminClient, createPublicReadClient } from "./supabase";
+import { createAdminClient, createPublicReadClient, createServiceClient } from "./supabase";
 import type { AuditRow, CmsRow, ContentStatus, MediaRow } from "./types";
 
 export type { CmsRow, ContentStatus };
@@ -44,6 +44,24 @@ async function fetchPublished(table: "projects" | "portfolio" | "blog_posts" | "
 
 export const getPublished = cache(async (table: "projects" | "portfolio" | "blog_posts" | "services") =>
   unstable_cache(() => fetchPublished(table), ["cms-published", table], {
+    revalidate: 60,
+    tags: ["cms", `cms-${table}`],
+  })(),
+);
+
+async function fetchCatalogRows(table: "projects" | "portfolio") {
+  const client = createServiceClient() ?? createPublicReadClient();
+  if (!client) return [] as CmsRow[];
+  const { data, error } = await client.from(table).select("*").order("sort_order", { ascending: true });
+  if (error) {
+    console.error(`[cms] catalog ${table}`, error.code, error.message);
+    return [] as CmsRow[];
+  }
+  return (data ?? []) as CmsRow[];
+}
+
+export const getCatalogRows = cache(async (table: "projects" | "portfolio") =>
+  unstable_cache(() => fetchCatalogRows(table), ["cms-catalog", table], {
     revalidate: 60,
     tags: ["cms", `cms-${table}`],
   })(),

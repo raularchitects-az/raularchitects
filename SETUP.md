@@ -78,7 +78,7 @@ Schema `media` adlı public bucket yaradır. Yüklənən şəkil/video orada sax
 
 ## 5. Public sayt davranışı
 
-- CMS env qurulanda layihə və portfolio **yalnız** Supabase-dən oxunur. Deaktiv və ya silinmiş qeyd statik kataloqa düşmür.
+- CMS env qurulanda layihə və portfolio **safe merge** ilə oxunur: CMS published+aktiv qeyd həmin legacy item-i əvəz edir; deaktiv/arxiv/silinmiş (legacy id gizlədilir) statik kataloqa qayıtmır; hələ CMS-ə köçürülməyənlər statikdən görünür.
 - CMS-də **Published + Aktiv** olmayan layihə, portfolio, blog və xidmət public-də görünmür; detail URL `notFound` qaytarır.
 - Env yoxdursa (lokal build), sayt mövcud statik kataloqa düşür.
 - Slug dəyişəndə köhnə URL `redirects` cədvəlinə 301 kimi yazılır.

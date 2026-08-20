@@ -5,10 +5,11 @@ import { services as staticServices } from "@/data/services";
 import { fallbackBlogSlugs, findBlogByAnySlug, getBlogLocaleSlug, isBlogLocaleLive } from "@/lib/blog-urls";
 import { isCmsConfigured } from "./env";
 import { mediaPublicUrl } from "./media-url";
-import { findRedirect, getPublished, getSettings } from "./queries";
+import { findRedirect, getCatalogRows, getPublished, getSettings } from "./queries";
+import { cmsTakesPublic, LEGACY_HIDDEN_SETTINGS_KEY, legacyItemVisibility, legacySourceId, parseHiddenLegacyIds, type LegacyKind } from "./legacy";
 import type { CmsRow, TranslationBlock } from "./types";
 
-/** When CMS env is set, public projects/portfolio never fall back to static catalogs. */
+/** True when CMS env is configured. Public listings still merge with unmigrated legacy items. */
 export function isPublicCmsLive() {
   return isCmsConfigured();
 }
@@ -156,31 +157,18 @@ export function cmsBlogToPost(row: CmsRow): BlogPost {
   };
 }
 
-export async function getPublicProjects(locale: string) {
-  const rows = await getPublished("projects");
-  if (isPublicCmsLive()) return rows.map((row) => cmsProjectToMeta(row, locale));
-  return staticProjects;
-}
-
-export async function getPublicProject(slug: string, locale: string) {
-  const rows = await getPublished("projects");
-  if (isPublicCmsLive()) {
-    const row = rows.find((item) => item.slug === slug);
-    return row ? cmsProjectToMeta(row, locale) : null;
-  }
-  const fallback = staticProjects.find((item) => item.slug === slug);
-  if (!fallback) return null;
-  const groups = getProjectGalleryGroups(slug);
+function staticProjectPublic(item: ProjectMeta) {
+  const groups = getProjectGalleryGroups(item.slug);
   return {
-    ...fallback,
+    ...item,
     description: "",
-    seoTitle: undefined,
-    metaDescription: undefined,
-    canonicalUrl: null,
-    videoUrl: null,
-    location: null,
-    area: null,
-    ogImage: fallback.image,
+    seoTitle: undefined as string | undefined,
+    metaDescription: undefined as string | undefined,
+    canonicalUrl: null as string | null,
+    videoUrl: null as string | null,
+    location: null as string | null,
+    area: null as string | null,
+    ogImage: item.heroImage || item.image,
     gallery: [...groups.exteriorImages, ...groups.interiorImages, ...groups.planningImages],
     sections: {
       exterior: { media: groups.exteriorImages.map((path) => ({ path })) },
@@ -191,30 +179,112 @@ export async function getPublicProject(slug: string, locale: string) {
   };
 }
 
-export async function getPublicPortfolio(locale: string) {
-  const rows = await getPublished("portfolio");
-  if (isPublicCmsLive()) return rows.map((row) => cmsPortfolioToMeta(row, locale));
-  return staticPortfolio;
-}
-
-export async function getPublicPortfolioItem(slug: string, locale: string) {
-  const rows = await getPublished("portfolio");
-  if (isPublicCmsLive()) {
-    const row = rows.find((item) => item.slug === slug);
-    return row ? cmsPortfolioToMeta(row, locale) : null;
-  }
-  const item = staticPortfolio.find((entry) => entry.slug === slug);
-  if (!item) return null;
+function staticPortfolioPublic(item: PortfolioMeta) {
   return {
     ...item,
     description: "",
-    seoTitle: undefined,
-    metaDescription: undefined,
-    canonicalUrl: null,
-    videoUrl: null,
-    ogImage: item.image,
-    gallery: [],
+    seoTitle: undefined as string | undefined,
+    metaDescription: undefined as string | undefined,
+    canonicalUrl: null as string | null,
+    videoUrl: null as string | null,
+    ogImage: item.heroImage || item.image,
+    gallery: [] as string[],
   };
+}
+
+async function hiddenLegacyIds() {
+  const settings = await getSettings(LEGACY_HIDDEN_SETTINGS_KEY);
+  return parseHiddenLegacyIds(settings);
+}
+
+function matchingCmsRow(kind: LegacyKind, slug: string, rows: CmsRow[]) {
+  const id = legacySourceId(kind, slug);
+  return (
+    rows.find((row) => {
+      const translations = row.translations ?? {};
+      return ["az", "en", "de", "ru"].some((locale) => translations[locale]?.legacySourceId === id);
+    }) ?? rows.find((row) => row.slug === slug)
+  );
+}
+
+export async function getPublicProjects(locale: string) {
+  const [rows, hidden] = await Promise.all([getCatalogRows("projects"), hiddenLegacyIds()]);
+  const merged = [];
+  const used = new Set<string>();
+
+  for (const item of staticProjects) {
+    const visibility = legacyItemVisibility({ kind: "project", slug: item.slug, cmsRows: rows, hiddenIds: hidden });
+    if (visibility === "hidden") continue;
+    if (visibility === "cms") {
+      const row = matchingCmsRow("project", item.slug, rows);
+      if (row && cmsTakesPublic(row)) {
+        merged.push(cmsProjectToMeta(row, locale));
+        used.add(row.id);
+        continue;
+      }
+    }
+    merged.push(staticProjectPublic(item));
+  }
+
+  for (const row of rows) {
+    if (!cmsTakesPublic(row) || used.has(row.id)) continue;
+    merged.push(cmsProjectToMeta(row, locale));
+  }
+  return merged;
+}
+
+export async function getPublicProject(slug: string, locale: string) {
+  const [rows, hidden] = await Promise.all([getCatalogRows("projects"), hiddenLegacyIds()]);
+  const visibility = legacyItemVisibility({ kind: "project", slug, cmsRows: rows, hiddenIds: hidden });
+  if (visibility === "hidden") return null;
+  if (visibility === "cms") {
+    const row = matchingCmsRow("project", slug, rows);
+    return row && cmsTakesPublic(row) ? cmsProjectToMeta(row, locale) : null;
+  }
+  const cmsOnly = rows.find((row) => cmsTakesPublic(row) && row.slug === slug);
+  if (cmsOnly) return cmsProjectToMeta(cmsOnly, locale);
+  const fallback = staticProjects.find((item) => item.slug === slug);
+  return fallback ? staticProjectPublic(fallback) : null;
+}
+
+export async function getPublicPortfolio(locale: string) {
+  const [rows, hidden] = await Promise.all([getCatalogRows("portfolio"), hiddenLegacyIds()]);
+  const merged = [];
+  const used = new Set<string>();
+
+  for (const item of staticPortfolio) {
+    const visibility = legacyItemVisibility({ kind: "portfolio", slug: item.slug, cmsRows: rows, hiddenIds: hidden });
+    if (visibility === "hidden") continue;
+    if (visibility === "cms") {
+      const row = matchingCmsRow("portfolio", item.slug, rows);
+      if (row && cmsTakesPublic(row)) {
+        merged.push(cmsPortfolioToMeta(row, locale));
+        used.add(row.id);
+        continue;
+      }
+    }
+    merged.push(staticPortfolioPublic(item));
+  }
+
+  for (const row of rows) {
+    if (!cmsTakesPublic(row) || used.has(row.id)) continue;
+    merged.push(cmsPortfolioToMeta(row, locale));
+  }
+  return merged;
+}
+
+export async function getPublicPortfolioItem(slug: string, locale: string) {
+  const [rows, hidden] = await Promise.all([getCatalogRows("portfolio"), hiddenLegacyIds()]);
+  const visibility = legacyItemVisibility({ kind: "portfolio", slug, cmsRows: rows, hiddenIds: hidden });
+  if (visibility === "hidden") return null;
+  if (visibility === "cms") {
+    const row = matchingCmsRow("portfolio", slug, rows);
+    return row && cmsTakesPublic(row) ? cmsPortfolioToMeta(row, locale) : null;
+  }
+  const cmsOnly = rows.find((row) => cmsTakesPublic(row) && row.slug === slug);
+  if (cmsOnly) return cmsPortfolioToMeta(cmsOnly, locale);
+  const item = staticPortfolio.find((entry) => entry.slug === slug);
+  return item ? staticPortfolioPublic(item) : null;
 }
 
 export async function getPublicBlogPosts(): Promise<BlogPost[]> {

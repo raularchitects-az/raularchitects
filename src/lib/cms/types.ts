@@ -17,6 +17,7 @@ export type TranslationBlock = {
   linkedinText?: string;
   slug?: string;
   published?: boolean;
+  legacySourceId?: string;
 };
 
 export type Translations = Record<string, TranslationBlock>;

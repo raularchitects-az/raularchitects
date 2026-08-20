@@ -8,6 +8,17 @@ import { mediaPublicUrl } from "./media-url";
 import { slugify } from "@/lib/slugify";
 import { routing } from "@/i18n/routing";
 import { fallbackBlogSlugs } from "@/lib/blog-urls";
+import {
+  LEGACY_HIDDEN_SETTINGS_KEY,
+  LEGACY_MIGRATION_SETTINGS_KEY,
+  hasExplicitLegacySourceId,
+  legacySourceId,
+  parseHiddenLegacyIds,
+  readLegacySourceId,
+  withLegacySourceId,
+  type LegacyKind,
+} from "./legacy";
+import { buildLegacyPortfolioRows, buildLegacyProjectRows, listLegacyCatalogCounts } from "./legacy-import";
 import type { ContentStatus, EntityType } from "./queries";
 import type { Translations } from "./types";
 
@@ -70,6 +81,33 @@ function revalidatePublic(table?: EntityType, slug?: string) {
 
 function throwIfError(error: { message?: string } | null, fallback: string) {
   if (error) throw new Error(error.message || fallback);
+}
+
+function kindForTable(table: EntityType): LegacyKind | null {
+  if (table === "projects") return "project";
+  if (table === "portfolio") return "portfolio";
+  return null;
+}
+
+async function syncLegacyHidden(
+  supabase: NonNullable<Awaited<ReturnType<typeof createAdminClient>>>,
+  table: EntityType,
+  row: { slug: string; translations?: Translations | null },
+  hide: boolean,
+) {
+  const kind = kindForTable(table);
+  if (!kind) return;
+  const id = readLegacySourceId(row, kind);
+  const { data } = await supabase.from("site_settings").select("value").eq("key", LEGACY_HIDDEN_SETTINGS_KEY).maybeSingle();
+  const ids = new Set(parseHiddenLegacyIds((data?.value ?? {}) as Record<string, unknown>));
+  if (hide) ids.add(id);
+  else ids.delete(id);
+  const { error } = await supabase.from("site_settings").upsert({
+    key: LEGACY_HIDDEN_SETTINGS_KEY,
+    value: { ids: [...ids] },
+    updated_at: new Date().toISOString(),
+  });
+  throwIfError(error, "Legacy gizlətmə siyahısı yazılmadı");
 }
 
 function storageObjectPath(path: string | null | undefined) {
@@ -294,9 +332,13 @@ export async function setStatus(table: EntityType, id: string, status: ContentSt
   if (!supabase) throw new Error("CMS configured deyil");
   const patch: Record<string, unknown> = { status, updated_at: new Date().toISOString() };
   if (status === "published") patch.published_at = new Date().toISOString();
-  const { data, error } = await supabase.from(table).update(patch).eq("id", id).select("id, slug, status").maybeSingle();
+  const { data, error } = await supabase.from(table).update(patch).eq("id", id).select("id, slug, status, is_active, translations").maybeSingle();
   throwIfError(error, "Status yenilənmədi");
   if (!data) throw new Error("Qeyd tapılmadı və ya status yazılmadı");
+  if (table === "projects" || table === "portfolio") {
+    const hide = data.status === "archived" || data.is_active === false || (hasExplicitLegacySourceId(data) && data.status !== "published");
+    await syncLegacyHidden(supabase, table, data, hide);
+  }
   await audit("status", table, id, `status → ${status}`);
   revalidatePublic(table, data.slug);
 }
@@ -309,11 +351,15 @@ export async function setActive(table: EntityType, id: string, isActive: boolean
     .from(table)
     .update({ is_active: isActive, updated_at: new Date().toISOString() })
     .eq("id", id)
-    .select("id, slug, is_active")
+    .select("id, slug, is_active, status, translations")
     .maybeSingle();
   throwIfError(error, "Aktiv statusu yenilənmədi");
   if (!data) throw new Error("Qeyd tapılmadı və ya aktiv statusu yazılmadı");
   if (data.is_active !== isActive) throw new Error("Aktiv statusu bazada dəyişmədi");
+  if (table === "projects" || table === "portfolio") {
+    const hide = !isActive || data.status === "archived" || (hasExplicitLegacySourceId(data) && data.status !== "published");
+    await syncLegacyHidden(supabase, table, data, hide);
+  }
   await audit("active", table, id, `active → ${isActive}`);
   revalidatePublic(table, data.slug);
 }
@@ -366,6 +412,7 @@ export async function deleteRecord(table: EntityType, id: string) {
   }
 
   if (hardDelete) {
+    await syncLegacyHidden(supabase, table, existing, true);
     await removeUnusedStorageFiles(supabase, table, id, existing as Record<string, unknown>);
   }
 
@@ -679,4 +726,104 @@ export async function importDraftBlogPosts() {
   await audit("import", "blog_posts", null, `${blogRows.length} yeni bloq qaralama kimi əlavə edildi`);
   revalidatePublic();
   return { blog: blogRows.length };
+}
+
+export async function migrateLegacyCatalog() {
+  await requireAdmin();
+  const supabase = await createAdminClient();
+  if (!supabase) throw new Error("CMS configured deyil");
+  const db = supabase;
+
+  const found = listLegacyCatalogCounts();
+  const projectPayloads = buildLegacyProjectRows();
+  const portfolioPayloads = buildLegacyPortfolioRows();
+
+  const [{ data: existingProjects, error: pRead }, { data: existingPortfolio, error: oRead }] = await Promise.all([
+    supabase.from("projects").select("id, slug, status, is_active, translations"),
+    supabase.from("portfolio").select("id, slug, status, is_active, translations"),
+  ]);
+  throwIfError(pRead, "Layihələr oxunmadı");
+  throwIfError(oRead, "Portfolio oxunmadı");
+
+  const result = {
+    found,
+    projects: { imported: 0, updated: 0, skipped: 0, failed: [] as { slug: string; error: string }[] },
+    portfolio: { imported: 0, updated: 0, skipped: 0, failed: [] as { slug: string; error: string }[] },
+  };
+
+  async function upsertKind(
+    table: "projects" | "portfolio",
+    kind: LegacyKind,
+    payloads: Record<string, unknown>[],
+    existing: Array<{ id: string; slug: string; status: string; is_active: boolean; translations?: Translations | null }> | null,
+    bucket: typeof result.projects,
+  ) {
+    for (const payload of payloads) {
+      const slug = String(payload.slug);
+      const id = legacySourceId(kind, slug);
+      const match =
+        existing?.find((row) => readLegacySourceId(row, kind) === id) ??
+        existing?.find((row) => row.slug === slug);
+      try {
+        if (match?.status === "published" && match.is_active && hasExplicitLegacySourceId(match)) {
+          bucket.skipped += 1;
+          continue;
+        }
+        if (match?.status === "published" && match.is_active && !hasExplicitLegacySourceId(match)) {
+          const { error } = await db
+            .from(table)
+            .update({
+              translations: withLegacySourceId(match.translations ?? {}, id),
+              updated_at: new Date().toISOString(),
+            })
+            .eq("id", match.id);
+          throwIfError(error, "legacy id yazılmadı");
+          bucket.skipped += 1;
+          continue;
+        }
+        if (match) {
+          const { error } = await db
+            .from(table)
+            .update({ ...payload, updated_at: new Date().toISOString() })
+            .eq("id", match.id);
+          throwIfError(error, "yenilənmədi");
+          await syncLegacyHidden(db, table, { slug, translations: payload.translations as Translations }, false);
+          bucket.updated += 1;
+          continue;
+        }
+        const { error } = await db.from(table).insert(payload);
+        throwIfError(error, "əlavə olunmadı");
+        await syncLegacyHidden(db, table, { slug, translations: payload.translations as Translations }, false);
+        bucket.imported += 1;
+      } catch (caught) {
+        bucket.failed.push({ slug, error: caught instanceof Error ? caught.message : "xəta" });
+      }
+    }
+  }
+
+  await upsertKind("projects", "project", projectPayloads, existingProjects, result.projects);
+  await upsertKind("portfolio", "portfolio", portfolioPayloads, existingPortfolio, result.portfolio);
+
+  const { error: settingsError } = await supabase.from("site_settings").upsert({
+    key: LEGACY_MIGRATION_SETTINGS_KEY,
+    value: {
+      ...found,
+      projectsImported: result.projects.imported + result.projects.updated,
+      portfolioImported: result.portfolio.imported + result.portfolio.updated,
+      completedAt: new Date().toISOString(),
+      failed: [...result.projects.failed, ...result.portfolio.failed],
+    },
+    updated_at: new Date().toISOString(),
+  });
+  throwIfError(settingsError, "Migration status yazılmadı");
+
+  await audit(
+    "import",
+    "site_settings",
+    null,
+    `legacy catalog: +${result.projects.imported + result.portfolio.imported} / upd ${result.projects.updated + result.portfolio.updated}`,
+  );
+  revalidatePublic("projects");
+  revalidatePublic("portfolio");
+  return result;
 }
