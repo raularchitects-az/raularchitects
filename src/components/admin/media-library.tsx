@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { deleteMedia, updateMediaAlt, uploadMedia } from "@/lib/cms/actions";
+import { MEDIA_ACCEPT, validateMediaFile } from "@/lib/cms/media-file";
 import { mediaPublicUrl } from "@/lib/cms/media-url";
 import type { MediaRow } from "@/lib/cms/types";
 import { ConfirmButton, Field, inputClass } from "@/components/admin/fields";
@@ -11,9 +12,9 @@ function errorMessage(error: unknown) {
   return error instanceof Error && error.message ? error.message : "Əməliyyat alınmadı";
 }
 
-export function MediaLibrary({ items }: { items: MediaRow[] }) {
+export function MediaLibrary({ items, loadError }: { items: MediaRow[]; loadError?: string | null }) {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(loadError ?? null);
 
   return (
     <div className="flex flex-col gap-6">
@@ -26,6 +27,14 @@ export function MediaLibrary({ items }: { items: MediaRow[] }) {
         action={async (formData) => {
           setError(null);
           try {
+            const file = formData.get("file");
+            if (file instanceof File) {
+              const invalid = validateMediaFile(file);
+              if (invalid) {
+                setError(invalid);
+                return;
+              }
+            }
             await uploadMedia(formData);
             router.refresh();
           } catch (caught) {
@@ -35,7 +44,7 @@ export function MediaLibrary({ items }: { items: MediaRow[] }) {
         className="flex flex-col gap-3 border border-charcoal/10 bg-white p-5 sm:flex-row sm:items-end"
       >
         <Field label="Fayl">
-          <input type="file" name="file" required accept="image/jpeg,image/png,image/webp,image/avif,video/mp4,video/webm" />
+          <input type="file" name="file" required accept={MEDIA_ACCEPT} />
         </Field>
         <Field label="Alt text">
           <input name="alt" className={inputClass} />
@@ -48,11 +57,13 @@ export function MediaLibrary({ items }: { items: MediaRow[] }) {
         {items.map((item) => (
           <article key={item.id} className="border border-charcoal/10 bg-white p-3">
             <div className="relative mb-2 aspect-square overflow-hidden bg-cream-dark">
-              {item.mime.startsWith("video/") ? (
+              {(item.mime ?? "").startsWith("video/") ? (
                 <span className="flex h-full items-center justify-center text-xs">video</span>
-              ) : (
+              ) : mediaPublicUrl(item.path) ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={mediaPublicUrl(item.path)} alt={item.alt_text ?? ""} className="h-full w-full object-cover" />
+              ) : (
+                <span className="flex h-full items-center justify-center text-xs text-charcoal/40">yoxdur</span>
               )}
             </div>
             <p className="truncate text-[11px] text-charcoal/50">{item.path}</p>

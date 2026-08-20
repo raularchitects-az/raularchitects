@@ -1,5 +1,5 @@
-function readPublicEnv(name: string) {
-  return (process.env[name] ?? "")
+function readPublicEnv(value: string | undefined) {
+  return (value ?? "")
     .trim()
     .replace(/^["']+|["']+$/g, "")
     .trim();
@@ -31,12 +31,14 @@ export function isCmsConfigured() {
 }
 
 export function getSupabaseUrl() {
-  return normalizeSupabaseUrl(readPublicEnv("NEXT_PUBLIC_SUPABASE_URL"));
+  // Static process.env.NEXT_PUBLIC_* access is required so Next.js inlines
+  // the value into Client Components. process.env[name] is empty in the browser.
+  return normalizeSupabaseUrl(readPublicEnv(process.env.NEXT_PUBLIC_SUPABASE_URL));
 }
 
 /** Legacy JWT `eyJ...` or current `sb_publishable_...`. Never a secret key. */
 export function getSupabaseAnonKey() {
-  return readPublicEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY");
+  return readPublicEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 }
 
 export function jwtRole(key: string) {

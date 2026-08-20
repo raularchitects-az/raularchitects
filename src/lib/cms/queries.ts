@@ -3,6 +3,29 @@ import { cache } from "react";
 import { createAdminClient, createPublicReadClient, createServiceClient } from "./supabase";
 import type { AuditRow, CmsRow, ContentStatus, MediaRow } from "./types";
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+function isUuid(id: string) {
+  return UUID_RE.test(id);
+}
+
+function normalizeMediaRow(row: Record<string, unknown>): MediaRow | null {
+  const id = typeof row.id === "string" ? row.id : "";
+  const path = typeof row.path === "string" ? row.path : "";
+  if (!id || !path) return null;
+  return {
+    id,
+    path,
+    bucket: typeof row.bucket === "string" && row.bucket ? row.bucket : "media",
+    mime: typeof row.mime === "string" ? row.mime : "",
+    size_bytes: typeof row.size_bytes === "number" ? row.size_bytes : 0,
+    alt_text: typeof row.alt_text === "string" ? row.alt_text : null,
+    width: typeof row.width === "number" ? row.width : null,
+    height: typeof row.height === "number" ? row.height : null,
+    created_at: typeof row.created_at === "string" ? row.created_at : "",
+  };
+}
+
 export type { CmsRow, ContentStatus };
 export type EntityType = "projects" | "portfolio" | "blog_posts" | "services" | "site_settings" | "media";
 
@@ -19,10 +42,14 @@ export async function listEntity(table: EntityType) {
 }
 
 export async function getEntity(table: EntityType, id: string) {
+  if (!isUuid(id)) return null;
   const supabase = await createAdminClient();
   if (!supabase) return null;
   const { data, error } = await supabase.from(table).select("*").eq("id", id).maybeSingle();
-  if (error) throw error;
+  if (error) {
+    console.error("[cms] getEntity", table, error.code, error.message);
+    return null;
+  }
   return (data ?? null) as CmsRow | null;
 }
 
@@ -110,12 +137,27 @@ export const getSettings = cache(async (key: string) =>
   )(),
 );
 
+export async function loadMedia(): Promise<{ items: MediaRow[]; error: string | null }> {
+  try {
+    const supabase = await createAdminClient();
+    if (!supabase) return { items: [], error: "CMS configured deyil" };
+    const { data, error } = await supabase.from("media").select("*").order("created_at", { ascending: false });
+    if (error) {
+      console.error("[cms] listMedia", error.code, error.message);
+      return { items: [], error: "Media siyahısı yüklənmədi" };
+    }
+    const items = ((data ?? []) as Record<string, unknown>[])
+      .map(normalizeMediaRow)
+      .filter((row): row is MediaRow => row !== null);
+    return { items, error: null };
+  } catch (error) {
+    console.error("[cms] listMedia", error);
+    return { items: [], error: "Media siyahısı yüklənmədi" };
+  }
+}
+
 export async function listMedia() {
-  const supabase = await createAdminClient();
-  if (!supabase) return [];
-  const { data, error } = await supabase.from("media").select("*").order("created_at", { ascending: false });
-  if (error) throw error;
-  return (data ?? []) as MediaRow[];
+  return (await loadMedia()).items;
 }
 
 export async function dashboardStats() {
@@ -163,6 +205,7 @@ export async function recentAudit(limit = 12) {
 }
 
 export async function listRevisions(entityType: string, entityId: string) {
+  if (!isUuid(entityId)) return [];
   const supabase = await createAdminClient();
   if (!supabase) return [];
   const { data } = await supabase

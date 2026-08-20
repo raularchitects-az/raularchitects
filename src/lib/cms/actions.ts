@@ -21,6 +21,7 @@ import {
   type LegacyKind,
 } from "./legacy";
 import { collectStoragePaths, findMediaUsages, formatMediaUsageError } from "./media-usage";
+import { mediaExtension, validateMediaFile } from "./media-file";
 import { buildLegacyPortfolioRows, buildLegacyProjectRows, listLegacyCatalogCounts } from "./legacy-import";
 import type { ContentStatus, EntityType } from "./queries";
 import type { Translations } from "./types";
@@ -82,9 +83,7 @@ function revalidatePublic(table?: EntityType, slug?: string) {
 
 function revalidateMedia() {
   updateTag("cms");
-  updateTag("cms-settings");
   revalidatePath("/admin/media");
-  revalidatePublic();
 }
 
 function throwIfError(error: { message?: string } | null, fallback: string) {
@@ -514,43 +513,39 @@ export async function uploadMedia(formData: FormData) {
   const file = formData.get("file");
   if (!(file instanceof File)) throw new Error("Fayl yoxdur");
 
-  const maxImage = 12 * 1024 * 1024;
-  const maxVideo = 80 * 1024 * 1024;
-  const isImage = file.type.startsWith("image/");
-  const isVideo = file.type.startsWith("video/");
-  if (!isImage && !isVideo) throw new Error("Yalnız şəkil və ya video");
-  if (isImage && file.size > maxImage) throw new Error("Şəkil 12MB-dan böyük ola bilməz");
-  if (isVideo && file.size > maxVideo) throw new Error("Video 80MB-dan böyük ola bilməz");
+  const invalid = validateMediaFile(file);
+  if (invalid) throw new Error(invalid);
 
-  const ext = file.name.split(".").pop()?.toLowerCase() || "bin";
-  const allowed = ["jpg", "jpeg", "png", "webp", "avif", "gif", "mp4", "webm"];
-  if (!allowed.includes(ext)) throw new Error("Dəstəklənməyən format");
-
+  const ext = mediaExtension(file.name) || "bin";
   const path = `${Date.now()}-${slugify(file.name.replace(/\.[^.]+$/, ""))}.${ext}`;
   const buffer = Buffer.from(await file.arrayBuffer());
   const { error: upErr } = await service.storage.from("media").upload(path, buffer, {
-    contentType: file.type,
+    contentType: file.type || undefined,
     upsert: false,
   });
-  if (upErr) throw upErr;
+  throwIfError(upErr, "Yüklənmədi");
 
   const alt = String(formData.get("alt") ?? "");
   const { data, error } = await supabase
     .from("media")
     .insert({
       path,
-      mime: file.type,
+      mime: file.type || "",
       size_bytes: file.size,
       alt_text: alt || null,
       created_by: user.id,
     })
-    .select("*")
+    .select("id, path, mime")
     .single();
-  if (error) throw error;
-  if (!data) throw new Error("Media qeydi yazılmadı");
+  throwIfError(error, "Media qeydi yazılmadı");
+  if (!data?.id || !data.path) throw new Error("Media qeydi yazılmadı");
   await audit("upload", "media", data.id, file.name);
-  revalidateMedia();
-  return { ...data, url: mediaPublicUrl(path) };
+  return {
+    id: String(data.id),
+    path: String(data.path),
+    mime: typeof data.mime === "string" ? data.mime : file.type,
+    url: mediaPublicUrl(path),
+  };
 }
 
 export async function deleteMedia(id: string) {

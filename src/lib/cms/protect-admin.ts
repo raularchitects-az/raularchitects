@@ -20,9 +20,10 @@ export async function protectAdmin(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Login Server Actions POST to this URL. Recreating the middleware
-  // response here drops the action and surfaces React error #441.
-  if (isLoginPath(pathname) && isServerActionRequest(request)) {
+  // Recreating NextResponse.next({ request }) consumes the POST body and
+  // drops Server Actions (React error #441), including multipart media uploads
+  // from /admin/projects/new. Actions still call requireStaff().
+  if (isServerActionRequest(request)) {
     return NextResponse.next();
   }
 

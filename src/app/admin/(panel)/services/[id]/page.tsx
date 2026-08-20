@@ -1,15 +1,15 @@
 import { notFound } from "next/navigation";
 import { ContentForm, RestoreButton } from "@/components/admin/content-form";
-import { getEntity, listMedia, listRevisions } from "@/lib/cms/queries";
+import { getEntity, loadMedia, listRevisions } from "@/lib/cms/queries";
 
 export default async function EditServicePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const [row, media, revisions] = await Promise.all([getEntity("services", id), listMedia(), listRevisions("services", id)]);
+  const [row, mediaResult, revisions] = await Promise.all([getEntity("services", id), loadMedia(), listRevisions("services", id)]);
   if (!row) notFound();
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-3xl font-semibold">Xidməti redaktə et</h1>
-      <ContentForm table="services" row={row} media={media} afterSaveHref="/admin/services" />
+      <ContentForm table="services" row={row} media={mediaResult.items} mediaError={mediaResult.error} afterSaveHref="/admin/services" />
       {revisions.length > 0 ? (
         <section className="border-t border-charcoal/10 pt-6">
           <h2 className="mb-3 text-sm uppercase tracking-[0.16em]">Versiyalar</h2>

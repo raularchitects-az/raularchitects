@@ -31,11 +31,13 @@ export function ContentForm({
   table,
   row,
   media,
+  mediaError,
   afterSaveHref,
 }: {
   table: EntityType;
   row?: CmsRow | null;
   media: MediaRow[];
+  mediaError?: string | null;
   afterSaveHref: string;
 }) {
   const router = useRouter();
@@ -250,8 +252,8 @@ export function ContentForm({
         </div>
       ) : null}
 
-      <MediaPicker label="Cover şəkli" name="cover_path" defaultPath={row?.cover_path} items={media} />
-      <MediaPicker label="Open Graph şəkli" name="og_image_path" defaultPath={row?.og_image_path} items={media} />
+      <MediaPicker label="Cover şəkli" name="cover_path" defaultPath={row?.cover_path} items={media} loadError={mediaError} />
+      <MediaPicker label="Open Graph şəkli" name="og_image_path" defaultPath={row?.og_image_path} items={media} loadError={mediaError} />
       <Field label="Video URL">
         <TextInput name="video_url" defaultValue={row?.video_url ?? ""} />
       </Field>
@@ -263,8 +265,9 @@ export function ContentForm({
         <GalleryPicker
           label="Qalereya"
           name="gallery"
-          defaultPaths={(row?.gallery ?? []).map((item) => item.path)}
+          defaultPaths={(row?.gallery ?? []).map((item) => item?.path).filter((path): path is string => Boolean(path))}
           items={media}
+          loadError={mediaError}
         />
       ) : null}
 
@@ -276,8 +279,9 @@ export function ContentForm({
           <GalleryPicker
             label="Exterior media"
             name="sec_exterior_media"
-            defaultPaths={(sections?.exterior?.media ?? []).map((item) => item.path)}
+            defaultPaths={(sections?.exterior?.media ?? []).map((item) => item?.path).filter((path): path is string => Boolean(path))}
             items={media}
+            loadError={mediaError}
           />
           <Field label="Interior mətn">
             <TextArea name="sec_interior" defaultValue={sections?.interior?.content ?? ""} />
@@ -285,8 +289,9 @@ export function ContentForm({
           <GalleryPicker
             label="Interior media"
             name="sec_interior_media"
-            defaultPaths={(sections?.interior?.media ?? []).map((item) => item.path)}
+            defaultPaths={(sections?.interior?.media ?? []).map((item) => item?.path).filter((path): path is string => Boolean(path))}
             items={media}
+            loadError={mediaError}
           />
           <Field label="Plan mətn">
             <TextArea name="sec_plan" defaultValue={sections?.plan?.content ?? ""} />
@@ -294,8 +299,9 @@ export function ContentForm({
           <GalleryPicker
             label="Plan media"
             name="sec_plan_media"
-            defaultPaths={(sections?.plan?.media ?? []).map((item) => item.path)}
+            defaultPaths={(sections?.plan?.media ?? []).map((item) => item?.path).filter((path): path is string => Boolean(path))}
             items={media}
+            loadError={mediaError}
           />
           <Field label="BIM mətn">
             <TextArea name="sec_bim" defaultValue={sections?.bim?.content ?? ""} />
@@ -303,8 +309,9 @@ export function ContentForm({
           <GalleryPicker
             label="BIM media"
             name="sec_bim_media"
-            defaultPaths={(sections?.bim?.media ?? []).map((item) => item.path)}
+            defaultPaths={(sections?.bim?.media ?? []).map((item) => item?.path).filter((path): path is string => Boolean(path))}
             items={media}
+            loadError={mediaError}
           />
         </div>
       ) : null}

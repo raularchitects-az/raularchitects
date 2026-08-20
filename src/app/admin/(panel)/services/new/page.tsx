@@ -1,12 +1,12 @@
 import { ContentForm } from "@/components/admin/content-form";
-import { listMedia } from "@/lib/cms/queries";
+import { loadMedia } from "@/lib/cms/queries";
 
 export default async function NewServicePage() {
-  const media = await listMedia();
+  const { items: media, error: mediaError } = await loadMedia();
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-3xl font-semibold">Yeni xidmət</h1>
-      <ContentForm table="services" media={media} afterSaveHref="/admin/services" />
+      <ContentForm table="services" media={media} mediaError={mediaError} afterSaveHref="/admin/services" />
     </div>
   );
 }
