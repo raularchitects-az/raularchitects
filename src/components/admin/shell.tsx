@@ -10,10 +10,6 @@ const nav = [
   { href: "/admin/projects", label: "Layihələr" },
   { href: "/admin/insights", label: "Insights" },
   { href: "/admin/blog", label: "Bloq" },
-  { href: "/admin/services", label: "Xidmətlər" },
-  { href: "/admin/pages", label: "Səhifələr" },
-  { href: "/admin/media", label: "Fayllar" },
-  { href: "/admin/audit", label: "Jurnal" },
 ];
 
 export function AdminShell({
@@ -50,28 +46,6 @@ export function AdminShell({
                 </Link>
               );
             })}
-            {profile.role === "admin" ? (
-              <>
-                <Link
-                  href="/admin/rollout"
-                  className={`px-3 py-2 text-xs uppercase tracking-[0.14em] ${
-                    pathname.startsWith("/admin/rollout")
-                      ? "bg-charcoal text-cream"
-                      : "text-charcoal/70 hover:bg-cream"
-                  }`}
-                >
-                  Insights rollout
-                </Link>
-                <Link
-                  href="/admin/users"
-                  className={`px-3 py-2 text-xs uppercase tracking-[0.14em] ${
-                    pathname.startsWith("/admin/users") ? "bg-charcoal text-cream" : "text-charcoal/70 hover:bg-cream"
-                  }`}
-                >
-                  İstifadəçilər
-                </Link>
-              </>
-            ) : null}
           </nav>
           <form action={logoutAction} className="px-5 pb-5">
             <button type="submit" className="text-[11px] uppercase tracking-[0.16em] text-charcoal/50">

@@ -47,7 +47,7 @@ export const insightSeedRows: InsightSeed[] = [
   {
     slug: "bim-tikinti-evvel-problemler",
     category: "bim",
-    cover_path: "/images/blog/bim-memarliq-nedir.webp",
+    cover_path: "/images/insights/bim-technology.webp",
     published_at: "2026-08-01T09:00:00.000Z",
     translations: {
       az: t(
@@ -74,7 +74,7 @@ Aşağıdakı suallar BIM-in erkən dəyərini yoxlamağa kömək edir:
         "bim-tikinti-evvel-problemler",
         "BIM tikinti başlamazdan əvvəl hansı problemləri həll edir? | Raul Architects",
         "BIM-in tikintidən əvvəl uyğunsuzluq, həcm və koordinasiya risklərini necə azaltmasına dair peşəkar izah.",
-        "BIM modeli və memarlıq layihələndirmə konteksti",
+        "Müasir fasad üzərində şəffaf BIM memarlıq modeli — Raul Architects Insights",
       ),
       en: t(
         "Which problems does BIM solve before construction starts?",
@@ -159,7 +159,7 @@ BIM-подход поддерживает вывод объёмов, специ�
   {
     slug: "boyuk-layihelerde-budce",
     category: "planning",
-    cover_path: "/images/blog/memarliq-layihesinin-qiymeti.webp",
+    cover_path: "/images/insights/cost-planning.webp",
     published_at: "2026-08-02T09:00:00.000Z",
     translations: {
       az: t(
@@ -192,7 +192,7 @@ Praktik yoxlama siyahısı:
         "boyuk-layihelerde-budce",
         "Böyük layihələrdə büdcə niyə aşılır? 5 əsas səbəb | Raul Architects",
         "Böyük layihələrdə büdcə aşımının beş əsas səbəbi: brif, risk, koordinasiya və dəyişiklik idarəetməsi.",
-        "Memarlıq layihəsinin qiymətləndirilməsi və büdcə planlaması",
+        "Büdcə və planlama üçün sakit material nümunələri və memarlıq mühiti — Raul Architects Insights",
       ),
       en: t(
         "Why do budgets overrun on large projects? Five main reasons",
@@ -295,7 +295,7 @@ Praktische Checkliste:
   {
     slug: "avropa-azerbaycan-5-yanasma",
     category: "architecture",
-    cover_path: "/images/import/kopenick-berlin-living/cover.webp",
+    cover_path: "/images/insights/european-practice.webp",
     published_at: "2026-08-03T09:00:00.000Z",
     translations: {
       az: t(
@@ -328,7 +328,7 @@ Tətbiqdən əvvəl yoxlayın:
         "avropa-azerbaycan-5-yanasma",
         "Avropada tətbiq olunan 5 yanaşma — Azərbaycan üçün | Raul Architects",
         "Avropa praktikasında yayılmış beş memarlıq yanaşmasının Azərbaycan kontekstində müzakirəsi.",
-        "Avropa yaşayış memarlığı nümunəsi — Berlin konteksti",
+        "Avropa üslubunda müasir yaşayış fasadı, premium redaksiya görüntüsü — Raul Architects Insights",
       ),
       en: t(
         "Five European approaches that could be used more widely in Azerbaijan",
@@ -431,7 +431,7 @@ Vor der Anwendung prüfen:
   {
     slug: "masterplan-kommersiya-deyeri",
     category: "urban",
-    cover_path: "/images/blog/sehersalma-yasayis-kompleksi-layihesi.webp",
+    cover_path: "/images/insights/masterplanning.webp",
     published_at: "2026-08-04T09:00:00.000Z",
     translations: {
       az: t(
@@ -461,7 +461,7 @@ Dəyər yaratmaq üçün diqqət:
         "masterplan-kommersiya-deyeri",
         "Yaxşı masterplan kommersiya dəyərini necə artırır? | Raul Architects",
         "Masterplanın mərhələ, tipologiya və ictimai məkan vasitəsilə kommersiya dəyərinə təsiri.",
-        "Şəhərsalma yaşayış kompleksi masterplan vizualı",
+        "Masterplan və şəhərsalma kontekstində yaşayış kompleksinin elevasiya görünüşü — Raul Architects Insights",
       ),
       en: t(
         "How a strong masterplan increases a project’s commercial value",
@@ -555,7 +555,7 @@ Fokus für Wertschöpfung:
   {
     slug: "memarliq-xerc-deyil",
     category: "investment",
-    cover_path: "/images/blog/villa-layihelendirmesi-baki.webp",
+    cover_path: "/images/insights/architecture-investment.webp",
     published_at: "2026-08-05T09:00:00.000Z",
     translations: {
       az: t(
@@ -585,7 +585,7 @@ Erkən dizayn intizamı uyğunsuzluqları və yenidən işləri azaltmağa köm�
         "memarliq-xerc-deyil",
         "Memarlıq xərc deyil: dizayn dəyəri necə artırır? | Raul Architects",
         "Düzgün memarlığın daşınmaz əmlak dəyərinə təsiri — zəmanətsiz, strategiya fokuslu izah.",
-        "Bakıda villa layihələndirməsi — memarlıq dəyəri",
+        "İnvestisiya dəyərli müasir villa memarlığı, qızılı işıq — Raul Architects Insights",
       ),
       en: t(
         "Architecture is not a cost: how good design can raise real-estate value",
@@ -679,7 +679,7 @@ Investment-Checks:
   {
     slug: "bina-30-il-ucun",
     category: "sustainability",
-    cover_path: "/images/blog/fasad-izolyasiyasi-baki-iqlimi.webp",
+    cover_path: "/images/insights/sustainability.webp",
     published_at: "2026-08-06T09:00:00.000Z",
     translations: {
       az: t(
@@ -709,7 +709,7 @@ Modullu və ya uyğunlaşdırıla bilən məkanlar funksiya dəyişəndə yenid�
         "bina-30-il-ucun",
         "Binanı növbəti 30 il üçün necə layihələndirmək olar? | Raul Architects",
         "Uzunmüddətli memarlıq: iqlim, texniki ehtiyat, material və çevik planlama prinsipləri.",
-        "Bakı iqlimi üçün fasad izolyasiyası konteksti",
+        "Dayanıqlı memarlıq: yaşıl həyət və təbii materiallı müasir fasad — Raul Architects Insights",
       ),
       en: t(
         "How to design a building for the next 30 years — not only for today",
@@ -803,7 +803,7 @@ Modulare oder anpassbare Layouts stützen Umnutzung — nicht für jede Typologi
   {
     slug: "developer-7-qerar",
     category: "planning",
-    cover_path: "/images/blog/ev-tikdirmek-ucun-memarliq-layihesi.webp",
+    cover_path: "/images/insights/developer-insights.webp",
     published_at: "2026-08-07T09:00:00.000Z",
     translations: {
       az: t(
@@ -842,7 +842,7 @@ Başlanğıc yoxlama siyahısı:
         "developer-7-qerar",
         "Developer memarla işdən əvvəl 7 qərar | Raul Architects",
         "Developer üçün memarla işə başlamazdan əvvəl verilməli yeddi əsas qərar.",
-        "Ev tikdirmək üçün memarlıq layihəsi konteksti",
+        "Developer layihəsi üçün yüksək səviyyəli yaşayış kompleksi fasadı — Raul Architects Insights",
       ),
       en: t(
         "Seven decisions a developer should make before working with an architect",
@@ -963,7 +963,7 @@ Kick-off-Checkliste:
   {
     slug: "digital-twin-nedir",
     category: "technology",
-    cover_path: "/images/insights/placeholder.svg",
+    cover_path: "/images/insights/digital-twin.webp",
     published_at: "2026-08-08T09:00:00.000Z",
     translations: {
       az: t(
@@ -990,7 +990,7 @@ Başlamazdan əvvəl suallar:
         "digital-twin-nedir",
         "Digital Twin nədir və istismarda nə qazandırır? | Raul Architects",
         "Digital Twin anlayışı və bina istifadəyə verildikdən sonra istismar dəyəri — peşəkar izah.",
-        "Digital Twin konseptini göstərən abstrakt vizual",
+        "Rəqəmsal əkiz konsepsiyası: bina kütləsi və işıqlı şəffaf memarlıq modeli — Raul Architects Insights",
       ),
       en: t(
         "What is a Digital Twin — and what does it add after handover?",
@@ -1075,7 +1075,7 @@ Fragen vor dem Start:
   {
     slug: "konseptden-icraya-bim",
     category: "bim",
-    cover_path: "/images/blog/isci-certyojlar-ve-icra-senedleri.webp",
+    cover_path: "/images/insights/case-study-bim.webp",
     published_at: "2026-08-09T09:00:00.000Z",
     translations: {
       az: t(
@@ -1105,7 +1105,7 @@ Birgə iş üçün minimum razılaşmalar:
         "konseptden-icraya-bim",
         "Konseptdən icraya: memarlıq, mühəndislik və BIM | Raul Architects",
         "Bir layihədə memarlıq, mühəndislik və BIM-in konseptdən icraya necə birləşdiyinə dair izah.",
-        "İşçi cizgilər və icra sənədləri konteksti",
+        "Konseptdən icraya: müasir memarlıq detalının redaksiya görüntüsü — Raul Architects Insights",
       ),
       en: t(
         "From concept to delivery: how architecture, engineering and BIM align on one project",
@@ -1199,7 +1199,7 @@ Mindestvereinbarungen:
   {
     slug: "ai-ve-memarin-rolu",
     category: "technology",
-    cover_path: "/images/insights/placeholder.svg",
+    cover_path: "/images/insights/future-architecture-ai.webp",
     published_at: "2026-08-10T09:00:00.000Z",
     translations: {
       az: t(
@@ -1229,7 +1229,7 @@ Bu gün üçün balans:
         "ai-ve-memarin-rolu",
         "AI memarlığı necə dəyişir və memarın rolu | Raul Architects",
         "AI-nin memarlığa təsiri və gələcəkdə memarın rolu — ehtiyatlı, peşəkar perspektiv.",
-        "AI və memarlıq rolunu göstərən abstrakt vizual",
+        "Gələcək memarlıq forması — sakit parametrik həcm, AI konteksti — Raul Architects Insights",
       ),
       en: t(
         "How AI is changing architecture — and what the architect’s role becomes",

@@ -244,7 +244,7 @@ export function cmsInsightToPost(row: CmsRow): InsightPost {
     slug: row.slug,
     slugs,
     publishedAt: cmsDatePrefix(row.published_at) || cmsDatePrefix(row.created_at) || "1970-01-01",
-    image: cover(row) || "/images/insights/placeholder.svg",
+    image: cover(row) || "/images/insights/bim-technology.webp",
     imageAlt: {
       az: pickLocaleT(row, "az").imageAlt || pickLocaleT(row, "az").title || row.slug,
       en: pickLocaleT(row, "en").imageAlt || pickLocaleT(row, "en").title || row.slug,
