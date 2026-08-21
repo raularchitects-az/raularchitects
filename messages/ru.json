@@ -14,6 +14,7 @@
   "nav": {
     "projects": "Проекты",
     "portfolio": "Портфолио",
+    "insights": "Insights",
     "services": "Услуги",
     "about": "О нас",
     "contact": "Контакты",
@@ -33,6 +34,7 @@
     "allServicesCta": "Все услуги",
     "allProjectsCta": "Все проекты",
     "allPortfolioCta": "Все портфолио",
+    "allInsightsCta": "Все Insights",
     "svcTikinti": "Строительство и ремонт",
     "svcBim": "BIM-архитектура",
     "svcInteryer": "Дизайн интерьера",
@@ -666,6 +668,32 @@
       "urban": "Градостроительство",
       "visualization": "Визуализация",
       "planning": "Планировка"
+    }
+  },
+  "insights": {
+    "title": "Insights",
+    "eyebrow": "Insights",
+    "subtitle": "Профессиональные материалы об архитектуре, BIM, интерьере и реализации проектов.",
+    "metaTitle": "Insights — архитектура и BIM | Raul Architects",
+    "metaDescription": "Профессиональные Insights об архитектуре, BIM, интерьере и реализации проектов от Raul Architects.",
+    "allPosts": "Все Insights",
+    "read": "Читать",
+    "back": "Все Insights",
+    "related": "Связанные страницы",
+    "unavailableTitle": "Этот Insight недоступен на этом языке",
+    "unavailableBody": "Эта языковая версия ещё не опубликована. Переключите язык или вернитесь к списку Insights.",
+    "author": "Раул Нагиев",
+    "categories": {
+      "bim": "BIM",
+      "architecture": "Архитектура",
+      "interior": "Интерьер",
+      "construction": "Строительство",
+      "urban": "Градостроительство",
+      "visualization": "Визуализация",
+      "planning": "Планировка",
+      "sustainability": "Устойчивость",
+      "investment": "Инвестиции",
+      "technology": "Технологии"
     }
   }
 }

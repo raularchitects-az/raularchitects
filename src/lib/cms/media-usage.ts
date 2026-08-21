@@ -1,4 +1,5 @@
 import type { EntityType } from "./queries";
+import { isMissingRelationError } from "./missing-table";
 
 export type MediaUsage = {
   table: EntityType | "site_settings";
@@ -7,12 +8,13 @@ export type MediaUsage = {
   label: string;
 };
 
-const CONTENT_TABLES: EntityType[] = ["projects", "portfolio", "blog_posts", "services"];
+const CONTENT_TABLES: EntityType[] = ["projects", "portfolio", "blog_posts", "insights", "services"];
 
 const TABLE_LABEL: Record<string, string> = {
   projects: "Layihə",
   portfolio: "Portfolio",
   blog_posts: "Bloq",
+  insights: "Insight",
   services: "Xidmət",
   site_settings: "Səhifə",
 };
@@ -90,7 +92,12 @@ export async function findMediaUsages(
   };
 
   for (const table of CONTENT_TABLES) {
-    const { data } = await supabase.from(table).select("*");
+    const { data, error } = await supabase.from(table).select("*");
+    if (error) {
+      if (isMissingRelationError(error)) continue;
+      console.error("[cms] findMediaUsages", table, error.message);
+      continue;
+    }
     for (const raw of data ?? []) {
       const row = raw as Record<string, unknown>;
       walkStrings(row, (text, field) => {

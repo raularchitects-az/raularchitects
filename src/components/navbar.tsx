@@ -9,17 +9,21 @@ import { Logo } from "@/components/ui/logo";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { MegaMenu } from "@/components/mega-menu";
 
-const primaryLinks = [
-  { href: "/xidmetler", key: "services" },
-  { href: "/layihelar", key: "projects" },
-  { href: "/portfolio", key: "portfolio" },
-] as const;
-
-export function Navbar() {
+export function Navbar({ insightsActive = false }: { insightsActive?: boolean }) {
   const t = useTranslations("nav");
   const locale = useLocale();
   const [open, setOpen] = useState(false);
   const upper = (text: string) => toDisplayUpperCase(text, locale);
+
+  const portfolioOrInsights = insightsActive
+    ? ({ href: "/insights" as const, key: "insights" as const })
+    : ({ href: "/portfolio" as const, key: "portfolio" as const });
+
+  const primaryLinks = [
+    { href: "/xidmetler" as const, key: "services" as const },
+    { href: "/layihelar" as const, key: "projects" as const },
+    portfolioOrInsights,
+  ];
 
   return (
     <>
@@ -59,7 +63,7 @@ export function Navbar() {
         </nav>
       </header>
 
-      <MegaMenu open={open} onClose={() => setOpen(false)} />
+      <MegaMenu open={open} onClose={() => setOpen(false)} insightsActive={insightsActive} />
     </>
   );
 }

@@ -10,33 +10,45 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 import { services } from "@/data/services";
 import { cn } from "@/lib/utils";
 
-const menuItems = [
-  {
-    href: "/xidmetler",
-    key: "services",
-    children: [
-      ...services.map((s) => ({ href: `/xidmetler/${s.slug}`, slug: s.slug }) as const),
-      { href: "/xidmetler", key: "allServices" } as const,
-    ],
-  },
-  { href: "/layihelar", key: "projects" },
-  { href: "/portfolio", key: "portfolio" },
-  {
-    href: "/haqqimizda",
-    key: "about",
-    children: [
-      { href: "/haqqimizda", key: "aboutStudio" },
-      { href: "/haqqimizda/raul-nagiyev", key: "aboutRaul" },
-    ],
-  },
-  { href: "/elaqe", key: "contact" },
-] as const;
-
-export function MegaMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function MegaMenu({
+  open,
+  onClose,
+  insightsActive = false,
+}: {
+  open: boolean;
+  onClose: () => void;
+  insightsActive?: boolean;
+}) {
   const t = useTranslations("nav");
   const s = useTranslations("servicesPage");
   const locale = useLocale();
   const upper = (text: string) => toDisplayUpperCase(text, locale);
+
+  const portfolioOrInsights = insightsActive
+    ? ({ href: "/insights" as const, key: "insights" as const })
+    : ({ href: "/portfolio" as const, key: "portfolio" as const });
+
+  const menuItems = [
+    {
+      href: "/xidmetler" as const,
+      key: "services" as const,
+      children: [
+        ...services.map((s) => ({ href: `/xidmetler/${s.slug}`, slug: s.slug }) as const),
+        { href: "/xidmetler" as const, key: "allServices" as const },
+      ],
+    },
+    { href: "/layihelar" as const, key: "projects" as const },
+    portfolioOrInsights,
+    {
+      href: "/haqqimizda" as const,
+      key: "about" as const,
+      children: [
+        { href: "/haqqimizda" as const, key: "aboutStudio" as const },
+        { href: "/haqqimizda/raul-nagiyev" as const, key: "aboutRaul" as const },
+      ],
+    },
+    { href: "/elaqe" as const, key: "contact" as const },
+  ];
 
   useEffect(() => {
     if (!open) return;

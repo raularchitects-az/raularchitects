@@ -24,8 +24,23 @@ import {
 import { collectStoragePaths, findMediaUsages, formatMediaUsageError } from "./media-usage";
 import { mediaExtension, validateMediaFile } from "./media-file";
 import { buildLegacyPortfolioRows, buildLegacyProjectRows, listLegacyCatalogCounts } from "./legacy-import";
+import {
+  PORTFOLIO_TO_PROJECTS_MIGRATION_KEY,
+  mapPortfolioToProjectPayload,
+  planPortfolioToProjects,
+  type PortfolioMigrationPlan,
+} from "./portfolio-to-projects";
+import {
+  INSIGHTS_RESTRUCTURE_ACTIVE_KEY,
+  REAL_PORTFOLIO_MIGRATE_SLUGS,
+  findMigratedProjectSlugForPortfolio,
+  getInsightsActivationReadiness,
+  insightsTableExists,
+  isInsightsRestructureActiveAdmin,
+} from "./insights-rollout";
+import { isMissingRelationError } from "./missing-table";
 import type { ContentStatus, EntityType } from "./queries";
-import type { Translations } from "./types";
+import type { CmsRow, Translations } from "./types";
 
 async function audit(
   action: string,
@@ -74,10 +89,12 @@ function revalidatePublic(table?: EntityType, slug?: string) {
     revalidatePath(`/${locale}/layihelar`, "layout");
     revalidatePath(`/${locale}/portfolio`, "layout");
     revalidatePath(`/${locale}/bloq`, "layout");
+    revalidatePath(`/${locale}/insights`, "layout");
     revalidatePath(`/${locale}/xidmetler`, "layout");
     revalidatePath(localizePublicPath(locale, "/layihelar"), "layout");
     revalidatePath(localizePublicPath(locale, "/portfolio"), "layout");
     revalidatePath(localizePublicPath(locale, "/bloq"), "layout");
+    revalidatePath(localizePublicPath(locale, "/insights"), "layout");
     revalidatePath(localizePublicPath(locale, "/xidmetler"), "layout");
     revalidatePath(localizePublicPath(locale, "/haqqimizda"), "layout");
     revalidatePath(localizePublicPath(locale, "/elaqe"), "layout");
@@ -92,6 +109,10 @@ function revalidatePublic(table?: EntityType, slug?: string) {
     if (table === "blog_posts" && slug) {
       revalidatePath(`/${locale}/bloq/${slug}`);
       revalidatePath(localizePublicPath(locale, `/bloq/${slug}`));
+    }
+    if (table === "insights" && slug) {
+      revalidatePath(`/${locale}/insights/${slug}`);
+      revalidatePath(localizePublicPath(locale, `/insights/${slug}`));
     }
     if (table === "services" && slug) {
       revalidatePath(`/${locale}/xidmetler/${slug}`);
@@ -119,6 +140,10 @@ function preserveLegacyStamps(next: Translations, prev?: Translations | null): T
     merged[locale] = {
       ...(merged[locale] ?? {}),
       legacySourceId: merged[locale]?.legacySourceId?.trim() || prev?.[locale]?.legacySourceId?.trim(),
+      migratedFromPortfolioId:
+        merged[locale]?.migratedFromPortfolioId?.trim() || prev?.[locale]?.migratedFromPortfolioId?.trim(),
+      migratedToProjectSlug:
+        merged[locale]?.migratedToProjectSlug?.trim() || prev?.[locale]?.migratedToProjectSlug?.trim(),
     };
   }
   return merged;
@@ -172,6 +197,7 @@ function publicPathFor(table: EntityType, slug?: string) {
   if (table === "projects") return slug ? `/layihelar/${slug}` : "/layihelar";
   if (table === "portfolio") return slug ? `/portfolio/${slug}` : "/portfolio";
   if (table === "blog_posts") return slug ? `/bloq/${slug}` : "/bloq";
+  if (table === "insights") return slug ? `/insights/${slug}` : "/insights";
   if (table === "services") return slug ? `/xidmetler/${slug}` : "/xidmetler";
   return "/";
 }
@@ -231,6 +257,21 @@ const ALLOWED_COLUMNS: Record<EntityType, readonly string[]> = {
     "translations",
     "published_at",
   ],
+  insights: [
+    "slug",
+    "category",
+    "status",
+    "is_active",
+    "sort_order",
+    "cover_path",
+    "og_image_path",
+    "video_url",
+    "canonical_url",
+    "seo_title",
+    "meta_description",
+    "translations",
+    "published_at",
+  ],
   services: [
     "slug",
     "icon",
@@ -275,7 +316,7 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
     row.published_at = new Date().toISOString();
   }
 
-  if (table === "blog_posts") {
+  if (table === "blog_posts" || table === "insights") {
     const translations = (row.translations ?? {}) as Translations;
     for (const locale of routing.locales) {
       const block = translations[locale] ?? {};
@@ -287,7 +328,10 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
     row.translations = translations;
     if (!row.slug) throw new Error("AZ slug tələb olunur");
 
-    const { data: others } = await supabase.from("blog_posts").select("id, slug, translations");
+    const { data: others, error: othersError } = await supabase.from(table).select("id, slug, translations");
+    if (othersError && !(table === "insights" && isMissingRelationError(othersError))) {
+      throwIfError(othersError, "Slug yoxlanışı alınmadı");
+    }
     for (const locale of routing.locales) {
       const candidate = translations[locale]?.slug?.trim();
       if (!candidate) continue;
@@ -339,6 +383,21 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
               { onConflict: "from_path" },
             );
             throwIfError(blogRedirectError, "Bloq yönləndirməsi yazılmadı");
+          }
+        }
+      }
+      if (table === "insights") {
+        const prevT = (existing.translations ?? {}) as Translations;
+        const nextT = (row.translations ?? {}) as Translations;
+        for (const locale of routing.locales) {
+          const previous = prevT[locale]?.slug || oldSlug;
+          const next = nextT[locale]?.slug || newSlug;
+          if (previous && next && previous !== next) {
+            const { error: insightRedirectError } = await supabase.from("redirects").upsert(
+              { from_path: `/insights/${previous}`, to_path: `/insights/${next}`, status_code: 301 },
+              { onConflict: "from_path" },
+            );
+            throwIfError(insightRedirectError, "Insight yönləndirməsi yazılmadı");
           }
         }
       }
@@ -854,4 +913,234 @@ export async function migrateLegacyCatalog() {
   revalidatePublic("projects");
   revalidatePublic("portfolio");
   return result;
+}
+
+async function loadPortfolioToProjectsPlan(
+  supabase: NonNullable<Awaited<ReturnType<typeof createAdminClient>>>,
+): Promise<PortfolioMigrationPlan> {
+  const [{ data: portfolios, error: pErr }, { data: projects, error: jErr }] = await Promise.all([
+    supabase.from("portfolio").select("*").order("sort_order", { ascending: true }),
+    supabase.from("projects").select("*").order("sort_order", { ascending: true }),
+  ]);
+  throwIfError(pErr, "Portfolio oxunmadı");
+  throwIfError(jErr, "Layihələr oxunmadı");
+  return planPortfolioToProjects((portfolios ?? []) as CmsRow[], (projects ?? []) as CmsRow[]);
+}
+
+export async function planPortfolioToProjectsMigration(): Promise<PortfolioMigrationPlan> {
+  await requireAdmin();
+  const supabase = await createAdminClient();
+  if (!supabase) throw new Error("CMS configured deyil");
+  return loadPortfolioToProjectsPlan(supabase);
+}
+
+export async function runPortfolioToProjectsMigration(options: { confirm: true }) {
+  if (options?.confirm !== true) {
+    throw new Error("Migration yalnız confirm: true ilə işə düşür");
+  }
+  await requireAdmin();
+  const supabase = await createAdminClient();
+  if (!supabase) throw new Error("CMS configured deyil");
+
+  const plan = await loadPortfolioToProjectsPlan(supabase);
+  const created: { portfolioSlug: string; projectSlug: string; projectId: string }[] = [];
+  const skipped = plan.items.filter((item) => item.action !== "create");
+
+  for (const item of plan.items) {
+    if (item.action !== "create") continue;
+    const { data: portfolio, error: readErr } = await supabase
+      .from("portfolio")
+      .select("*")
+      .eq("id", item.portfolioId)
+      .maybeSingle();
+    throwIfError(readErr, "Portfolio oxunmadı");
+    if (!portfolio) {
+      throw new Error(`Portfolio tapılmadı: ${item.portfolioSlug}`);
+    }
+
+    const payload = mapPortfolioToProjectPayload(portfolio as CmsRow, item.projectSlug);
+    const { data: inserted, error: insertErr } = await supabase
+      .from("projects")
+      .insert(payload)
+      .select("id, slug")
+      .single();
+    throwIfError(insertErr, `Layihə yaradılmadı: ${item.projectSlug}`);
+    if (!inserted) throw new Error(`Layihə yaradılmadı: ${item.projectSlug}`);
+
+    // Intentionally do NOT mutate Portfolio rows, deactivate them, or write public
+    // redirects here — public Portfolio must stay live until activation (State C).
+
+    created.push({
+      portfolioSlug: String(portfolio.slug),
+      projectSlug: String(inserted.slug),
+      projectId: String(inserted.id),
+    });
+  }
+
+  const result = {
+    ranAt: new Date().toISOString(),
+    created: created.length,
+    skipped: skipped.length,
+    create: plan.create,
+    skipAlreadyMigrated: plan.skipAlreadyMigrated,
+    skipSlugConflict: plan.skipSlugConflict,
+    updateSameMigration: plan.updateSameMigration,
+    items: plan.items,
+    createdItems: created,
+    portfolioRowsUntouched: true,
+  };
+
+  const { error: settingsError } = await supabase.from("site_settings").upsert({
+    key: PORTFOLIO_TO_PROJECTS_MIGRATION_KEY,
+    value: result,
+    updated_at: new Date().toISOString(),
+  });
+  throwIfError(settingsError, "Migration status yazılmadı");
+
+  await audit(
+    "import",
+    "site_settings",
+    null,
+    `portfolio→projects (3 real only): created ${created.length}, skipped ${skipped.length}; portfolio rows untouched`,
+    null,
+    result,
+  );
+  revalidatePublic("projects");
+  return result;
+}
+
+export async function seedInitialInsights(options: { confirm: true }) {
+  if (options?.confirm !== true) {
+    throw new Error("Seed yalnız confirm: true ilə işə düşür");
+  }
+  await requireAdmin();
+  const supabase = await createAdminClient();
+  if (!supabase) throw new Error("CMS configured deyil");
+
+  const { insightSeedRows } = await import("@/data/insights-seed");
+  const rows = insightSeedRows.map((item, index) => ({
+    slug: item.slug,
+    category: item.category,
+    cover_path: item.cover_path,
+    status: "published" as const,
+    is_active: true,
+    sort_order: index,
+    published_at: item.published_at ?? new Date().toISOString(),
+    seo_title: item.translations.az?.seoTitle ?? item.translations.az?.title ?? null,
+    meta_description: item.translations.az?.description ?? null,
+    translations: Object.fromEntries(
+      Object.entries(item.translations).map(([locale, copy]) => [
+        locale,
+        {
+          title: copy.title,
+          short: copy.excerpt,
+          excerpt: copy.excerpt,
+          body: copy.body,
+          seoTitle: copy.seoTitle,
+          description: copy.description,
+          imageAlt: copy.imageAlt,
+          slug: copy.slug,
+          published: copy.published,
+        },
+      ]),
+    ),
+  }));
+
+  const { error } = await supabase.from("insights").upsert(rows, {
+    onConflict: "slug",
+    ignoreDuplicates: false,
+  });
+  if (error) {
+    if (isMissingRelationError(error)) {
+      throw new Error("insights cədvəli yoxdur — əvvəl supabase/patch-insights.sql işə salın");
+    }
+    throw error;
+  }
+
+  await audit("import", "insights", null, `${rows.length} insight seed (upsert by slug)`);
+  revalidatePublic("insights");
+  return { insights: rows.length };
+}
+
+export async function getInsightsRolloutStatus() {
+  await requireAdmin();
+  const [readiness, tableOk, active] = await Promise.all([
+    getInsightsActivationReadiness(),
+    insightsTableExists(),
+    isInsightsRestructureActiveAdmin(),
+  ]);
+  return {
+    active,
+    tableOk,
+    readiness,
+    realPortfolioSlugs: [...REAL_PORTFOLIO_MIGRATE_SLUGS],
+  };
+}
+
+/**
+ * State C — explicit activation. Validates readiness, writes 308 redirects for the
+ * 3 migrated works, then sets insights_restructure_active = true.
+ * Never auto-runs. Does not delete Portfolio rows.
+ */
+export async function activateInsightsRestructure(options: { confirm: true }) {
+  if (options?.confirm !== true) {
+    throw new Error("Aktivasiya yalnız confirm: true ilə işə düşür");
+  }
+  await requireAdmin();
+  const supabase = await createAdminClient();
+  if (!supabase) throw new Error("CMS configured deyil");
+
+  const readiness = await getInsightsActivationReadiness();
+  if (!readiness.ok) {
+    throw new Error(
+      `Aktivasiya bloklandı:\n${readiness.blockers.map((b) => `• ${b.message}`).join("\n")}`,
+    );
+  }
+
+  const [{ data: projects }, { data: portfolios }] = await Promise.all([
+    supabase.from("projects").select("*"),
+    supabase.from("portfolio").select("*"),
+  ]);
+
+  for (const slug of REAL_PORTFOLIO_MIGRATE_SLUGS) {
+    const projectSlug = findMigratedProjectSlugForPortfolio(
+      slug,
+      (projects ?? []) as CmsRow[],
+      (portfolios ?? []) as CmsRow[],
+    );
+    if (!projectSlug) {
+      throw new Error(`Aktivasiya: köçürülmüş layihə tapılmadı (${slug})`);
+    }
+    const { error: redirectErr } = await supabase.from("redirects").upsert(
+      {
+        from_path: `/portfolio/${slug}`,
+        to_path: `/layihelar/${projectSlug}`,
+        status_code: 308,
+      },
+      { onConflict: "from_path" },
+    );
+    throwIfError(redirectErr, `Redirect yazılmadı: ${slug}`);
+  }
+
+  const { error: settingsError } = await supabase.from("site_settings").upsert({
+    key: INSIGHTS_RESTRUCTURE_ACTIVE_KEY,
+    value: { active: true },
+    updated_at: new Date().toISOString(),
+  });
+  throwIfError(settingsError, "insights_restructure_active yazılmadı");
+
+  await audit(
+    "settings",
+    "site_settings",
+    INSIGHTS_RESTRUCTURE_ACTIVE_KEY,
+    "Insights restructure activated (public Portfolio → Insights)",
+    null,
+    { active: true },
+  );
+
+  revalidatePublic("projects");
+  revalidatePublic("portfolio");
+  revalidatePublic("insights");
+  updateTag("cms-settings");
+  return { active: true, redirects: REAL_PORTFOLIO_MIGRATE_SLUGS.length };
 }

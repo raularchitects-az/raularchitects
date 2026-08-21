@@ -14,6 +14,7 @@
   "nav": {
     "projects": "Projects",
     "portfolio": "Portfolio",
+    "insights": "Insights",
     "services": "Services",
     "about": "About",
     "contact": "Contact",
@@ -33,6 +34,7 @@
     "allServicesCta": "All services",
     "allProjectsCta": "All projects",
     "allPortfolioCta": "All portfolio",
+    "allInsightsCta": "All Insights",
     "svcTikinti": "Construction & Repair",
     "svcBim": "BIM Architecture",
     "svcInteryer": "Interior Design",
@@ -666,6 +668,32 @@
       "urban": "Urban planning",
       "visualization": "Visualization",
       "planning": "Planning"
+    }
+  },
+  "insights": {
+    "title": "Insights",
+    "eyebrow": "Insights",
+    "subtitle": "Professional notes on architecture, BIM, interiors and project delivery.",
+    "metaTitle": "Insights — architecture and BIM | Raul Architects",
+    "metaDescription": "Professional insights on architecture, BIM, interiors and project delivery from Raul Architects.",
+    "allPosts": "All Insights",
+    "read": "Read",
+    "back": "All Insights",
+    "related": "Related pages",
+    "unavailableTitle": "This insight is not available in this language",
+    "unavailableBody": "This language version has not been published yet. Switch language or return to the Insights list.",
+    "author": "Raul Naghiyev",
+    "categories": {
+      "bim": "BIM",
+      "architecture": "Architecture",
+      "interior": "Interior",
+      "construction": "Construction",
+      "urban": "Urban planning",
+      "visualization": "Visualization",
+      "planning": "Planning",
+      "sustainability": "Sustainability",
+      "investment": "Investment",
+      "technology": "Technology"
     }
   }
 }

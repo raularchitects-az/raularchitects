@@ -38,6 +38,7 @@ export default async function AdminPagesPage() {
     await saveSettings("home", {
       showProjects: formData.get("showProjects") === "on",
       showPortfolio: formData.get("showPortfolio") === "on",
+      showInsights: formData.get("showInsights") === "on",
       showBlog: formData.get("showBlog") === "on",
       showServices: formData.get("showServices") === "on",
     });
@@ -85,7 +86,8 @@ export default async function AdminPagesPage() {
         <h2 className="text-sm uppercase tracking-[0.16em]">Ana səhifə bölmələri</h2>
         <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="showServices" defaultChecked={homeV.showServices !== false} /> Xidmətlər</label>
         <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="showProjects" defaultChecked={homeV.showProjects !== false} /> Layihələr</label>
-        <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="showPortfolio" defaultChecked={homeV.showPortfolio !== false} /> Portfolio</label>
+        <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="showPortfolio" defaultChecked={homeV.showPortfolio !== false} /> Portfolio (rollout qeyri-aktiv ikən)</label>
+        <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="showInsights" defaultChecked={(homeV.showInsights ?? homeV.showPortfolio) !== false} /> Insights (rollout aktiv olanda)</label>
         <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="showBlog" defaultChecked={Boolean(homeV.showBlog)} /> Bloq (seçilmiş yazılar)</label>
       </section>
       <SubmitButton>Saxla</SubmitButton>

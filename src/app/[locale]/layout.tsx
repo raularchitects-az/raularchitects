@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { routing, asLocale } from "@/i18n/routing";
 import { Navbar } from "@/components/navbar";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
+import { isInsightsRestructureActive } from "@/lib/cms/insights-rollout";
 import { PRODUCTION_SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -38,11 +39,11 @@ export default async function LocaleLayout({
   }
 
   setRequestLocale(locale);
-  const messages = await getMessages();
+  const [messages, insightsActive] = await Promise.all([getMessages(), isInsightsRestructureActive()]);
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <Navbar />
+      <Navbar insightsActive={insightsActive} />
       <div className="pt-20">{children}</div>
       <WhatsAppFloat />
     </NextIntlClientProvider>

@@ -14,6 +14,7 @@
   "nav": {
     "projects": "Layihələr",
     "portfolio": "Portfolio",
+    "insights": "Insights",
     "services": "Xidmətlər",
     "about": "Haqqımızda",
     "contact": "Əlaqə",
@@ -33,6 +34,7 @@
     "allServicesCta": "Bütün xidmətlər",
     "allProjectsCta": "Bütün layihələr",
     "allPortfolioCta": "Bütün portfolio",
+    "allInsightsCta": "Bütün Insights",
     "svcTikinti": "Tikinti Təmir",
     "svcBim": "BIM Memarlıq",
     "svcInteryer": "İnteryer Dizayn",
@@ -666,6 +668,32 @@
       "urban": "Şəhərsalma",
       "visualization": "Vizualizasiya",
       "planning": "Planlama"
+    }
+  },
+  "insights": {
+    "title": "Insights",
+    "eyebrow": "Insights",
+    "subtitle": "Memarlıq, BIM, interyer və layihə icrası üzrə peşəkar qeydlər.",
+    "metaTitle": "Insights — memarlıq və BIM | Raul Architects",
+    "metaDescription": "Raul Architects-dən memarlıq, BIM, interyer və layihə icrası üzrə peşəkar Insights.",
+    "allPosts": "Bütün Insights",
+    "read": "Oxu",
+    "back": "Bütün Insights",
+    "related": "Əlaqəli səhifələr",
+    "unavailableTitle": "Bu Insights bu dildə mövcud deyil",
+    "unavailableBody": "Bu dil versiyası hələ dərc olunmayıb. Dil seçin və ya Insights siyahısına qayıdın.",
+    "author": "Raul Nağıyev",
+    "categories": {
+      "bim": "BIM",
+      "architecture": "Memarlıq",
+      "interior": "İnteryer",
+      "construction": "Tikinti",
+      "urban": "Şəhərsalma",
+      "visualization": "Vizualizasiya",
+      "planning": "Planlama",
+      "sustainability": "Dayanıqlıq",
+      "investment": "İnvestisiya",
+      "technology": "Texnologiya"
     }
   }
 }

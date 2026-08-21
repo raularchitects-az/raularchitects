@@ -13,21 +13,21 @@ export default async function AdminDashboardPage() {
 
   const cards = [
     { label: "Layihələr", ...stats.projects, href: "/admin/projects" },
-    { label: "Portfolio", ...stats.portfolio, href: "/admin/portfolio" },
+    { label: "Insights", ...stats.insights, href: "/admin/insights" },
     { label: "Bloq", ...stats.blog, href: "/admin/blog" },
   ];
 
   return (
     <div className="flex flex-col gap-10">
       <div>
-        <h1 className="text-3xl font-semibold">Dashboard</h1>
+        <h1 className="text-3xl font-semibold">Ana səhifə</h1>
         <p className="mt-2 text-sm text-charcoal/60">Kontent statistikası və son dəyişikliklər</p>
       </div>
-      {stats.projects.total + stats.portfolio.total + stats.blog.total === 0 ? (
+      {stats.projects.total + stats.insights.total + stats.blog.total === 0 ? (
         <div className="border border-charcoal/10 bg-white p-6">
           <h2 className="text-lg font-medium">CMS hələ boşdur</h2>
           <p className="mt-2 max-w-2xl text-sm text-charcoal/60">
-            Canlı saytdakı layihə, portfolio və bloq hələ də statik fayllardadır. Onları adminə draft kimi
+            Canlı saytdakı layihə və bloq hələ də statik fayllardadır. Onları adminə draft kimi
             gətirmək üçün import edin, yoxlayın, sonra Publish edin. Publish etmədən public sayt dəyişmir.
           </p>
           {profile.role === "admin" ? (
@@ -54,8 +54,8 @@ export default async function AdminDashboardPage() {
         <Link href="/admin/projects/new" className="bg-charcoal px-4 py-2.5 text-xs uppercase tracking-[0.16em] text-cream">
           Yeni layihə
         </Link>
-        <Link href="/admin/portfolio/new" className="border border-charcoal px-4 py-2.5 text-xs uppercase tracking-[0.16em]">
-          Yeni portfolio
+        <Link href="/admin/insights/new" className="border border-charcoal px-4 py-2.5 text-xs uppercase tracking-[0.16em]">
+          Yeni Insight
         </Link>
         <Link href="/admin/blog/new" className="border border-charcoal px-4 py-2.5 text-xs uppercase tracking-[0.16em]">
           Yeni blog yazısı
@@ -67,6 +67,15 @@ export default async function AdminDashboardPage() {
           </>
         ) : null}
       </div>
+      {profile.role === "admin" ? (
+        <p className="text-sm text-charcoal/55">
+          Insights staged rollout (schema → migration → seed → aktivasiya):{" "}
+          <Link href="/admin/rollout" className="underline underline-offset-2">
+            /admin/rollout
+          </Link>
+          .
+        </p>
+      ) : null}
       <section>
         <h2 className="mb-4 text-sm font-medium uppercase tracking-[0.16em]">Son dəyişikliklər</h2>
         <ul className="divide-y divide-charcoal/10 border border-charcoal/10 bg-white">

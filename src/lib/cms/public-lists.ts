@@ -1,9 +1,11 @@
 import type { BlogPost } from "@/data/blog";
+import type { InsightPost } from "@/data/insights/types";
 import { blogPosts as staticBlog } from "@/data/blog";
 import { portfolioItems as staticPortfolio } from "@/data/portfolio";
 import { projects as staticProjects } from "@/data/projects";
 import { services as staticServices } from "@/data/services";
 import { findBlogByAnySlug } from "@/lib/blog-urls";
+import { findInsightByAnySlug } from "@/lib/insights-urls";
 import {
   cmsHidesUnpublishedLegacy,
   cmsTakesPublic,
@@ -14,6 +16,7 @@ import {
 } from "./legacy";
 import {
   cmsBlogToPost,
+  cmsInsightToPost,
   cmsPortfolioToMeta,
   cmsProjectToMeta,
   cmsServiceToPublic,
@@ -285,4 +288,40 @@ export async function getHomeBlogPosts() {
     )
     .map((row) => mapOrSkip(row, cmsBlogToPost))
     .filter((post): post is BlogPost => Boolean(post));
+}
+
+function insightTimestamp(value?: string | null) {
+  if (!value) return 0;
+  const ms = Date.parse(value);
+  return Number.isNaN(ms) ? 0 : ms;
+}
+
+export async function getPublicInsights(): Promise<InsightPost[]> {
+  const rows = await getCatalogRows("insights");
+  return rows
+    .filter((row) => cmsTakesPublic(row))
+    .sort(
+      (a, b) =>
+        insightTimestamp(b.published_at) - insightTimestamp(a.published_at) ||
+        (a.sort_order ?? 0) - (b.sort_order ?? 0),
+    )
+    .map((row) => mapOrSkip(row, cmsInsightToPost))
+    .filter((post): post is InsightPost => Boolean(post));
+}
+
+export async function getPublicInsight(slug: string) {
+  return findInsightByAnySlug(await getPublicInsights(), slug);
+}
+
+export async function getHomeInsights(): Promise<InsightPost[]> {
+  const rows = await getCatalogRows("insights");
+  return rows
+    .filter((row) => cmsTakesPublic(row))
+    .sort(
+      (a, b) =>
+        insightTimestamp(b.published_at) - insightTimestamp(a.published_at) ||
+        (a.sort_order ?? 0) - (b.sort_order ?? 0),
+    )
+    .map((row) => mapOrSkip(row, cmsInsightToPost))
+    .filter((post): post is InsightPost => Boolean(post));
 }

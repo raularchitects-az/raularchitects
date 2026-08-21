@@ -30,6 +30,8 @@ export const pathnames = {
   "/": "/",
   "/portfolio": "/portfolio",
   "/portfolio/[slug]": "/portfolio/[slug]",
+  "/insights": "/insights",
+  "/insights/[slug]": "/insights/[slug]",
   "/layihelar": localized("/layihelar", "/projects"),
   "/layihelar/[slug]": localized("/layihelar/[slug]", "/projects/[slug]"),
   "/bloq": localized("/bloq", "/blog"),

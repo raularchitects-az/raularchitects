@@ -18,6 +18,8 @@ export type TranslationBlock = {
   slug?: string;
   published?: boolean;
   legacySourceId?: string;
+  migratedFromPortfolioId?: string;
+  migratedToProjectSlug?: string;
 };
 
 export type Translations = Record<string, TranslationBlock>;
@@ -113,6 +115,16 @@ export const BLOG_CATEGORIES = [
   "urban",
   "visualization",
   "planning",
+] as const;
+
+export const INSIGHT_CATEGORIES = [
+  "bim",
+  "architecture",
+  "planning",
+  "sustainability",
+  "investment",
+  "technology",
+  "urban",
 ] as const;
 
 export const COUNTRIES = [

@@ -5,20 +5,30 @@ import { Logo } from "@/components/ui/logo";
 import { Container } from "@/components/ui/container";
 import { SocialLinks } from "@/components/social-links";
 
-const links = [
-  { href: "/xidmetler", key: "services" },
-  { href: "/layihelar", key: "projects" },
-  { href: "/portfolio", key: "portfolio" },
-  { href: "/haqqimizda", key: "about" },
-  { href: "/bloq", key: "blog" },
-  { href: "/elaqe", key: "contact" },
-] as const;
-
-export function Footer({ credit }: { credit?: string }) {
+export function Footer({
+  credit,
+  insightsActive = false,
+}: {
+  credit?: string;
+  insightsActive?: boolean;
+}) {
   const t = useTranslations("nav");
   const locale = useLocale();
   const year = new Date().getFullYear();
   const upper = (text: string) => toDisplayUpperCase(text, locale);
+
+  const portfolioOrInsights = insightsActive
+    ? ({ href: "/insights" as const, key: "insights" as const })
+    : ({ href: "/portfolio" as const, key: "portfolio" as const });
+
+  const links = [
+    { href: "/xidmetler" as const, key: "services" as const },
+    { href: "/layihelar" as const, key: "projects" as const },
+    portfolioOrInsights,
+    { href: "/haqqimizda" as const, key: "about" as const },
+    { href: "/bloq" as const, key: "blog" as const },
+    { href: "/elaqe" as const, key: "contact" as const },
+  ];
 
   return (
     <footer className="border-t border-charcoal/10 bg-cream py-12">

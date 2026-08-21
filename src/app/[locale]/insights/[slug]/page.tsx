@@ -8,9 +8,10 @@ import { SiteFooter } from "@/components/site-footer";
 import { BlogLocaleSwitch } from "@/components/locale-switch-context";
 import { routing, type Locale, asLocale } from "@/i18n/routing";
 import { localizePublicPath, toIntlHref } from "@/lib/public-paths";
-import { formatBlogDate, getBlogCopy, getBlogImageAlt } from "@/data/blog";
-import { getPublicBlogPosts, resolvePublicBlog } from "@/lib/cms/public";
-import { blogLanguageAlternates, blogPostPath, getBlogLocaleSlug } from "@/lib/blog-urls";
+import { formatInsightDate, getInsightCopy, getInsightImageAlt } from "@/data/insights/types";
+import { getPublicInsights, resolvePublicInsight } from "@/lib/cms/public";
+import { isInsightsRestructureActive } from "@/lib/cms/insights-rollout";
+import { getInsightLocaleSlug, insightLanguageAlternates, insightPostPath } from "@/lib/insights-urls";
 import { BlogBody } from "@/lib/blog-body";
 import {
   SITE_NAME,
@@ -22,12 +23,13 @@ import {
 } from "@/lib/site";
 
 export async function generateStaticParams() {
-  const posts = await getPublicBlogPosts();
+  if (!(await isInsightsRestructureActive())) return [];
+  const posts = await getPublicInsights();
   return routing.locales.flatMap((locale) => {
     const slugs = new Set<string>();
     for (const post of posts) {
       slugs.add(post.slug);
-      const localized = getBlogLocaleSlug(post, locale);
+      const localized = getInsightLocaleSlug(post, locale);
       if (localized) slugs.add(localized);
     }
     return [...slugs].map((slug) => ({ locale, slug }));
@@ -39,15 +41,18 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
+  if (!(await isInsightsRestructureActive())) {
+    return { robots: { index: false, follow: true } };
+  }
   const { locale: localeParam, slug } = await params;
   const locale = asLocale(localeParam);
-  const resolved = await resolvePublicBlog(locale, slug);
+  const resolved = await resolvePublicInsight(locale, slug);
   if (resolved.redirectTo) {
     permanentRedirect(localizePublicPath(locale, resolved.redirectTo));
   }
   if (!resolved.post) return {};
 
-  const t = await getTranslations({ locale, namespace: "blog" });
+  const t = await getTranslations({ locale, namespace: "insights" });
   if (!resolved.live) {
     return {
       title: t("unavailableTitle"),
@@ -55,10 +60,10 @@ export async function generateMetadata({
     };
   }
 
-  const copy = getBlogCopy(resolved.post, locale);
+  const copy = getInsightCopy(resolved.post, locale);
   if (!copy) return { robots: { index: false, follow: true } };
 
-  const path = blogPostPath(resolved.post, locale);
+  const path = insightPostPath(resolved.post, locale);
   const canonical = productionAbsoluteUrl(locale, path);
   const imageUrl = absoluteMediaUrl(resolved.post.image);
   const title = copy.seoTitle || copy.title;
@@ -69,7 +74,7 @@ export async function generateMetadata({
     description,
     alternates: {
       canonical,
-      languages: blogLanguageAlternates(resolved.post),
+      languages: insightLanguageAlternates(resolved.post),
     },
     openGraph: {
       type: "article",
@@ -84,7 +89,7 @@ export async function generateMetadata({
       images: [
         {
           url: imageUrl,
-          alt: getBlogImageAlt(resolved.post, locale),
+          alt: getInsightImageAlt(resolved.post, locale),
         },
       ],
     },
@@ -98,27 +103,31 @@ export async function generateMetadata({
   };
 }
 
-export default async function BlogPostPage({
+export default async function InsightPostPage({
   params,
-}: PageProps<"/[locale]/bloq/[slug]">) {
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}) {
+  if (!(await isInsightsRestructureActive())) notFound();
+
   const { locale: localeParam, slug } = await params;
   const locale = asLocale(localeParam);
   setRequestLocale(locale);
 
-  const resolved = await resolvePublicBlog(locale, slug);
+  const resolved = await resolvePublicInsight(locale, slug);
   if (resolved.redirectTo) {
     permanentRedirect(localizePublicPath(locale, resolved.redirectTo));
   }
   if (!resolved.post) notFound();
 
   const post = resolved.post;
-  const t = await getTranslations("blog");
+  const t = await getTranslations("insights");
   const switchPaths = Object.fromEntries(
     routing.locales.map((code) => {
-      const localeSlug = getBlogLocaleSlug(post, code) || post.slug;
-      return [code, localeSlug ? { pathname: "/bloq/[slug]", params: { slug: localeSlug } } : "/bloq"];
+      const localeSlug = getInsightLocaleSlug(post, code) || post.slug;
+      return [code, localeSlug ? { pathname: "/insights/[slug]", params: { slug: localeSlug } } : "/insights"];
     }),
-  ) as Record<Locale, "/bloq" | { pathname: "/bloq/[slug]"; params: { slug: string } }>;
+  ) as Record<Locale, "/insights" | { pathname: "/insights/[slug]"; params: { slug: string } }>;
 
   if (!resolved.live) {
     return (
@@ -128,7 +137,7 @@ export default async function BlogPostPage({
           <Container>
             <div className="mx-auto max-w-3xl">
               <Link
-                href="/bloq"
+                href="/insights"
                 className="text-xs font-medium uppercase tracking-[0.2em] text-charcoal/50 transition-colors duration-300 hover:text-bronze-dark"
               >
                 ← {t("back")}
@@ -144,11 +153,10 @@ export default async function BlogPostPage({
   }
 
   const nav = await getTranslations("nav");
-  const services = await getTranslations("servicesPage");
-  const copy = getBlogCopy(post, locale);
+  const copy = getInsightCopy(post, locale);
   if (!copy) notFound();
 
-  const canonical = productionAbsoluteUrl(locale, blogPostPath(post, locale));
+  const canonical = productionAbsoluteUrl(locale, insightPostPath(post, locale));
 
   const relatedLabels: Record<string, string> = {
     "/elaqe": nav("contact"),
@@ -157,15 +165,11 @@ export default async function BlogPostPage({
     "/insights": nav("insights"),
     "/xidmetler": nav("services"),
     "/haqqimizda": nav("about"),
-    "/xidmetler/bim-ile-layihelendirme": services("items.bim-ile-layihelendirme.title"),
-    "/xidmetler/tikinti-ve-temir": services("items.tikinti-ve-temir.title"),
-    "/xidmetler/interyer-dizayn": services("items.interyer-dizayn.title"),
-    "/xidmetler/seherselme-layiheleri": services("items.seherselme-layiheleri.title"),
   };
 
   const schema = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
+    "@type": "Article",
     headline: copy.title,
     description: copy.description,
     datePublished: post.publishedAt,
@@ -175,7 +179,7 @@ export default async function BlogPostPage({
     image: {
       "@type": "ImageObject",
       url: absoluteMediaUrl(post.image),
-      caption: getBlogImageAlt(post, locale),
+      caption: getInsightImageAlt(post, locale),
     },
     mainEntityOfPage: {
       "@type": "WebPage",
@@ -205,7 +209,7 @@ export default async function BlogPostPage({
         <Container>
           <div className="mx-auto max-w-3xl">
             <Link
-              href="/bloq"
+              href="/insights"
               className="text-xs font-medium uppercase tracking-[0.2em] text-charcoal/50 transition-colors duration-300 hover:text-bronze-dark"
             >
               ← {t("back")}
@@ -219,14 +223,14 @@ export default async function BlogPostPage({
                 {copy.title}
               </h1>
               <time dateTime={post.publishedAt} className="text-sm text-charcoal/45">
-                {formatBlogDate(post.publishedAt, locale)}
+                {formatInsightDate(post.publishedAt, locale)}
               </time>
             </header>
 
             <figure className="relative mt-10 aspect-[16/10] overflow-hidden bg-cream-dark">
               <Image
                 src={post.image}
-                alt={getBlogImageAlt(post, locale)}
+                alt={getInsightImageAlt(post, locale)}
                 fill
                 priority
                 sizes="(min-width: 768px) 48rem, 100vw"
@@ -238,15 +242,21 @@ export default async function BlogPostPage({
               <BlogBody blocks={copy.blocks} />
             </div>
 
-            <div className="mt-16 border-t border-charcoal/10 pt-10">
-              <p className="text-base leading-relaxed text-charcoal/75">{copy.ctaText}</p>
-              <Link
-                href={toIntlHref(`/xidmetler/${post.serviceSlug}`)}
-                className="mt-6 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.22em] text-bronze-dark transition-colors duration-300 hover:text-[#6b4a32]"
-              >
-                {copy.ctaLabel} →
-              </Link>
-            </div>
+            {copy.ctaText || copy.ctaLabel ? (
+              <div className="mt-16 border-t border-charcoal/10 pt-10">
+                {copy.ctaText ? (
+                  <p className="text-base leading-relaxed text-charcoal/75">{copy.ctaText}</p>
+                ) : null}
+                {copy.ctaLabel ? (
+                  <Link
+                    href="/elaqe"
+                    className="mt-6 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.22em] text-bronze-dark transition-colors duration-300 hover:text-[#6b4a32]"
+                  >
+                    {copy.ctaLabel} →
+                  </Link>
+                ) : null}
+              </div>
+            ) : null}
 
             <nav aria-label={t("related")} className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-charcoal/10 pt-8">
               {post.relatedHrefs.map((href) => (

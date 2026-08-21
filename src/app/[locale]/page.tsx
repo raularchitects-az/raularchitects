@@ -12,13 +12,17 @@ import { HomeHero } from "@/components/home-hero";
 import { services } from "@/data/services";
 import {
   getHomeBlogPosts,
+  getPublicInsights,
   getPublicPortfolio,
   getPublicProjects,
   getPublicServices,
   getSiteSettings,
   takeLatestPublic,
 } from "@/lib/cms/public";
+import { isInsightsRestructureActive } from "@/lib/cms/insights-rollout";
 import { isBlogLocaleLive } from "@/lib/blog-urls";
+import { getInsightLocaleSlug, isInsightLocaleLive } from "@/lib/insights-urls";
+import { getInsightCopy, getInsightImageAlt } from "@/data/insights/types";
 import { BlogCard } from "@/components/blog-card";
 import { toDisplayUpperCase } from "@/lib/locale-text";
 import { asLocale } from "@/i18n/routing";
@@ -35,6 +39,7 @@ type HomeMessages = {
   allServicesCta: string;
   allProjectsCta: string;
   allPortfolioCta: string;
+  allInsightsCta: string;
   svcTikinti: string;
   svcBim: string;
   svcInteryer: string;
@@ -90,20 +95,32 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
     };
   });
 
-  const settings = await getSiteSettings();
-  const [cmsServices, publicProjects, publicPortfolio] = await Promise.all([
+  const [settings, insightsActive] = await Promise.all([
+    getSiteSettings(),
+    isInsightsRestructureActive(),
+  ]);
+  const [cmsServices, publicProjects, publicPortfolio, publicInsights] = await Promise.all([
     getPublicServices(locale),
     getPublicProjects(locale),
-    getPublicPortfolio(locale),
+    insightsActive ? Promise.resolve([]) : getPublicPortfolio(locale),
+    insightsActive ? getPublicInsights() : Promise.resolve([]),
   ]);
   const latestProjects = takeLatestPublic(publicProjects, 10);
   const latestPortfolio = takeLatestPublic(publicPortfolio, 10);
+  const latestInsights = takeLatestPublic(
+    publicInsights.filter((post) => isInsightLocaleLive(post, locale)),
+    10,
+  );
   const homeFlags = settings.home ?? {};
   const hero = settings.hero ?? {};
+  const showPortfolio = homeFlags.showPortfolio !== false;
+  const showInsights = (homeFlags.showInsights ?? homeFlags.showPortfolio) !== false;
   const homePosts = (homeFlags.showBlog === true ? await getHomeBlogPosts() : []).filter((post) =>
     isBlogLocaleLive(post, locale),
   );
   const blogT = homePosts.length ? await getTranslations("blog") : null;
+  const insightsT =
+    insightsActive && showInsights && latestInsights.length ? await getTranslations("insights") : null;
   const visibleServices = cmsServices
     .filter((item) => item.home !== false)
     .map((item) => {
@@ -182,7 +199,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
       </section>
       ) : null}
 
-      {homeFlags.showPortfolio !== false ? (
+      {!insightsActive && showPortfolio ? (
       <section className="relative overflow-hidden py-20 sm:py-28">
         <div className="absolute inset-0 bg-gradient-animated" />
         <Container className="relative">
@@ -223,6 +240,57 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
                     </span>
                     <span className="mt-1 block text-xs font-medium tracking-[0.14em] text-cream sm:text-sm">
                       {item.title || item.slug}
+                    </span>
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+          ) : null}
+        </Container>
+      </section>
+      ) : null}
+
+      {insightsActive && showInsights ? (
+      <section className="relative overflow-hidden py-20 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-animated" />
+        <Container className="relative">
+          <Reveal>
+            <h2 className="inline-flex items-center gap-3 text-3xl font-semibold tracking-wide text-cream sm:text-4xl">
+              {upper(nav("insights"))}
+              <TriangleMark size={18} className="brightness-0 invert" />
+            </h2>
+          </Reveal>
+          <Link
+            href="/insights"
+            className="mt-6 inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-cream/80 transition-colors duration-300 hover:text-cream"
+          >
+            {upper(homeMsg.allInsightsCta)}
+            <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} />
+          </Link>
+
+          {latestInsights.length > 0 ? (
+          <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+            {latestInsights.map((item, index) => (
+              <Reveal key={item.slug} delay={index * 40}>
+                <Link
+                  href={toIntlHref(`/insights/${getInsightLocaleSlug(item, locale) || item.slug}`)}
+                  className="group relative block aspect-[4/5] overflow-hidden rounded-md border border-cream/25 bg-bronze shadow-sm transition-shadow duration-300 hover:shadow-xl"
+                >
+                  <Image
+                    src={item.image}
+                    alt={getInsightImageAlt(item, locale)}
+                    fill
+                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal-dark/80 via-charcoal-dark/10 to-transparent transition-colors duration-300 group-hover:from-charcoal-dark/90" />
+                  <span className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
+                    <span className="block text-[10px] font-medium tracking-[0.18em] text-cream/70">
+                      {upper(insightsT ? insightsT(`categories.${item.category}`) : item.category)}
+                    </span>
+                    <span className="mt-1 block text-xs font-medium tracking-[0.14em] text-cream sm:text-sm">
+                      {getInsightCopy(item, locale)?.title || item.slug}
                     </span>
                   </span>
                 </Link>

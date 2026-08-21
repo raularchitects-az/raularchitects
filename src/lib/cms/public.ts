@@ -1,14 +1,19 @@
 import { getBlogLocaleSlug, isBlogLocaleLive } from "@/lib/blog-urls";
+import { getInsightLocaleSlug, isInsightLocaleLive } from "@/lib/insights-urls";
 import { isCmsConfigured } from "./env";
 import { findRedirect, getPublished, getSettings } from "./queries";
-import { getPublicBlogPost } from "./public-lists";
+import { getPublicBlogPost, getPublicInsight } from "./public-lists";
 import type { BlogPost } from "@/data/blog";
+import type { InsightPost } from "@/data/insights/types";
 
-export { cmsBlogToPost, cmsPortfolioToMeta, cmsProjectToMeta } from "./public-mappers";
+export { cmsBlogToPost, cmsInsightToPost, cmsPortfolioToMeta, cmsProjectToMeta } from "./public-mappers";
 export {
   getHomeBlogPosts,
+  getHomeInsights,
   getPublicBlogPost,
   getPublicBlogPosts,
+  getPublicInsight,
+  getPublicInsights,
   getPublicPortfolio,
   getPublicPortfolioItem,
   getPublicProject,
@@ -46,7 +51,10 @@ export async function getPublicContact() {
   };
 }
 
-export async function resolveSlugRedirect(kind: "layihelar" | "portfolio" | "bloq" | "xidmetler", slug: string) {
+export async function resolveSlugRedirect(
+  kind: "layihelar" | "portfolio" | "bloq" | "xidmetler" | "insights",
+  slug: string,
+) {
   return findRedirect(`/${kind}/${slug}`);
 }
 
@@ -62,6 +70,22 @@ export async function resolvePublicBlog(locale: string, slug: string) {
   const canonicalSlug = getBlogLocaleSlug(post, locale);
   if (live && canonicalSlug && canonicalSlug !== slug) {
     return { post, live, redirectTo: `/bloq/${canonicalSlug}` };
+  }
+  return { post, live, redirectTo: null as string | null };
+}
+
+export async function resolvePublicInsight(locale: string, slug: string) {
+  const redirected = await resolveSlugRedirect("insights", slug);
+  const viaRedirect = redirected?.to_path.replace(/^\/insights\//, "") ?? "";
+  const post =
+    (await getPublicInsight(slug)) ??
+    (viaRedirect ? await getPublicInsight(viaRedirect) : null);
+  if (!post) return { post: null as InsightPost | null, live: false, redirectTo: null as string | null };
+
+  const live = isInsightLocaleLive(post, locale);
+  const canonicalSlug = getInsightLocaleSlug(post, locale);
+  if (live && canonicalSlug && canonicalSlug !== slug) {
+    return { post, live, redirectTo: `/insights/${canonicalSlug}` };
   }
   return { post, live, redirectTo: null as string | null };
 }

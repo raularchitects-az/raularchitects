@@ -1,5 +1,6 @@
 import { unstable_cache } from "next/cache";
 import { cache } from "react";
+import { isMissingRelationError } from "./missing-table";
 import { createAdminClient, createPublicReadClient, createServiceClient } from "./supabase";
 import type { AuditRow, CmsRow, ContentStatus, MediaRow } from "./types";
 
@@ -27,7 +28,14 @@ function normalizeMediaRow(row: Record<string, unknown>): MediaRow | null {
 }
 
 export type { CmsRow, ContentStatus };
-export type EntityType = "projects" | "portfolio" | "blog_posts" | "services" | "site_settings" | "media";
+export type EntityType =
+  | "projects"
+  | "portfolio"
+  | "blog_posts"
+  | "insights"
+  | "services"
+  | "site_settings"
+  | "media";
 
 export async function listEntity(table: EntityType) {
   const supabase = await createAdminClient();
@@ -37,7 +45,10 @@ export async function listEntity(table: EntityType) {
     .select("*")
     .order("sort_order", { ascending: true })
     .order("updated_at", { ascending: false });
-  if (error) throw error;
+  if (error) {
+    if (table === "insights" && isMissingRelationError(error)) return [];
+    throw error;
+  }
   return (data ?? []) as CmsRow[];
 }
 
@@ -47,13 +58,16 @@ export async function getEntity(table: EntityType, id: string) {
   if (!supabase) return null;
   const { data, error } = await supabase.from(table).select("*").eq("id", id).maybeSingle();
   if (error) {
+    if (table === "insights" && isMissingRelationError(error)) return null;
     console.error("[cms] getEntity", table, error.code, error.message);
     return null;
   }
   return (data ?? null) as CmsRow | null;
 }
 
-async function fetchPublished(table: "projects" | "portfolio" | "blog_posts" | "services") {
+export type CatalogTable = "projects" | "portfolio" | "blog_posts" | "insights" | "services";
+
+async function fetchPublished(table: CatalogTable) {
   const client = createPublicReadClient();
   if (!client) return [] as CmsRow[];
   const { data, error } = await client
@@ -63,26 +77,26 @@ async function fetchPublished(table: "projects" | "portfolio" | "blog_posts" | "
     .eq("is_active", true)
     .order("sort_order", { ascending: true });
   if (error) {
+    if (isMissingRelationError(error)) return [] as CmsRow[];
     console.error(`[cms] public ${table}`, error.code, error.message);
     return [] as CmsRow[];
   }
   return (data ?? []) as CmsRow[];
 }
 
-export const getPublished = cache(async (table: "projects" | "portfolio" | "blog_posts" | "services") =>
+export const getPublished = cache(async (table: CatalogTable) =>
   unstable_cache(() => fetchPublished(table), ["cms-published", table], {
     revalidate: 60,
     tags: ["cms", `cms-${table}`],
   })(),
 );
 
-export type CatalogTable = "projects" | "portfolio" | "blog_posts" | "services";
-
 async function fetchCatalogRows(table: CatalogTable) {
   const client = createServiceClient() ?? createPublicReadClient();
   if (!client) return [] as CmsRow[];
   const { data, error } = await client.from(table).select("*").order("sort_order", { ascending: true });
   if (error) {
+    if (isMissingRelationError(error)) return [] as CmsRow[];
     console.error(`[cms] catalog ${table}`, error.code, error.message);
     return [] as CmsRow[];
   }
@@ -96,10 +110,7 @@ export const getCatalogRows = cache(async (table: CatalogTable) =>
   })(),
 );
 
-export async function getPublishedBySlug(
-  table: "projects" | "portfolio" | "blog_posts" | "services",
-  slug: string,
-) {
+export async function getPublishedBySlug(table: CatalogTable, slug: string) {
   const rows = await getPublished(table);
   return rows.find((row) => row.slug === slug) ?? null;
 }
@@ -161,21 +172,28 @@ export async function listMedia() {
 }
 
 export async function dashboardStats() {
+  const empty = { total: 0, published: 0, draft: 0 };
   const supabase = await createAdminClient();
   if (!supabase) {
     return {
-      projects: { total: 0, published: 0, draft: 0 },
-      portfolio: { total: 0, published: 0, draft: 0 },
-      blog: { total: 0, published: 0, draft: 0 },
+      projects: empty,
+      portfolio: empty,
+      blog: empty,
+      insights: empty,
     };
   }
   const count = async (table: string, status?: ContentStatus) => {
     let q = supabase.from(table).select("id", { count: "exact", head: true });
     if (status) q = q.eq("status", status);
-    const { count: n } = await q;
+    const { count: n, error } = await q;
+    if (error) {
+      if (isMissingRelationError(error)) return 0;
+      console.error("[cms] dashboardStats", table, error.code, error.message);
+      return 0;
+    }
     return n ?? 0;
   };
-  const [pt, pp, pd, ot, op, od, bt, bp, bd] = await Promise.all([
+  const [pt, pp, pd, ot, op, od, bt, bp, bd, it, ip, id] = await Promise.all([
     count("projects"),
     count("projects", "published"),
     count("projects", "draft"),
@@ -185,11 +203,15 @@ export async function dashboardStats() {
     count("blog_posts"),
     count("blog_posts", "published"),
     count("blog_posts", "draft"),
+    count("insights"),
+    count("insights", "published"),
+    count("insights", "draft"),
   ]);
   return {
     projects: { total: pt, published: pp, draft: pd },
     portfolio: { total: ot, published: op, draft: od },
     blog: { total: bt, published: bp, draft: bd },
+    insights: { total: it, published: ip, draft: id },
   };
 }
 

@@ -1,8 +1,10 @@
 import type { BlogPost } from "@/data/blog";
+import type { InsightPost } from "@/data/insights/types";
 import type { PortfolioMeta } from "@/data/portfolio";
 import { getProjectGalleryGroups, type ProjectMeta } from "@/data/projects";
 import type { ServiceMeta } from "@/data/services";
 import { fallbackBlogSlugs } from "@/lib/blog-urls";
+import { fallbackInsightSlugs } from "@/lib/insights-urls";
 import { mediaPublicUrl } from "./media-url";
 import { getSettings } from "./queries";
 import { LEGACY_HIDDEN_SETTINGS_KEY, parseHiddenLegacyIds } from "./legacy";
@@ -200,6 +202,57 @@ export function cmsBlogToPost(row: CmsRow): BlogPost {
     category: (row.category as BlogPost["category"]) || "architecture",
     serviceSlug: "bim-ile-layihelendirme",
     relatedHrefs: ["/xidmetler", "/elaqe"],
+    copy,
+  };
+}
+
+export function cmsInsightToPost(row: CmsRow): InsightPost {
+  const locales = ["az", "en", "ru", "de"] as const;
+  const mapped = fallbackInsightSlugs(row.slug);
+  const slugs = Object.fromEntries(
+    locales.map((locale) => {
+      const t = pickLocaleT(row, locale);
+      const explicit = t.slug?.trim();
+      if (explicit) return [locale, explicit];
+      if (mapped[locale] && mapped[locale] !== row.slug) return [locale, mapped[locale]];
+      if (t.title?.trim() || locale === "az") return [locale, row.slug];
+      return [locale, ""];
+    }),
+  ) as InsightPost["slugs"];
+
+  const copy = Object.fromEntries(
+    locales.map((locale) => {
+      const t = pickLocaleT(row, locale);
+      const title = t.title?.trim() || "";
+      return [
+        locale,
+        {
+          title,
+          seoTitle: t.seoTitle || (locale === "az" ? row.seo_title : "") || title,
+          description: t.description || t.excerpt || t.short || (locale === "az" ? row.meta_description || "" : ""),
+          excerpt: t.excerpt || t.short || "",
+          ctaLabel: t.ctaLabel || "",
+          ctaText: t.ctaText || "",
+          blocks: markdownToBlocks(t.body || t.full || ""),
+          published: t.published !== false,
+        },
+      ];
+    }),
+  ) as InsightPost["copy"];
+
+  return {
+    slug: row.slug,
+    slugs,
+    publishedAt: cmsDatePrefix(row.published_at) || cmsDatePrefix(row.created_at) || "1970-01-01",
+    image: cover(row) || "/images/insights/placeholder.svg",
+    imageAlt: {
+      az: pickLocaleT(row, "az").imageAlt || pickLocaleT(row, "az").title || row.slug,
+      en: pickLocaleT(row, "en").imageAlt || pickLocaleT(row, "en").title || row.slug,
+      ru: pickLocaleT(row, "ru").imageAlt || pickLocaleT(row, "ru").title || row.slug,
+      de: pickLocaleT(row, "de").imageAlt || pickLocaleT(row, "de").title || row.slug,
+    },
+    category: (row.category as InsightPost["category"]) || "architecture",
+    relatedHrefs: ["/layihelar", "/elaqe"],
     copy,
   };
 }

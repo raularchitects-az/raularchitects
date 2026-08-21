@@ -5,7 +5,14 @@ import { useRouter } from "next/navigation";
 import { restoreRevision, upsertRecord } from "@/lib/cms/actions";
 import type { EntityType } from "@/lib/cms/queries";
 import type { CmsRow, MediaRow, Translations } from "@/lib/cms/types";
-import { ADMIN_LOCALES, BLOG_CATEGORIES, COUNTRIES, PROJECT_CATEGORIES, SERVICE_FILTERS } from "@/lib/cms/types";
+import {
+  ADMIN_LOCALES,
+  BLOG_CATEGORIES,
+  COUNTRIES,
+  INSIGHT_CATEGORIES,
+  PROJECT_CATEGORIES,
+  SERVICE_FILTERS,
+} from "@/lib/cms/types";
 import { fallbackBlogSlugs } from "@/lib/blog-urls";
 import { productionAbsoluteUrl } from "@/lib/site";
 import type { Locale } from "@/i18n/routing";
@@ -27,6 +34,10 @@ function emptyT(): Translations {
   return { az: {}, en: {}, de: {}, ru: {} };
 }
 
+function isLocaleSlugEntity(table: EntityType) {
+  return table === "blog_posts" || table === "insights";
+}
+
 export function ContentForm({
   table,
   row,
@@ -44,6 +55,8 @@ export function ContentForm({
   const translations = row?.translations ?? emptyT();
   const [error, setError] = useState("");
   const [editorLocale, setEditorLocale] = useState<(typeof ADMIN_LOCALES)[number]>("az");
+  const localeSlugEntity = isLocaleSlugEntity(table);
+  const publicBase = table === "insights" ? "/insights" : "/bloq";
 
   async function onSubmit(formData: FormData) {
     setError("");
@@ -63,8 +76,10 @@ export function ContentForm({
         ctaLabel: String(formData.get(`${locale}_ctaLabel`) ?? ""),
         ctaText: String(formData.get(`${locale}_ctaText`) ?? ""),
         slug: String(formData.get(`${locale}_slug`) ?? ""),
-        published: table === "blog_posts" ? formData.get(`${locale}_published`) === "on" : undefined,
+        published: localeSlugEntity ? formData.get(`${locale}_published`) === "on" : undefined,
         legacySourceId: translations[locale]?.legacySourceId,
+        migratedFromPortfolioId: translations[locale]?.migratedFromPortfolioId,
+        migratedToProjectSlug: translations[locale]?.migratedToProjectSlug,
       };
     }
     if (table === "blog_posts") {
@@ -74,7 +89,7 @@ export function ContentForm({
       };
     }
     const payload: Record<string, unknown> = {
-      slug: table === "blog_posts" ? String(formData.get("az_slug") ?? "") : String(formData.get("slug") ?? ""),
+      slug: localeSlugEntity ? String(formData.get("az_slug") ?? "") : String(formData.get("slug") ?? ""),
       status: String(formData.get("status") ?? "draft"),
       is_active: formData.get("is_active") === "on",
       sort_order: Number(formData.get("sort_order") ?? 0),
@@ -122,6 +137,10 @@ export function ContentForm({
       payload.featured = formData.get("featured") === "on";
       payload.published_at = String(formData.get("published_at") ?? "") || null;
     }
+    if (table === "insights") {
+      payload.category = String(formData.get("category") ?? "architecture");
+      payload.published_at = String(formData.get("published_at") ?? "") || null;
+    }
     if (table === "services") {
       payload.icon = String(formData.get("icon") ?? "") || null;
       payload.number = String(formData.get("number") ?? "") || null;
@@ -143,7 +162,7 @@ export function ContentForm({
     <form action={onSubmit} className="flex max-w-4xl flex-col gap-6">
       {error ? <p className="text-sm text-red-700">{error}</p> : null}
       <div className="grid gap-4 sm:grid-cols-2">
-        {table === "blog_posts" ? null : (
+        {localeSlugEntity ? null : (
           <Field label="URL slug">
             <TextInput name="slug" required defaultValue={row?.slug} placeholder="bim-memarliq-nedir" />
           </Field>
@@ -163,6 +182,16 @@ export function ContentForm({
           Aktiv
         </label>
       </div>
+
+      {table === "insights" ? (
+        <MediaPicker
+          label="Cover şəkli (məcburi görünüş — dəyişmək üçün seçin)"
+          name="cover_path"
+          defaultPath={row?.cover_path}
+          items={media}
+          loadError={mediaError}
+        />
+      ) : null}
 
       {table === "projects" || table === "portfolio" ? (
         <Field label="Kateqoriya">
@@ -237,6 +266,23 @@ export function ContentForm({
         </>
       ) : null}
 
+      {table === "insights" ? (
+        <>
+          <Field label="Kateqoriya">
+            <Select name="category" defaultValue={row?.category ?? "architecture"}>
+              {INSIGHT_CATEGORIES.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </Select>
+          </Field>
+          <Field label="Publish tarixi">
+            <TextInput name="published_at" type="date" defaultValue={row?.published_at?.slice(0, 10) ?? ""} />
+          </Field>
+        </>
+      ) : null}
+
       {table === "services" ? (
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="İkon">
@@ -252,7 +298,9 @@ export function ContentForm({
         </div>
       ) : null}
 
-      <MediaPicker label="Cover şəkli" name="cover_path" defaultPath={row?.cover_path} items={media} loadError={mediaError} />
+      {table === "insights" ? null : (
+        <MediaPicker label="Cover şəkli" name="cover_path" defaultPath={row?.cover_path} items={media} loadError={mediaError} />
+      )}
       <MediaPicker label="Open Graph şəkli" name="og_image_path" defaultPath={row?.og_image_path} items={media} loadError={mediaError} />
       <Field label="Video URL">
         <TextInput name="video_url" defaultValue={row?.video_url ?? ""} />
@@ -321,6 +369,12 @@ export function ContentForm({
         onLocaleChange={setEditorLocale}
         render={(locale) => {
           const t = translations[locale] ?? {};
+          const fallbackSlug =
+            table === "blog_posts"
+              ? fallbackBlogSlugs(row?.slug ?? "")[locale as Locale] || (locale === "az" ? row?.slug : "") || ""
+              : locale === "az"
+                ? row?.slug || ""
+                : "";
           return (
             <div className="grid gap-4">
               <Field label={`Başlıq (${locale})`}>
@@ -343,23 +397,22 @@ export function ContentForm({
               <Field label={`Meta description (${locale})`}>
                 <TextArea name={`${locale}_seoDesc`} defaultValue={t.description || ""} />
               </Field>
-              {table === "blog_posts" ? (
+              {localeSlugEntity ? (
                 <>
                   <Field label={`Public slug (${locale})`}>
                     <TextInput
                       name={`${locale}_slug`}
                       required={locale === "az"}
-                      defaultValue={
-                        t.slug ||
-                        fallbackBlogSlugs(row?.slug ?? "")[locale as Locale] ||
-                        (locale === "az" ? row?.slug : "") ||
-                        ""
-                      }
+                      defaultValue={t.slug || fallbackSlug}
                       placeholder={`${locale}-slug`}
                     />
                   </Field>
                   <p className="text-xs text-charcoal/45">
-                    Public URL: {productionAbsoluteUrl(locale, `/bloq/${t.slug || fallbackBlogSlugs(row?.slug ?? "")[locale as Locale] || row?.slug || "slug"}`)}
+                    Public URL:{" "}
+                    {productionAbsoluteUrl(
+                      locale,
+                      `${publicBase}/${t.slug || fallbackSlug || row?.slug || "slug"}`,
+                    )}
                   </p>
                   <label className="flex items-center gap-2 text-sm">
                     <input
@@ -379,12 +432,16 @@ export function ContentForm({
                   <Field label={`Şəkil alt (${locale})`}>
                     <TextInput name={`${locale}_imageAlt`} defaultValue={t.imageAlt || ""} />
                   </Field>
-                  <Field label={`CTA (${locale})`}>
-                    <TextInput name={`${locale}_ctaLabel`} defaultValue={t.ctaLabel || ""} />
-                  </Field>
-                  <Field label={`CTA mətn (${locale})`}>
-                    <TextArea name={`${locale}_ctaText`} defaultValue={t.ctaText || ""} />
-                  </Field>
+                  {table === "blog_posts" ? (
+                    <>
+                      <Field label={`CTA (${locale})`}>
+                        <TextInput name={`${locale}_ctaLabel`} defaultValue={t.ctaLabel || ""} />
+                      </Field>
+                      <Field label={`CTA mətn (${locale})`}>
+                        <TextArea name={`${locale}_ctaText`} defaultValue={t.ctaText || ""} />
+                      </Field>
+                    </>
+                  ) : null}
                 </>
               ) : null}
             </div>
@@ -417,6 +474,16 @@ export function ContentForm({
         {table === "blog_posts" && row?.id ? (
           <a
             href={`/admin/preview/blog/${row.id}`}
+            target="_blank"
+            rel="noreferrer"
+            className="border border-charcoal/20 px-5 py-2.5 text-xs uppercase tracking-[0.18em]"
+          >
+            Preview
+          </a>
+        ) : null}
+        {table === "insights" && row?.id ? (
+          <a
+            href={`/admin/preview/insights/${row.id}`}
             target="_blank"
             rel="noreferrer"
             className="border border-charcoal/20 px-5 py-2.5 text-xs uppercase tracking-[0.18em]"

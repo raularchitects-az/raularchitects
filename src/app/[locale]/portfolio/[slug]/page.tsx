@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { notFound, redirect as nextRedirect } from "next/navigation";
+import { notFound, permanentRedirect, redirect as nextRedirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
@@ -11,6 +11,11 @@ import { ProjectGallery } from "@/components/project-gallery";
 import { getPortfolioItem } from "@/data/portfolio";
 import { getImportedEntry } from "@/data/folder-imports";
 import { getPublicPortfolio, getPublicPortfolioItem, resolveSlugRedirect } from "@/lib/cms/public";
+import { getCatalogRows } from "@/lib/cms/queries";
+import {
+  findMigratedProjectSlugForPortfolio,
+  isInsightsRestructureActive,
+} from "@/lib/cms/insights-rollout";
 import { entryMetadata } from "@/lib/cms/metadata";
 import { mediaPublicUrl } from "@/lib/cms/media-url";
 import { SITE_NAME, SITE_URL, publicCanonicalUrl } from "@/lib/site";
@@ -22,11 +27,40 @@ export async function generateStaticParams() {
   return routing.locales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
 }
 
+function queryStringFromSearchParams(searchParams: Record<string, string | string[] | undefined>) {
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(searchParams)) {
+    if (value === undefined) continue;
+    if (Array.isArray(value)) {
+      for (const item of value) params.append(key, item);
+    } else {
+      params.set(key, value);
+    }
+  }
+  const qs = params.toString();
+  return qs ? `?${qs}` : "";
+}
+
+async function resolveActivatedPortfolioTarget(slug: string) {
+  const redirected = await resolveSlugRedirect("portfolio", slug);
+  if (redirected?.to_path) return redirected.to_path;
+  const [projects, portfolios] = await Promise.all([
+    getCatalogRows("projects"),
+    getCatalogRows("portfolio"),
+  ]);
+  const projectSlug = findMigratedProjectSlugForPortfolio(slug, projects, portfolios);
+  if (projectSlug) return `/layihelar/${projectSlug}`;
+  return "/layihelar";
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
+  if (await isInsightsRestructureActive()) {
+    return { robots: { index: false, follow: true } };
+  }
   const { locale: localeParam, slug } = await params;
   const locale = asLocale(localeParam);
   const cms = await getPublicPortfolioItem(slug, locale);
@@ -47,13 +81,24 @@ export async function generateMetadata({
 
 export default async function PortfolioDetailPage({
   params,
-}: PageProps<"/[locale]/portfolio/[slug]">) {
+  searchParams,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const { locale: localeParam, slug } = await params;
   const locale = asLocale(localeParam);
   setRequestLocale(locale);
 
+  if (await isInsightsRestructureActive()) {
+    const target = await resolveActivatedPortfolioTarget(slug);
+    const query = queryStringFromSearchParams(await searchParams);
+    permanentRedirect(`${localizePublicPath(locale, target)}${query}`);
+  }
+
+  // State A/B: ignore portfolio→project DB redirects so Portfolio stays public.
   const redirected = await resolveSlugRedirect("portfolio", slug);
-  if (redirected) {
+  if (redirected?.to_path?.startsWith("/portfolio/")) {
     nextRedirect(localizePublicPath(locale, redirected.to_path));
   }
 
