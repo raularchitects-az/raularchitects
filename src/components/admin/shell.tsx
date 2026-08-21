@@ -10,6 +10,7 @@ const nav = [
   { href: "/admin/projects", label: "Layihələr" },
   { href: "/admin/insights", label: "Insights" },
   { href: "/admin/blog", label: "Bloq" },
+  { href: "/admin/services", label: "Xidmətlər" },
 ];
 
 export function AdminShell({

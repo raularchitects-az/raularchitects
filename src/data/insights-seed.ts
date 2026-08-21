@@ -74,7 +74,7 @@ Aşağıdakı suallar BIM-in erkən dəyərini yoxlamağa kömək edir:
         "bim-tikinti-evvel-problemler",
         "BIM tikinti başlamazdan əvvəl hansı problemləri həll edir? | Raul Architects",
         "BIM-in tikintidən əvvəl uyğunsuzluq, həcm və koordinasiya risklərini necə azaltmasına dair peşəkar izah.",
-        "Müasir fasad üzərində şəffaf BIM memarlıq modeli — Raul Architects Insights",
+        "BIM koordinasiya modeli — şəffaf memarlıq həcmi və mühəndislik kəsişmələri",
       ),
       en: t(
         "Which problems does BIM solve before construction starts?",
@@ -192,7 +192,7 @@ Praktik yoxlama siyahısı:
         "boyuk-layihelerde-budce",
         "Böyük layihələrdə büdcə niyə aşılır? 5 əsas səbəb | Raul Architects",
         "Böyük layihələrdə büdcə aşımının beş əsas səbəbi: brif, risk, koordinasiya və dəyişiklik idarəetməsi.",
-        "Büdcə və planlama üçün sakit material nümunələri və memarlıq mühiti — Raul Architects Insights",
+        "Büdcə və planlama — material nümunələri və memarlıq cizgiləri",
       ),
       en: t(
         "Why do budgets overrun on large projects? Five main reasons",
@@ -328,7 +328,7 @@ Tətbiqdən əvvəl yoxlayın:
         "avropa-azerbaycan-5-yanasma",
         "Avropada tətbiq olunan 5 yanaşma — Azərbaycan üçün | Raul Architects",
         "Avropa praktikasında yayılmış beş memarlıq yanaşmasının Azərbaycan kontekstində müzakirəsi.",
-        "Avropa üslubunda müasir yaşayış fasadı, premium redaksiya görüntüsü — Raul Architects Insights",
+        "Avropa şəhər memarlığı — sakit yaşayış küçəsi və müasir fasadlar",
       ),
       en: t(
         "Five European approaches that could be used more widely in Azerbaijan",
@@ -461,7 +461,7 @@ Dəyər yaratmaq üçün diqqət:
         "masterplan-kommersiya-deyeri",
         "Yaxşı masterplan kommersiya dəyərini necə artırır? | Raul Architects",
         "Masterplanın mərhələ, tipologiya və ictimai məkan vasitəsilə kommersiya dəyərinə təsiri.",
-        "Masterplan və şəhərsalma kontekstində yaşayış kompleksinin elevasiya görünüşü — Raul Architects Insights",
+        "Masterplan elevasiya görünüşü — yaşayış blokları və şəhərsalma sxemi",
       ),
       en: t(
         "How a strong masterplan increases a project’s commercial value",
@@ -585,7 +585,7 @@ Erkən dizayn intizamı uyğunsuzluqları və yenidən işləri azaltmağa köm�
         "memarliq-xerc-deyil",
         "Memarlıq xərc deyil: dizayn dəyəri necə artırır? | Raul Architects",
         "Düzgün memarlığın daşınmaz əmlak dəyərinə təsiri — zəmanətsiz, strategiya fokuslu izah.",
-        "İnvestisiya dəyərli müasir villa memarlığı, qızılı işıq — Raul Architects Insights",
+        "İnvestisiya dəyərli müasir yaşayış memarlığı — şüşə və daş fasad",
       ),
       en: t(
         "Architecture is not a cost: how good design can raise real-estate value",
@@ -709,7 +709,7 @@ Modullu və ya uyğunlaşdırıla bilən məkanlar funksiya dəyişəndə yenid�
         "bina-30-il-ucun",
         "Binanı növbəti 30 il üçün necə layihələndirmək olar? | Raul Architects",
         "Uzunmüddətli memarlıq: iqlim, texniki ehtiyat, material və çevik planlama prinsipləri.",
-        "Dayanıqlı memarlıq: yaşıl həyət və təbii materiallı müasir fasad — Raul Architects Insights",
+        "Dayanıqlı fasad — günəş qoruyucuları və yaşıl landşaft",
       ),
       en: t(
         "How to design a building for the next 30 years — not only for today",
@@ -842,7 +842,7 @@ Başlanğıc yoxlama siyahısı:
         "developer-7-qerar",
         "Developer memarla işdən əvvəl 7 qərar | Raul Architects",
         "Developer üçün memarla işə başlamazdan əvvəl verilməli yeddi əsas qərar.",
-        "Developer layihəsi üçün yüksək səviyyəli yaşayış kompleksi fasadı — Raul Architects Insights",
+        "Developer qarışıq-istifadə massinq — yaşayış və kommersiya podiumu",
       ),
       en: t(
         "Seven decisions a developer should make before working with an architect",
@@ -990,7 +990,7 @@ Başlamazdan əvvəl suallar:
         "digital-twin-nedir",
         "Digital Twin nədir və istismarda nə qazandırır? | Raul Architects",
         "Digital Twin anlayışı və bina istifadəyə verildikdən sonra istismar dəyəri — peşəkar izah.",
-        "Rəqəmsal əkiz konsepsiyası: bina kütləsi və işıqlı şəffaf memarlıq modeli — Raul Architects Insights",
+        "Rəqəmsal əkiz — fiziki bina və işıqlı rəqəmsal model yan-yana",
       ),
       en: t(
         "What is a Digital Twin — and what does it add after handover?",
@@ -1105,7 +1105,7 @@ Birgə iş üçün minimum razılaşmalar:
         "konseptden-icraya-bim",
         "Konseptdən icraya: memarlıq, mühəndislik və BIM | Raul Architects",
         "Bir layihədə memarlıq, mühəndislik və BIM-in konseptdən icraya necə birləşdiyinə dair izah.",
-        "Konseptdən icraya: müasir memarlıq detalının redaksiya görüntüsü — Raul Architects Insights",
+        "Konseptdən icraya — BIM iş axını və memarlıq mühəndislik detalı",
       ),
       en: t(
         "From concept to delivery: how architecture, engineering and BIM align on one project",
@@ -1229,7 +1229,7 @@ Bu gün üçün balans:
         "ai-ve-memarin-rolu",
         "AI memarlığı necə dəyişir və memarın rolu | Raul Architects",
         "AI-nin memarlığa təsiri və gələcəkdə memarın rolu — ehtiyatlı, peşəkar perspektiv.",
-        "Gələcək memarlıq forması — sakit parametrik həcm, AI konteksti — Raul Architects Insights",
+        "Gələcək memarlıq formu — parametrik fasad və məsuliyyətli AI dizayn",
       ),
       en: t(
         "How AI is changing architecture — and what the architect’s role becomes",
