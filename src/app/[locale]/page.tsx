@@ -150,7 +150,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
 
       {homeFlags.showProjects !== false ? (
       <section className="relative bg-cream py-20 sm:py-28">
-        <Container>
+        <Container className="min-[1921px]:max-w-[90rem] min-[2560px]:max-w-[100rem] min-[3440px]:max-w-[108rem]">
           <Reveal>
             <h2 className="inline-flex items-center gap-3 text-3xl font-semibold tracking-wide text-charcoal sm:text-4xl">
               {upper(nav("projects"))}
@@ -166,7 +166,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
           </Link>
 
           {latestProjects.length > 0 ? (
-          <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+          <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 min-[2560px]:gap-5">
             {latestProjects.map((project, index) => (
               <Reveal key={project.slug} delay={index * 40}>
                 <Link
@@ -177,7 +177,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
                     src={project.image}
                     alt={project.title || project.slug}
                     fill
-                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+                    sizes="(min-width: 3440px) 17vw, (min-width: 2560px) 15vw, (min-width: 1921px) 13vw, (min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     style={project.objectPosition ? { objectPosition: project.objectPosition } : undefined}
                   />
