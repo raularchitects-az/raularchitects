@@ -157,13 +157,6 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
               <TriangleMark size={18} />
             </h2>
           </Reveal>
-          <Link
-            href="/layihelar"
-            className="mt-6 inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-bronze-dark transition-colors duration-300 hover:text-[#6b4a32]"
-          >
-            {upper(homeMsg.allProjectsCta)}
-            <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} />
-          </Link>
 
           {latestProjects.length > 0 ? (
           <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 min-[2560px]:gap-5">
@@ -182,11 +175,11 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
                     style={project.objectPosition ? { objectPosition: project.objectPosition } : undefined}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal-dark/80 via-charcoal-dark/10 to-transparent transition-colors duration-300 group-hover:from-bronze-dark/90" />
-                  <span className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
+                  <span className="absolute inset-x-0 bottom-0 min-w-0 p-3 sm:p-4">
                     <span className="block text-[10px] font-medium tracking-[0.18em] text-cream/70">
                       {upper(c(project.category))}
                     </span>
-                    <span className="mt-1 block text-xs font-medium tracking-[0.14em] text-cream sm:text-sm">
+                    <span className="mt-1 block truncate text-xs font-medium tracking-[0.14em] text-cream sm:text-sm">
                       {project.title || project.slug}
                     </span>
                   </span>
@@ -195,6 +188,13 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
             ))}
           </div>
           ) : null}
+          <Link
+            href="/layihelar"
+            className={`inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-bronze-dark transition-colors duration-300 hover:text-[#6b4a32] ${latestProjects.length > 0 ? "mt-6" : "mt-12"}`}
+          >
+            {upper(homeMsg.allProjectsCta)}
+            <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} />
+          </Link>
         </Container>
       </section>
       ) : null}
@@ -261,13 +261,6 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
               <TriangleMark size={18} className="brightness-0 invert" />
             </h2>
           </Reveal>
-          <Link
-            href="/insights"
-            className="mt-6 inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-cream/80 transition-colors duration-300 hover:text-cream"
-          >
-            {upper(homeMsg.allInsightsCta)}
-            <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} />
-          </Link>
 
           {latestInsights.length > 0 ? (
           <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
@@ -285,11 +278,11 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal-dark/80 via-charcoal-dark/10 to-transparent transition-colors duration-300 group-hover:from-charcoal-dark/90" />
-                  <span className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
+                  <span className="absolute inset-x-0 bottom-0 min-w-0 p-3 sm:p-4">
                     <span className="block text-[10px] font-medium tracking-[0.18em] text-cream/70">
                       {upper(insightsT ? insightsT(`categories.${item.category}`) : item.category)}
                     </span>
-                    <span className="mt-1 block text-xs font-medium tracking-[0.14em] text-cream sm:text-sm">
+                    <span className="mt-1 block truncate text-xs font-medium tracking-[0.14em] text-cream sm:text-sm">
                       {getInsightCopy(item, locale)?.title || item.slug}
                     </span>
                   </span>
@@ -298,6 +291,13 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
             ))}
           </div>
           ) : null}
+          <Link
+            href="/insights"
+            className={`inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-cream/80 transition-colors duration-300 hover:text-cream ${latestInsights.length > 0 ? "mt-6" : "mt-12"}`}
+          >
+            {upper(homeMsg.allInsightsCta)}
+            <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} />
+          </Link>
         </Container>
       </section>
       ) : null}
