@@ -653,6 +653,7 @@
       "email": "E-Mail-Adresse",
       "message": "Kurzbeschreibung Ihres Projekts",
       "submit": "Senden",
+      "sending": "Wird gesendet…",
       "success": "Vielen Dank! Wir melden uns in Kürze bei Ihnen."
     },
     "socials": "Soziale Netzwerke"
