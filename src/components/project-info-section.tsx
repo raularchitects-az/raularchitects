@@ -26,7 +26,7 @@ export function ProjectInfoSection({
     <section className="border-b border-charcoal/10 bg-cream py-16 sm:py-24">
       <Container wide>
         <div className={PUBLIC_PROJECT_INFO_GRID}>
-          <dl className="space-y-8">
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-8 lg:block lg:space-y-8">
             {facts.map((fact) => (
               <div key={fact.label}>
                 <dt className="text-sm font-bold uppercase tracking-[0.04em] text-charcoal">{fact.label}</dt>

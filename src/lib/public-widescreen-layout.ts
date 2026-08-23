@@ -29,3 +29,17 @@ export const PUBLIC_PROJECT_DESCRIPTION =
 
 export const PUBLIC_ARTICLE_COVER_SIZES =
   "(min-width: 2560px) 48rem, (min-width: 1600px) 44rem, (min-width: 768px) 40rem, 100vw";
+
+/** Insight article detail page — wider shell from 1600px (detail route only). */
+export const PUBLIC_INSIGHT_DETAIL_COLUMN =
+  "mx-auto w-full max-w-3xl xl:max-w-[40rem] min-[1600px]:max-w-[68rem] min-[2560px]:max-w-[72rem] min-[3440px]:max-w-[75rem]";
+
+/** Insight body prose — full detail width until ultrawide, then cap line length. */
+export const PUBLIC_INSIGHT_DETAIL_BODY =
+  "w-full min-[2560px]:max-w-[52rem] min-[3440px]:max-w-[54rem]";
+
+export const PUBLIC_INSIGHT_DETAIL_BODY_TYPO =
+  "min-[1600px]:text-[1.0625rem] min-[1600px]:leading-[1.85] min-[1600px]:[&_p]:text-[1.0625rem] min-[1600px]:[&_p]:leading-[1.85] min-[1600px]:[&_li]:text-[1.0625rem] min-[1600px]:[&_li]:leading-[1.85] min-[1600px]:[&_h2]:text-[1.0625rem] min-[1600px]:[&_h3]:text-[1.0625rem] min-[1600px]:[&_.flex]:gap-7";
+
+export const PUBLIC_INSIGHT_COVER_SIZES =
+  "(min-width: 3440px) 75rem, (min-width: 2560px) 72rem, (min-width: 1600px) 68rem, (min-width: 768px) 40rem, 100vw";
