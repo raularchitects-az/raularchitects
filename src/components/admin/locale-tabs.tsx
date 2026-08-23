@@ -38,9 +38,13 @@ export function LocaleTabs({
           </button>
         ))}
       </div>
-      <div>
+      <div className="relative">
         {ADMIN_LOCALES.map((code) => (
-          <div key={code} hidden={code !== locale}>
+          <div
+            key={code}
+            className={code === locale ? "flex flex-col gap-4" : "pointer-events-none absolute inset-0 -z-10 opacity-0"}
+            aria-hidden={code !== locale}
+          >
             {render(code)}
           </div>
         ))}

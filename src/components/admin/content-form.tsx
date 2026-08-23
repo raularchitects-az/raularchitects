@@ -34,6 +34,18 @@ function emptyT(): Translations {
   return { az: {}, en: {}, de: {}, ru: {} };
 }
 
+/** Hidden locale tabs omit controls from FormData — keep stored values for those fields. */
+function formField(formData: FormData, name: string, fallback: string) {
+  const value = formData.get(name);
+  return value !== null ? String(value) : fallback;
+}
+
+function formCheckbox(formData: FormData, name: string, fallback: boolean) {
+  const value = formData.get(name);
+  if (value === null) return fallback;
+  return value === "on";
+}
+
 function isLocaleSlugEntity(table: EntityType) {
   return table === "blog_posts" || table === "insights";
 }
@@ -64,37 +76,40 @@ export function ContentForm({
     setError("");
     const next: Translations = emptyT();
     for (const locale of ADMIN_LOCALES) {
+      const prev = translations[locale] ?? {};
       next[locale] = {
-        title: String(formData.get(`${locale}_title`) ?? ""),
-        name: String(formData.get(`${locale}_title`) ?? ""),
-        short: String(formData.get(`${locale}_short`) ?? ""),
-        excerpt: String(formData.get(`${locale}_short`) ?? ""),
-        full: String(formData.get(`${locale}_body`) ?? ""),
-        body: String(formData.get(`${locale}_body`) ?? ""),
-        intro: String(formData.get(`${locale}_intro`) ?? ""),
-        seoTitle: String(formData.get(`${locale}_seoTitle`) ?? ""),
-        description: String(formData.get(`${locale}_seoDesc`) ?? ""),
-        imageAlt: String(formData.get(`${locale}_imageAlt`) ?? ""),
-        year: String(formData.get(`${locale}_year`) ?? ""),
-        status: String(formData.get(`${locale}_status`) ?? ""),
-        client: String(formData.get(`${locale}_client`) ?? ""),
+        title: formField(formData, `${locale}_title`, prev.title || prev.name || ""),
+        name: formField(formData, `${locale}_title`, prev.name || prev.title || ""),
+        short: formField(formData, `${locale}_short`, prev.short || prev.excerpt || ""),
+        excerpt: formField(formData, `${locale}_short`, prev.excerpt || prev.short || ""),
+        full: formField(formData, `${locale}_body`, prev.full || prev.body || ""),
+        body: formField(formData, `${locale}_body`, prev.body || prev.full || ""),
+        intro: formField(formData, `${locale}_intro`, prev.intro || ""),
+        seoTitle: formField(formData, `${locale}_seoTitle`, prev.seoTitle || ""),
+        description: formField(formData, `${locale}_seoDesc`, prev.description || ""),
+        imageAlt: formField(formData, `${locale}_imageAlt`, prev.imageAlt || ""),
+        year: formField(formData, `${locale}_year`, prev.year || ""),
+        status: formField(formData, `${locale}_status`, prev.status || ""),
+        client: formField(formData, `${locale}_client`, prev.client || ""),
         location:
           table === "projects" && locale === "az"
-            ? String(formData.get("location") ?? "")
-            : String(formData.get(`${locale}_location`) ?? ""),
+            ? formField(formData, "location", prev.location || "")
+            : formField(formData, `${locale}_location`, prev.location || ""),
         area:
           table === "projects" && locale === "az"
-            ? String(formData.get("area_m2") ?? "")
+            ? formField(formData, "area_m2", prev.area || "")
             : table === "projects"
-              ? String(formData.get(`${locale}_area`) ?? "")
+              ? formField(formData, `${locale}_area`, prev.area || "")
               : undefined,
-        ctaLabel: String(formData.get(`${locale}_ctaLabel`) ?? ""),
-        ctaText: String(formData.get(`${locale}_ctaText`) ?? ""),
-        slug: String(formData.get(`${locale}_slug`) ?? ""),
-        published: localeSlugEntity ? formData.get(`${locale}_published`) === "on" : undefined,
-        legacySourceId: translations[locale]?.legacySourceId,
-        migratedFromPortfolioId: translations[locale]?.migratedFromPortfolioId,
-        migratedToProjectSlug: translations[locale]?.migratedToProjectSlug,
+        ctaLabel: formField(formData, `${locale}_ctaLabel`, prev.ctaLabel || ""),
+        ctaText: formField(formData, `${locale}_ctaText`, prev.ctaText || ""),
+        slug: formField(formData, `${locale}_slug`, prev.slug || ""),
+        published: localeSlugEntity
+          ? formCheckbox(formData, `${locale}_published`, prev.published !== false && Boolean(prev.title || prev.name))
+          : undefined,
+        legacySourceId: prev.legacySourceId,
+        migratedFromPortfolioId: prev.migratedFromPortfolioId,
+        migratedToProjectSlug: prev.migratedToProjectSlug,
       };
     }
     if (table === "blog_posts") {

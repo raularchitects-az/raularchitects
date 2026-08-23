@@ -64,6 +64,14 @@ function applyTranslatedFields(
   }
 }
 
+function readField(block: TranslationBlock | undefined, key: StringField) {
+  if (!block) return "";
+  if (key === "body") return text(block.body || block.full);
+  if (key === "short") return text(block.short || block.excerpt);
+  if (key === "title") return text(block.title || block.name);
+  return text((block as Record<string, unknown>)[key]);
+}
+
 export async function applyAutoTranslations(
   table: EntityType,
   translations: Translations,
@@ -72,6 +80,7 @@ export async function applyAutoTranslations(
     location?: string | null;
     area_m2?: string | null;
   },
+  previous?: Translations | null,
 ) {
   if (table !== "projects" && table !== "blog_posts" && table !== "insights") return;
   if (!process.env.DEEPL_API_KEY?.trim()) return;
@@ -119,6 +128,15 @@ export async function applyAutoTranslations(
 
   const translated = await translateFieldsForLocales(projectFields, azValues, TARGET_LOCALES);
   for (const locale of TARGET_LOCALES) {
-    applyTranslatedFields(translations, locale, translated[locale]);
+    const patch: Partial<Record<StringField, string>> = {};
+    for (const key of projectFields) {
+      const incoming = readField(translations[locale], key);
+      const prior = readField(previous?.[locale], key);
+      // Keep manual edits in EN/DE/RU when that locale tab was saved.
+      if (incoming && prior && incoming !== prior) continue;
+      const value = translated[locale][key];
+      if (value?.trim()) patch[key] = value;
+    }
+    applyTranslatedFields(translations, locale, patch);
   }
 }
