@@ -1,3 +1,5 @@
+import "server-only";
+
 type InquiryPayload = {
   name: string;
   email: string;
@@ -5,12 +7,17 @@ type InquiryPayload = {
   to: string;
 };
 
+/** Bracket access so Next.js reads env at runtime on Vercel, not at build time. */
+function env(name: string) {
+  return process.env[name]?.trim();
+}
+
 function inquiryFromAddress() {
-  return process.env.INQUIRY_FROM_EMAIL?.trim() || "Raul Architects <onboarding@resend.dev>";
+  return env("INQUIRY_FROM_EMAIL") || "Raul Architects <onboarding@resend.dev>";
 }
 
 export async function sendInquiryEmail(payload: InquiryPayload) {
-  const apiKey = process.env.RESEND_API_KEY?.trim();
+  const apiKey = env("RESEND_API_KEY");
   if (!apiKey) {
     throw new Error(
       "RESEND_API_KEY is not configured. Add it to .env.local (server-only) and verify your domain in Resend.",
@@ -39,7 +46,7 @@ export async function sendInquiryEmail(payload: InquiryPayload) {
 }
 
 export function defaultInquiryRecipient(cmsEmail?: string | null) {
-  const configured = process.env.INQUIRY_TO_EMAIL?.trim();
+  const configured = env("INQUIRY_TO_EMAIL");
   if (configured) return configured;
   if (cmsEmail?.trim()) return cmsEmail.trim();
   return "office@raularchitects.com";
