@@ -73,6 +73,9 @@ export function ContentForm({
         seoTitle: String(formData.get(`${locale}_seoTitle`) ?? ""),
         description: String(formData.get(`${locale}_seoDesc`) ?? ""),
         imageAlt: String(formData.get(`${locale}_imageAlt`) ?? ""),
+        year: String(formData.get(`${locale}_year`) ?? ""),
+        status: String(formData.get(`${locale}_status`) ?? ""),
+        client: String(formData.get(`${locale}_client`) ?? ""),
         ctaLabel: String(formData.get(`${locale}_ctaLabel`) ?? ""),
         ctaText: String(formData.get(`${locale}_ctaText`) ?? ""),
         slug: String(formData.get(`${locale}_slug`) ?? ""),
@@ -108,6 +111,7 @@ export function ContentForm({
     if (table === "projects") {
       payload.location = String(formData.get("location") ?? "") || null;
       payload.area_m2 = String(formData.get("area_m2") ?? "") || null;
+      payload.published_at = String(formData.get("published_at") ?? "") || null;
       payload.sections = {
         exterior: {
           content: String(formData.get("sec_exterior") ?? ""),
@@ -206,14 +210,28 @@ export function ContentForm({
       ) : null}
 
       {table === "projects" ? (
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Lokasiya">
-            <TextInput name="location" defaultValue={row?.location ?? ""} />
-          </Field>
-          <Field label="Sahə / m²">
-            <TextInput name="area_m2" defaultValue={row?.area_m2 ?? ""} />
-          </Field>
-        </div>
+        <>
+          <div className="rounded-md border border-charcoal/10 bg-cream-dark/30 p-4">
+            <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-charcoal/55">
+              Layihə detall səhifəsi
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-charcoal/50">
+              Lokasiya və sahə bütün dillərdə eynidir. Tarix, status, müştəri və təsvir hər dil tabında ayrıca
+              redaktə olunur.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Lokasiya">
+              <TextInput name="location" defaultValue={row?.location ?? ""} placeholder="Bakı, Azərbaycan" />
+            </Field>
+            <Field label="Sahə / ölçü">
+              <TextInput name="area_m2" defaultValue={row?.area_m2 ?? ""} placeholder="450 m²" />
+            </Field>
+            <Field label="Publish tarixi">
+              <TextInput name="published_at" type="date" defaultValue={row?.published_at?.slice(0, 10) ?? ""} />
+            </Field>
+          </div>
+        </>
       ) : null}
 
       {table === "portfolio" ? (
@@ -383,7 +401,7 @@ export function ContentForm({
               <Field label={`Qısa mətn (${locale})`}>
                 <TextArea name={`${locale}_short`} defaultValue={t.short || t.excerpt || t.intro || ""} />
               </Field>
-              <Field label={`Tam mətn / rich text (${locale})`}>
+              <Field label={table === "projects" ? `Layihə overview / təsvir (${locale})` : `Tam mətn / rich text (${locale})`}>
                 <TextArea
                   name={`${locale}_body`}
                   className="min-h-56"
@@ -391,6 +409,34 @@ export function ContentForm({
                   placeholder="Markdown: ## başlıq, - siyahı, [link](/xidmetler)"
                 />
               </Field>
+              {table === "projects" ? (
+                <div className="rounded-md border border-charcoal/10 p-4">
+                  <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.16em] text-charcoal/55">
+                    Sol sütun məlumatları ({locale})
+                  </p>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <Field label={`Tarix / il (${locale})`}>
+                      <TextInput name={`${locale}_year`} defaultValue={t.year || ""} placeholder="2024" />
+                    </Field>
+                    <Field label={`Status (${locale})`}>
+                      <TextInput
+                        name={`${locale}_status`}
+                        defaultValue={t.status || ""}
+                        placeholder={locale === "az" ? "Tamamlanıb" : "Completed"}
+                      />
+                    </Field>
+                    <div className="sm:col-span-2">
+                      <Field label={`Müştəri (${locale})`}>
+                        <TextInput
+                          name={`${locale}_client`}
+                          defaultValue={t.client || ""}
+                          placeholder={locale === "az" ? "Müştəri adı" : "Client name"}
+                        />
+                      </Field>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
               <Field label={`SEO title (${locale})`}>
                 <TextInput name={`${locale}_seoTitle`} defaultValue={t.seoTitle || ""} />
               </Field>

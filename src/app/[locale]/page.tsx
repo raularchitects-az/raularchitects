@@ -21,9 +21,11 @@ import {
 } from "@/lib/cms/public";
 import { isInsightsRestructureActive } from "@/lib/cms/insights-rollout";
 import { isBlogLocaleLive } from "@/lib/blog-urls";
-import { getInsightLocaleSlug, isInsightLocaleLive } from "@/lib/insights-urls";
-import { getInsightCopy, getInsightImageAlt } from "@/data/insights/types";
+import { isInsightLocaleLive } from "@/lib/insights-urls";
 import { BlogCard } from "@/components/blog-card";
+import { HomeProjectCard } from "@/components/home-project-card";
+import { InsightsCard } from "@/components/insights-card";
+import { HOME_EDITORIAL_CONTAINER, HOME_EDITORIAL_GRID, HOME_INSIGHTS_GRID } from "@/lib/home-editorial-layout";
 import { toDisplayUpperCase } from "@/lib/locale-text";
 import { asLocale } from "@/i18n/routing";
 import { entryMetadata } from "@/lib/cms/metadata";
@@ -105,14 +107,16 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
     insightsActive ? Promise.resolve([]) : getPublicPortfolio(locale),
     insightsActive ? getPublicInsights() : Promise.resolve([]),
   ]);
-  const latestProjects = takeLatestPublic(publicProjects, 10);
+  const latestProjects = takeLatestPublic(publicProjects, 9);
   const latestPortfolio = takeLatestPublic(publicPortfolio, 10);
   const latestInsights = takeLatestPublic(
     publicInsights.filter((post) => isInsightLocaleLive(post, locale)),
-    10,
+    9,
   );
   const homeFlags = settings.home ?? {};
   const hero = settings.hero ?? {};
+  const projectsPageT =
+    homeFlags.showProjects !== false ? await getTranslations("projectsPage") : null;
   const showPortfolio = homeFlags.showPortfolio !== false;
   const showInsights = (homeFlags.showInsights ?? homeFlags.showPortfolio) !== false;
   const homePosts = (homeFlags.showBlog === true ? await getHomeBlogPosts() : []).filter((post) =>
@@ -150,7 +154,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
 
       {homeFlags.showProjects !== false ? (
       <section className="relative bg-cream py-20 sm:py-28">
-        <Container className="min-[1921px]:max-w-[90rem] min-[2560px]:max-w-[100rem] min-[3440px]:max-w-[108rem]">
+        <Container className={HOME_EDITORIAL_CONTAINER}>
           <Reveal>
             <h2 className="inline-flex items-center gap-3 text-3xl font-semibold tracking-wide text-charcoal sm:text-4xl">
               {upper(nav("projects"))}
@@ -159,38 +163,24 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
           </Reveal>
 
           {latestProjects.length > 0 ? (
-          <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 min-[2560px]:gap-5">
+          <div className={HOME_EDITORIAL_GRID}>
             {latestProjects.map((project, index) => (
               <Reveal key={project.slug} delay={index * 40}>
-                <Link
-                  href={toIntlHref(`/layihelar/${project.slug}`)}
-                  className="group relative block aspect-[4/5] overflow-hidden rounded-md border border-charcoal/15 bg-cream shadow-sm transition-shadow duration-300 hover:shadow-lg"
-                >
-                  <Image
-                    src={project.image}
-                    alt={project.title || project.slug}
-                    fill
-                    sizes="(min-width: 3440px) 17vw, (min-width: 2560px) 15vw, (min-width: 1921px) 13vw, (min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                    style={project.objectPosition ? { objectPosition: project.objectPosition } : undefined}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal-dark/80 via-charcoal-dark/10 to-transparent transition-colors duration-300 group-hover:from-bronze-dark/90" />
-                  <span className="absolute inset-x-0 bottom-0 min-w-0 p-3 sm:p-4">
-                    <span className="block text-[10px] font-medium tracking-[0.18em] text-cream/70">
-                      {upper(c(project.category))}
-                    </span>
-                    <span className="mt-1 block truncate text-xs font-medium tracking-[0.14em] text-cream sm:text-sm">
-                      {project.title || project.slug}
-                    </span>
-                  </span>
-                </Link>
+                <HomeProjectCard
+                  project={project}
+                  index={index}
+                  locale={locale}
+                  categoryLabel={c(project.category)}
+                  viewProjectLabel={projectsPageT?.("viewProject") ?? "View project"}
+                  title={project.title || project.slug}
+                />
               </Reveal>
             ))}
           </div>
           ) : null}
           <Link
             href="/layihelar"
-            className={`inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-bronze-dark transition-colors duration-300 hover:text-[#6b4a32] ${latestProjects.length > 0 ? "mt-6" : "mt-12"}`}
+            className={`inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-bronze-dark transition-colors duration-300 hover:text-[#6b4a32] ${latestProjects.length > 0 ? "mt-10" : "mt-12"}`}
           >
             {upper(homeMsg.allProjectsCta)}
             <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} />
@@ -252,48 +242,32 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
       ) : null}
 
       {insightsActive && showInsights ? (
-      <section className="relative overflow-hidden py-20 sm:py-28">
-        <div className="absolute inset-0 bg-gradient-animated" />
-        <Container className="relative">
+      <section className="relative bg-cream py-20 sm:py-28">
+        <Container className={HOME_EDITORIAL_CONTAINER}>
           <Reveal>
-            <h2 className="inline-flex items-center gap-3 text-3xl font-semibold tracking-wide text-cream sm:text-4xl">
+            <h2 className="inline-flex items-center gap-3 text-3xl font-semibold tracking-wide text-charcoal sm:text-4xl">
               {upper(nav("insights"))}
-              <TriangleMark size={18} className="brightness-0 invert" />
+              <TriangleMark size={18} />
             </h2>
           </Reveal>
 
-          {latestInsights.length > 0 ? (
-          <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+          {latestInsights.length > 0 && insightsT ? (
+          <div className={HOME_INSIGHTS_GRID}>
             {latestInsights.map((item, index) => (
               <Reveal key={item.slug} delay={index * 40}>
-                <Link
-                  href={toIntlHref(`/insights/${getInsightLocaleSlug(item, locale) || item.slug}`)}
-                  className="group relative block aspect-[4/5] overflow-hidden rounded-md border border-cream/25 bg-bronze shadow-sm transition-shadow duration-300 hover:shadow-xl"
-                >
-                  <Image
-                    src={item.image}
-                    alt={getInsightImageAlt(item, locale)}
-                    fill
-                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal-dark/80 via-charcoal-dark/10 to-transparent transition-colors duration-300 group-hover:from-charcoal-dark/90" />
-                  <span className="absolute inset-x-0 bottom-0 min-w-0 p-3 sm:p-4">
-                    <span className="block text-[10px] font-medium tracking-[0.18em] text-cream/70">
-                      {upper(insightsT ? insightsT(`categories.${item.category}`) : item.category)}
-                    </span>
-                    <span className="mt-1 block truncate text-xs font-medium tracking-[0.14em] text-cream sm:text-sm">
-                      {getInsightCopy(item, locale)?.title || item.slug}
-                    </span>
-                  </span>
-                </Link>
+                <InsightsCard
+                  post={item}
+                  locale={locale}
+                  categoryLabel={insightsT(`categories.${item.category}`)}
+                  readLabel={insightsT("read")}
+                />
               </Reveal>
             ))}
           </div>
           ) : null}
           <Link
             href="/insights"
-            className={`inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-cream/80 transition-colors duration-300 hover:text-cream ${latestInsights.length > 0 ? "mt-6" : "mt-12"}`}
+            className={`inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-bronze-dark transition-colors duration-300 hover:text-[#6b4a32] ${latestInsights.length > 0 ? "mt-10" : "mt-12"}`}
           >
             {upper(homeMsg.allInsightsCta)}
             <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} />

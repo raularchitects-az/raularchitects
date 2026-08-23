@@ -12,6 +12,9 @@ export type TranslationBlock = {
   seoTitle?: string;
   description?: string;
   imageAlt?: string;
+  year?: string;
+  status?: string;
+  client?: string;
   ctaLabel?: string;
   ctaText?: string;
   linkedinText?: string;

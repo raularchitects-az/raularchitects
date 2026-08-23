@@ -67,6 +67,9 @@ export function cmsProjectToMeta(row: CmsRow, locale: string): ProjectMeta & {
   videoUrl?: string | null;
   location?: string | null;
   area?: string | null;
+  year?: string | null;
+  status?: string | null;
+  client?: string | null;
   gallery: string[];
   sections: NonNullable<CmsRow["sections"]>;
   ogImage?: string;
@@ -80,13 +83,16 @@ export function cmsProjectToMeta(row: CmsRow, locale: string): ProjectMeta & {
     image: cover(row) || gallery[0] || "/images/projects/compact-villa.jpg",
     source: "cms",
     title: localizedField(row, locale, ["name", "title"]) || row.slug,
-    description: localizedField(row, locale, ["full", "short"]),
+    description: localizedField(row, locale, ["full", "body", "short"]),
     seoTitle: localizedField(row, locale, ["seoTitle", "title", "name"], locale === "az" ? row.seo_title : null),
     metaDescription: localizedField(row, locale, ["description", "short"], locale === "az" ? row.meta_description : null),
     canonicalUrl: row.canonical_url,
     videoUrl: row.video_url,
     location: row.location,
     area: row.area_m2,
+    year: localizedField(row, locale, ["year"]) || cmsDatePrefix(row.published_at) || null,
+    status: localizedField(row, locale, ["status"]) || null,
+    client: localizedField(row, locale, ["client"]) || null,
     gallery,
     sections: row.sections ?? {},
     ogImage: mediaPublicUrl(row.og_image_path) || cover(row),
@@ -298,6 +304,9 @@ export function staticProjectPublic(item: ProjectMeta) {
     videoUrl: null as string | null,
     location: null as string | null,
     area: null as string | null,
+    year: null as string | null,
+    status: null as string | null,
+    client: null as string | null,
     ogImage: item.heroImage || item.image,
     gallery: [...groups.exteriorImages, ...groups.interiorImages, ...groups.planningImages],
     publishedAt: null as string | null,

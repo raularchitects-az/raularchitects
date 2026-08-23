@@ -9,6 +9,7 @@ import { ProjectLeadForm } from "@/components/project-lead-form";
 import { SiteFooter } from "@/components/site-footer";
 import { routing, asLocale } from "@/i18n/routing";
 import { ProjectGallery } from "@/components/project-gallery";
+import { ProjectInfoSection } from "@/components/project-info-section";
 import { getProject, getProjectGalleryGroups } from "@/data/projects";
 import { getImportedEntry } from "@/data/folder-imports";
 import { getPublicContact, getPublicProject, getPublicProjects, resolveSlugRedirect } from "@/lib/cms/public";
@@ -16,7 +17,22 @@ import { entryMetadata, whatsappHref } from "@/lib/cms/metadata";
 import { mediaPublicUrl } from "@/lib/cms/media-url";
 import { SITE_NAME, SITE_URL, publicCanonicalUrl } from "@/lib/site";
 import { localizePublicPath } from "@/lib/public-paths";
-import { safeRawArray } from "@/lib/i18n/safe-raw";
+
+function formatProjectYear(value: string | null | undefined) {
+  const trimmed = value?.trim();
+  if (!trimmed) return null;
+  if (/^\d{4}-\d{2}-\d{2}/.test(trimmed)) return trimmed.slice(0, 4);
+  return trimmed;
+}
+
+function factValue(value: string | null | undefined) {
+  const trimmed = value?.trim();
+  return trimmed || null;
+}
+
+function factOrSample(value: string | null | undefined, sample: string) {
+  return factValue(value) ?? sample;
+}
 
 export async function generateStaticParams() {
   const cms = await getPublicProjects("en");
@@ -69,17 +85,10 @@ export default async function ProjectDetailPage({
   };
 
   const t = await getTranslations("projectDetail");
+  const infoT = await getTranslations("projectDetail.info");
   const co = await getTranslations("countries");
   const contact = await getPublicContact();
   const imported = getImportedEntry(slug);
-  const staticSpecs = imported || !getProject(slug) || cmsProject?.source === "cms"
-    ? []
-    : safeRawArray(t, `items.${slug}.specs`);
-  const specs = staticSpecs.length
-    ? staticSpecs
-    : [cmsProject && "location" in cmsProject ? cmsProject.location : null, cmsProject && "area" in cmsProject ? cmsProject.area : null].filter(
-        (value): value is string => Boolean(value),
-      );
   const description = (cmsProject && "description" in cmsProject && cmsProject.description)
     ? String(cmsProject.description)
     : imported
@@ -87,6 +96,7 @@ export default async function ProjectDetailPage({
       : getProject(slug)
         ? t(`items.${slug}.description`)
         : "";
+  const overviewText = description.trim() || t("overviewFallback");
   const title = cmsProject?.title || imported?.title || (getProject(slug) ? t(`items.${slug}.title`) : slug);
   const is13Import = imported?.source === "raul-13-project-import";
   const location = (is13Import && imported.country ? co(imported.country) : null)
@@ -133,8 +143,24 @@ export default async function ProjectDetailPage({
     objectPosition: image.objectPosition,
     caption: image.caption ?? null,
   })) ?? [];
-  const hasSpecs = specs.length > 0;
-  const hasDescription = description.trim().length > 0;
+  const infoFacts = [
+    {
+      label: infoT("year"),
+      value: formatProjectYear(cmsProject.year) ?? infoT("samples.year"),
+    },
+    {
+      label: infoT("status"),
+      value: factOrSample(cmsProject.status, infoT("samples.status")),
+    },
+    {
+      label: infoT("client"),
+      value: factOrSample(cmsProject.client, infoT("samples.client")),
+    },
+    {
+      label: infoT("area"),
+      value: factOrSample(cmsProject.area, infoT("samples.area")),
+    },
+  ];
   const canonical = publicCanonicalUrl(locale, `/layihelar/${slug}`, cmsProject?.canonicalUrl);
   const schema = {
     "@context": "https://schema.org",
@@ -199,27 +225,11 @@ export default async function ProjectDetailPage({
         )}
       </section>
 
-      {hasSpecs ? (
-        <section className="border-b border-charcoal/10 bg-cream py-8">
-          <Container>
-            <ul className="flex flex-wrap gap-x-8 gap-y-3">
-              {specs.map((spec) => (
-                <li key={spec} className="text-sm font-medium uppercase tracking-[0.12em] text-charcoal/70">
-                  {spec}
-                </li>
-              ))}
-            </ul>
-          </Container>
-        </section>
-      ) : null}
-
-      {hasDescription ? (
-        <section className="bg-cream py-16 sm:py-20">
-          <Container className="max-w-3xl">
-            <p className="text-lg font-light leading-relaxed text-charcoal/70">{description}</p>
-          </Container>
-        </section>
-      ) : null}
+      <ProjectInfoSection
+        facts={infoFacts}
+        description={overviewText}
+        descriptionLabel={infoT("description")}
+      />
 
       {imported && (importedGallery.length > 0 || importedVideo) ? (
         <section className="bg-cream py-10 sm:py-16">
