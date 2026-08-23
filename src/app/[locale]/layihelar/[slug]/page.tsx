@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { ProjectLeadForm } from "@/components/project-lead-form";
 import { SiteFooter } from "@/components/site-footer";
+import { BlogLocaleSwitch } from "@/components/locale-switch-context";
 import { routing, asLocale } from "@/i18n/routing";
 import { ProjectGallery } from "@/components/project-gallery";
 import { ProjectInfoSection } from "@/components/project-info-section";
@@ -17,6 +18,7 @@ import { entryMetadata, whatsappHref } from "@/lib/cms/metadata";
 import { mediaPublicUrl } from "@/lib/cms/media-url";
 import { SITE_NAME, SITE_URL, publicCanonicalUrl } from "@/lib/site";
 import { localizePublicPath } from "@/lib/public-paths";
+import { buildProjectLocaleSwitchPaths } from "@/lib/project-urls";
 
 function formatProjectYear(value: string | null | undefined) {
   const trimmed = value?.trim();
@@ -162,6 +164,7 @@ export default async function ProjectDetailPage({
     },
   ];
   const canonical = publicCanonicalUrl(locale, `/layihelar/${slug}`, cmsProject?.canonicalUrl);
+  const switchPaths = await buildProjectLocaleSwitchPaths(slug);
   const schema = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
@@ -175,6 +178,7 @@ export default async function ProjectDetailPage({
 
   return (
     <>
+      <BlogLocaleSwitch paths={switchPaths} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <section className="relative h-[70vh] w-full overflow-hidden sm:h-[92vh]">
         <Image

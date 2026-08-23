@@ -6,6 +6,7 @@ import { Globe, ChevronDown } from "lucide-react";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { locales, localeLabels, localeNames, type Locale } from "@/i18n/routing";
 import { useLocaleSwitchPaths } from "@/components/locale-switch-context";
+import { DYNAMIC_ROUTE_LISTING_FALLBACKS } from "@/lib/locale-switch-fallbacks";
 import { cn } from "@/lib/utils";
 
 export function LanguageSwitcher({ tone = "dark" }: { tone?: "dark" | "light" }) {
@@ -31,6 +32,12 @@ export function LanguageSwitcher({ tone = "dark" }: { tone?: "dark" | "light" })
     const override = switchPaths?.[next];
     if (override) {
       router.replace(override as never, { locale: next });
+      return;
+    }
+    const pathnameKey = typeof pathname === "string" ? pathname : "";
+    const listingFallback = DYNAMIC_ROUTE_LISTING_FALLBACKS[pathnameKey];
+    if (listingFallback) {
+      router.replace(listingFallback as never, { locale: next });
       return;
     }
     router.replace(pathname as never, { locale: next });
