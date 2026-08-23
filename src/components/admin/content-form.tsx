@@ -60,7 +60,7 @@ export function ContentForm({
   const projectBodyLabel = (locale: (typeof ADMIN_LOCALES)[number]) =>
     locale === "az" && table === "projects" ? "Təsvir" : `Tam mətn / rich text (${locale})`;
 
-  async function onSubmit(formData: FormData) {
+  async function submitForm(formData: FormData) {
     setError("");
     const next: Translations = emptyT();
     for (const locale of ADMIN_LOCALES) {
@@ -107,7 +107,10 @@ export function ContentForm({
       slug: localeSlugEntity ? String(formData.get("az_slug") ?? "") : String(formData.get("slug") ?? ""),
       status: String(formData.get("status") ?? "draft"),
       is_active: formData.get("is_active") === "on",
-      sort_order: Number(formData.get("sort_order") ?? 0),
+      sort_order:
+        table === "projects" && row?.sort_order != null
+          ? row.sort_order
+          : Number(formData.get("sort_order") ?? 0),
       cover_path: String(formData.get("cover_path") ?? "") || null,
       og_image_path: String(formData.get("og_image_path") ?? "") || null,
       video_url: String(formData.get("video_url") ?? "") || null,
@@ -153,15 +156,26 @@ export function ContentForm({
     }
     try {
       const id = await upsertRecord(table, row?.id ?? null, payload);
-      router.push(`${afterSaveHref.replace("[id]", id)}`);
-      router.refresh();
+      router.push(afterSaveHref.replace("[id]", id));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Saxlanılmadı");
+      const message =
+        err instanceof Error && err.message.trim()
+          ? err.message
+          : typeof err === "object" && err !== null && "message" in err && typeof err.message === "string"
+            ? err.message
+            : "Saxlanılmadı";
+      setError(message);
     }
   }
 
   return (
-    <form action={onSubmit} className="flex max-w-4xl flex-col gap-6">
+    <form
+      className="flex max-w-4xl flex-col gap-6"
+      onSubmit={(event) => {
+        event.preventDefault();
+        void submitForm(new FormData(event.currentTarget));
+      }}
+    >
       {error ? <p className="text-sm text-red-700">{error}</p> : null}
       <div className="grid gap-4 sm:grid-cols-2">
         {localeSlugEntity ? null : (
@@ -177,7 +191,18 @@ export function ContentForm({
           </Select>
         </Field>
         <Field label="Sıra">
-          <TextInput name="sort_order" type="number" defaultValue={row?.sort_order ?? 0} />
+          {table === "projects" ? (
+            <TextInput
+              name="sort_order"
+              type="number"
+              readOnly
+              defaultValue={row?.sort_order ?? 0}
+              className="bg-cream-dark/40 text-charcoal/60"
+              title="Sıranı Layihələr siyahısında sürüşdürərək dəyişin"
+            />
+          ) : (
+            <TextInput name="sort_order" type="number" defaultValue={row?.sort_order ?? 0} />
+          )}
         </Field>
         <label className="flex items-center gap-2 pt-6 text-sm">
           <input type="checkbox" name="is_active" defaultChecked={row?.is_active ?? true} />

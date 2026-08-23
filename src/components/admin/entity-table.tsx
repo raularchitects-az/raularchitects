@@ -13,6 +13,10 @@ const statusLabel: Record<ContentStatus, string> = {
   archived: "Archived",
 };
 
+function withSequentialOrder(rows: CmsRow[]) {
+  return rows.map((row, index) => ({ ...row, sort_order: index + 1 }));
+}
+
 export function EntityTable({
   rows,
   table,
@@ -25,18 +29,37 @@ export function EntityTable({
   canHardDelete?: boolean;
 }) {
   const router = useRouter();
-  const [ordered, setOrdered] = useState(rows);
+  const [ordered, setOrdered] = useState(() => withSequentialOrder(rows));
   const [dragId, setDragId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [savingOrder, setSavingOrder] = useState(false);
   const rowSig = rows.map((row) => `${row.id}:${row.status}:${row.is_active}:${row.sort_order}:${row.updated_at}`).join("|");
   const [seenSig, setSeenSig] = useState(rowSig);
   if (rowSig !== seenSig) {
     setSeenSig(rowSig);
-    setOrdered(rows);
+    setOrdered(withSequentialOrder(rows));
   }
 
   const hardDelete = table === "projects" || table === "portfolio";
+  const reorderDisabled = Boolean(busyId) || savingOrder;
+
+  async function persistOrder(next: CmsRow[]) {
+    const numbered = withSequentialOrder(next);
+    setError(null);
+    setSavingOrder(true);
+    setOrdered(numbered);
+    try {
+      await reorder(table, numbered.map((item) => item.id));
+      router.refresh();
+    } catch (caught) {
+      setOrdered(withSequentialOrder(rows));
+      setError(caught instanceof Error ? caught.message : "Sıra yenilənmədi");
+    } finally {
+      setSavingOrder(false);
+      setDragId(null);
+    }
+  }
 
   async function run(id: string, fn: () => Promise<unknown>) {
     setError(null);
@@ -56,6 +79,11 @@ export function EntityTable({
       {error ? (
         <p className="border-b border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>
       ) : null}
+      {savingOrder ? (
+        <p className="border-b border-charcoal/10 bg-cream-dark/40 px-4 py-2 text-xs uppercase tracking-[0.14em] text-charcoal/55">
+          Sıra yenilənir…
+        </p>
+      ) : null}
       <table className="w-full min-w-[720px] text-left text-sm">
         <thead className="border-b border-charcoal/10 text-[11px] uppercase tracking-[0.14em] text-charcoal/50">
           <tr>
@@ -69,34 +97,50 @@ export function EntityTable({
           </tr>
         </thead>
         <tbody>
-          {ordered.map((row) => {
+          {ordered.map((row, index) => {
             const title =
               row.translations?.az?.title ||
               row.translations?.az?.name ||
               row.translations?.en?.title ||
               row.slug;
             const busy = busyId === row.id;
+            const dragging = dragId === row.id;
             return (
               <tr
                 key={row.id}
-                draggable={!busy}
-                onDragStart={() => setDragId(row.id)}
-                onDragOver={(event) => event.preventDefault()}
-                onDrop={() => {
-                  if (!dragId || dragId === row.id) return;
+                onDragOver={(event) => {
+                  event.preventDefault();
+                  event.dataTransfer.dropEffect = "move";
+                }}
+                onDrop={(event) => {
+                  event.preventDefault();
+                  if (!dragId || dragId === row.id || reorderDisabled) return;
                   const next = [...ordered];
                   const from = next.findIndex((item) => item.id === dragId);
                   const to = next.findIndex((item) => item.id === row.id);
                   if (from < 0 || to < 0) return;
                   const [moved] = next.splice(from, 1);
                   next.splice(to, 0, moved);
-                  setOrdered(next);
-                  setDragId(null);
-                  void run(row.id, () => reorder(table, next.map((item) => item.id)));
+                  void persistOrder(next);
                 }}
-                className="border-b border-charcoal/5 cursor-grab"
+                className={`border-b border-charcoal/5 ${dragging ? "bg-cream-dark/50 opacity-60" : ""}`}
               >
-                <td className="px-2 py-3 text-charcoal/30">⋮⋮</td>
+                <td className="px-2 py-3 text-charcoal/30">
+                  <button
+                    type="button"
+                    draggable={!reorderDisabled && !busy}
+                    aria-label="Sıranı dəyiş"
+                    onDragStart={(event) => {
+                      event.dataTransfer.effectAllowed = "move";
+                      setDragId(row.id);
+                    }}
+                    onDragEnd={() => setDragId(null)}
+                    disabled={reorderDisabled || busy}
+                    className="cursor-grab px-1 active:cursor-grabbing disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    ⋮⋮
+                  </button>
+                </td>
                 <td className="px-4 py-3">
                   <a href={`${editBase}/${row.id}`} className="font-medium text-charcoal hover:text-bronze-dark">
                     {title}
@@ -112,29 +156,29 @@ export function EntityTable({
                       : "CMS · slug match"
                     : "—"}
                 </td>
-                <td className="px-4 py-3">{row.sort_order}</td>
+                <td className="px-4 py-3 tabular-nums">{index + 1}</td>
                 <td className="px-4 py-3">
                   <div className={`flex flex-wrap gap-2 text-[11px] uppercase tracking-[0.12em] ${busy ? "opacity-50" : ""}`}>
                     <a href={`${editBase}/${row.id}`}>Redaktə</a>
-                    <button type="button" disabled={busy} onClick={() => run(row.id, () => duplicateRecord(table, row.id))}>
+                    <button type="button" disabled={busy || reorderDisabled} onClick={() => run(row.id, () => duplicateRecord(table, row.id))}>
                       Duplikat
                     </button>
                     {row.status !== "published" ? (
-                      <button type="button" disabled={busy} onClick={() => run(row.id, () => setStatus(table, row.id, "published"))}>
+                      <button type="button" disabled={busy || reorderDisabled} onClick={() => run(row.id, () => setStatus(table, row.id, "published"))}>
                         Publish
                       </button>
                     ) : (
-                      <button type="button" disabled={busy} onClick={() => run(row.id, () => setStatus(table, row.id, "draft"))}>
+                      <button type="button" disabled={busy || reorderDisabled} onClick={() => run(row.id, () => setStatus(table, row.id, "draft"))}>
                         Unpublish
                       </button>
                     )}
-                    <button type="button" disabled={busy} onClick={() => run(row.id, () => setActive(table, row.id, !row.is_active))}>
+                    <button type="button" disabled={busy || reorderDisabled} onClick={() => run(row.id, () => setActive(table, row.id, !row.is_active))}>
                       {row.is_active ? "Deaktiv" : "Aktiv"}
                     </button>
                     <ConfirmButton
                       label="Arxiv"
                       confirm="Arxivlənsin? Public saytdan çıxacaq, admin-də qalacaq."
-                      disabled={busy}
+                      disabled={busy || reorderDisabled}
                       onConfirm={() => run(row.id, () => archiveRecord(table, row.id))}
                     />
                     {hardDelete && !canHardDelete ? (
@@ -150,7 +194,7 @@ export function EntityTable({
                               : "Əvvəlcə arxivlənəcək. Davam?"
                         }
                         className="text-red-700"
-                        disabled={busy}
+                        disabled={busy || reorderDisabled}
                         onConfirm={() => run(row.id, () => deleteRecord(table, row.id))}
                       />
                     )}

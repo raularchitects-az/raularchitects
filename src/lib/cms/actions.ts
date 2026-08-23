@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath, refresh, updateTag } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin, requireStaff } from "./auth";
 import { createAdminClient, createUserServerClient, createServiceClient } from "./supabase";
@@ -81,7 +81,6 @@ function revalidatePublic(table?: EntityType, slug?: string) {
   updateTag("cms");
   updateTag("cms-settings");
   if (table) updateTag(`cms-${table}`);
-  refresh();
   revalidatePath("/", "layout");
   revalidatePath("/admin", "layout");
   revalidatePath("/sitemap.xml");
@@ -591,7 +590,7 @@ export async function reorder(table: EntityType, orderedIds: string[]) {
   if (!supabase) throw new Error("CMS configured deyil");
   const results = await Promise.all(
     orderedIds.map((id, index) =>
-      supabase.from(table).update({ sort_order: index, updated_at: new Date().toISOString() }).eq("id", id),
+      supabase.from(table).update({ sort_order: index + 1, updated_at: new Date().toISOString() }).eq("id", id),
     ),
   );
   const failed = results.find((result) => result.error);

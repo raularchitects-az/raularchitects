@@ -74,6 +74,7 @@ export async function applyAutoTranslations(
   },
 ) {
   if (table !== "projects" && table !== "blog_posts" && table !== "insights") return;
+  if (!process.env.DEEPL_API_KEY?.trim()) return;
 
   const az = { ...(translations.az ?? {}) };
   if (table === "projects") {
