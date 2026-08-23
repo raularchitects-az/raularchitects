@@ -41,6 +41,7 @@ import {
 import { isMissingRelationError } from "./missing-table";
 import type { ContentStatus, EntityType } from "./queries";
 import type { CmsRow, Translations } from "./types";
+import { applyAutoTranslations } from "./auto-translate-content";
 
 async function audit(
   action: string,
@@ -350,6 +351,23 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
     : null;
   if (id && !existing) throw new Error("Qeyd tapılmadı");
   if (row.translations && typeof row.translations === "object") {
+    if (table === "projects" || table === "blog_posts" || table === "insights") {
+      await applyAutoTranslations(table, row.translations as Translations, {
+        category: typeof row.category === "string" ? row.category : (existing?.category as string | null),
+        location: typeof row.location === "string" ? row.location : (existing?.location as string | null),
+        area_m2: typeof row.area_m2 === "string" ? row.area_m2 : (existing?.area_m2 as string | null),
+      });
+      if (table === "projects") {
+        const az = (row.translations as Translations).az ?? {};
+        if (typeof row.seo_title === "string" && row.seo_title.trim()) az.seoTitle = row.seo_title.trim();
+        if (typeof row.meta_description === "string" && row.meta_description.trim()) {
+          az.description = row.meta_description.trim();
+        }
+        (row.translations as Translations).az = az;
+        row.seo_title = az.seoTitle || row.seo_title;
+        row.meta_description = az.description || row.meta_description;
+      }
+    }
     row.translations = preserveLegacyStamps(
       row.translations as Translations,
       (existing?.translations as Translations | null) ?? null,

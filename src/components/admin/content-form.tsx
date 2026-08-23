@@ -57,6 +57,8 @@ export function ContentForm({
   const [editorLocale, setEditorLocale] = useState<(typeof ADMIN_LOCALES)[number]>("az");
   const localeSlugEntity = isLocaleSlugEntity(table);
   const publicBase = table === "insights" ? "/insights" : "/bloq";
+  const projectBodyLabel = (locale: (typeof ADMIN_LOCALES)[number]) =>
+    locale === "az" && table === "projects" ? "Təsvir" : `Tam mətn / rich text (${locale})`;
 
   async function onSubmit(formData: FormData) {
     setError("");
@@ -76,6 +78,16 @@ export function ContentForm({
         year: String(formData.get(`${locale}_year`) ?? ""),
         status: String(formData.get(`${locale}_status`) ?? ""),
         client: String(formData.get(`${locale}_client`) ?? ""),
+        location:
+          table === "projects" && locale === "az"
+            ? String(formData.get("location") ?? "")
+            : String(formData.get(`${locale}_location`) ?? ""),
+        area:
+          table === "projects" && locale === "az"
+            ? String(formData.get("area_m2") ?? "")
+            : table === "projects"
+              ? String(formData.get(`${locale}_area`) ?? "")
+              : undefined,
         ctaLabel: String(formData.get(`${locale}_ctaLabel`) ?? ""),
         ctaText: String(formData.get(`${locale}_ctaText`) ?? ""),
         slug: String(formData.get(`${locale}_slug`) ?? ""),
@@ -112,23 +124,11 @@ export function ContentForm({
       payload.location = String(formData.get("location") ?? "") || null;
       payload.area_m2 = String(formData.get("area_m2") ?? "") || null;
       payload.published_at = String(formData.get("published_at") ?? "") || null;
-      payload.sections = {
-        exterior: {
-          content: String(formData.get("sec_exterior") ?? ""),
-          media: pathsFromForm(formData.get("sec_exterior_media")),
-        },
-        interior: {
-          content: String(formData.get("sec_interior") ?? ""),
-          media: pathsFromForm(formData.get("sec_interior_media")),
-        },
-        plan: {
-          content: String(formData.get("sec_plan") ?? ""),
-          media: pathsFromForm(formData.get("sec_plan_media")),
-        },
-        bim: {
-          content: String(formData.get("sec_bim") ?? ""),
-          media: pathsFromForm(formData.get("sec_bim_media")),
-        },
+      payload.sections = row?.sections ?? {
+        exterior: { content: "", media: [] },
+        interior: { content: "", media: [] },
+        plan: { content: "", media: [] },
+        bim: { content: "", media: [] },
       };
     }
     if (table === "portfolio") {
@@ -159,8 +159,6 @@ export function ContentForm({
       setError(err instanceof Error ? err.message : "Saxlanılmadı");
     }
   }
-
-  const sections = row?.sections;
 
   return (
     <form action={onSubmit} className="flex max-w-4xl flex-col gap-6">
@@ -216,13 +214,13 @@ export function ContentForm({
               Layihə detall səhifəsi
             </p>
             <p className="mt-2 text-xs leading-relaxed text-charcoal/50">
-              Lokasiya və sahə bütün dillərdə eynidir. Tarix, status, müştəri və təsvir hər dil tabında ayrıca
-              redaktə olunur.
+              Lokasiya AZ mənbə kimi saxlanır və saxlanarkən EN/DE/RU-a avtomatik tərcümə olunur. Tarix, status,
+              müştəri, sahə və Təsvir hər dil tabında da əl ilə redaktə oluna bilər.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Lokasiya">
-              <TextInput name="location" defaultValue={row?.location ?? ""} placeholder="Bakı, Azərbaycan" />
+            <Field label="Lokasiya (AZ mənbə)">
+              <TextInput name="location" defaultValue={row?.location ?? ""} placeholder="Berlin, Germany" />
             </Field>
             <Field label="Sahə / ölçü">
               <TextInput name="area_m2" defaultValue={row?.area_m2 ?? ""} placeholder="450 m²" />
@@ -337,51 +335,6 @@ export function ContentForm({
         />
       ) : null}
 
-      {table === "projects" ? (
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Exterior mətn">
-            <TextArea name="sec_exterior" defaultValue={sections?.exterior?.content ?? ""} />
-          </Field>
-          <GalleryPicker
-            label="Exterior media"
-            name="sec_exterior_media"
-            defaultPaths={(sections?.exterior?.media ?? []).map((item) => item?.path).filter((path): path is string => Boolean(path))}
-            items={media}
-            loadError={mediaError}
-          />
-          <Field label="Interior mətn">
-            <TextArea name="sec_interior" defaultValue={sections?.interior?.content ?? ""} />
-          </Field>
-          <GalleryPicker
-            label="Interior media"
-            name="sec_interior_media"
-            defaultPaths={(sections?.interior?.media ?? []).map((item) => item?.path).filter((path): path is string => Boolean(path))}
-            items={media}
-            loadError={mediaError}
-          />
-          <Field label="Plan mətn">
-            <TextArea name="sec_plan" defaultValue={sections?.plan?.content ?? ""} />
-          </Field>
-          <GalleryPicker
-            label="Plan media"
-            name="sec_plan_media"
-            defaultPaths={(sections?.plan?.media ?? []).map((item) => item?.path).filter((path): path is string => Boolean(path))}
-            items={media}
-            loadError={mediaError}
-          />
-          <Field label="BIM mətn">
-            <TextArea name="sec_bim" defaultValue={sections?.bim?.content ?? ""} />
-          </Field>
-          <GalleryPicker
-            label="BIM media"
-            name="sec_bim_media"
-            defaultPaths={(sections?.bim?.media ?? []).map((item) => item?.path).filter((path): path is string => Boolean(path))}
-            items={media}
-            loadError={mediaError}
-          />
-        </div>
-      ) : null}
-
       <LocaleTabs
         locale={editorLocale}
         onLocaleChange={setEditorLocale}
@@ -401,12 +354,16 @@ export function ContentForm({
               <Field label={`Qısa mətn (${locale})`}>
                 <TextArea name={`${locale}_short`} defaultValue={t.short || t.excerpt || t.intro || ""} />
               </Field>
-              <Field label={table === "projects" ? `Layihə overview / təsvir (${locale})` : `Tam mətn / rich text (${locale})`}>
+              <Field label={projectBodyLabel(locale)}>
                 <TextArea
                   name={`${locale}_body`}
                   className="min-h-56"
                   defaultValue={t.body || t.full || ""}
-                  placeholder="Markdown: ## başlıq, - siyahı, [link](/xidmetler)"
+                  placeholder={
+                    table === "projects"
+                      ? "Layihənin qısa təsviri — public səhifədə TƏSVİR altında göstərilir"
+                      : "Markdown: ## başlıq, - siyahı, [link](/xidmetler)"
+                  }
                 />
               </Field>
               {table === "projects" ? (
@@ -434,6 +391,24 @@ export function ContentForm({
                         />
                       </Field>
                     </div>
+                    {locale === "az" ? null : (
+                      <>
+                        <div className="sm:col-span-2">
+                          <Field label={`Lokasiya (${locale})`}>
+                            <TextInput
+                              name={`${locale}_location`}
+                              defaultValue={t.location || ""}
+                              placeholder="Berlin, Germany"
+                            />
+                          </Field>
+                        </div>
+                        <div className="sm:col-span-2">
+                          <Field label={`Sahə / ölçü (${locale})`}>
+                            <TextInput name={`${locale}_area`} defaultValue={t.area || ""} placeholder="450 m²" />
+                          </Field>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               ) : null}

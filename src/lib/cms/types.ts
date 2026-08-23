@@ -15,6 +15,9 @@ export type TranslationBlock = {
   year?: string;
   status?: string;
   client?: string;
+  location?: string;
+  area?: string;
+  categoryLabel?: string;
   ctaLabel?: string;
   ctaText?: string;
   linkedinText?: string;

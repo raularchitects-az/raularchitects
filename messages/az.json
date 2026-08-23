@@ -233,12 +233,14 @@
       "status": "Status",
       "client": "Müştəri",
       "area": "Sahə",
+      "location": "Lokasiya",
       "description": "Təsvir",
       "samples": {
         "year": "2024",
         "status": "Tamamlanıb",
         "client": "Müştəri adı",
-        "area": "450 m²"
+        "area": "450 m²",
+        "location": "Berlin, Germany"
       }
     },
     "overviewFallback": "Bu layihə memarlıq niyyətini, funksional planlaşdırmanı, kontekstə uyğun həlləri və texniki koordinasiyanı vahid bir yanaşmada birləşdirir. Məkan təşkili, material seçimi və işıqlandırma prinsipləri gündəlik istifadə rahatlığını və uzunmüddətli dəyəri nəzərə alır. Layihə prosesi konseptdən icraya qədər arxitektura, mühəndislik və BIM koordinasiyasını eyni məlumat axını üzərindən idarə etməyə imkan verir.",

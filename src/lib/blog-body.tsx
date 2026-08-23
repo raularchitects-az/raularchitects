@@ -35,20 +35,35 @@ function RichText({ text }: { text: string }) {
   return nodes;
 }
 
-export function BlogBody({ blocks }: { blocks: BlogBlock[] }) {
+export function BlogBody({
+  blocks,
+  variant = "default",
+}: {
+  blocks: BlogBlock[];
+  variant?: "default" | "insight";
+}) {
+  const subheadingClass =
+    variant === "insight"
+      ? "mt-6 text-base leading-[1.8] text-charcoal/75 sm:text-[1.05rem]"
+      : "mt-6 text-2xl font-semibold text-charcoal sm:text-3xl";
+  const subheadingSmallClass =
+    variant === "insight"
+      ? "mt-2 text-base leading-[1.8] text-charcoal/75 sm:text-[1.05rem]"
+      : "mt-2 text-xl font-semibold text-charcoal";
+
   return (
     <div className="flex flex-col gap-6">
       {blocks.map((block, index) => {
         if (block.type === "h2" && block.text) {
           return (
-            <h2 key={index} className="mt-6 text-2xl font-semibold text-charcoal sm:text-3xl">
+            <h2 key={index} className={subheadingClass}>
               {block.text}
             </h2>
           );
         }
         if (block.type === "h3" && block.text) {
           return (
-            <h3 key={index} className="mt-2 text-xl font-semibold text-charcoal">
+            <h3 key={index} className={subheadingSmallClass}>
               {block.text}
             </h3>
           );

@@ -233,12 +233,14 @@
       "status": "Status",
       "client": "Auftraggeber",
       "area": "Gebäudegröße",
+      "location": "Standort",
       "description": "Beschreibung",
       "samples": {
         "year": "2017",
         "status": "Abgeschlossen",
         "client": "Auftraggeber",
-        "area": "10.000 m² Bruttofläche"
+        "area": "10.000 m² Bruttofläche",
+        "location": "Berlin, Germany"
       }
     },
     "overviewFallback": "Dieses Projekt verbindet architektonische Intention, funktionale Planung, kontextuelle Antwort und technische Koordination in einem stimmigen Gesamtkonzept. Raumorganisation, Materialwahl und Lichtführung sind auf Alltagskomfort und langfristigen Wert ausgerichtet. Vom Konzept bis zur Umsetzung verknüpft der Prozess Architektur, Ingenieurwesen und BIM-Koordination über einen gemeinsamen Informationsfluss.",

@@ -240,7 +240,7 @@ export default async function InsightPostPage({
             </figure>
 
             <div className="mt-12">
-              <BlogBody blocks={copy.blocks} />
+              <BlogBody blocks={copy.blocks} variant="insight" />
             </div>
 
             {copy.ctaText || copy.ctaLabel ? (

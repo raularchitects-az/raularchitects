@@ -117,28 +117,23 @@ export default async function ProjectDetailPage({
   const sectionUrls = (key: "exterior" | "interior" | "plan" | "bim") =>
     (cmsProject?.sections?.[key]?.media ?? []).map((item) => mediaPublicUrl(item.path)).filter(Boolean);
   const cmsGallery = cmsProject?.gallery ?? [];
-  const hasCmsMedia = Boolean(
-    sectionUrls("exterior").length ||
-      sectionUrls("interior").length ||
-      sectionUrls("plan").length ||
-      sectionUrls("bim").length ||
-      cmsGallery.length,
-  );
-  const groups = hasCmsMedia
-    ? {
-        exteriorImages: sectionUrls("exterior").length ? sectionUrls("exterior") : cmsGallery,
-        interiorImages: sectionUrls("interior"),
-        planningImages: sectionUrls("plan").length ? sectionUrls("plan") : sectionUrls("bim"),
-      }
-    : getProjectGalleryGroups(slug);
-  const toCards = (sources: string[], label: string) =>
-    sources.map((src, index) => ({ src, alt: `${title} ${label} ${index + 1}` }));
-  const galleryRows = [
-    toCards(groups.exteriorImages, "exterior"),
-    toCards(groups.interiorImages, "interior"),
-    toCards(groups.planningImages, "planning"),
+  const legacySectionUrls = [
+    ...sectionUrls("exterior"),
+    ...sectionUrls("interior"),
+    ...sectionUrls("plan"),
+    ...sectionUrls("bim"),
   ];
-  const gallery = galleryRows.flat();
+  const staticGroups = getProjectGalleryGroups(slug);
+  const galleryImageUrls =
+    cmsGallery.length > 0
+      ? cmsGallery
+      : legacySectionUrls.length > 0
+        ? legacySectionUrls
+        : [...staticGroups.exteriorImages, ...staticGroups.interiorImages, ...staticGroups.planningImages];
+  const gallery = galleryImageUrls.map((src, index) => ({
+    src,
+    alt: `${title} ${index + 1}`,
+  }));
   const importedGallery = imported?.gallery.map((image, index) => ({
     src: image.src,
     alt: `${title}${image.caption ? ` — ${image.caption}` : ""} ${image.kind} ${index + 1}`,
@@ -161,6 +156,10 @@ export default async function ProjectDetailPage({
     {
       label: infoT("area"),
       value: factOrSample(cmsProject.area, infoT("samples.area")),
+    },
+    {
+      label: infoT("location"),
+      value: factOrSample(location, infoT("samples.location")),
     },
   ];
   const canonical = publicCanonicalUrl(locale, `/layihelar/${slug}`, cmsProject?.canonicalUrl);
@@ -214,17 +213,8 @@ export default async function ProjectDetailPage({
             </h1>
           </div>
         ) : (
-          <div className="absolute inset-0 z-10 flex">
-            <div className="flex w-[40%] items-end p-6 sm:p-10 lg:w-[38%] lg:p-14">
-              <h1 className="text-4xl font-semibold text-cream sm:text-6xl lg:text-7xl">
-                {title}
-              </h1>
-            </div>
-            <div className="hidden w-[60%] items-center justify-center px-5 py-24 md:flex lg:px-8 lg:py-20 xl:px-12">
-              <div className="w-4/5">
-                <ProjectGallery images={gallery} rows={galleryRows} variant="hero" />
-              </div>
-            </div>
+          <div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-10 lg:p-14">
+            <h1 className="text-4xl font-semibold text-cream sm:text-6xl lg:text-7xl">{title}</h1>
           </div>
         )}
       </section>
@@ -234,6 +224,14 @@ export default async function ProjectDetailPage({
         description={overviewText}
         descriptionLabel={infoT("description")}
       />
+
+      {!imported && gallery.length > 0 ? (
+        <section className="bg-cream py-10 sm:py-16">
+          <Container wide>
+            <ProjectGallery images={gallery} />
+          </Container>
+        </section>
+      ) : null}
 
       {imported && (importedGallery.length > 0 || importedVideo) ? (
         <section className="bg-cream py-10 sm:py-16">
@@ -256,23 +254,10 @@ export default async function ProjectDetailPage({
             ) : null}
           </Container>
         </section>
-      ) : imported ? null : (
-        <section className="bg-cream py-10 md:hidden">
-          <Container wide>
-            <ProjectGallery images={gallery} rows={galleryRows} />
-            {cmsVideo ? (
-              <div className="mt-8 sm:mt-10">
-                <video controls playsInline preload="metadata" className="h-auto w-full bg-charcoal">
-                  <source src={cmsVideo} />
-                </video>
-              </div>
-            ) : null}
-          </Container>
-        </section>
-      )}
+      ) : null}
 
       {!imported && cmsVideo ? (
-        <section className="hidden bg-cream pb-16 md:block">
+        <section className="bg-cream pb-16">
           <Container wide>
             <video controls playsInline preload="metadata" className="h-auto w-full bg-charcoal">
               <source src={cmsVideo} />

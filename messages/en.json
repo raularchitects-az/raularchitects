@@ -233,12 +233,14 @@
       "status": "Status",
       "client": "Client",
       "area": "Building size",
+      "location": "Location",
       "description": "Description",
       "samples": {
         "year": "2017",
         "status": "Completed",
         "client": "Client name",
-        "area": "10,000 sq.m gross area"
+        "area": "10,000 sq.m gross area",
+        "location": "Berlin, Germany"
       }
     },
     "overviewFallback": "This project brings together architectural intent, functional planning, contextual response and technical coordination in a single coherent approach. Spatial organisation, material choices and daylight principles are shaped to support everyday comfort and long-term value. From concept to delivery, the process aligns architecture, engineering and BIM coordination through one shared information workflow.",
