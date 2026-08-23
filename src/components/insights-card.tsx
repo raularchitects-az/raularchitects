@@ -15,11 +15,13 @@ export function InsightsCard({
   locale,
   categoryLabel,
   readLabel,
+  showExcerpt = true,
 }: {
   post: InsightPost;
   locale: string;
   categoryLabel: string;
   readLabel: string;
+  showExcerpt?: boolean;
 }) {
   const copy = getInsightCopy(post, locale);
   if (!copy) return null;
@@ -43,10 +45,12 @@ export function InsightsCard({
       <h3 className="mt-3 text-xl font-semibold leading-snug text-charcoal transition-colors duration-300 group-hover:text-bronze-dark sm:text-[1.35rem]">
         {copy.title}
       </h3>
-      <p className="mt-3 flex-1 text-sm font-light leading-relaxed text-charcoal/70">
-        {copy.excerpt}
-      </p>
-      <div className="mt-6 flex items-center justify-between gap-4">
+      {showExcerpt ? (
+        <p className="mt-3 flex-1 text-sm font-light leading-relaxed text-charcoal/70">
+          {copy.excerpt}
+        </p>
+      ) : null}
+      <div className={`flex items-center justify-between gap-4 ${showExcerpt ? "mt-6" : "mt-4"}`}>
         <time dateTime={post.publishedAt} className="text-xs text-charcoal/45">
           {formatInsightDate(post.publishedAt, locale)}
         </time>

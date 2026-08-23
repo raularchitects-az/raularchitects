@@ -242,12 +242,13 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
       ) : null}
 
       {insightsActive && showInsights ? (
-      <section className="relative bg-cream py-20 sm:py-28">
-        <Container className={HOME_EDITORIAL_CONTAINER}>
+      <section className="relative overflow-hidden py-20 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-animated" />
+        <Container className={`relative ${HOME_EDITORIAL_CONTAINER}`}>
           <Reveal>
-            <h2 className="inline-flex items-center gap-3 text-3xl font-semibold tracking-wide text-charcoal sm:text-4xl">
+            <h2 className="inline-flex items-center gap-3 text-3xl font-semibold tracking-wide text-cream sm:text-4xl">
               {upper(nav("insights"))}
-              <TriangleMark size={18} />
+              <TriangleMark size={18} className="brightness-0 invert" />
             </h2>
           </Reveal>
 
@@ -260,6 +261,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
                   locale={locale}
                   categoryLabel={insightsT(`categories.${item.category}`)}
                   readLabel={insightsT("read")}
+                  showExcerpt={false}
                 />
               </Reveal>
             ))}
@@ -267,7 +269,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
           ) : null}
           <Link
             href="/insights"
-            className={`inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-bronze-dark transition-colors duration-300 hover:text-[#6b4a32] ${latestInsights.length > 0 ? "mt-10" : "mt-12"}`}
+            className={`inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-cream/80 transition-colors duration-300 hover:text-cream ${latestInsights.length > 0 ? "mt-10" : "mt-12"}`}
           >
             {upper(homeMsg.allInsightsCta)}
             <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} />
