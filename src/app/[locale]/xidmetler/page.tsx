@@ -36,7 +36,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/xidm
   return (
     <>
       <section className="bg-cream py-24 sm:py-32">
-        <Container>
+        <Container wide>
           <SectionHeading eyebrow={t("eyebrow")} title={t("title")} />
 
           <div className="mt-16 flex flex-col border-t border-charcoal/10">

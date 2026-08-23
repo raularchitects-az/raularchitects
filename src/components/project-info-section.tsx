@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/container";
+import { PUBLIC_PROJECT_DESCRIPTION, PUBLIC_PROJECT_INFO_GRID } from "@/lib/public-widescreen-layout";
 
 type Fact = {
   label: string;
@@ -23,8 +24,8 @@ export function ProjectInfoSection({
 
   return (
     <section className="border-b border-charcoal/10 bg-cream py-16 sm:py-24">
-      <Container>
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,14rem)_1fr] lg:gap-x-20 lg:gap-y-12 xl:grid-cols-[minmax(0,16rem)_1fr]">
+      <Container wide>
+        <div className={PUBLIC_PROJECT_INFO_GRID}>
           <dl className="space-y-8">
             {facts.map((fact) => (
               <div key={fact.label}>
@@ -39,7 +40,7 @@ export function ProjectInfoSection({
           {description ? (
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.04em] text-charcoal">{descriptionLabel}</p>
-              <div className="mt-4 max-w-3xl space-y-4">
+              <div className={`mt-4 space-y-4 ${PUBLIC_PROJECT_DESCRIPTION}`}>
                 {(paragraphs.length ? paragraphs : [description]).map((paragraph, index) => (
                   <p key={index} className="text-sm font-normal leading-relaxed text-charcoal sm:text-base">
                     {paragraph}

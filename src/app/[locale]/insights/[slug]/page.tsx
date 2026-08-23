@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
+import { PUBLIC_READABLE_COLUMN, PUBLIC_ARTICLE_COVER_SIZES } from "@/lib/public-widescreen-layout";
 import { SiteFooter } from "@/components/site-footer";
 import { BlogLocaleSwitch } from "@/components/locale-switch-context";
 import { routing, type Locale, asLocale } from "@/i18n/routing";
@@ -134,8 +135,8 @@ export default async function InsightPostPage({
       <>
         <BlogLocaleSwitch paths={switchPaths} />
         <section className="bg-cream py-24 sm:py-32">
-          <Container>
-            <div className="mx-auto max-w-3xl">
+          <Container wide>
+            <div className={PUBLIC_READABLE_COLUMN}>
               <Link
                 href="/insights"
                 className="text-xs font-medium uppercase tracking-[0.2em] text-charcoal/50 transition-colors duration-300 hover:text-bronze-dark"
@@ -206,8 +207,8 @@ export default async function InsightPostPage({
       />
 
       <article className="bg-cream py-24 sm:py-32">
-        <Container>
-          <div className="mx-auto max-w-3xl">
+        <Container wide>
+          <div className={PUBLIC_READABLE_COLUMN}>
             <Link
               href="/insights"
               className="text-xs font-medium uppercase tracking-[0.2em] text-charcoal/50 transition-colors duration-300 hover:text-bronze-dark"
@@ -233,7 +234,7 @@ export default async function InsightPostPage({
                 alt={getInsightImageAlt(post, locale)}
                 fill
                 priority
-                sizes="(min-width: 768px) 48rem, 100vw"
+                sizes={PUBLIC_ARTICLE_COVER_SIZES}
                 className="object-cover"
               />
             </figure>

@@ -8,6 +8,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { toIntlHref } from "@/lib/public-paths";
 import { Container } from "@/components/ui/container";
+import { PUBLIC_EDITORIAL_GRID } from "@/lib/public-widescreen-layout";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { categories, type Category } from "@/data/categories";
 import { type PortfolioMeta } from "@/data/portfolio";
@@ -31,7 +32,7 @@ export function PortfolioGrid({ items = [] }: { items?: PortfolioMeta[] }) {
 
   return (
     <section className="bg-cream py-24 sm:py-32">
-      <Container>
+      <Container wide>
         <SectionHeading eyebrow={t("eyebrow")} title={t("title")} description={t("subtitle")} />
 
         <div className="mt-10 flex flex-wrap gap-3">
@@ -52,7 +53,7 @@ export function PortfolioGrid({ items = [] }: { items?: PortfolioMeta[] }) {
           ))}
         </div>
 
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className={`mt-12 ${PUBLIC_EDITORIAL_GRID}`}>
           {filtered.map((item) => (
             <Link key={item.slug} href={toIntlHref(`/portfolio/${item.slug}`)} className="group flex flex-col gap-5">
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-charcoal/5">

@@ -25,7 +25,7 @@ import { isInsightLocaleLive } from "@/lib/insights-urls";
 import { BlogCard } from "@/components/blog-card";
 import { HomeProjectCard } from "@/components/home-project-card";
 import { InsightsCard } from "@/components/insights-card";
-import { HOME_EDITORIAL_CONTAINER, HOME_EDITORIAL_GRID, HOME_INSIGHTS_GRID } from "@/lib/home-editorial-layout";
+import { HOME_EDITORIAL_GRID, HOME_INSIGHTS_GRID } from "@/lib/home-editorial-layout";
 import { toDisplayUpperCase } from "@/lib/locale-text";
 import { asLocale } from "@/i18n/routing";
 import { entryMetadata } from "@/lib/cms/metadata";
@@ -154,7 +154,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
 
       {homeFlags.showProjects !== false ? (
       <section className="relative bg-cream py-20 sm:py-28">
-        <Container className={HOME_EDITORIAL_CONTAINER}>
+        <Container wide>
           <Reveal>
             <h2 className="inline-flex items-center gap-3 text-3xl font-semibold tracking-wide text-charcoal sm:text-4xl">
               {upper(nav("projects"))}
@@ -244,7 +244,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
       {insightsActive && showInsights ? (
       <section className="relative overflow-hidden py-20 sm:py-28">
         <div className="absolute inset-0 bg-gradient-animated" />
-        <Container className={`relative ${HOME_EDITORIAL_CONTAINER}`}>
+        <Container wide className="relative">
           <Reveal>
             <h2 className="inline-flex items-center gap-3 text-3xl font-semibold tracking-wide text-cream sm:text-4xl">
               {upper(nav("insights"))}
@@ -281,7 +281,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
 
       {homeFlags.showBlog === true && homePosts.length > 0 && blogT ? (
       <section className="relative bg-cream py-20 sm:py-28">
-        <Container>
+        <Container wide>
           <Reveal>
             <h2 className="inline-flex items-center gap-3 text-3xl font-semibold tracking-wide text-charcoal sm:text-4xl">
               {upper(nav("blog"))}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Container } from "@/components/ui/container";
+import { PUBLIC_INSIGHTS_GRID } from "@/lib/public-widescreen-layout";
 import { SiteFooter } from "@/components/site-footer";
 import { InsightsCard } from "@/components/insights-card";
 import { getPublicInsights } from "@/lib/cms/public";
@@ -46,7 +47,7 @@ export default async function InsightsIndexPage({
   return (
     <>
       <section className="bg-cream py-24 sm:py-32">
-        <Container>
+        <Container wide>
           <div className="flex max-w-2xl flex-col gap-4">
             <span className="text-xs font-medium uppercase tracking-[0.28em] text-bronze-dark">
               {t("eyebrow")}
@@ -59,7 +60,7 @@ export default async function InsightsIndexPage({
             </p>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 gap-10 border-t border-charcoal/10 pt-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+          <div className={`mt-16 border-t border-charcoal/10 pt-12 ${PUBLIC_INSIGHTS_GRID}`}>
             {insightPosts.map((post) => (
               <InsightsCard
                 key={post.slug}

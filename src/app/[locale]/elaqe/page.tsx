@@ -39,7 +39,7 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/elaqe
   return (
     <>
       <section className="bg-cream py-24 sm:py-32">
-        <Container>
+        <Container wide>
           <div className="grid gap-16 lg:grid-cols-[1fr_1fr] lg:gap-20">
             <div className="flex flex-col gap-12">
               <div className="flex flex-col gap-4">

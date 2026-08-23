@@ -68,7 +68,7 @@ export default async function ServiceDetailPage({
   return (
     <>
       <section className="bg-charcoal py-24 sm:py-32">
-        <Container>
+        <Container wide>
           <Link
             href="/xidmetler"
             className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-cream/60 transition-colors duration-300 hover:text-bronze-light"
@@ -95,7 +95,7 @@ export default async function ServiceDetailPage({
       </section>
 
       <section className="bg-cream py-20 sm:py-28">
-        <Container>
+        <Container wide>
           <div className="grid gap-6 border-t border-charcoal/10 pt-10 sm:grid-cols-2">
             {points.map((point) => (
               <div key={point} className="flex items-start gap-4">

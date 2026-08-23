@@ -12,6 +12,10 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(PRODUCTION_SITE_URL),
+  icons: {
+    icon: [{ url: "/brand/favicon.png", type: "image/png" }],
+    shortcut: "/brand/favicon.png",
+  },
 };
 
 export const viewport: Viewport = {

@@ -233,7 +233,7 @@ export default async function ProjectDetailPage({
 
       {imported && (importedGallery.length > 0 || importedVideo) ? (
         <section className="bg-cream py-10 sm:py-16">
-          <Container>
+          <Container wide>
             <ProjectGallery images={importedGallery} />
             {importedVideo ? (
               <div className="mt-8 sm:mt-10">
@@ -254,7 +254,7 @@ export default async function ProjectDetailPage({
         </section>
       ) : imported ? null : (
         <section className="bg-cream py-10 md:hidden">
-          <Container>
+          <Container wide>
             <ProjectGallery images={gallery} rows={galleryRows} />
             {cmsVideo ? (
               <div className="mt-8 sm:mt-10">
@@ -269,7 +269,7 @@ export default async function ProjectDetailPage({
 
       {!imported && cmsVideo ? (
         <section className="hidden bg-cream pb-16 md:block">
-          <Container>
+          <Container wide>
             <video controls playsInline preload="metadata" className="h-auto w-full bg-charcoal">
               <source src={cmsVideo} />
             </video>
@@ -278,7 +278,8 @@ export default async function ProjectDetailPage({
       ) : null}
 
       <section className="bg-charcoal py-24 sm:py-32">
-        <Container className="max-w-3xl">
+        <Container wide>
+          <div className="mx-auto max-w-3xl">
           <div className="flex flex-col items-center gap-8 text-center">
             <h2 className="text-3xl font-semibold text-cream sm:text-4xl">{t("adaptTitle")}</h2>
             <div className="flex flex-col gap-4 sm:flex-row">
@@ -303,6 +304,7 @@ export default async function ProjectDetailPage({
 
           <div id="apply" className="mt-16 scroll-mt-28">
             <ProjectLeadForm />
+          </div>
           </div>
         </Container>
       </section>

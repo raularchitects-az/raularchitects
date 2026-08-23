@@ -41,7 +41,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/haqqimi
   return (
     <>
       <section className="bg-cream py-24 sm:py-32">
-        <Container>
+        <Container wide>
           <div className="flex flex-col gap-6">
             <span className="text-xs font-medium uppercase tracking-[0.28em] text-bronze-dark">{t("eyebrow")}</span>
             <h1 className="max-w-2xl text-4xl font-semibold leading-[1.1] text-charcoal sm:text-6xl">{t("title")}</h1>

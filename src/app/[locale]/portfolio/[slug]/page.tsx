@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
+import { PUBLIC_READABLE_COLUMN } from "@/lib/public-widescreen-layout";
 import { SiteFooter } from "@/components/site-footer";
 import { routing, asLocale } from "@/i18n/routing";
 import { ProjectGallery } from "@/components/project-gallery";
@@ -175,7 +176,8 @@ export default async function PortfolioDetailPage({
       </section>
 
       <section className="bg-cream py-16 sm:py-24">
-        <Container className="flex max-w-3xl flex-col items-start gap-10">
+        <Container wide>
+          <div className={`flex flex-col items-start gap-10 ${PUBLIC_READABLE_COLUMN}`}>
           {description ? (
             <p className="text-lg font-light leading-relaxed text-charcoal/70">{description}</p>
           ) : location ? (
@@ -190,12 +192,13 @@ export default async function PortfolioDetailPage({
             {t("ctaLabel")}
             <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
           </Link>
+          </div>
         </Container>
       </section>
 
       {gallery.length > 0 || videoUrl ? (
         <section className="bg-cream pb-16 sm:pb-24">
-          <Container>
+          <Container wide>
             {gallery.length > 0 ? <ProjectGallery images={gallery} /> : null}
             {videoUrl ? (
               <div className="mt-8 sm:mt-10">

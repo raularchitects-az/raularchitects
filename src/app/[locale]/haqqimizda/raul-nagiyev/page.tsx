@@ -36,7 +36,7 @@ export default async function RaulNagiyevPage({ params }: PageProps<"/[locale]/h
   return (
     <>
       <section className="bg-cream py-20 sm:py-28">
-        <Container>
+        <Container wide>
           <Link
             href="/haqqimizda"
             className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-charcoal/60 transition-colors duration-300 hover:text-bronze-dark"

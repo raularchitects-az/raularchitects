@@ -32,7 +32,7 @@ export function Footer({
 
   return (
     <footer className="border-t border-charcoal/10 bg-cream py-12">
-      <Container>
+      <Container wide>
         <div className="flex flex-col items-center gap-8 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
           <Logo />
 

@@ -8,6 +8,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { toIntlHref } from "@/lib/public-paths";
 import { Container } from "@/components/ui/container";
+import { PUBLIC_EDITORIAL_GRID } from "@/lib/public-widescreen-layout";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { categories, type Category } from "@/data/categories";
 import { type ProjectMeta } from "@/data/projects";
@@ -45,7 +46,7 @@ export function ProjectsCatalog({ items = [] }: { items?: ProjectMeta[] }) {
 
   return (
     <section className="bg-cream py-24 sm:py-32">
-      <Container>
+      <Container wide>
         <SectionHeading eyebrow={t("eyebrow")} title={t("title")} description={t("subtitle")} />
 
         <div className="mt-10 flex flex-wrap gap-3">
@@ -66,7 +67,7 @@ export function ProjectsCatalog({ items = [] }: { items?: ProjectMeta[] }) {
           ))}
         </div>
 
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className={`mt-12 ${PUBLIC_EDITORIAL_GRID}`}>
           {filtered.map((project, index) => {
             const title = catalogTitle(t, project);
             const specs = catalogSpecs(t, project);
