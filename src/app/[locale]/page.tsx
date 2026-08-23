@@ -262,6 +262,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
                   categoryLabel={insightsT(`categories.${item.category}`)}
                   readLabel={insightsT("read")}
                   showExcerpt={false}
+                  variant="onDark"
                 />
               </Reveal>
             ))}
