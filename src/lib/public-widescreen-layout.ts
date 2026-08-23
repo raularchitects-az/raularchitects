@@ -30,16 +30,19 @@ export const PUBLIC_PROJECT_DESCRIPTION =
 export const PUBLIC_ARTICLE_COVER_SIZES =
   "(min-width: 2560px) 48rem, (min-width: 1600px) 44rem, (min-width: 768px) 40rem, 100vw";
 
-/** Insight article detail page — wider shell from 1600px (detail route only). */
+/** Insight article detail page — scales up from lg; full editorial width on large desktops. */
 export const PUBLIC_INSIGHT_DETAIL_COLUMN =
-  "mx-auto w-full max-w-3xl xl:max-w-[40rem] min-[1600px]:max-w-[68rem] min-[2560px]:max-w-[72rem] min-[3440px]:max-w-[75rem]";
+  "mx-auto w-full max-w-3xl lg:max-w-[52rem] xl:max-w-[60rem] min-[1600px]:max-w-[72rem] min-[2560px]:max-w-[76rem] min-[3440px]:max-w-[80rem]";
 
-/** Insight body prose — full detail width until ultrawide, then cap line length. */
+/** Insight body prose — uses full detail column; gentle cap only on ultrawide for line length. */
 export const PUBLIC_INSIGHT_DETAIL_BODY =
-  "w-full min-[2560px]:max-w-[52rem] min-[3440px]:max-w-[54rem]";
+  "w-full min-[2560px]:max-w-[58rem] min-[3440px]:max-w-[62rem]";
 
 export const PUBLIC_INSIGHT_DETAIL_BODY_TYPO =
-  "min-[1600px]:text-[1.0625rem] min-[1600px]:leading-[1.85] min-[1600px]:[&_p]:text-[1.0625rem] min-[1600px]:[&_p]:leading-[1.85] min-[1600px]:[&_li]:text-[1.0625rem] min-[1600px]:[&_li]:leading-[1.85] min-[1600px]:[&_h2]:text-[1.0625rem] min-[1600px]:[&_h3]:text-[1.0625rem] min-[1600px]:[&_.flex]:gap-7";
+  "lg:text-[1.0625rem] lg:leading-[1.82] lg:[&_p]:text-[1.0625rem] lg:[&_p]:leading-[1.82] lg:[&_li]:text-[1.0625rem] lg:[&_li]:leading-[1.82] lg:[&_h2]:text-[1.125rem] lg:[&_h2]:leading-[1.75] lg:[&_h3]:text-[1.0625rem] lg:[&_h3]:leading-[1.82] lg:[&_.flex]:gap-7 min-[1600px]:text-[1.125rem] min-[1600px]:leading-[1.85] min-[1600px]:[&_p]:text-[1.125rem] min-[1600px]:[&_p]:leading-[1.85] min-[1600px]:[&_li]:text-[1.125rem] min-[1600px]:[&_li]:leading-[1.85] min-[1600px]:[&_h2]:text-[1.1875rem] min-[1600px]:[&_h2]:leading-[1.78] min-[1600px]:[&_h3]:text-[1.125rem] min-[1600px]:[&_h3]:leading-[1.85] min-[1600px]:[&_.flex]:gap-8";
+
+export const PUBLIC_INSIGHT_DETAIL_TITLE =
+  "text-3xl font-semibold leading-[1.15] text-charcoal sm:text-5xl lg:text-[3.25rem] lg:leading-[1.12] xl:text-6xl min-[1600px]:text-7xl min-[1600px]:leading-[1.08]";
 
 export const PUBLIC_INSIGHT_COVER_SIZES =
-  "(min-width: 3440px) 75rem, (min-width: 2560px) 72rem, (min-width: 1600px) 68rem, (min-width: 768px) 40rem, 100vw";
+  "(min-width: 3440px) 80rem, (min-width: 2560px) 76rem, (min-width: 1600px) 72rem, (min-width: 1280px) 60rem, (min-width: 1024px) 52rem, 100vw";

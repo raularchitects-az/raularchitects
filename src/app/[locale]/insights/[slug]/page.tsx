@@ -4,7 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
-import { PUBLIC_INSIGHT_DETAIL_BODY, PUBLIC_INSIGHT_DETAIL_BODY_TYPO, PUBLIC_INSIGHT_DETAIL_COLUMN, PUBLIC_INSIGHT_COVER_SIZES } from "@/lib/public-widescreen-layout";
+import { PUBLIC_INSIGHT_DETAIL_BODY, PUBLIC_INSIGHT_DETAIL_BODY_TYPO, PUBLIC_INSIGHT_DETAIL_COLUMN, PUBLIC_INSIGHT_DETAIL_TITLE, PUBLIC_INSIGHT_COVER_SIZES } from "@/lib/public-widescreen-layout";
 import { SiteFooter } from "@/components/site-footer";
 import { BlogLocaleSwitch } from "@/components/locale-switch-context";
 import { routing, type Locale, asLocale } from "@/i18n/routing";
@@ -216,19 +216,19 @@ export default async function InsightPostPage({
               ← {t("back")}
             </Link>
 
-            <header className="mt-10 flex flex-col gap-4">
-              <span className="text-xs font-medium uppercase tracking-[0.22em] text-bronze-dark">
+            <header className="mt-10 flex flex-col gap-4 lg:gap-5 min-[1600px]:gap-6">
+              <span className="text-xs font-medium uppercase tracking-[0.22em] text-bronze-dark lg:text-[0.8125rem]">
                 {t(`categories.${post.category}`)}
               </span>
-              <h1 className="text-3xl font-semibold leading-[1.15] text-charcoal sm:text-5xl">
+              <h1 className={PUBLIC_INSIGHT_DETAIL_TITLE}>
                 {copy.title}
               </h1>
-              <time dateTime={post.publishedAt} className="text-sm text-charcoal/45">
+              <time dateTime={post.publishedAt} className="text-sm text-charcoal/45 lg:text-base">
                 {formatInsightDate(post.publishedAt, locale)}
               </time>
             </header>
 
-            <figure className="relative mt-10 aspect-[16/10] overflow-hidden bg-cream-dark">
+            <figure className="relative mt-10 aspect-[16/10] overflow-hidden bg-cream-dark lg:mt-12 min-[1600px]:mt-14">
               <Image
                 src={post.image}
                 alt={getInsightImageAlt(post, locale)}
@@ -239,7 +239,7 @@ export default async function InsightPostPage({
               />
             </figure>
 
-            <div className={`mt-12 ${PUBLIC_INSIGHT_DETAIL_BODY} ${PUBLIC_INSIGHT_DETAIL_BODY_TYPO}`}>
+            <div className={`mt-12 lg:mt-14 min-[1600px]:mt-16 ${PUBLIC_INSIGHT_DETAIL_BODY} ${PUBLIC_INSIGHT_DETAIL_BODY_TYPO}`}>
               <BlogBody blocks={copy.blocks} variant="insight" />
             </div>
 

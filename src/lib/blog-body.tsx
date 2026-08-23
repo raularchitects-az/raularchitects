@@ -44,11 +44,11 @@ export function BlogBody({
 }) {
   const subheadingClass =
     variant === "insight"
-      ? "mt-6 text-base leading-[1.8] text-charcoal/75 sm:text-[1.05rem]"
+      ? "mt-6 text-base leading-[1.8] text-charcoal/75 sm:text-[1.05rem] lg:text-[1.125rem] lg:leading-[1.75] min-[1600px]:text-[1.1875rem] min-[1600px]:leading-[1.78]"
       : "mt-6 text-2xl font-semibold text-charcoal sm:text-3xl";
   const subheadingSmallClass =
     variant === "insight"
-      ? "mt-2 text-base leading-[1.8] text-charcoal/75 sm:text-[1.05rem]"
+      ? "mt-2 text-base leading-[1.8] text-charcoal/75 sm:text-[1.05rem] lg:text-[1.0625rem] lg:leading-[1.82] min-[1600px]:text-[1.125rem] min-[1600px]:leading-[1.85]"
       : "mt-2 text-xl font-semibold text-charcoal";
 
   return (
@@ -72,7 +72,14 @@ export function BlogBody({
           return (
             <ul key={index} className="flex flex-col gap-2 pl-5">
               {block.items.map((item) => (
-                <li key={item} className="list-disc text-base leading-relaxed text-charcoal/75">
+                <li
+                  key={item}
+                  className={
+                    variant === "insight"
+                      ? "list-disc text-base leading-relaxed text-charcoal/75 lg:text-[1.0625rem] lg:leading-[1.82] min-[1600px]:text-[1.125rem] min-[1600px]:leading-[1.85]"
+                      : "list-disc text-base leading-relaxed text-charcoal/75"
+                  }
+                >
                   <RichText text={item} />
                 </li>
               ))}
@@ -81,7 +88,14 @@ export function BlogBody({
         }
         if (block.type === "p" && block.text) {
           return (
-            <p key={index} className="text-base leading-[1.8] text-charcoal/75 sm:text-[1.05rem]">
+            <p
+              key={index}
+              className={
+                variant === "insight"
+                  ? "text-base leading-[1.8] text-charcoal/75 sm:text-[1.05rem] lg:text-[1.0625rem] lg:leading-[1.82] min-[1600px]:text-[1.125rem] min-[1600px]:leading-[1.85]"
+                  : "text-base leading-[1.8] text-charcoal/75 sm:text-[1.05rem]"
+              }
+            >
               <RichText text={block.text} />
             </p>
           );
