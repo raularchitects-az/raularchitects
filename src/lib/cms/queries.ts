@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import { isMissingRelationError } from "./missing-table";
+import { sortRowsBySortOrder } from "./legacy";
 import { createAdminClient, createPublicReadClient, createServiceClient } from "./supabase";
 import type { AuditRow, CmsRow, ContentStatus, MediaRow } from "./types";
 
@@ -49,7 +50,8 @@ export async function listEntity(table: EntityType) {
     if (table === "insights" && isMissingRelationError(error)) return [];
     throw error;
   }
-  return (data ?? []) as CmsRow[];
+  const rows = (data ?? []) as CmsRow[];
+  return table === "projects" ? sortRowsBySortOrder(rows) : rows;
 }
 
 export async function getEntity(table: EntityType, id: string) {

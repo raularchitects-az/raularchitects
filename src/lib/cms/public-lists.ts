@@ -12,6 +12,8 @@ import {
   hiddenSetHasLegacy,
   pickPublicCatalogRow,
   resolveCatalogItem,
+  sortOrderRank,
+  sortRowsBySortOrder,
   type LegacyKind,
 } from "./legacy";
 import {
@@ -130,16 +132,31 @@ function relatedServiceRows(slug: string, rows: CmsRow[]) {
   return rows.filter((row) => row.slug === slug);
 }
 
+function comparePublicProjectOrder(
+  a: { sortOrder?: number | null; slug: string },
+  b: { sortOrder?: number | null; slug: string },
+) {
+  const order = sortOrderRank(a.sortOrder) - sortOrderRank(b.sortOrder);
+  if (order !== 0) return order;
+  return a.slug.localeCompare(b.slug);
+}
+
+function sortPublicProjects<T extends { sortOrder?: number | null; slug: string }>(items: T[]) {
+  return [...items].sort(comparePublicProjectOrder);
+}
+
 export async function getPublicProjects(locale: string) {
   const [rows, hidden] = await Promise.all([getCatalogRows("projects"), hiddenLegacyIdsForMerge()]);
-  return mergeHardCatalog({
-    kind: "project",
-    staticItems: staticProjects,
-    cmsRows: rows,
-    hiddenIds: hidden,
-    toCms: (row) => cmsProjectToMeta(row, locale),
-    toLegacy: staticProjectPublic,
-  });
+  return sortPublicProjects(
+    mergeHardCatalog({
+      kind: "project",
+      staticItems: staticProjects,
+      cmsRows: rows,
+      hiddenIds: hidden,
+      toCms: (row) => cmsProjectToMeta(row, locale),
+      toLegacy: staticProjectPublic,
+    }),
+  );
 }
 
 export async function getPublicProject(slug: string, locale: string) {

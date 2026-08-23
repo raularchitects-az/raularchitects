@@ -107,7 +107,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
     insightsActive ? Promise.resolve([]) : getPublicPortfolio(locale),
     insightsActive ? getPublicInsights() : Promise.resolve([]),
   ]);
-  const latestProjects = takeLatestPublic(publicProjects, 9);
+  const latestProjects = publicProjects.slice(0, 9);
   const latestPortfolio = takeLatestPublic(publicPortfolio, 10);
   const latestInsights = takeLatestPublic(
     publicInsights.filter((post) => isInsightLocaleLive(post, locale)),

@@ -72,11 +72,29 @@ export function relatedCatalogRows<T extends CatalogRow>(options: {
   return options.cmsRows.filter((row) => row.slug === options.slug);
 }
 
+export function sortOrderRank(value: number | null | undefined) {
+  if (value == null || value <= 0) return Number.MAX_SAFE_INTEGER;
+  return value;
+}
+
+export function compareBySortOrder(
+  a: { sort_order?: number | null; slug?: string },
+  b: { sort_order?: number | null; slug?: string },
+) {
+  const order = sortOrderRank(a.sort_order) - sortOrderRank(b.sort_order);
+  if (order !== 0) return order;
+  return (a.slug ?? "").localeCompare(b.slug ?? "");
+}
+
+export function sortRowsBySortOrder<T extends { sort_order?: number | null; slug?: string }>(rows: T[]) {
+  return [...rows].sort(compareBySortOrder);
+}
+
 export function pickPublicCatalogRow<T extends CatalogRow>(rows: T[]): T | null {
   const publicRows = rows.filter(cmsTakesPublic);
   if (!publicRows.length) return null;
   return [...publicRows].sort((a, b) => {
-    const order = (a.sort_order ?? 0) - (b.sort_order ?? 0);
+    const order = compareBySortOrder(a, b);
     if (order !== 0) return order;
     return a.id.localeCompare(b.id);
   })[0];

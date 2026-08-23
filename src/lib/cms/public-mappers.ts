@@ -75,6 +75,7 @@ export function cmsProjectToMeta(row: CmsRow, locale: string): ProjectMeta & {
   ogImage?: string;
   publishedAt: string | null;
   createdAt: string | null;
+  sortOrder: number | null;
 } {
   const gallery = galleryUrls(row);
   return {
@@ -98,6 +99,7 @@ export function cmsProjectToMeta(row: CmsRow, locale: string): ProjectMeta & {
     ogImage: mediaPublicUrl(row.og_image_path) || cover(row),
     publishedAt: row.published_at ?? null,
     createdAt: row.created_at ?? null,
+    sortOrder: row.sort_order != null && row.sort_order > 0 ? row.sort_order : null,
   };
 }
 
@@ -311,6 +313,7 @@ export function staticProjectPublic(item: ProjectMeta) {
     gallery: [...groups.exteriorImages, ...groups.interiorImages, ...groups.planningImages],
     publishedAt: null as string | null,
     createdAt: null as string | null,
+    sortOrder: null as number | null,
     sections: {
       exterior: { media: groups.exteriorImages.map((path) => ({ path })) },
       interior: { media: groups.interiorImages.map((path) => ({ path })) },
