@@ -51,9 +51,14 @@ export async function generateMetadata({
   const cms = await getPublicProject(slug, locale);
   if (!cms) return {};
   const project = getProject(slug);
-  const imported = getImportedEntry(slug);
+  const legacyEntry = getImportedEntry(slug);
+  const imported = cms.source === "cms" ? null : legacyEntry;
   const t = await getTranslations({ locale, namespace: "projectDetail" });
-  const title = cms?.seoTitle || cms?.title || imported?.title || (project ? t(`items.${slug}.title`) : slug);
+  const title =
+    cms?.seoTitle ||
+    cms?.title ||
+    imported?.title ||
+    (!legacyEntry && project ? t(`items.${slug}.title`) : slug);
   return entryMetadata({
     locale,
     path: `/layihelar/${slug}`,
@@ -89,16 +94,21 @@ export default async function ProjectDetailPage({
   const infoT = await getTranslations("projectDetail.info");
   const co = await getTranslations("countries");
   const contact = await getPublicContact();
-  const imported = getImportedEntry(slug);
-  const description = (cmsProject && "description" in cmsProject && cmsProject.description)
+  const legacyEntry = getImportedEntry(slug);
+  /**
+   * Once a project exists in the CMS it owns every public field. The static
+   * import files stay available only for slugs that have no CMS row at all.
+   */
+  const cmsBacked = cmsProject.source === "cms";
+  const imported = cmsBacked ? null : legacyEntry;
+  const cmsDescription = "description" in cmsProject && cmsProject.description
     ? String(cmsProject.description)
-    : imported
-      ? ""
-      : getProject(slug)
-        ? t(`items.${slug}.description`)
-        : "";
+    : "";
+  const legacyDescription = legacyEntry ? "" : getProject(slug) ? t(`items.${slug}.description`) : "";
+  const description = cmsDescription || (cmsBacked ? "" : legacyDescription);
   const overviewText = description.trim() || t("overviewFallback");
-  const title = cmsProject?.title || imported?.title || (getProject(slug) ? t(`items.${slug}.title`) : slug);
+  const title =
+    cmsProject?.title || imported?.title || (!legacyEntry && getProject(slug) ? t(`items.${slug}.title`) : slug);
   const is13Import = imported?.source === "raul-13-project-import";
   const location = (is13Import && imported.country ? co(imported.country) : null)
     || (cmsProject && "location" in cmsProject ? cmsProject.location : null);
@@ -123,8 +133,14 @@ export default async function ProjectDetailPage({
     ...sectionUrls("bim"),
   ];
   const staticGroups = getProjectGalleryGroups(slug);
-  const galleryImageUrls =
-    cmsGallery.length > 0
+  /**
+   * CMS-backed projects render exactly the gallery stored on the row, so removing
+   * an image in admin removes it publicly. The legacy `sections` column and the
+   * static gallery groups are fallbacks for slugs without a CMS row.
+   */
+  const galleryImageUrls = cmsBacked
+    ? cmsGallery
+    : cmsGallery.length > 0
       ? cmsGallery
       : legacySectionUrls.length > 0
         ? legacySectionUrls
@@ -200,7 +216,7 @@ export default async function ProjectDetailPage({
           </Link>
         </div>
 
-        {imported ? (
+        {legacyEntry ? (
           <div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-10 lg:p-14">
             {location || competitionNote ? (
               <p className="mb-3 text-xs font-medium uppercase tracking-[0.24em] text-bronze-light/80">

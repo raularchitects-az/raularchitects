@@ -72,6 +72,34 @@ function readField(block: TranslationBlock | undefined, key: StringField) {
   return text((block as Record<string, unknown>)[key]);
 }
 
+export function isAutoTranslatable(table: EntityType) {
+  return table === "projects" || table === "blog_posts" || table === "insights";
+}
+
+/**
+ * Mirrors the project-level columns into the AZ translation block. Runs before
+ * the database write and never touches the network, so a DeepL outage cannot
+ * stop the Azerbaijani source from being saved.
+ */
+export function normalizeAzSource(
+  table: EntityType,
+  translations: Translations,
+  context: { location?: string | null; area_m2?: string | null },
+) {
+  if (!isAutoTranslatable(table)) return;
+  const az = { ...(translations.az ?? {}) };
+  if (table === "projects") {
+    if (context.location) az.location = text(context.location);
+    if (context.area_m2) az.area = text(context.area_m2);
+  }
+  translations.az = az;
+}
+
+/**
+ * Fills EN/DE/RU from the AZ source via DeepL. Throws when DeepL is unreachable
+ * or rejects the request; callers run this after the record is already saved and
+ * treat a failure as a warning. Returns true when `translations` was changed.
+ */
 export async function applyAutoTranslations(
   table: EntityType,
   translations: Translations,
@@ -81,16 +109,13 @@ export async function applyAutoTranslations(
     area_m2?: string | null;
   },
   previous?: Translations | null,
-) {
-  if (table !== "projects" && table !== "blog_posts" && table !== "insights") return;
-  if (!process.env.DEEPL_API_KEY?.trim()) return;
+): Promise<boolean> {
+  if (!isAutoTranslatable(table)) return false;
+  if (!process.env.DEEPL_API_KEY?.trim()) return false;
 
+  normalizeAzSource(table, translations, context);
   const az = { ...(translations.az ?? {}) };
-  if (table === "projects") {
-    if (context.location) az.location = text(context.location);
-    if (context.area_m2) az.area = text(context.area_m2);
-  }
-  translations.az = az;
+  const before = JSON.stringify(translations);
 
   const categoryLabel = categoryLabelFor(table, context.category);
   const projectFields: StringField[] =
@@ -124,7 +149,7 @@ export async function applyAutoTranslations(
   }
 
   const hasAnySource = Object.values(azValues).some(Boolean);
-  if (!hasAnySource) return;
+  if (!hasAnySource) return false;
 
   const translated = await translateFieldsForLocales(projectFields, azValues, TARGET_LOCALES);
   for (const locale of TARGET_LOCALES) {
@@ -139,4 +164,6 @@ export async function applyAutoTranslations(
     }
     applyTranslatedFields(translations, locale, patch);
   }
+
+  return JSON.stringify(translations) !== before;
 }

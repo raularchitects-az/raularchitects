@@ -40,8 +40,45 @@ import {
 } from "./insights-rollout";
 import { isMissingRelationError } from "./missing-table";
 import type { ContentStatus, EntityType } from "./queries";
-import type { CmsRow, Translations } from "./types";
-import { applyAutoTranslations } from "./auto-translate-content";
+import { TRANSLATION_WARNING, type CmsRow, type Translations } from "./types";
+import { applyAutoTranslations, isAutoTranslatable, normalizeAzSource } from "./auto-translate-content";
+
+/**
+ * Runs after the record is saved so a DeepL outage can never roll back the
+ * Azerbaijani source or any other admin edit. Returns a warning instead of
+ * throwing; existing EN/DE/RU translations are left untouched on failure.
+ */
+async function autoTranslateSavedRecord(options: {
+  // PostgREST builder is thenable after .select(); keep this loosely typed.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  supabase: { from: (table: string) => any };
+  table: EntityType;
+  id: string;
+  slug: string;
+  translations: Translations | null;
+  context: { category?: string | null; location?: string | null; area_m2?: string | null };
+  previous: Translations | null;
+}) {
+  const { supabase, table, id, slug, translations, context, previous } = options;
+  if (!isAutoTranslatable(table) || !translations) return null;
+
+  try {
+    const draft = JSON.parse(JSON.stringify(translations)) as Translations;
+    const changed = await applyAutoTranslations(table, draft, context, previous);
+    if (!changed) return null;
+
+    const { error } = await supabase
+      .from(table)
+      .update({ translations: draft, updated_at: new Date().toISOString() })
+      .eq("id", id);
+    throwIfError(error, "Tərcümə yazılmadı");
+    revalidatePublic(table, slug);
+    return null;
+  } catch (error) {
+    console.error("[cms] auto-translate failed", table, id, error);
+    return TRANSLATION_WARNING;
+  }
+}
 
 async function audit(
   action: string,
@@ -124,6 +161,9 @@ function revalidatePublic(table?: EntityType, slug?: string) {
 function revalidateMedia() {
   updateTag("cms");
   revalidatePath("/admin/media");
+  // Media rows are referenced by content rows, so a media change can alter any
+  // public page that renders a cover or gallery image.
+  revalidatePublic();
 }
 
 function throwIfError(error: { message?: string } | null, fallback: string) {
@@ -349,18 +389,15 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
     ? ((await supabase.from(table).select("*").eq("id", id).maybeSingle()).data as Record<string, unknown> | null)
     : null;
   if (id && !existing) throw new Error("Qeyd tapılmadı");
+  const translationContext = {
+    category: typeof row.category === "string" ? row.category : (existing?.category as string | null),
+    location: typeof row.location === "string" ? row.location : (existing?.location as string | null),
+    area_m2: typeof row.area_m2 === "string" ? row.area_m2 : (existing?.area_m2 as string | null),
+  };
+  const previousTranslations = (existing?.translations as Translations | null) ?? null;
   if (row.translations && typeof row.translations === "object") {
-    if (table === "projects" || table === "blog_posts" || table === "insights") {
-      await applyAutoTranslations(
-        table,
-        row.translations as Translations,
-        {
-          category: typeof row.category === "string" ? row.category : (existing?.category as string | null),
-          location: typeof row.location === "string" ? row.location : (existing?.location as string | null),
-          area_m2: typeof row.area_m2 === "string" ? row.area_m2 : (existing?.area_m2 as string | null),
-        },
-        (existing?.translations as Translations | null) ?? null,
-      );
+    if (isAutoTranslatable(table)) {
+      normalizeAzSource(table, row.translations as Translations, translationContext);
       if (table === "projects") {
         const az = (row.translations as Translations).az ?? {};
         if (typeof row.seo_title === "string" && row.seo_title.trim()) az.seoTitle = row.seo_title.trim();
@@ -434,8 +471,18 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
     if (!updated) throw new Error("Qeyd tapılmadı və ya icazə yoxdur");
     await syncLegacyHidden(supabase, table, updated);
     await audit("update", table, id, `${table} yeniləndi`, existing, row);
-    revalidatePublic(table, String(updated.slug ?? row.slug ?? existing?.slug ?? ""));
-    return id;
+    const updatedSlug = String(updated.slug ?? row.slug ?? existing?.slug ?? "");
+    revalidatePublic(table, updatedSlug);
+    const warning = await autoTranslateSavedRecord({
+      supabase,
+      table,
+      id,
+      slug: updatedSlug,
+      translations: (row.translations as Translations | null) ?? null,
+      context: translationContext,
+      previous: previousTranslations,
+    });
+    return { id, warning };
   }
 
   const { data, error } = await supabase.from(table).insert(row).select("id, slug, status, is_active, translations").single();
@@ -443,8 +490,18 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
   if (!data) throw new Error("Yaradılmadı");
   await syncLegacyHidden(supabase, table, data);
   await audit("create", table, data.id, `${table} yaradıldı`, null, row);
-  revalidatePublic(table, String(data.slug ?? row.slug ?? ""));
-  return data.id as string;
+  const createdSlug = String(data.slug ?? row.slug ?? "");
+  revalidatePublic(table, createdSlug);
+  const warning = await autoTranslateSavedRecord({
+    supabase,
+    table,
+    id: data.id as string,
+    slug: createdSlug,
+    translations: (row.translations as Translations | null) ?? null,
+    context: translationContext,
+    previous: previousTranslations,
+  });
+  return { id: data.id as string, warning };
 }
 
 export async function setStatus(table: EntityType, id: string, status: ContentStatus) {

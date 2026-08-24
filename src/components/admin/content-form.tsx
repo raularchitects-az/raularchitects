@@ -66,6 +66,9 @@ export function ContentForm({
   const router = useRouter();
   const translations = row?.translations ?? emptyT();
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
+  /** Tracks the id after a create so a follow-up save updates instead of duplicating. */
+  const [savedId, setSavedId] = useState<string | null>(row?.id ?? null);
   const [editorLocale, setEditorLocale] = useState<(typeof ADMIN_LOCALES)[number]>("az");
   const localeSlugEntity = isLocaleSlugEntity(table);
   const publicBase = table === "insights" ? "/insights" : "/bloq";
@@ -74,6 +77,7 @@ export function ContentForm({
 
   async function submitForm(formData: FormData) {
     setError("");
+    setNotice("");
     const next: Translations = emptyT();
     for (const locale of ADMIN_LOCALES) {
       const prev = translations[locale] ?? {};
@@ -170,7 +174,13 @@ export function ContentForm({
       payload.image_path = String(formData.get("cover_path") ?? "") || null;
     }
     try {
-      const id = await upsertRecord(table, row?.id ?? null, payload);
+      const { id, warning } = await upsertRecord(table, savedId, payload);
+      setSavedId(id);
+      // The record is already stored; a translation warning must not read as a failure.
+      if (warning) {
+        setNotice(warning);
+        return;
+      }
       router.push(afterSaveHref.replace("[id]", id));
     } catch (err) {
       const message =
@@ -192,6 +202,18 @@ export function ContentForm({
       }}
     >
       {error ? <p className="text-sm text-red-700">{error}</p> : null}
+      {notice ? (
+        <div className="flex flex-wrap items-center gap-3 border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+          <span>{notice}</span>
+          <button
+            type="button"
+            onClick={() => router.push(afterSaveHref.replace("[id]", savedId ?? ""))}
+            className="underline underline-offset-4"
+          >
+            Siyahıya qayıt
+          </button>
+        </div>
+      ) : null}
       <div className="grid gap-4 sm:grid-cols-2">
         {localeSlugEntity ? null : (
           <Field label="URL slug">

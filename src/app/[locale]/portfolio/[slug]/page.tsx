@@ -67,7 +67,7 @@ export async function generateMetadata({
   const cms = await getPublicPortfolioItem(slug, locale);
   if (!cms) return {};
   const item = getPortfolioItem(slug);
-  const imported = getImportedEntry(slug);
+  const imported = cms.source === "cms" ? null : getImportedEntry(slug);
   const c = await getTranslations({ locale, namespace: "categories" });
   const title = cms?.seoTitle || cms?.title || imported?.title || (item ? c(item.category) : slug);
   return entryMetadata({
@@ -110,7 +110,10 @@ export default async function PortfolioDetailPage({
   const t = await getTranslations("portfolioPage");
   const c = await getTranslations("categories");
   const co = await getTranslations("countries");
-  const imported = getImportedEntry(slug);
+  const legacyEntry = getImportedEntry(slug);
+  /** Same rule as project detail: a CMS row owns its public media and text. */
+  const cmsBacked = cmsItem.source === "cms";
+  const imported = cmsBacked ? null : legacyEntry;
   const location = item.country ? co(item.country) : null;
   const title = cmsItem?.title || imported?.title || c(item.category);
   const description = cmsItem?.description || "";
@@ -123,7 +126,7 @@ export default async function PortfolioDetailPage({
     src,
     alt: `${title} ${index + 1}`,
   }));
-  const gallery = importedGallery.length ? importedGallery : cmsGallery;
+  const gallery = cmsBacked ? cmsGallery : importedGallery.length ? importedGallery : cmsGallery;
   const videoUrl = cmsItem?.videoUrl ?? null;
   const canonical = publicCanonicalUrl(locale, `/portfolio/${slug}`, cmsItem?.canonicalUrl);
   const schema = {

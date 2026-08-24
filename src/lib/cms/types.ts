@@ -147,3 +147,6 @@ export const SERVICE_FILTERS = [
 ] as const;
 
 export const ADMIN_LOCALES = ["az", "en", "de", "ru"] as const;
+
+/** Shown when the record saved but the DeepL pass could not run. */
+export const TRANSLATION_WARNING = "Tərcümə yenilənmədi. Azərbaycan dilindəki dəyişiklik saxlanıldı.";
