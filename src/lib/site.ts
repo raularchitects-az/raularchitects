@@ -70,7 +70,7 @@ export function absoluteMediaUrl(src: string) {
 
 export function languageAlternates(path: string) {
   const languages: Record<string, string> = {
-    "x-default": productionAbsoluteUrl("en", path),
+    "x-default": productionAbsoluteUrl("az", path),
   };
   for (const locale of routing.locales) {
     languages[locale] = productionAbsoluteUrl(locale, path);

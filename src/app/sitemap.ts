@@ -16,7 +16,7 @@ import { insightLanguageAlternates, insightPostPath, isInsightLocaleLive } from 
 
 function localizedEntry(path: string, lastModified?: string): MetadataRoute.Sitemap[number] {
   const languages: Record<string, string> = {
-    "x-default": absoluteUrl("en", path),
+    "x-default": absoluteUrl("az", path),
   };
   for (const locale of routing.locales) {
     languages[locale] = absoluteUrl(locale, path);
@@ -25,7 +25,7 @@ function localizedEntry(path: string, lastModified?: string): MetadataRoute.Site
   const editorial = path.startsWith("/bloq") || path.startsWith("/insights") || path.startsWith("/portfolio");
 
   return {
-    url: absoluteUrl("en", path),
+    url: absoluteUrl("az", path),
     lastModified,
     changeFrequency: editorial ? "weekly" : "monthly",
     priority:

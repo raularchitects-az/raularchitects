@@ -40,7 +40,7 @@ function localizedTemplate(key: PathnameKey, locale: Locale) {
 const pathnameKeys = (Object.keys(pathnames) as PathnameKey[]).sort((a, b) => b.length - a.length);
 
 export function mapInternalPathname(locale: string, pathname: string) {
-  const code: Locale = isLocale(locale) ? locale : "en";
+  const code: Locale = isLocale(locale) ? locale : "az";
   const { pathname: normalized } = splitPath(pathname);
   for (const key of pathnameKeys) {
     const { regex, names } = templateToRegex(key);

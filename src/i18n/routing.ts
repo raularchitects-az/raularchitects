@@ -1,11 +1,11 @@
 import { defineRouting } from "next-intl/routing";
 
-export const locales = ["en", "az", "ru", "de"] as const;
+export const locales = ["az", "en", "ru", "de"] as const;
 
 export type Locale = (typeof locales)[number];
 
 export function asLocale(value: string): Locale {
-  return (locales as readonly string[]).includes(value) ? (value as Locale) : "en";
+  return (locales as readonly string[]).includes(value) ? (value as Locale) : "az";
 }
 
 export const localeLabels: Record<Locale, string> = {
@@ -45,7 +45,7 @@ export const pathnames = {
 
 export const routing = defineRouting({
   locales,
-  defaultLocale: "en",
+  defaultLocale: "az",
   localePrefix: "always",
   localeDetection: false,
   pathnames,

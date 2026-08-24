@@ -5,7 +5,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowLeft, ArrowRight, MessageCircle } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
-import { ProjectLeadForm } from "@/components/project-lead-form";
 import { SiteFooter } from "@/components/site-footer";
 import { BlogLocaleSwitch } from "@/components/locale-switch-context";
 import { routing, asLocale } from "@/i18n/routing";
@@ -268,17 +267,15 @@ export default async function ProjectDetailPage({
 
       <section className="bg-charcoal py-24 sm:py-32">
         <Container wide>
-          <div className="mx-auto max-w-3xl">
-          <div className="flex flex-col items-center gap-8 text-center">
-            <h2 className="text-3xl font-semibold text-cream sm:text-4xl">{t("adaptTitle")}</h2>
+          <div className="mx-auto flex max-w-3xl flex-col items-center gap-8 text-center">
             <div className="flex flex-col gap-4 sm:flex-row">
-              <a
-                href="#apply"
+              <Link
+                href="/elaqe"
                 className="group inline-flex items-center justify-center gap-2 border border-bronze-light bg-bronze-dark px-7 py-3.5 text-xs font-medium uppercase tracking-[0.22em] text-cream transition-all duration-300 hover:bg-bronze-light hover:text-charcoal"
               >
                 {t("applyCta")}
                 <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
-              </a>
+              </Link>
               <a
                 href={whatsappHref(contact.whatsapp)}
                 target="_blank"
@@ -289,11 +286,6 @@ export default async function ProjectDetailPage({
                 <MessageCircle className="h-3.5 w-3.5" strokeWidth={1.5} />
               </a>
             </div>
-          </div>
-
-          <div id="apply" className="mt-16 scroll-mt-28">
-            <ProjectLeadForm />
-          </div>
           </div>
         </Container>
       </section>

@@ -40,7 +40,7 @@ export function blogLanguageAlternates(post: BlogPost) {
     if (!isBlogLocaleLive(post, locale)) continue;
     languages[locale] = blogPostUrl(post, locale);
   }
-  languages["x-default"] = languages.en || languages.az || Object.values(languages)[0] || "";
+  languages["x-default"] = languages.az || languages.en || Object.values(languages)[0] || "";
   return languages;
 }
 
