@@ -5,6 +5,9 @@ type InquiryPayload = {
   email: string;
   message: string;
   to: string;
+  /** Set when the enquiry came from a project detail page. */
+  project?: string;
+  pageUrl?: string;
 };
 
 /** Bracket access so Next.js reads env at runtime on Vercel, not at build time. */
@@ -34,8 +37,17 @@ export async function sendInquiryEmail(payload: InquiryPayload) {
       from: inquiryFromAddress(),
       to: [payload.to],
       reply_to: payload.email,
-      subject: `Müraciət formu: ${payload.name}`,
-      text: [`Ad: ${payload.name}`, `E-poçt: ${payload.email}`, "", payload.message].join("\n"),
+      subject: payload.project
+        ? `Layihə müraciəti: ${payload.project} — ${payload.name}`
+        : `Müraciət formu: ${payload.name}`,
+      text: [
+        `Ad: ${payload.name}`,
+        `E-poçt: ${payload.email}`,
+        ...(payload.project ? [`Layihə: ${payload.project}`] : []),
+        ...(payload.pageUrl ? [`Səhifə: ${payload.pageUrl}`] : []),
+        "",
+        payload.message,
+      ].join("\n"),
     }),
   });
 

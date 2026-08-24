@@ -247,6 +247,23 @@
     "adaptTitle": "Lassen Sie uns dieses Projekt an Ihr Grundstück anpassen.",
     "applyCta": "Projektanfrage",
     "whatsappCta": "WhatsApp",
+    "enquiry": {
+      "title": "Anfrageformular",
+      "name": "Vor- und Nachname",
+      "email": "E-Mail-Adresse",
+      "message": "Kurzbeschreibung Ihres Projekts",
+      "submit": "Senden",
+      "sending": "Wird gesendet…",
+      "success": "Vielen Dank! Wir melden uns in Kürze bei Ihnen.",
+      "close": "Schließen",
+      "projectLine": "Projekt",
+      "pageLine": "Seite",
+      "errors": {
+        "required": "Bitte füllen Sie alle Felder aus.",
+        "email": "Diese E-Mail-Adresse ist ungültig.",
+        "send": "Konnte nicht gesendet werden. Bitte versuchen Sie es in Kürze erneut."
+      }
+    },
     "form": {
       "land": "Grundstücksgröße",
       "location": "Standort",

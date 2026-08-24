@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound, redirect as nextRedirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { ArrowLeft, ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowLeft, MessageCircle } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { SiteFooter } from "@/components/site-footer";
@@ -10,6 +10,7 @@ import { BlogLocaleSwitch } from "@/components/locale-switch-context";
 import { routing, asLocale } from "@/i18n/routing";
 import { ProjectGallery } from "@/components/project-gallery";
 import { ProjectInfoSection } from "@/components/project-info-section";
+import { ProjectEnquiryModal } from "@/components/project-enquiry-modal";
 import { getProject, getProjectGalleryGroups } from "@/data/projects";
 import { getImportedEntry } from "@/data/folder-imports";
 import { getPublicContact, getPublicProject, getPublicProjects, resolveSlugRedirect } from "@/lib/cms/public";
@@ -285,13 +286,7 @@ export default async function ProjectDetailPage({
         <Container wide>
           <div className="mx-auto flex max-w-3xl flex-col items-center gap-8 text-center">
             <div className="flex flex-col gap-4 sm:flex-row">
-              <Link
-                href="/elaqe"
-                className="group inline-flex items-center justify-center gap-2 border border-bronze-light bg-bronze-dark px-7 py-3.5 text-xs font-medium uppercase tracking-[0.22em] text-cream transition-all duration-300 hover:bg-bronze-light hover:text-charcoal"
-              >
-                {t("applyCta")}
-                <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
-              </Link>
+              <ProjectEnquiryModal projectName={title} projectUrl={canonical} />
               <a
                 href={whatsappHref(contact.whatsapp)}
                 target="_blank"

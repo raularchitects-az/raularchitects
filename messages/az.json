@@ -247,6 +247,23 @@
     "adaptTitle": "Bu layihəni torpağınıza uyğunlaşdıraq.",
     "applyCta": "Layihə üçün müraciət",
     "whatsappCta": "WhatsApp",
+    "enquiry": {
+      "title": "Müraciət formu",
+      "name": "Ad, Soyad",
+      "email": "E-poçt ünvanı",
+      "message": "Layihəniz haqqında qısa məlumat",
+      "submit": "Göndər",
+      "sending": "Göndərilir…",
+      "success": "Təşəkkürlər! Tezliklə sizinlə əlaqə saxlayacağıq.",
+      "close": "Bağla",
+      "projectLine": "Layihə",
+      "pageLine": "Səhifə",
+      "errors": {
+        "required": "Bütün sahələri doldurun.",
+        "email": "E-poçt ünvanı düzgün deyil.",
+        "send": "Göndərilmədi. Bir az sonra yenidən cəhd edin."
+      }
+    },
     "form": {
       "land": "Torpaq sahəsi",
       "location": "Lokasiya",
