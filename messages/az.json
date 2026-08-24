@@ -256,8 +256,6 @@
       "sending": "Göndərilir…",
       "success": "Təşəkkürlər! Tezliklə sizinlə əlaqə saxlayacağıq.",
       "close": "Bağla",
-      "projectLine": "Layihə",
-      "pageLine": "Səhifə",
       "errors": {
         "required": "Bütün sahələri doldurun.",
         "email": "E-poçt ünvanı düzgün deyil.",

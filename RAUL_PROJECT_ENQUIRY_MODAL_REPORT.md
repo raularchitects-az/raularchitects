@@ -12,8 +12,8 @@ Client component that renders both the trigger button and the modal.
 - The trigger keeps the exact classes the previous `<Link>` had, so the button in screenshot 2 is visually unchanged. Only the element changed from a link to a `<button type="button">` and the action from navigation to opening the modal.
 - The form markup and classes are copied from `InquiryForm`, so the panel matches screenshot 1: title, three uppercase-tracked labels, and the charcoal submit button with the send icon.
 - Rendered through `createPortal` into `document.body`, so the overlay (`z-[100]`) sits above the fixed navbar (`z-50`) regardless of where the trigger sits in the tree.
-- Message field is prefilled with the localized project name and the live page URL, followed by a blank line for the visitor's own text.
-- Two hidden fields, `project` and `pageUrl`, travel with the submission so the enquiry is identified even if the visitor deletes the prefilled lines.
+- All three visible fields open empty — the visitor sees a clean form with nothing to delete first.
+- Two hidden fields, `project` and `pageUrl`, travel with the submission, so the enquiry is still identified without any of it appearing in the textarea.
 
 ### `src/lib/inquiry-actions.ts`
 - Reads the optional `project` and `pageUrl` fields and forwards them to the mailer.
@@ -29,7 +29,7 @@ Client component that renders both the trigger button and the modal.
 - The WhatsApp button, the surrounding section and every other part of the page are unchanged.
 
 ### `messages/az.json`, `en.json`, `de.json`, `ru.json`
-Added a `projectDetail.enquiry` block per locale: `title`, `name`, `email`, `message`, `submit`, `sending`, `success`, `close`, `projectLine`, `pageLine` and `errors.{required,email,send}`. Label wording matches the existing `contactPage.form` strings so the two forms read identically. No existing key was modified.
+Added a `projectDetail.enquiry` block per locale: `title`, `name`, `email`, `message`, `submit`, `sending`, `success`, `close` and `errors.{required,email,send}`. Label wording matches the existing `contactPage.form` strings so the two forms read identically. No existing key was modified.
 
 ---
 
@@ -61,23 +61,21 @@ All four locales were exercised through the real UI on the Space Port Helgoland 
 
 Four test emails were sent to the configured recipient, each with `Test Elnar (<locale>)` as the sender name and a `TEST <locale> - modal enquiry flow check.` line in the body.
 
-### Prefill per locale
+### Empty form, project still identified
 
-The project name is taken from the CMS, so it arrives already translated:
+The modal opens with every visible field blank. Verified on the AZ page:
 
 ```
-AZ  Layihə: Space Port Helgoland
-    Səhifə: http://localhost:3000/az/layihelar/space-port-helgoland
-
-EN  Project: Space Port Helgoland
-    Page: http://localhost:3000/en/projects/space-port-helgoland
-
-DE  Projekt: Raumhafen Helgoland
-    Seite: http://localhost:3000/de/layihelar/space-port-helgoland
-
-RU  Проект: Космический порт Гельголанд
-    Страница: http://localhost:3000/ru/layihelar/space-port-helgoland
+nameValue     ""
+emailValue    ""
+messageValue  ""            ← nothing to delete
+hiddenProject "Space Port Helgoland"
+hiddenPageUrl "http://localhost:3000/az/layihelar/space-port-helgoland"
 ```
+
+A follow-up send from the empty form returned SUCCESS, confirming the project and URL still reach the inbox through the hidden fields and the `Layihə müraciəti: <project> — <name>` subject line.
+
+An earlier revision prefilled the textarea with `Layihə:` and `Səhifə:` lines. That was removed at the client's request; the `projectLine` and `pageLine` message keys were deleted with it.
 
 ### Localized labels
 
@@ -133,8 +131,8 @@ Nothing was committed, pushed or deployed.
 
 ## 5. Notes
 
-**The prefilled URL uses the live address.** The component receives the canonical URL from the server as an SSR fallback, then replaces it with `window.location.href` when the modal opens, so the visitor's actual address (including locale prefix) is what reaches the inbox.
+**The reported URL is the live address.** The component receives the canonical URL from the server as an SSR fallback, then replaces it with `window.location.href` when the modal opens, so the visitor's actual address (including locale prefix) is what reaches the inbox.
 
-**Project name follows the CMS.** Because `projectName` is the already-localized `title`, a DE enquiry reads `Projekt: Raumhafen Helgoland`. If you would rather always see the Azerbaijani name in the inbox, the page can pass the AZ title instead — say the word and it is a one-line change.
+**Project name follows the CMS.** Because `projectName` is the already-localized `title`, a DE enquiry arrives as `Layihə müraciəti: Raumhafen Helgoland — <name>`. If you would rather always see the Azerbaijani name in the inbox, the page can pass the AZ title instead — say the word and it is a one-line change.
 
 **Portfolio detail pages still link to the contact page.** The brief covered project detail pages only, so the portfolio CTA was left as it was.

@@ -256,8 +256,6 @@
       "sending": "Wird gesendet…",
       "success": "Vielen Dank! Wir melden uns in Kürze bei Ihnen.",
       "close": "Schließen",
-      "projectLine": "Projekt",
-      "pageLine": "Seite",
       "errors": {
         "required": "Bitte füllen Sie alle Felder aus.",
         "email": "Diese E-Mail-Adresse ist ungültig.",

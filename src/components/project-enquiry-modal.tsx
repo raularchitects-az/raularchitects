@@ -30,8 +30,6 @@ export function ProjectEnquiryModal({
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  const prefill = `${e("projectLine")}: ${projectName}\n${e("pageLine")}: ${pageUrl}\n\n`;
-
   const close = useCallback(() => {
     setOpen(false);
     triggerRef.current?.focus();
@@ -180,7 +178,6 @@ export function ProjectEnquiryModal({
                 required
                 name="message"
                 rows={5}
-                defaultValue={prefill}
                 disabled={pending}
                 className="resize-none border border-charcoal/15 bg-transparent px-4 py-3 text-sm text-charcoal outline-none transition-colors duration-300 placeholder:text-charcoal/30 focus:border-bronze-dark disabled:opacity-60"
               />
