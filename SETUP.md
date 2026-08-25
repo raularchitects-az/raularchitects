@@ -47,7 +47,13 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_ANON_KEY
 SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
+DEEPL_API_KEY=YOUR_DEEPL_API_KEY
+RESEND_API_KEY=YOUR_RESEND_API_KEY
+INQUIRY_TO_EMAIL=office@raularchitects.com
+NEXT_PUBLIC_GA_MEASUREMENT_ID=
 ```
+
+Bütün dəyişənlərin siyahısı `.env.example` faylındadır. Həqiqi açarları heç vaxt repoya yazmayın.
 
 - `NEXT_PUBLIC_SUPABASE_URL` — Project Settings → API → **Project URL** yalnız: `https://YOUR_PROJECT.supabase.co`  
   Sonda `/auth/v1`, `/rest/v1`, dashboard linki (`supabase.com/dashboard/...`) və ya sayt ünvanı (`raularchitects.com`) olmasın. Bu səhv `Invalid path specified in request URL` xətası verir.  
@@ -67,12 +73,25 @@ Project → Settings → Environment Variables. Production / Preview / Developme
 | `NEXT_PUBLIC_SUPABASE_URL` | Yalnız `https://xxxx.supabase.co` (path yox) |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | anon public **və ya** `sb_publishable_...` |
 | `SUPABASE_SERVICE_ROLE_KEY` | service_role **və ya** `sb_secret_...`, **server only** |
+| `DEEPL_API_KEY` | DeepL API açarı — CMS-də AZ→EN/DE/RU avtomatik tərcümə (server only) |
+| `RESEND_API_KEY` | [Resend](https://resend.com) API açarı — müraciət formu email (server only) |
+| `INQUIRY_TO_EMAIL` | Form müraciətlərinin gedəcəyi ünvan (default: `office@raularchitects.com`) |
+| `INQUIRY_FROM_EMAIL` | Göndərən ünvan (məs. `Raul Architects <noreply@raularchitects.com>` — Resend-də domain təsdiqlənməlidir) |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 Measurement ID (`G-XXXXXXXXXX`). Opsional — boş olsa analitika və cookie banneri tamamilə söndürülür |
 
 Deploy-dan sonra `/admin/login` yoxlayın.
 
+## 3.1. Google Analytics 4
+
+- Measurement ID yalnız `NEXT_PUBLIC_GA_MEASUREMENT_ID` dəyişənindən oxunur; kodda heç yerdə yazılı deyil.
+- Skript yalnız public səhifələrdə (`/az`, `/en`, `/de`, `/ru`) yüklənir. `/admin` heç vaxt izlənmir.
+- Ziyarətçi cookie bannerində **Qəbul edirəm** seçməyincə gtag.js yüklənmir. Seçim `localStorage`-də `ra-analytics-consent` açarında saxlanılır.
+- Dəyişən təyin olunmayıbsa nə banner, nə də skript görünür; sayt normal işləyir.
+- İzlənən konversiyalar: `generate_lead` (əlaqə forması və layihə müraciət modalı) və `whatsapp_click`.
+
 ## 4. Media
 
-Schema `media` adlı public bucket yaradır. Yüklənən şəkil/video orada saxlanır. İcazə verilən formatlar: JPG, PNG, WebP, AVIF, MP4, WebM. Şəkil limiti 12MB, video 80MB.
+Schema `media` adlı public bucket yaradır. Yüklənən şəkil/video orada saxlanır. İcazə verilən formatlar: JPG, PNG, WebP, AVIF, MP4, WebM. Şəkil limiti 3MB, video 80MB.
 
 `next.config.ts` Supabase storage hostunu `images.remotePatterns` siyahısına əlavə edir.
 
