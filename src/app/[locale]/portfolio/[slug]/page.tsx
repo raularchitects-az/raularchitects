@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { CmsImage as Image } from "@/components/ui/cms-image";
 import { notFound, permanentRedirect, redirect as nextRedirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowLeft, ArrowRight } from "lucide-react";

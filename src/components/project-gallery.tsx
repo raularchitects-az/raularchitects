@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import Image from "next/image";
+import { CmsImage as Image } from "@/components/ui/cms-image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 export type ProjectGalleryImage = {

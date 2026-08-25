@@ -10,3 +10,12 @@ export function mediaPublicUrl(path: string | null | undefined) {
   if (!base) return "";
   return `${base}/storage/v1/object/public/media/${value.replace(/^\/+/, "")}`;
 }
+
+/**
+ * True for files uploaded through the CMS and served from Supabase storage.
+ * Legacy `/images/...` assets shipped with the repo return false.
+ */
+export function isCmsMediaUrl(src: string | null | undefined) {
+  if (!src) return false;
+  return src.includes("/storage/v1/object/public/");
+}

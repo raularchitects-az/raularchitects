@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
+import { CmsImage as Image } from "@/components/ui/cms-image";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import Image from "next/image";
+import { CmsImage as Image } from "@/components/ui/cms-image";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/container";
 import { PUBLIC_INSIGHT_DETAIL_BODY, PUBLIC_INSIGHT_DETAIL_BODY_TYPO, PUBLIC_INSIGHT_DETAIL_COLUMN, PUBLIC_INSIGHT_DETAIL_TITLE, PUBLIC_INSIGHT_COVER_SIZES } from "@/lib/public-widescreen-layout";

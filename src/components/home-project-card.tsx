@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { CmsImage as Image } from "@/components/ui/cms-image";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { toIntlHref } from "@/lib/public-paths";

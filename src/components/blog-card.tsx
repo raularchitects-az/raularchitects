@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { CmsImage as Image } from "@/components/ui/cms-image";
 import { Link } from "@/i18n/navigation";
 import { formatBlogDate, type BlogPost, getBlogCopy, getBlogImageAlt } from "@/data/blog";
 import { getBlogLocaleSlug } from "@/lib/blog-urls";
