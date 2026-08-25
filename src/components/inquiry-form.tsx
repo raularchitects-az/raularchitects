@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { useTranslations } from "next-intl";
 import { CheckCircle2, Send } from "lucide-react";
 import { submitInquiryForm } from "@/lib/inquiry-actions";
+import { trackEvent } from "@/lib/analytics";
 
 export function InquiryForm() {
   const t = useTranslations("contactPage.form");
@@ -24,6 +25,7 @@ export function InquiryForm() {
       return;
     }
 
+    trackEvent("generate_lead", { method: "contact_form", form_location: "contact_page" });
     setSubmitted(true);
   }
 

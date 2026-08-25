@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { routing, asLocale } from "@/i18n/routing";
 import { Navbar } from "@/components/navbar";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
+import { SiteAnalytics } from "@/components/analytics/site-analytics";
 import { isInsightsRestructureActive } from "@/lib/cms/insights-rollout";
 import { PRODUCTION_SITE_URL } from "@/lib/site";
 
@@ -46,6 +47,7 @@ export default async function LocaleLayout({
       <Navbar insightsActive={insightsActive} />
       <div className="pt-20">{children}</div>
       <WhatsAppFloat />
+      <SiteAnalytics />
     </NextIntlClientProvider>
   );
 }

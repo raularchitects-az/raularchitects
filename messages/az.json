@@ -679,6 +679,12 @@
   "languageSwitcher": {
     "label": "Dil"
   },
+  "cookieConsent": {
+    "title": "Kukilər",
+    "description": "Saytın necə istifadə olunduğunu anlamaq üçün analitik kukilərdən istifadə etmək istəyirik. Yalnız razılığınızdan sonra aktivləşir.",
+    "accept": "Qəbul edirəm",
+    "reject": "İmtina edirəm"
+  },
   "blog": {
     "title": "Bloq",
     "eyebrow": "Bloq",

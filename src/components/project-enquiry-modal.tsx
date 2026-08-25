@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import { ArrowRight, CheckCircle2, Send, X } from "lucide-react";
 import { submitInquiryForm, type InquiryErrorCode } from "@/lib/inquiry-actions";
+import { trackEvent } from "@/lib/analytics";
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -100,6 +101,11 @@ export function ProjectEnquiryModal({
       setErrorCode(result.code);
       return;
     }
+    trackEvent("generate_lead", {
+      method: "project_enquiry_modal",
+      form_location: "project_detail",
+      project_name: projectName,
+    });
     setSubmitted(true);
   }
 

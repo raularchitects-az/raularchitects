@@ -1,3 +1,5 @@
+import { WhatsAppLink } from "@/components/whatsapp-link";
+
 const WHATSAPP_URL = "https://wa.me/message/ZULTMDZMVTGBN1";
 
 function WhatsAppIcon() {
@@ -10,15 +12,14 @@ function WhatsAppIcon() {
 
 export function WhatsAppFloat() {
   return (
-    <a
+    <WhatsAppLink
       href={WHATSAPP_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="WhatsApp ilə əlaqə"
+      ariaLabel="WhatsApp ilə əlaqə"
+      location="floating_button"
       className="fixed right-5 bottom-[max(1.25rem,calc(env(safe-area-inset-bottom)+0.75rem))] z-40 inline-flex h-12 w-12 items-center justify-center rounded-full bg-bronze-dark text-cream shadow-[0_10px_28px_rgba(145,107,79,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-bronze-light hover:text-charcoal hover:shadow-[0_14px_32px_rgba(145,107,79,0.36)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bronze-dark md:right-6 md:bottom-6 md:w-auto md:gap-2.5 md:px-4 lg:right-8 lg:bottom-8"
     >
       <WhatsAppIcon />
       <span className="hidden text-[11px] font-medium uppercase tracking-[0.16em] md:inline">WhatsApp</span>
-    </a>
+    </WhatsAppLink>
   );
 }

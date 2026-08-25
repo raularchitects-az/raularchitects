@@ -11,6 +11,7 @@ import { routing, asLocale } from "@/i18n/routing";
 import { ProjectGallery } from "@/components/project-gallery";
 import { ProjectInfoSection } from "@/components/project-info-section";
 import { ProjectEnquiryModal } from "@/components/project-enquiry-modal";
+import { WhatsAppLink } from "@/components/whatsapp-link";
 import { getProject, getProjectGalleryGroups } from "@/data/projects";
 import { getImportedEntry } from "@/data/folder-imports";
 import { getPublicContact, getPublicProject, getPublicProjects, resolveSlugRedirect } from "@/lib/cms/public";
@@ -287,15 +288,15 @@ export default async function ProjectDetailPage({
           <div className="mx-auto flex max-w-3xl flex-col items-center gap-8 text-center">
             <div className="flex flex-col gap-4 sm:flex-row">
               <ProjectEnquiryModal projectName={title} projectUrl={canonical} />
-              <a
+              <WhatsAppLink
                 href={whatsappHref(contact.whatsapp)}
-                target="_blank"
-                rel="noopener noreferrer"
+                location="project_detail"
+                projectName={title}
                 className="group inline-flex items-center justify-center gap-2 border border-cream/25 px-7 py-3.5 text-xs font-medium uppercase tracking-[0.22em] text-cream transition-all duration-300 hover:border-bronze-light hover:text-bronze-light"
               >
                 {t("whatsappCta")}
                 <MessageCircle className="h-3.5 w-3.5" strokeWidth={1.5} />
-              </a>
+              </WhatsAppLink>
             </div>
           </div>
         </Container>

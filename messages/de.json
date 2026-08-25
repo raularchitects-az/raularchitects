@@ -679,6 +679,12 @@
   "languageSwitcher": {
     "label": "Sprache"
   },
+  "cookieConsent": {
+    "title": "Cookies",
+    "description": "Wir möchten Analyse-Cookies verwenden, um zu verstehen, wie die Website genutzt wird. Sie werden erst nach Ihrer Zustimmung aktiviert.",
+    "accept": "Akzeptieren",
+    "reject": "Ablehnen"
+  },
   "blog": {
     "title": "Blog",
     "eyebrow": "Blog",
