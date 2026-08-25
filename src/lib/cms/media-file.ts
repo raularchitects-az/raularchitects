@@ -1,5 +1,5 @@
 export const MEDIA_ACCEPT = "image/jpeg,image/png,image/webp,image/avif,video/mp4,video/webm";
-export const MAX_IMAGE_BYTES = 12 * 1024 * 1024;
+export const MAX_IMAGE_BYTES = 3 * 1024 * 1024;
 export const MAX_VIDEO_BYTES = 80 * 1024 * 1024;
 export const ALLOWED_MEDIA_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "avif", "gif", "mp4", "webm"] as const;
 
@@ -20,7 +20,9 @@ export function validateMediaFile(file: { name: string; type: string; size: numb
   const isImage = type.startsWith("image/");
   const isVideo = type.startsWith("video/");
   if (!isImage && !isVideo) return "Yalnız şəkil və ya video";
-  if (isImage && file.size > MAX_IMAGE_BYTES) return "Şəkil 12MB-dan böyük ola bilməz";
+  if (isImage && file.size > MAX_IMAGE_BYTES) {
+    return "Şəkil 3 MB-dan böyük ola bilməz. Zəhmət olmasa faylı kiçildin və yenidən yükləyin.";
+  }
   if (isVideo && file.size > MAX_VIDEO_BYTES) return "Video 80MB-dan böyük ola bilməz";
   return null;
 }
