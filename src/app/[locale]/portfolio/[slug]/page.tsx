@@ -22,6 +22,9 @@ import { mediaPublicUrl } from "@/lib/cms/media-url";
 import { SITE_NAME, SITE_URL, publicCanonicalUrl } from "@/lib/site";
 import { localizePublicPath } from "@/lib/public-paths";
 
+/** Safety net: a detail URL that a save failed to purge self-heals in a minute. */
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   const cms = await getPublicPortfolio("en");
   const slugs = [...new Set(cms.map((item) => item.slug))];

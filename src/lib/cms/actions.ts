@@ -72,7 +72,7 @@ async function autoTranslateSavedRecord(options: {
       .update({ translations: draft, updated_at: new Date().toISOString() })
       .eq("id", id);
     throwIfError(error, "Tərcümə yazılmadı");
-    revalidatePublic(table, slug);
+    revalidatePublic(table, [slug, ...localeSlugs(draft), ...localeSlugs(previous)]);
     return null;
   } catch (error) {
     console.error("[cms] auto-translate failed", table, id, error);
@@ -114,7 +114,27 @@ async function saveRevision(entityType: string, entityId: string, payload: unkno
   });
 }
 
-function revalidatePublic(table?: EntityType, slug?: string) {
+/**
+ * Blog and Insights detail pages are prerendered under the base slug *and*
+ * every per-locale slug, so a save has to purge all of them. Missing one left
+ * that URL frozen on its build-time HTML.
+ */
+function localeSlugs(translations: unknown): string[] {
+  if (!translations || typeof translations !== "object") return [];
+  const value = translations as Translations;
+  return routing.locales
+    .map((locale) => value[locale]?.slug?.trim())
+    .filter((slug): slug is string => Boolean(slug));
+}
+
+function revalidatePublic(table?: EntityType, slug?: string | string[] | null) {
+  const slugs = [
+    ...new Set(
+      (Array.isArray(slug) ? slug : [slug])
+        .map((value) => (typeof value === "string" ? value.trim() : ""))
+        .filter(Boolean),
+    ),
+  ];
   updateTag("cms");
   updateTag("cms-settings");
   if (table) updateTag(`cms-${table}`);
@@ -135,25 +155,12 @@ function revalidatePublic(table?: EntityType, slug?: string) {
     revalidatePath(localizePublicPath(locale, "/xidmetler"), "layout");
     revalidatePath(localizePublicPath(locale, "/haqqimizda"), "layout");
     revalidatePath(localizePublicPath(locale, "/elaqe"), "layout");
-    if (table === "projects" && slug) {
-      revalidatePath(`/${locale}/layihelar/${slug}`);
-      revalidatePath(localizePublicPath(locale, `/layihelar/${slug}`));
-    }
-    if (table === "portfolio" && slug) {
-      revalidatePath(`/${locale}/portfolio/${slug}`);
-      revalidatePath(localizePublicPath(locale, `/portfolio/${slug}`));
-    }
-    if (table === "blog_posts" && slug) {
-      revalidatePath(`/${locale}/bloq/${slug}`);
-      revalidatePath(localizePublicPath(locale, `/bloq/${slug}`));
-    }
-    if (table === "insights" && slug) {
-      revalidatePath(`/${locale}/insights/${slug}`);
-      revalidatePath(localizePublicPath(locale, `/insights/${slug}`));
-    }
-    if (table === "services" && slug) {
-      revalidatePath(`/${locale}/xidmetler/${slug}`);
-      revalidatePath(localizePublicPath(locale, `/xidmetler/${slug}`));
+    if (!table) continue;
+    for (const item of slugs) {
+      const path = publicPathFor(table, item);
+      if (path === "/") continue;
+      revalidatePath(`/${locale}${path}`);
+      revalidatePath(localizePublicPath(locale, path));
     }
   }
 }
@@ -472,7 +479,12 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
     await syncLegacyHidden(supabase, table, updated);
     await audit("update", table, id, `${table} yeniləndi`, existing, row);
     const updatedSlug = String(updated.slug ?? row.slug ?? existing?.slug ?? "");
-    revalidatePublic(table, updatedSlug);
+    revalidatePublic(table, [
+      updatedSlug,
+      String(existing?.slug ?? ""),
+      ...localeSlugs(updated.translations),
+      ...localeSlugs(existing?.translations),
+    ]);
     const warning = await autoTranslateSavedRecord({
       supabase,
       table,
@@ -491,7 +503,7 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
   await syncLegacyHidden(supabase, table, data);
   await audit("create", table, data.id, `${table} yaradıldı`, null, row);
   const createdSlug = String(data.slug ?? row.slug ?? "");
-  revalidatePublic(table, createdSlug);
+  revalidatePublic(table, [createdSlug, ...localeSlugs(data.translations)]);
   const warning = await autoTranslateSavedRecord({
     supabase,
     table,
@@ -516,7 +528,7 @@ export async function setStatus(table: EntityType, id: string, status: ContentSt
   if (data.status !== status) throw new Error("Status bazada dəyişmədi");
   await syncLegacyHidden(supabase, table, data, { forceHide: status !== "published" });
   await audit("status", table, id, `status → ${status}`);
-  revalidatePublic(table, data.slug);
+  revalidatePublic(table, [String(data.slug ?? ""), ...localeSlugs(data.translations)]);
 }
 
 export async function setActive(table: EntityType, id: string, isActive: boolean) {
@@ -534,7 +546,7 @@ export async function setActive(table: EntityType, id: string, isActive: boolean
   if (data.is_active !== isActive) throw new Error("Aktiv statusu bazada dəyişmədi");
   await syncLegacyHidden(supabase, table, data, { forceHide: !isActive });
   await audit("active", table, id, `active → ${isActive}`);
-  revalidatePublic(table, data.slug);
+  revalidatePublic(table, [String(data.slug ?? ""), ...localeSlugs(data.translations)]);
 }
 
 export async function archiveRecord(table: EntityType, id: string) {
@@ -591,7 +603,11 @@ export async function deleteRecord(table: EntityType, id: string) {
   if (!deleted) throw new Error("Qeyd silinmədi — icazə və ya RLS yoxlanışı alınmadı");
   await syncLegacyHidden(supabase, table, existing, { deleted: true });
   await audit("delete", table, id, `${table} silindi`, existing, null);
-  revalidatePublic(table, deleted.slug ?? existing.slug);
+  revalidatePublic(table, [
+    String(deleted.slug ?? existing.slug ?? ""),
+    String(existing.slug ?? ""),
+    ...localeSlugs(existing.translations),
+  ]);
   return "deleted";
 }
 
@@ -613,7 +629,7 @@ export async function duplicateRecord(table: EntityType, id: string) {
   if (!data) throw new Error("Dublikat yaradılmadı");
   await syncLegacyHidden(supabase, table, data);
   await audit("duplicate", table, data.id, `${existing.slug} dublikat`);
-  revalidatePublic(table, String(copy.slug));
+  revalidatePublic(table, [String(copy.slug), ...localeSlugs(data.translations)]);
   return data.id as string;
 }
 
@@ -633,7 +649,12 @@ export async function restoreRevision(revisionId: string) {
     forceHide: updated.status === "archived" || updated.is_active === false,
   });
   await audit("restore", rev.entity_type, id, "əvvəlki versiyaya qayıdıldı");
-  revalidatePublic(rev.entity_type as EntityType, String(payload.slug ?? updated.slug ?? ""));
+  revalidatePublic(rev.entity_type as EntityType, [
+    String(payload.slug ?? updated.slug ?? ""),
+    String(updated.slug ?? ""),
+    ...localeSlugs(updated.translations),
+    ...localeSlugs(payload.translations),
+  ]);
 }
 
 export async function saveSettings(key: string, value: Record<string, unknown>) {

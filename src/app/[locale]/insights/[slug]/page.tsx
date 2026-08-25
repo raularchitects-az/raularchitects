@@ -23,6 +23,9 @@ import {
   productionAbsoluteUrl,
 } from "@/lib/site";
 
+/** Safety net: a detail URL that a save failed to purge self-heals in a minute. */
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   if (!(await isInsightsRestructureActive())) return [];
   const posts = await getPublicInsights();
