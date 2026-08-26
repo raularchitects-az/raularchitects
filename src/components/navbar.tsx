@@ -6,6 +6,7 @@ import { toDisplayUpperCase } from "@/lib/locale-text";
 import { Menu } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/ui/logo";
+import { LogoHomeLink } from "@/components/ui/logo-home-link";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { MegaMenu } from "@/components/mega-menu";
 
@@ -32,9 +33,9 @@ export function Navbar({ insightsActive = false }: { insightsActive?: boolean })
           <div className="absolute inset-0 bg-gradient-animated" />
         </div>
         <nav className="relative mx-auto grid h-20 max-w-7xl grid-cols-2 items-center px-6 lg:grid-cols-3 lg:px-10">
-          <Link href="/" className="shrink-0 justify-self-start">
+          <LogoHomeLink className="shrink-0 justify-self-start">
             <Logo tone="light" />
-          </Link>
+          </LogoHomeLink>
 
           <div className="hidden items-center justify-center gap-10 lg:flex">
             {primaryLinks.map((item) => (

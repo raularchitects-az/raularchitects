@@ -2,6 +2,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { toDisplayUpperCase } from "@/lib/locale-text";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/ui/logo";
+import { LogoHomeLink } from "@/components/ui/logo-home-link";
 import { Container } from "@/components/ui/container";
 import { SocialLinks } from "@/components/social-links";
 
@@ -34,7 +35,9 @@ export function Footer({
     <footer className="border-t border-charcoal/10 bg-cream py-12">
       <Container wide>
         <div className="flex flex-col items-center gap-8 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
-          <Logo />
+          <LogoHomeLink>
+            <Logo />
+          </LogoHomeLink>
 
           <nav className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
             {links.map((link) => (
