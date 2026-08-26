@@ -120,7 +120,7 @@ Deterministic and fully explainable: every point that reaches the total is store
 |---|---|---|
 | CPV family evidence | 32 | Weighted per family; hierarchical, so 71221000 also counts under 71220000 and 71200000. |
 | Project type fit | 16 | Full weight when the type is in the profile's target list, otherwise 4. |
-| Country priority | 16 | Germany and Switzerland 15, Austria 8, other Europe 4. |
+| Country priority | 16 | Germany and Switzerland 14, Austria 9, every other eligible European country 7. All editable in the Eligibility Profile. See `RAUL_RADAR_COUNTRY_PRIORITY_REPORT.md`. |
 | Deadline | 10 | 15+ days 10, 4–14 days 5, 0–3 days 1. |
 | Strategic relevance | 10 | BIM, competition or general planning. |
 | Scale | 8 | Only when a value is officially supplied. |

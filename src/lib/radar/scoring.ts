@@ -1,4 +1,9 @@
-import { countryWeight, isPriorityCountry, type EligibilityProfile } from "./eligibility";
+import {
+  countryWeight,
+  hasCountryPreferences,
+  isPriorityCountry,
+  type EligibilityProfile,
+} from "./eligibility";
 import {
   cpvMatchesFamily,
   cpvMatchesPrefix,
@@ -188,13 +193,21 @@ export function scoreOpportunity(
     unknowns.push("Layihə tipi başlıqdan müəyyən edilmədi.");
   }
 
-  // --- Country priority ---------------------------------------------------
+  // --- Country ------------------------------------------------------------
+  // Raul works internationally, so no country is favoured until the profile
+  // says so; until then every eligible country contributes the same weight.
+  const countryPreferences = hasCountryPreferences(profile);
   if (opportunity.country) {
     const points = clamp(countryWeight(profile, opportunity.country), 0, MAX_COUNTRY_POINTS);
     factors.push({
       key: "country",
-      label: `Ölkə prioriteti: ${opportunity.country}`,
+      label: countryPreferences
+        ? `Ölkə prioriteti: ${opportunity.country}`
+        : `Avropa bazarı: ${opportunity.country}`,
       points,
+      detail: countryPreferences
+        ? undefined
+        : "Uyğunluq profilində ölkə prioriteti təyin edilməyib; bütün ölkələr bərabər sayılır.",
     });
   } else {
     unknowns.push("Mənbədə ölkə göstərilməyib.");
@@ -292,7 +305,10 @@ export function scoreOpportunity(
   // The Phase 1 field projection never contains selection criteria, so these
   // are recorded as unknowns instead of being assumed satisfied.
   unknowns.push("İxtisas və referans tələbləri yalnız tender sənədlərində görünür.");
-  if (!isPriorityCountry(profile, opportunity.country) && !profile.hasLocalPartnerNetwork) {
+  // Only penalise once the profile actually distinguishes markets. With no
+  // country preferences the penalty would apply to every opportunity equally
+  // and would therefore say nothing about any of them.
+  if (countryPreferences && !isPriorityCountry(profile, opportunity.country) && !profile.hasLocalPartnerNetwork) {
     factors.push({
       key: "local-presence",
       label: "Yerli ofis/partnyor tələbi aydın deyil",

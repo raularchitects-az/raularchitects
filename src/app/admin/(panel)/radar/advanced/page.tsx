@@ -157,7 +157,7 @@ export default async function RadarAdvancedPage() {
             </Select>
           </Field>
           <Field label="Ölkə filtri (ISO3, boş = hamısı)">
-            <TextInput name="countryFilter" defaultValue={settings.search.countryFilter.join(" ")} placeholder="DEU CHE" />
+            <TextInput name="countryFilter" defaultValue={settings.search.countryFilter.join(" ")} />
           </Field>
           <Field label="Əlavə mənbə sahələri">
             <TextInput name="extraFields" defaultValue={settings.search.extraFields.join(" ")} />

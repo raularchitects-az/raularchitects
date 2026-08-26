@@ -1,4 +1,9 @@
-import { countryLabel, isPriorityCountry, type EligibilityProfile } from "./eligibility";
+import {
+  countryLabel,
+  hasCountryPreferences,
+  isPriorityCountry,
+  type EligibilityProfile,
+} from "./eligibility";
 import { daysUntilDeadline, deadlineSummary } from "./deadline";
 import type { RadarAnalysis, RadarRecommendation, ScoreResult, SourceOpportunity } from "./types";
 
@@ -37,7 +42,12 @@ function recommendationFor(
   if (score.excluded || score.band === "low") return "monitor_only";
 
   const days = daysUntilDeadline(opportunity.deadlineAt, now);
-  const localUnclear = !isPriorityCountry(profile, opportunity.country) && !profile.hasLocalPartnerNetwork;
+  // Without declared country preferences there is no basis for singling this
+  // country out, so the recommendation is driven by the opportunity instead.
+  const localUnclear =
+    hasCountryPreferences(profile) &&
+    !isPriorityCountry(profile, opportunity.country) &&
+    !profile.hasLocalPartnerNetwork;
   if (localUnclear) return "check_local_eligibility";
 
   const large =
@@ -57,10 +67,14 @@ function whyItMatters(opportunity: SourceOpportunity, score: ScoreResult, profil
 
   const parts: string[] = [];
   const country = countryLabel(profile, opportunity.country);
-  if (isPriorityCountry(profile, opportunity.country)) {
-    parts.push(`${country} Raul üçün prioritet bazardır`);
-  } else if (country) {
-    parts.push(`${country} ikinci dərəcəli prioritetdir`);
+  if (country) {
+    if (!hasCountryPreferences(profile)) {
+      parts.push(`${country} üzrə Avropa imkanıdır`);
+    } else if (isPriorityCountry(profile, opportunity.country)) {
+      parts.push(`${country} Raul üçün prioritet bazardır`);
+    } else {
+      parts.push(`${country} ikinci dərəcəli prioritetdir`);
+    }
   }
   if (score.projectType) parts.push(`layihə tipi «${score.projectType}» studiyanın hədəf sahələrindədir`);
   if (score.services.length) parts.push(`tələb olunan xidmətlər: ${score.services.join(", ")}`);

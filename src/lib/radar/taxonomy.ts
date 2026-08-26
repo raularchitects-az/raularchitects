@@ -80,9 +80,10 @@ export const CPV_FAMILIES: CpvFamily[] = [
 ];
 
 /**
- * German terminology is intentionally as rich as English because Germany is a
- * priority market and German notices are the least likely to be discoverable
- * through English keywords. French and Italian cover the remaining volume.
+ * German terminology is intentionally as rich as English because Germany and
+ * Switzerland are priority markets and German-language notices are the least
+ * likely to be discoverable through English keywords. French and Italian cover
+ * the remaining volume.
  */
 export const PROJECT_TYPES: ProjectTypeDefinition[] = [
   {
