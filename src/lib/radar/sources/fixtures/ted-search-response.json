@@ -1,0 +1,98 @@
+{
+  "notices": [
+    {
+      "publication-number": "556964-2026",
+      "publication-date": "20260812",
+      "notice-identifier": "b1c6f0a2-4d21-4a1e-9f10-2c7d3f6e5a11",
+      "notice-version": "01",
+      "procedure-identifier": "1f5a83c4-7c9b-4b2a-9a54-8e2f5d4c1b90",
+      "form-type": "competition",
+      "notice-type": "cn-standard",
+      "official-language": ["DEU"],
+      "notice-title": {
+        "DEU": "Realisierungswettbewerb Architekturleistungen Neubau Wohnquartier Hafenkante",
+        "ENG": "Design contest for architectural services, new residential quarter Hafenkante"
+      },
+      "buyer-name": {
+        "DEU": ["Stadt Hamburg, Behörde für Stadtentwicklung und Wohnen"]
+      },
+      "buyer-country": ["DEU"],
+      "classification-cpv": ["71220000", "71200000", "71230000"],
+      "deadline-receipt-tender-date-lot": ["2030-03-18T12:00:00+01:00"],
+      "total-value": [1450000],
+      "total-value-cur": ["EUR"],
+      "links": {
+        "html": {
+          "DEU": "https://ted.europa.eu/de/notice/556964-2026/html",
+          "ENG": "https://ted.europa.eu/en/notice/556964-2026/html"
+        },
+        "xml": { "MUL": "https://ted.europa.eu/en/notice/556964-2026/xml" }
+      }
+    },
+    {
+      "publication-number": "556970-2026",
+      "publication-date": "20260812",
+      "notice-identifier": "6d2b7f31-8f44-4c17-b0d8-91af2e3c7d55",
+      "notice-version": "01",
+      "procedure-identifier": "44c1e9a7-2f6d-4d88-91b2-0c7e5a4f3b21",
+      "form-type": "competition",
+      "notice-type": "cn-standard",
+      "official-language": ["DEU"],
+      "notice-title": {
+        "DEU": "Ingenieurleistungen Straßenplanung und Brückenbau Ortsumgehung B31",
+        "ENG": "Engineering services for road design and bridge construction, bypass B31"
+      },
+      "buyer-name": { "DEU": ["Landesbetrieb Straßenbau Baden-Württemberg"] },
+      "buyer-country": ["DEU"],
+      "classification-cpv": ["71322000", "71311000"],
+      "deadline-receipt-tender-date-lot": ["2030-02-02T10:00:00+01:00"],
+      "links": {
+        "html": { "DEU": "https://ted.europa.eu/de/notice/556970-2026/html" }
+      }
+    },
+    {
+      "publication-number": "557012-2026",
+      "publication-date": "20260812",
+      "notice-identifier": "9a17c4d2-5b03-4a6f-8f21-3d6b7e1c9a04",
+      "notice-version": "01",
+      "procedure-identifier": "b7e2c1f9-3a45-4c62-8d71-5f9a2e6b4c33",
+      "form-type": "competition",
+      "notice-type": "cn-standard",
+      "official-language": ["DEU", "FRA"],
+      "notice-title": {
+        "DEU": "Generalplanung mit BIM-Planung für Neubau Bildungszentrum",
+        "FRA": "Planification générale avec planification BIM pour un centre de formation"
+      },
+      "buyer-name": { "DEU": ["Kanton Zürich, Hochbauamt"] },
+      "buyer-country": ["CHE"],
+      "classification-cpv": ["71240000", "71221000"],
+      "deadline-receipt-tender-date-lot": ["2030-04-30T16:00:00+02:00", "2030-05-15T16:00:00+02:00"],
+      "links": {
+        "html": { "DEU": "https://ted.europa.eu/de/notice/557012-2026/html" }
+      }
+    },
+    {
+      "publication-number": "557044-2026",
+      "publication-date": "20260812",
+      "notice-identifier": "3c8e1b47-2d95-4f70-9c16-7a4d8e2f5b60",
+      "notice-version": "01",
+      "procedure-identifier": "e5d3a2b8-6c19-4f4d-b823-1a7c9e0f6d42",
+      "form-type": "competition",
+      "notice-type": "cn-standard",
+      "official-language": ["ENG"],
+      "notice-title": {
+        "ENG": "Supply and delivery of BIM software licences for the technical department"
+      },
+      "buyer-name": { "ENG": ["Ministry of Infrastructure"] },
+      "buyer-country": ["POL"],
+      "classification-cpv": ["48000000"],
+      "deadline-receipt-tender-date-lot": ["2030-01-20T09:00:00+01:00"],
+      "links": {
+        "html": { "ENG": "https://ted.europa.eu/en/notice/557044-2026/html" }
+      }
+    }
+  ],
+  "totalNoticeCount": 4,
+  "iterationNextToken": null,
+  "timedOut": false
+}

@@ -11,6 +11,7 @@ const nav = [
   { href: "/admin/insights", label: "Insights" },
   { href: "/admin/blog", label: "Bloq" },
   { href: "/admin/services", label: "Xidmətlər" },
+  { href: "/admin/radar", label: "Business Radar" },
 ];
 
 export function AdminShell({
