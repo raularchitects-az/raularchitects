@@ -52,6 +52,13 @@ export type ExclusionRule = {
   terms: string[];
   /** `hard` removes the opportunity from consideration, `soft` only penalises. */
   severity: "hard" | "soft";
+  /**
+   * A hard rule normally yields to strong architecture CPV evidence, because a
+   * design-and-build notice legitimately carries both classifications. An
+   * `absolute` rule does not: training and course procurement is never
+   * architecture work, whatever CPV the buyer attached to it.
+   */
+  absolute?: boolean;
 };
 
 export type RadarTaxonomy = {
@@ -82,8 +89,12 @@ export const CPV_FAMILIES: CpvFamily[] = [
 /**
  * German terminology is intentionally as rich as English because Germany and
  * Switzerland are priority markets and German-language notices are the least
- * likely to be discoverable through English keywords. French and Italian cover
- * the remaining volume.
+ * likely to be discoverable through English keywords.
+ *
+ * French and Italian carry the same weight since SIMAP joined: Romandy and
+ * Ticino publish in their own language only, so a Geneva "planificateur
+ * général" or a Ticino "progettista generale" is invisible to German and
+ * English keywords alike.
  */
 export const PROJECT_TYPES: ProjectTypeDefinition[] = [
   {
@@ -103,8 +114,14 @@ export const PROJECT_TYPES: ProjectTypeDefinition[] = [
       "planungsleistungen",
       "hochbau",
       "services d'architecture",
+      "prestations d'architecte",
+      "conception architecturale",
+      "architecte",
       "maîtrise d'oeuvre",
+      "maîtrise d'œuvre",
       "servizi di architettura",
+      "progettazione architettonica",
+      "architetto",
       "servicios de arquitectura",
     ],
   },
@@ -117,8 +134,15 @@ export const PROJECT_TYPES: ProjectTypeDefinition[] = [
       "generalplanung",
       "generalplaner",
       "generalplanerleistungen",
+      "generalplanersubmission",
+      "generalplanerwettbewerb",
       "gesamtplanung",
       "integrated design services",
+      "planificateur général",
+      "planification générale",
+      "mandataire général",
+      "progettista generale",
+      "pianificazione generale",
     ],
   },
   {
@@ -185,7 +209,10 @@ export const PROJECT_TYPES: ProjectTypeDefinition[] = [
       "mehrfamilienhaus",
       "geschosswohnungsbau",
       "logement",
+      "logements",
+      "habitation",
       "residenziale",
+      "alloggi",
     ],
   },
   {
@@ -247,6 +274,13 @@ export const PROJECT_TYPES: ProjectTypeDefinition[] = [
       "öffentliches gebäude",
       "bürgerzentrum",
       "bâtiment public",
+      "centre culturel",
+      "bibliothèque",
+      "musée",
+      "edificio pubblico",
+      "centro culturale",
+      "biblioteca",
+      "museo",
     ],
   },
   {
@@ -260,18 +294,31 @@ export const PROJECT_TYPES: ProjectTypeDefinition[] = [
       "campus",
       "schulbau",
       "schulgebäude",
+      "schulhaus",
+      "schulanlage",
       "kita",
       "hochschule",
       "bildungszentrum",
+      "ausbildungszentrum",
       "école",
+      "groupe scolaire",
+      "collège",
       "scuola",
+      "scuole",
     ],
   },
   {
     key: "interior",
     label: "İnteryer memarlığı",
     weight: 7,
-    terms: ["interior architecture", "interior design", "innenarchitektur", "innenausbau planung", "architecture intérieure"],
+    terms: [
+      "interior architecture",
+      "interior design",
+      "innenarchitektur",
+      "innenausbau planung",
+      "architecture intérieure",
+      "architettura d'interni",
+    ],
   },
   {
     key: "landscape",
@@ -284,6 +331,8 @@ export const PROJECT_TYPES: ProjectTypeDefinition[] = [
       "freianlagen",
       "aussenraumgestaltung",
       "architecture du paysage",
+      "aménagement paysager",
+      "architettura del paesaggio",
     ],
   },
   {
@@ -314,9 +363,20 @@ export const PROJECT_TYPES: ProjectTypeDefinition[] = [
       "realisierungswettbewerb",
       "architekturwettbewerb",
       "planungswettbewerb",
+      "projektwettbewerb",
+      "ideenwettbewerb",
+      "gesamtleistungswettbewerb",
       "wettbewerb",
+      // Swiss procurement law runs design competitions as "study contracts"
+      // (SIA 143), which never contain the word "Wettbewerb".
+      "studienauftrag",
+      "studienaufträge",
       "concours d'architecture",
+      "concours de projets",
+      "mandats d'étude parallèles",
       "concorso di progettazione",
+      "concorso di architettura",
+      "mandati di studio paralleli",
     ],
   },
 ];
@@ -338,7 +398,11 @@ export const EXCLUSIONS: ExclusionRule[] = [
       "bauausführung",
       "rohbauarbeiten",
       "generalunternehmer",
+      "totalunternehmer",
       "travaux de construction",
+      "entreprise générale",
+      "lavori di costruzione",
+      "impresa generale",
     ],
   },
   {
@@ -358,6 +422,12 @@ export const EXCLUSIONS: ExclusionRule[] = [
       "baugrundgutachten",
       "geotechnik",
       "prüfstatik",
+      "ingénieur civil",
+      "génie technique",
+      "chauffage ventilation climatisation",
+      "géomètre",
+      "ingegneria civile",
+      "rilievo topografico",
     ],
   },
   {
@@ -381,6 +451,15 @@ export const EXCLUSIONS: ExclusionRule[] = [
       "bahnanlagen",
       "tiefbau",
       "leitungsbau",
+      "kunstbauten",
+      "génie civil",
+      "route cantonale",
+      "routes cantonales",
+      "ouvrage d'art",
+      "ouvrages d'art",
+      "voie ferrée",
+      "genio civile",
+      "strada cantonale",
     ],
   },
   {
@@ -388,7 +467,41 @@ export const EXCLUSIONS: ExclusionRule[] = [
     label: "BIM proqram təminatı / IT satınalma",
     severity: "hard",
     cpvPrefixes: ["48", "72"],
-    terms: ["software licence", "software licenses", "software-lizenzen", "it-dienstleistungen", "cad software", "bim software"],
+    terms: [
+      "software licence",
+      "software licenses",
+      "software-lizenzen",
+      "it-dienstleistungen",
+      "cad software",
+      "bim software",
+      "logiciel bim",
+      "software bim",
+    ],
+  },
+  {
+    // Kept apart from `software_it` because a training mandate is a service,
+    // not a purchase, and buyers sometimes file it under an architecture CPV.
+    key: "training_courses",
+    label: "BIM və peşə təlimi / kurs satınalması",
+    severity: "hard",
+    absolute: true,
+    cpvPrefixes: ["80"],
+    terms: [
+      "bim training",
+      "bim-schulung",
+      "bim schulung",
+      "schulung",
+      "schulungen",
+      "weiterbildung",
+      "fortbildung",
+      "lehrgang",
+      "training courses",
+      "training services",
+      "formation continue",
+      "formation bim",
+      "corso di formazione",
+      "formazione bim",
+    ],
   },
   {
     key: "goods_supply",
@@ -418,7 +531,12 @@ export const CORE_TERMS = [
   "städtebau",
   "hochbau",
   "urbanisme",
+  "architecte",
+  "planificateur",
   "architettura",
+  "architetto",
+  "progettista",
+  "urbanistica",
   "arquitectura",
 ];
 
@@ -435,7 +553,10 @@ export function normalizeText(value: string) {
 }
 
 export function matchesTerm(haystack: string, term: string) {
-  const needle = term.toLowerCase().trim();
+  // The term goes through the same flattening as the haystack, otherwise
+  // punctuation inside a term ("services d'architecture", "mandats d'étude")
+  // could never match text where that punctuation became a space.
+  const needle = normalizeText(term).trim();
   if (!needle) return false;
   return haystack.includes(` ${needle} `) || haystack.includes(` ${needle}-`) || haystack.includes(`-${needle} `);
 }

@@ -88,14 +88,30 @@ export function scoreOpportunity(
   const exclusionReasons: string[] = [];
   const services = new Set<string>();
 
-  const haystack = normalizeText([opportunity.title, opportunity.buyerName ?? ""].join(" "));
+  // What the tender *is*: the officially published subject line. Exclusions
+  // read only this. A description routinely names neighbouring disciplines —
+  // a Swiss architecture mandate lists the civil engineering and building
+  // services lots beside it — and letting that text exclude the notice would
+  // bury exactly the combined mandates Raul wants to see.
+  const subject = normalizeText([opportunity.title, opportunity.buyerName ?? ""].join(" "));
+  // What the tender is *about*: classification may also read the official
+  // description, which is often the only place a German, French or Italian
+  // notice states the project type.
+  const haystack = normalizeText(
+    [opportunity.title, opportunity.buyerName ?? "", opportunity.summary ?? ""].join(" "),
+  );
   const cpvCodes = opportunity.cpvCodes.filter(Boolean);
 
   // --- CPV evidence -------------------------------------------------------
   const matchedFamilies = taxonomy.cpvFamilies.filter((family) =>
     cpvCodes.some((code) => cpvMatchesFamily(code, family.code)),
   );
-  const strongArchitecture = matchedFamilies.some((family) => family.weight >= 10);
+  // Architecture evidence is not only structural. Swiss buyers routinely file
+  // an architecture mandate under the umbrella code 71000000, which is too
+  // broad to count on its own, while the subject line says "Architekt" or
+  // "architecte" outright. Either kind of evidence counterbalances a hard rule.
+  const architectureTerminology = taxonomy.coreTerms.some((term) => matchesTerm(subject, term));
+  const strongArchitecture = matchedFamilies.some((family) => family.weight >= 10) || architectureTerminology;
   const cpvPoints = clamp(
     matchedFamilies.reduce((sum, family) => sum + family.weight, 0),
     0,
@@ -106,13 +122,14 @@ export function scoreOpportunity(
   let excluded = false;
   for (const rule of taxonomy.exclusions) {
     const cpvHit = cpvCodes.some((code) => rule.cpvPrefixes.some((prefix) => cpvMatchesPrefix(code, prefix)));
-    const termHit = rule.terms.some((term) => matchesTerm(haystack, term));
+    const termHit = rule.terms.some((term) => matchesTerm(subject, term));
     if (!cpvHit && !termHit) continue;
 
     // A design-and-build notice can legitimately carry both an architecture
     // CPV and a construction CPV, so a hard rule only excludes when there is
-    // no strong architecture evidence to counterbalance it.
-    if (rule.severity === "hard" && !strongArchitecture) {
+    // no strong architecture evidence to counterbalance it. An `absolute` rule
+    // ignores that counterbalance.
+    if (rule.severity === "hard" && (rule.absolute || !strongArchitecture)) {
       excluded = true;
       exclusionReasons.push(rule.label);
       factors.push({ key: `exclusion:${rule.key}`, label: `İstisna: ${rule.label}`, points: 0 });

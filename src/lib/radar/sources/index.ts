@@ -1,23 +1,16 @@
 import type { RadarSourceId } from "../types";
+import { simapSource } from "./simap";
 import { tedSource } from "./ted";
 import type { RadarSource } from "./types";
 
 /**
- * SIMAP is registered but not implemented in Phase 1.
+ * Every official source the radar can read.
  *
- * Keeping it in the registry means the Advanced page can already list it and a
- * later phase only has to supply `fetchOpportunities` — no admin screen, route
- * or table has to change when Switzerland gets its own source.
+ * Order matters for one reason: Swiss notices above the WTO threshold are
+ * published on TED as well as SIMAP, and discovery suppresses the second copy
+ * of a tender it has already stored. Running TED first keeps that decision
+ * stable from run to run.
  */
-const simapSource: RadarSource = {
-  id: "simap",
-  label: "SIMAP (Switzerland)",
-  availability: "planned",
-  fetchOpportunities: async () => {
-    throw new Error("SIMAP mənbəyi Phase 1-də aktiv deyil.");
-  },
-};
-
 export const RADAR_SOURCES: RadarSource[] = [tedSource, simapSource];
 
 export function getRadarSource(id: string): RadarSource | null {

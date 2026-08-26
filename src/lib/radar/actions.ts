@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { requireStaff } from "@/lib/cms/auth";
 import { createAdminClient } from "@/lib/cms/supabase";
-import { runDiscovery } from "./discovery";
+import { runAllSources, runDiscovery } from "./discovery";
 import { DEFAULT_ELIGIBILITY } from "./eligibility";
 import { runSourceSelfCheck, type SelfCheckResult } from "./self-check";
 import {
@@ -72,9 +72,12 @@ export async function restoreOpportunity(id: string) {
   await setState(id, "active", "İmkan aktiv siyahıya qaytarıldı");
 }
 
-export async function runRadarNow(sourceId = "ted") {
+/** Without a source id every enabled official source runs, exactly like the schedule. */
+export async function runRadarNow(sourceId?: string) {
   await requireStaff();
-  const result = await runDiscovery({ trigger: "manual", sourceId });
+  const result = sourceId
+    ? await runDiscovery({ trigger: "manual", sourceId })
+    : await runAllSources({ trigger: "manual" });
   await radarAudit("radar_run", result.runId, `Manual axtarış: ${result.status}`, {
     created: result.created,
     updated: result.updated,

@@ -1,0 +1,213 @@
+{
+  "projects": [
+    {
+      "id": "11111111-1111-4111-8111-000000090101",
+      "title": {
+        "de": "Generalplanersubmission Neubau Schulhaus Riedbach",
+        "en": "General planner submission, new school building Riedbach",
+        "fr": null,
+        "it": null
+      },
+      "projectNumber": "90101",
+      "projectType": "tender",
+      "projectSubType": "service",
+      "processType": "open",
+      "lotsType": "without",
+      "publicationId": "22222222-2222-4222-8222-000000090101",
+      "publicationDate": "2029-12-18",
+      "publicationNumber": "90101-01",
+      "pubType": "tender",
+      "corrected": false,
+      "procOfficeName": {
+        "de": "Hochbaudepartement der Stadt Zürich",
+        "en": "City of Zurich, Building Department",
+        "fr": null,
+        "it": null
+      },
+      "lots": [],
+      "orderAddressOnlyDescription": "no",
+      "orderAddress": {
+        "countryId": "CH",
+        "cantonId": "ZH",
+        "postalCode": "8001",
+        "city": { "de": "Zürich", "en": "Zurich", "fr": null, "it": null }
+      }
+    },
+    {
+      "id": "11111111-1111-4111-8111-000000090102",
+      "title": {
+        "de": null,
+        "en": null,
+        "fr": "Groupe scolaire Tivoli — planificateur général et architecte",
+        "it": null
+      },
+      "projectNumber": "90102",
+      "projectType": "tender",
+      "projectSubType": "service",
+      "processType": "selective",
+      "lotsType": "without",
+      "publicationId": "22222222-2222-4222-8222-000000090102",
+      "publicationDate": "2029-12-20",
+      "publicationNumber": "90102-01",
+      "pubType": "tender",
+      "corrected": false,
+      "procOfficeName": {
+        "de": null,
+        "en": null,
+        "fr": "Ville de Genève, Département des constructions",
+        "it": null
+      },
+      "lots": [],
+      "orderAddressOnlyDescription": "no",
+      "orderAddress": {
+        "countryId": "CH",
+        "cantonId": "GE",
+        "postalCode": "1204",
+        "city": { "de": null, "en": null, "fr": "Genève", "it": null }
+      }
+    },
+    {
+      "id": "11111111-1111-4111-8111-000000090103",
+      "title": {
+        "de": null,
+        "en": null,
+        "fr": null,
+        "it": "Concorso di progettazione per il nuovo centro culturale di Lugano"
+      },
+      "projectNumber": "90103",
+      "projectType": "competition",
+      "projectSubType": "project_competition",
+      "processType": "open",
+      "lotsType": "with",
+      "publicationId": "22222222-2222-4222-8222-000000090103",
+      "publicationDate": "2029-12-22",
+      "publicationNumber": "90103-01",
+      "pubType": "competition",
+      "corrected": false,
+      "procOfficeName": {
+        "de": null,
+        "en": null,
+        "fr": null,
+        "it": "Città di Lugano, Divisione edilizia pubblica"
+      },
+      "lots": [
+        {
+          "publicationId": "22222222-2222-4222-8222-000000090103",
+          "publicationDate": "2029-12-22",
+          "publicationNumber": "90103-01",
+          "pubType": "competition",
+          "corrected": false,
+          "lotId": "33333333-3333-4333-8333-000090103001",
+          "lotNumber": 1,
+          "lotTitle": {
+            "de": null,
+            "en": null,
+            "fr": null,
+            "it": "Lotto 1 — architettura e progettazione generale"
+          },
+          "orderAddressOnlyDescription": "no",
+          "orderAddress": {
+            "countryId": "CH",
+            "cantonId": "TI",
+            "postalCode": "6900",
+            "city": { "de": null, "en": null, "fr": null, "it": "Lugano" }
+          }
+        },
+        {
+          "publicationId": "22222222-2222-4222-8222-000000090103",
+          "publicationDate": "2029-12-22",
+          "publicationNumber": "90103-01",
+          "pubType": "competition",
+          "corrected": false,
+          "lotId": "33333333-3333-4333-8333-000090103002",
+          "lotNumber": 2,
+          "lotTitle": {
+            "de": null,
+            "en": null,
+            "fr": null,
+            "it": "Lotto 2 — architettura del paesaggio e spazi esterni"
+          },
+          "orderAddressOnlyDescription": "no",
+          "orderAddress": {
+            "countryId": "CH",
+            "cantonId": "TI",
+            "postalCode": "6900",
+            "city": { "de": null, "en": null, "fr": null, "it": "Lugano" }
+          }
+        }
+      ],
+      "orderAddressOnlyDescription": null,
+      "orderAddress": null
+    },
+    {
+      "id": "11111111-1111-4111-8111-000000090104",
+      "title": {
+        "de": "N13 Erhaltungsmassnahmen Kunstbauten — Projektverfasser Strassenbau",
+        "en": null,
+        "fr": null,
+        "it": null
+      },
+      "projectNumber": "90104",
+      "projectType": "tender",
+      "projectSubType": "service",
+      "processType": "open",
+      "lotsType": "without",
+      "publicationId": "22222222-2222-4222-8222-000000090104",
+      "publicationDate": "2029-12-19",
+      "publicationNumber": "90104-01",
+      "pubType": "tender",
+      "corrected": false,
+      "procOfficeName": {
+        "de": "Bundesamt für Strassen ASTRA",
+        "en": null,
+        "fr": null,
+        "it": null
+      },
+      "lots": [],
+      "orderAddressOnlyDescription": "no",
+      "orderAddress": {
+        "countryId": "CH",
+        "cantonId": "GR",
+        "postalCode": "7000",
+        "city": { "de": "Chur", "en": null, "fr": null, "it": null }
+      }
+    },
+    {
+      "id": "11111111-1111-4111-8111-000000090105",
+      "title": {
+        "de": "BIM-Schulung und Weiterbildung für Planungsmitarbeitende",
+        "en": null,
+        "fr": null,
+        "it": null
+      },
+      "projectNumber": "90105",
+      "projectType": "tender",
+      "projectSubType": "service",
+      "processType": "open",
+      "lotsType": "without",
+      "publicationId": "22222222-2222-4222-8222-000000090105",
+      "publicationDate": "2029-12-21",
+      "publicationNumber": "90105-01",
+      "pubType": "tender",
+      "corrected": false,
+      "procOfficeName": {
+        "de": "Kanton Bern, Amt für Grundstücke und Gebäude",
+        "en": null,
+        "fr": null,
+        "it": null
+      },
+      "lots": [],
+      "orderAddressOnlyDescription": "no",
+      "orderAddress": {
+        "countryId": "CH",
+        "cantonId": "BE",
+        "postalCode": "3011",
+        "city": { "de": "Bern", "en": null, "fr": null, "it": null }
+      }
+    }
+  ],
+  "pagination": {
+    "lastItem": "20291221|90105",
+    "itemsPerPage": 20
+  }
+}

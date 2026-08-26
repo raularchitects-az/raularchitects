@@ -40,6 +40,18 @@ export type SourceOpportunity = {
   formType: string | null;
   noticeType: string | null;
   languages: string[];
+  /**
+   * Officially published description text, when the source returns one. TED's
+   * field projection has none, so it stays null there; SIMAP supplies it and
+   * the scorer reads it alongside the title.
+   */
+  summary: string | null;
+  /**
+   * Official identifiers for the same tender at another source. Swiss notices
+   * above the WTO threshold are published on both SIMAP and TED, and this is
+   * how discovery recognises the second copy.
+   */
+  crossSourceRefs: string[];
   raw: Record<string, unknown>;
 };
 
@@ -132,6 +144,12 @@ export type RadarSourceRow = {
   last_run_at: string | null;
   last_success_at: string | null;
   last_error: string | null;
+};
+
+/** Shown wherever an opportunity has to name the official source it came from. */
+export const SOURCE_LABEL: Record<RadarSourceId, string> = {
+  ted: "TED Europe",
+  simap: "SIMAP Switzerland",
 };
 
 export const SCORE_BAND_LABEL: Record<ScoreBand, string> = {

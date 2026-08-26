@@ -7,6 +7,7 @@ import { loadOpportunity } from "@/lib/radar/queries";
 import {
   DEADLINE_STATUS_LABEL,
   RECOMMENDATION_LABEL,
+  SOURCE_LABEL,
   STATE_LABEL,
   type RadarAnalysis,
   type ScoreFactor,
@@ -55,6 +56,7 @@ export default async function RadarOpportunityPage({ params }: { params: Promise
   const analysis = (item.analysis ?? {}) as Partial<RadarAnalysis>;
   const factors = (item.score_factors ?? []) as ScoreFactor[];
   const days = daysUntilDeadline(item.deadline_at);
+  const sourceLabel = SOURCE_LABEL[item.source_id] ?? item.source_id;
 
   return (
     <div className="flex flex-col gap-6">
@@ -65,6 +67,9 @@ export default async function RadarOpportunityPage({ params }: { params: Promise
       <div className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center gap-3">
           <ScoreBadge score={item.score} band={item.score_band} />
+          <span className="border border-charcoal/15 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-charcoal/50">
+            {sourceLabel}
+          </span>
           <span className="text-[11px] uppercase tracking-[0.14em] text-charcoal/50">{STATE_LABEL[item.state]}</span>
         </div>
         <h1 className="max-w-4xl text-2xl font-semibold leading-snug">{item.title}</h1>
@@ -75,7 +80,7 @@ export default async function RadarOpportunityPage({ params }: { params: Promise
         <section className="flex flex-col gap-2 border border-charcoal/10 bg-white p-5">
           <h2 className="text-sm uppercase tracking-[0.16em] text-charcoal/70">Rəsmi mənbə faktları</h2>
           <p className="mb-2 text-[11px] text-charcoal/40">
-            Yalnız TED elanında göstərilən məlumatlar. Boş sahələr mənbədə yoxdur.
+            Yalnız {sourceLabel} elanında göstərilən məlumatlar. Boş sahələr mənbədə yoxdur.
           </p>
           <dl className="flex flex-col">
             <Fact label="Sifarişçi təşkilat" value={item.buyer_name} />
@@ -99,7 +104,8 @@ export default async function RadarOpportunityPage({ params }: { params: Promise
               }
             />
             <Fact label="Prosedur ID" value={item.procedure_ref} />
-            <Fact label="Mənbə" value={`${item.source_id.toUpperCase()} · ${item.source_ref}`} />
+            <Fact label="Lot" value={item.source_lot || null} />
+            <Fact label="Mənbə" value={`${sourceLabel} · ${item.source_ref}`} />
             <Fact label="Son yoxlanma" value={new Date(item.last_checked_at).toLocaleString("az-AZ")} />
           </dl>
           <a
@@ -108,7 +114,7 @@ export default async function RadarOpportunityPage({ params }: { params: Promise
             rel="noopener noreferrer"
             className="mt-2 text-[11px] uppercase tracking-[0.14em] text-bronze-dark hover:underline"
           >
-            Rəsmi TED elanını aç
+            Rəsmi {sourceLabel} elanını aç
           </a>
         </section>
 

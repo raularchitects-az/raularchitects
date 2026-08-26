@@ -5,6 +5,7 @@ import {
   DEADLINE_STATUS_LABEL,
   RECOMMENDATION_LABEL,
   SCORE_BAND_LABEL,
+  SOURCE_LABEL,
   STATE_LABEL,
   type RadarAnalysis,
   type ScoreBand,
@@ -41,7 +42,12 @@ export function OpportunityCard({ item }: { item: RadarListItem }) {
   return (
     <article className="flex flex-col gap-3 border border-charcoal/10 bg-white p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <ScoreBadge score={item.score} band={item.score_band} />
+        <div className="flex flex-wrap items-center gap-2">
+          <ScoreBadge score={item.score} band={item.score_band} />
+          <span className="border border-charcoal/15 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-charcoal/50">
+            {SOURCE_LABEL[item.source_id] ?? item.source_id}
+          </span>
+        </div>
         <span className={`text-[11px] uppercase tracking-[0.14em] ${DEADLINE_CLASS[item.deadline_status] ?? ""}`}>
           {DEADLINE_STATUS_LABEL[item.deadline_status]}
           {days !== null ? ` · ${days} gün` : ""}

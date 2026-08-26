@@ -1,5 +1,5 @@
 import { timingSafeEqual } from "node:crypto";
-import { runDiscovery } from "@/lib/radar/discovery";
+import { runAllSources } from "@/lib/radar/discovery";
 
 /**
  * Scheduled discovery endpoint.
@@ -41,7 +41,8 @@ export async function GET(request: Request) {
     return Response.json({ ok: false, error: "Unauthorized" }, { status: 401, headers: HEADERS });
   }
 
-  const result = await runDiscovery({ trigger: "schedule", sourceId: "ted" });
+  // Every enabled official source runs in the same scheduled job.
+  const result = await runAllSources({ trigger: "schedule" });
   return Response.json(
     { ok: result.status !== "failed", ...result },
     { status: result.status === "failed" ? 500 : 200, headers: HEADERS },

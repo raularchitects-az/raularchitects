@@ -52,7 +52,7 @@ export default async function RadarAdvancedPage() {
               <div className="text-sm text-charcoal">
                 {source.label}
                 <span className="ml-2 text-[11px] uppercase tracking-[0.14em] text-charcoal/40">
-                  {source.availability === "available" ? "aktiv mərhələ" : "Phase 2"}
+                  {source.availability === "available" ? "aktiv mərhələ" : "hazırlanır"}
                 </span>
                 <span className="block text-[11px] text-charcoal/40">
                   Son işləmə: {moment(source.last_run_at)} · Son uğurlu: {moment(source.last_success_at)}

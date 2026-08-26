@@ -1,0 +1,415 @@
+{
+  "22222222-2222-4222-8222-000000090101": {
+    "project-info": {
+      "stateContractArea": true,
+      "publicationTed": true,
+      "procOfficeAddress": {
+        "postalCode": "8001",
+        "countryId": "CH",
+        "cantonId": "ZH",
+        "id": "44444444-4444-4444-8444-000000090101",
+        "name": {
+          "de": "Hochbaudepartement der Stadt Zürich",
+          "en": "City of Zurich, Building Department",
+          "fr": null,
+          "it": null
+        },
+        "email": "submission@zuerich.ch",
+        "city": { "de": "Zürich", "en": "Zurich", "fr": null, "it": null }
+      },
+      "title": {
+        "de": "Generalplanersubmission Neubau Schulhaus Riedbach",
+        "en": "General planner submission, new school building Riedbach",
+        "fr": null,
+        "it": null
+      },
+      "offerLanguages": ["de"],
+      "publicationLanguages": ["de"],
+      "processType": "open",
+      "orderType": "service",
+      "documentsCosts": { "currency": null, "price": null }
+    },
+    "procurement": {
+      "orderDescription": {
+        "de": "<p>Die Stadt Zürich vergibt die Generalplanerleistungen für den Neubau des Schulhauses Riedbach. Die Leistungen umfassen Architektur, Objektplanung sowie die BIM-Koordination über alle Planungsphasen.</p>",
+        "en": null,
+        "fr": null,
+        "it": null
+      },
+      "additionalCpvCodes": [{ "code": "71240000", "label": { "de": "Architektur-, Ingenieur- und Planungsleistungen" } }],
+      "orderAddress": {
+        "countryId": "CH",
+        "cantonId": "ZH",
+        "postalCode": "8001",
+        "city": { "de": "Zürich", "en": "Zurich", "fr": null, "it": null }
+      }
+    },
+    "dates": {
+      "publicationDate": "2029-12-18",
+      "offerDeadline": "2030-05-14T16:00:00+02:00",
+      "offerValidityDeadlineDays": 180
+    },
+    "base": {
+      "corrected": false,
+      "cpvCode": {
+        "code": "71220000",
+        "label": {
+          "de": "Architektonische Entwurfsleistungen",
+          "en": "Architectural design services",
+          "fr": "Services de conception architecturale",
+          "it": "Servizi di progettazione architettonica"
+        }
+      },
+      "orderType": "service",
+      "lots": [],
+      "publicationTed": true,
+      "id": "22222222-2222-4222-8222-000000090101",
+      "title": {
+        "de": "Generalplanersubmission Neubau Schulhaus Riedbach",
+        "en": "General planner submission, new school building Riedbach",
+        "fr": null,
+        "it": null
+      },
+      "projectType": "tender",
+      "processType": "open",
+      "lotsType": "without",
+      "type": "tender",
+      "publicationNumber": "90101-01",
+      "projectId": "11111111-1111-4111-8111-000000090101",
+      "publicationDate": "2029-12-18",
+      "creationLanguage": "de",
+      "correctedPubId": null,
+      "initialPublicationDate": null,
+      "projectNumber": "90101"
+    },
+    "ted": {
+      "status": "published",
+      "url": "https://ted.europa.eu/udl?uri=TED:NOTICE:590101-2029:HTML:DE:HTML"
+    },
+    "publishers": [{ "id": "55555555-5555-4555-8555-000000000001", "name": "simap.ch" }]
+  },
+
+  "22222222-2222-4222-8222-000000090102": {
+    "project-info": {
+      "stateContractArea": false,
+      "publicationTed": false,
+      "procOfficeAddress": {
+        "postalCode": "1204",
+        "countryId": "CH",
+        "cantonId": "GE",
+        "id": "44444444-4444-4444-8444-000000090102",
+        "name": {
+          "de": null,
+          "en": null,
+          "fr": "Ville de Genève, Département des constructions",
+          "it": null
+        },
+        "city": { "de": null, "en": null, "fr": "Genève", "it": null }
+      },
+      "title": {
+        "de": null,
+        "en": null,
+        "fr": "Groupe scolaire Tivoli — planificateur général et architecte",
+        "it": null
+      },
+      "offerLanguages": ["fr"],
+      "publicationLanguages": ["fr"],
+      "processType": "selective",
+      "orderType": "service"
+    },
+    "procurement": {
+      "orderDescription": {
+        "de": null,
+        "en": null,
+        "fr": "<p>La Ville de Genève met au concours les prestations d'architecte et de planificateur général pour la construction du nouveau groupe scolaire Tivoli. La maîtrise d'oeuvre comprend la conception architecturale complète.</p>",
+        "it": null
+      },
+      "additionalCpvCodes": [],
+      "orderAddress": {
+        "countryId": "CH",
+        "cantonId": "GE",
+        "postalCode": "1204",
+        "city": { "de": null, "en": null, "fr": "Genève", "it": null }
+      }
+    },
+    "dates": {
+      "publicationDate": "2029-12-20",
+      "offerDeadline": "2030-04-22T12:00:00+02:00"
+    },
+    "base": {
+      "corrected": false,
+      "cpvCode": {
+        "code": "71240000",
+        "label": {
+          "de": null,
+          "en": "Architectural, engineering and planning services",
+          "fr": "Services d'architecture, d'ingénierie et de planification",
+          "it": null
+        }
+      },
+      "orderType": "service",
+      "lots": [],
+      "publicationTed": false,
+      "id": "22222222-2222-4222-8222-000000090102",
+      "title": {
+        "de": null,
+        "en": null,
+        "fr": "Groupe scolaire Tivoli — planificateur général et architecte",
+        "it": null
+      },
+      "projectType": "tender",
+      "processType": "selective",
+      "lotsType": "without",
+      "type": "tender",
+      "publicationNumber": "90102-01",
+      "projectId": "11111111-1111-4111-8111-000000090102",
+      "publicationDate": "2029-12-20",
+      "creationLanguage": "fr",
+      "correctedPubId": null,
+      "initialPublicationDate": null,
+      "projectNumber": "90102"
+    },
+    "ted": null,
+    "publishers": [{ "id": "55555555-5555-4555-8555-000000000001", "name": "simap.ch" }]
+  },
+
+  "22222222-2222-4222-8222-000000090103": {
+    "project-info": {
+      "stateContractArea": false,
+      "publicationTed": false,
+      "procOfficeAddress": {
+        "postalCode": "6900",
+        "countryId": "CH",
+        "cantonId": "TI",
+        "id": "44444444-4444-4444-8444-000000090103",
+        "name": {
+          "de": null,
+          "en": null,
+          "fr": null,
+          "it": "Città di Lugano, Divisione edilizia pubblica"
+        },
+        "city": { "de": null, "en": null, "fr": null, "it": "Lugano" }
+      },
+      "title": {
+        "de": null,
+        "en": null,
+        "fr": null,
+        "it": "Concorso di progettazione per il nuovo centro culturale di Lugano"
+      },
+      "offerLanguages": ["it"],
+      "publicationLanguages": ["it"],
+      "processType": "open",
+      "orderType": "service"
+    },
+    "procurement": {
+      "orderDescription": {
+        "de": null,
+        "en": null,
+        "fr": null,
+        "it": "<p>La Città di Lugano bandisce un concorso di progettazione per il nuovo centro culturale. Sono richiesti servizi di architettura e di progettista generale, oltre all'architettura del paesaggio per gli spazi esterni.</p>"
+      },
+      "additionalCpvCodes": [{ "code": "71420000", "label": { "it": "Servizi di architettura del paesaggio" } }],
+      "orderAddress": null
+    },
+    "dates": {
+      "publicationDate": "2029-12-22",
+      "offerDeadline": "2030-06-30T17:00:00+02:00"
+    },
+    "base": {
+      "corrected": false,
+      "cpvCode": {
+        "code": "71230000",
+        "label": {
+          "de": null,
+          "en": "Organisation of architectural design contests",
+          "fr": null,
+          "it": "Organizzazione di concorsi di progettazione architettonica"
+        }
+      },
+      "orderType": "service",
+      "lots": [
+        {
+          "lotId": "33333333-3333-4333-8333-000090103001",
+          "lotNumber": 1,
+          "offerDeadline": "2030-06-30T17:00:00+02:00",
+          "cpvCode": { "code": "71220000", "label": { "it": "Servizi di progettazione architettonica" } }
+        },
+        {
+          "lotId": "33333333-3333-4333-8333-000090103002",
+          "lotNumber": 2,
+          "offerDeadline": "2030-07-15T17:00:00+02:00",
+          "cpvCode": { "code": "71420000", "label": { "it": "Servizi di architettura del paesaggio" } }
+        }
+      ],
+      "publicationTed": false,
+      "id": "22222222-2222-4222-8222-000000090103",
+      "title": {
+        "de": null,
+        "en": null,
+        "fr": null,
+        "it": "Concorso di progettazione per il nuovo centro culturale di Lugano"
+      },
+      "projectType": "competition",
+      "processType": "open",
+      "lotsType": "with",
+      "type": "competition",
+      "publicationNumber": "90103-01",
+      "projectId": "11111111-1111-4111-8111-000000090103",
+      "publicationDate": "2029-12-22",
+      "creationLanguage": "it",
+      "correctedPubId": null,
+      "initialPublicationDate": null,
+      "projectNumber": "90103"
+    },
+    "ted": null,
+    "publishers": [{ "id": "55555555-5555-4555-8555-000000000001", "name": "simap.ch" }]
+  },
+
+  "22222222-2222-4222-8222-000000090104": {
+    "project-info": {
+      "stateContractArea": true,
+      "publicationTed": false,
+      "procOfficeAddress": {
+        "postalCode": "7000",
+        "countryId": "CH",
+        "cantonId": "GR",
+        "id": "44444444-4444-4444-8444-000000090104",
+        "name": { "de": "Bundesamt für Strassen ASTRA", "en": null, "fr": null, "it": null },
+        "city": { "de": "Chur", "en": null, "fr": null, "it": null }
+      },
+      "title": {
+        "de": "N13 Erhaltungsmassnahmen Kunstbauten — Projektverfasser Strassenbau",
+        "en": null,
+        "fr": null,
+        "it": null
+      },
+      "offerLanguages": ["de"],
+      "publicationLanguages": ["de"],
+      "processType": "open",
+      "orderType": "service"
+    },
+    "procurement": {
+      "orderDescription": {
+        "de": "<p>Projektverfasser für die Erhaltungsmassnahmen der Kunstbauten entlang der N13. Umfasst Brückenbau, Strassenplanung und Tiefbau.</p>",
+        "en": null,
+        "fr": null,
+        "it": null
+      },
+      "additionalCpvCodes": [],
+      "orderAddress": {
+        "countryId": "CH",
+        "cantonId": "GR",
+        "postalCode": "7000",
+        "city": { "de": "Chur", "en": null, "fr": null, "it": null }
+      }
+    },
+    "dates": {
+      "publicationDate": "2029-12-19",
+      "offerDeadline": "2030-03-10T12:00:00+01:00"
+    },
+    "base": {
+      "corrected": false,
+      "cpvCode": {
+        "code": "71311000",
+        "label": { "de": "Beratung im Bereich Bauingenieurwesen", "en": "Civil engineering consultancy services" }
+      },
+      "orderType": "service",
+      "lots": [],
+      "publicationTed": false,
+      "id": "22222222-2222-4222-8222-000000090104",
+      "title": {
+        "de": "N13 Erhaltungsmassnahmen Kunstbauten — Projektverfasser Strassenbau",
+        "en": null,
+        "fr": null,
+        "it": null
+      },
+      "projectType": "tender",
+      "processType": "open",
+      "lotsType": "without",
+      "type": "tender",
+      "publicationNumber": "90104-01",
+      "projectId": "11111111-1111-4111-8111-000000090104",
+      "publicationDate": "2029-12-19",
+      "creationLanguage": "de",
+      "correctedPubId": null,
+      "initialPublicationDate": null,
+      "projectNumber": "90104"
+    },
+    "ted": null,
+    "publishers": [{ "id": "55555555-5555-4555-8555-000000000001", "name": "simap.ch" }]
+  },
+
+  "22222222-2222-4222-8222-000000090105": {
+    "project-info": {
+      "stateContractArea": false,
+      "publicationTed": false,
+      "procOfficeAddress": {
+        "postalCode": "3011",
+        "countryId": "CH",
+        "cantonId": "BE",
+        "id": "44444444-4444-4444-8444-000000090105",
+        "name": { "de": "Kanton Bern, Amt für Grundstücke und Gebäude", "en": null, "fr": null, "it": null },
+        "city": { "de": "Bern", "en": null, "fr": null, "it": null }
+      },
+      "title": {
+        "de": "BIM-Schulung und Weiterbildung für Planungsmitarbeitende",
+        "en": null,
+        "fr": null,
+        "it": null
+      },
+      "offerLanguages": ["de"],
+      "publicationLanguages": ["de"],
+      "processType": "open",
+      "orderType": "service"
+    },
+    "procurement": {
+      "orderDescription": {
+        "de": "<p>Durchführung von Schulungen und Weiterbildung zu BIM-Methodik für die Mitarbeitenden des Amtes. Kein Planungsauftrag.</p>",
+        "en": null,
+        "fr": null,
+        "it": null
+      },
+      "additionalCpvCodes": [],
+      "orderAddress": {
+        "countryId": "CH",
+        "cantonId": "BE",
+        "postalCode": "3011",
+        "city": { "de": "Bern", "en": null, "fr": null, "it": null }
+      }
+    },
+    "dates": {
+      "publicationDate": "2029-12-21",
+      "offerDeadline": "2030-04-02T12:00:00+02:00"
+    },
+    "base": {
+      "corrected": false,
+      "cpvCode": {
+        "code": "71220000",
+        "label": { "de": "Architektonische Entwurfsleistungen", "en": "Architectural design services" }
+      },
+      "orderType": "service",
+      "lots": [],
+      "publicationTed": false,
+      "id": "22222222-2222-4222-8222-000000090105",
+      "title": {
+        "de": "BIM-Schulung und Weiterbildung für Planungsmitarbeitende",
+        "en": null,
+        "fr": null,
+        "it": null
+      },
+      "projectType": "tender",
+      "processType": "open",
+      "lotsType": "without",
+      "type": "tender",
+      "publicationNumber": "90105-01",
+      "projectId": "11111111-1111-4111-8111-000000090105",
+      "publicationDate": "2029-12-21",
+      "creationLanguage": "de",
+      "correctedPubId": null,
+      "initialPublicationDate": null,
+      "projectNumber": "90105"
+    },
+    "ted": null,
+    "publishers": [{ "id": "55555555-5555-4555-8555-000000000001", "name": "simap.ch" }]
+  }
+}

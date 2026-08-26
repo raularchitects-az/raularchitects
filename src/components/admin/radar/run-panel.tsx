@@ -19,7 +19,7 @@ export function RunPanel() {
     setChecks(null);
     startTransition(async () => {
       try {
-        const result = await runRadarNow("ted");
+        const result = await runRadarNow();
         if (result.error) {
           setMessage(`Uğursuz: ${result.error}`);
           return;

@@ -6,7 +6,7 @@ import { deadlineStatus, isExpired } from "./deadline";
 import { dispatchRadarAlerts } from "./notify";
 import { scoreOpportunity } from "./scoring";
 import { getRadarSettings } from "./settings";
-import { getRadarSource } from "./sources";
+import { getRadarSource, RADAR_SOURCES } from "./sources";
 import type {
   RadarOpportunityRow,
   RunStatus,
@@ -163,12 +163,12 @@ export async function runDiscovery(
     const scored = fetched.opportunities.map((item) => {
       const score = scoreOpportunity(item, settings.taxonomy, settings.eligibility, now);
       const analysis = buildAnalysis(item, score, settings.eligibility, now);
-      return buildPayload(item, score, analysis, now);
+      return { item, payload: buildPayload(item, score, analysis, now) };
     });
 
     // Deduplicate against what is already stored, keyed by the official
     // publication reference plus lot.
-    const refs = [...new Set(scored.map((row) => row.source_ref))];
+    const refs = [...new Set(scored.map((entry) => entry.payload.source_ref))];
     const existing = new Map<string, RadarOpportunityRow>();
     for (const part of chunk(refs, 150)) {
       const { data, error } = await supabase
@@ -182,15 +182,34 @@ export async function runDiscovery(
       }
     }
 
+    // A Swiss tender above the WTO threshold is published on both SIMAP and
+    // TED. When the source hands over the other platform's official reference,
+    // an already stored copy of the same tender is not created a second time.
+    const crossRefs = [...new Set(scored.flatMap((entry) => entry.item.crossSourceRefs))];
+    const storedElsewhere = new Set<string>();
+    for (const part of chunk(crossRefs, 150)) {
+      const { data } = await supabase
+        .from("radar_opportunities")
+        .select("source_ref")
+        .neq("source_id", sourceId)
+        .in("source_ref", part);
+      for (const row of (data ?? []) as { source_ref: string }[]) storedElsewhere.add(row.source_ref);
+    }
+
     const inserts: Record<string, unknown>[] = [];
     const updates: { id: string; payload: Record<string, unknown> }[] = [];
+    let duplicates = 0;
 
-    for (const row of scored) {
-      const { excludedOrExpired, ...payload } = row;
-      const key = `${row.source_ref}|${row.source_lot}`;
+    for (const entry of scored) {
+      const { excludedOrExpired, ...payload } = entry.payload;
+      const key = `${payload.source_ref}|${payload.source_lot}`;
       const previous = existing.get(key);
 
       if (!previous) {
+        if (entry.item.crossSourceRefs.some((ref) => storedElsewhere.has(ref))) {
+          duplicates += 1;
+          continue;
+        }
         inserts.push({
           ...payload,
           state: excludedOrExpired ? "archived" : "active",
@@ -206,6 +225,10 @@ export async function runDiscovery(
       else if (state === "archived") state = "active";
 
       updates.push({ id: previous.id, payload: { ...payload, state } });
+    }
+
+    if (duplicates) {
+      warnings.push(`${duplicates} elan başqa rəsmi mənbədə artıq qeydə alındığı üçün təkrar yaradılmadı.`);
     }
 
     let created = 0;
@@ -272,4 +295,78 @@ export async function runDiscovery(
     console.error("[radar] discovery", message);
     return finish({ ...empty, runId, error: message });
   }
+}
+
+export type MultiSourceDiscoveryResult = DiscoveryResult & {
+  sources: { sourceId: string; status: RunStatus; error: string | null }[];
+};
+
+/**
+ * Runs every enabled official source in registry order and aggregates the
+ * outcome.
+ *
+ * Each source still gets its own `radar_runs` row, so the Advanced run history
+ * stays per-source and a TED outage never hides a successful SIMAP run. A
+ * source that an admin switched off is skipped rather than reported as failed.
+ */
+export async function runAllSources(
+  options: { trigger: RunTrigger } = { trigger: "schedule" },
+): Promise<MultiSourceDiscoveryResult> {
+  const empty: MultiSourceDiscoveryResult = {
+    runId: null,
+    status: "failed",
+    fetched: 0,
+    created: 0,
+    updated: 0,
+    archived: 0,
+    alerts: 0,
+    warnings: [],
+    error: null,
+    sources: [],
+  };
+
+  const supabase = await createAdminClient();
+  if (!supabase) return { ...empty, error: "Supabase konfiqurasiya olunmayıb." };
+
+  const { data: sourceRows } = await supabase.from("radar_sources").select("id, is_enabled");
+  const disabled = new Set(
+    (sourceRows ?? [])
+      .filter((row) => (row as { is_enabled?: boolean }).is_enabled === false)
+      .map((row) => String((row as { id: unknown }).id)),
+  );
+
+  const runnable = RADAR_SOURCES.filter(
+    (source) => source.availability === "available" && !disabled.has(source.id),
+  );
+
+  if (!runnable.length) {
+    return { ...empty, error: "Aktiv mənbə yoxdur." };
+  }
+
+  const aggregate: MultiSourceDiscoveryResult = { ...empty, warnings: [] };
+
+  for (const source of runnable) {
+    const result = await runDiscovery({ trigger: options.trigger, sourceId: source.id });
+    aggregate.sources.push({ sourceId: source.id, status: result.status, error: result.error });
+    aggregate.fetched += result.fetched;
+    aggregate.created += result.created;
+    aggregate.updated += result.updated;
+    aggregate.archived += result.archived;
+    aggregate.alerts += result.alerts;
+    aggregate.warnings.push(...result.warnings.map((warning) => `${source.label}: ${warning}`));
+    if (result.error) aggregate.warnings.push(`${source.label}: ${result.error}`);
+    // The last run id is enough for the audit trail; the per-source rows hold
+    // the detail.
+    if (result.runId) aggregate.runId = result.runId;
+  }
+
+  const failed = aggregate.sources.filter((item) => item.status === "failed");
+  aggregate.status = failed.length === aggregate.sources.length
+    ? "failed"
+    : failed.length || aggregate.warnings.length
+      ? "partial"
+      : "success";
+  aggregate.error = failed.length ? failed.map((item) => `${item.sourceId}: ${item.error}`).join("; ") : null;
+
+  return aggregate;
 }

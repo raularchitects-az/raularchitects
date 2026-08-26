@@ -159,6 +159,10 @@ export function mapTedNotice(notice: TedNotice): SourceOpportunity | null {
     formType: pickLocalized(notice["form-type"], languages),
     noticeType: pickLocalized(notice["notice-type"], languages),
     languages,
+    // The TED field projection carries no description, and nothing is invented
+    // to fill the gap.
+    summary: null,
+    crossSourceRefs: [],
     raw: notice,
   };
 }
