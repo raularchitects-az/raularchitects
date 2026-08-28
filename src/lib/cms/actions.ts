@@ -404,7 +404,7 @@ export async function upsertRecord(table: EntityType, id: string | null, payload
   const previousTranslations = (existing?.translations as Translations | null) ?? null;
   if (row.translations && typeof row.translations === "object") {
     if (isAutoTranslatable(table)) {
-      normalizeAzSource(table, row.translations as Translations, translationContext);
+      normalizeAzSource(table, row.translations as Translations, translationContext, previousTranslations);
       if (table === "projects") {
         const az = (row.translations as Translations).az ?? {};
         if (typeof row.seo_title === "string" && row.seo_title.trim()) az.seoTitle = row.seo_title.trim();

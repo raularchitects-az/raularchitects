@@ -1,3 +1,5 @@
+import { protectNumericDates, restoreNumericDates } from "./preserve-numeric-dates";
+
 type DeepLTarget = "EN" | "DE" | "RU";
 
 const TARGET_BY_LOCALE: Record<string, DeepLTarget> = {
@@ -33,11 +35,12 @@ export async function translateFromAzerbaijani(
   if (!targetLang) throw new Error(`Unsupported translation target: ${targetLocale}`);
 
   const normalized = texts.map((text) => text.trim());
+  const protectedTexts = normalized.map((text) => protectNumericDates(text));
   const indexes = normalized.map((text, index) => (text ? index : -1)).filter((index) => index >= 0);
   if (!indexes.length) return texts.map(() => "");
 
   const params = new URLSearchParams();
-  for (const index of indexes) params.append("text", normalized[index]!);
+  for (const index of indexes) params.append("text", protectedTexts[index]!.masked);
   params.set("source_lang", "AZ");
   params.set("target_lang", targetLang);
 
@@ -63,7 +66,10 @@ export async function translateFromAzerbaijani(
 
   const result = texts.map(() => "");
   indexes.forEach((sourceIndex, resultIndex) => {
-    result[sourceIndex] = translated[resultIndex] ?? "";
+    result[sourceIndex] = restoreNumericDates(
+      translated[resultIndex] ?? "",
+      protectedTexts[sourceIndex]!.tokens,
+    );
   });
   return result;
 }

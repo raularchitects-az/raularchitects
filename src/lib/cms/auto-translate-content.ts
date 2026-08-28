@@ -1,5 +1,6 @@
 import type { EntityType } from "./queries";
 import { translateFieldsForLocales } from "./deepl-translate";
+import { isNumericDateField } from "./preserve-numeric-dates";
 import { BLOG_CATEGORIES, INSIGHT_CATEGORIES, PROJECT_CATEGORIES, type TranslationBlock, type Translations } from "./types";
 
 const TARGET_LOCALES = ["en", "de", "ru"] as const;
@@ -85,6 +86,7 @@ export function normalizeAzSource(
   table: EntityType,
   translations: Translations,
   context: { location?: string | null; area_m2?: string | null },
+  previous?: Translations | null,
 ) {
   if (!isAutoTranslatable(table)) return;
   const az = { ...(translations.az ?? {}) };
@@ -93,6 +95,15 @@ export function normalizeAzSource(
     if (context.area_m2) az.area = text(context.area_m2);
   }
   translations.az = az;
+
+  const year = text(az.year);
+  if (!year) return;
+  for (const locale of TARGET_LOCALES) {
+    const incoming = readField(translations[locale], "year");
+    const prior = readField(previous?.[locale], "year");
+    if (incoming && prior && incoming !== prior) continue;
+    translations[locale] = { ...(translations[locale] ?? {}), year };
+  }
 }
 
 /**
@@ -113,7 +124,7 @@ export async function applyAutoTranslations(
   if (!isAutoTranslatable(table)) return false;
   if (!process.env.DEEPL_API_KEY?.trim()) return false;
 
-  normalizeAzSource(table, translations, context);
+  normalizeAzSource(table, translations, context, previous);
   const az = { ...(translations.az ?? {}) };
   const before = JSON.stringify(translations);
 
@@ -121,7 +132,7 @@ export async function applyAutoTranslations(
   const projectFields: StringField[] =
     table === "projects"
       ? ["title", "categoryLabel", "location", "year", "status", "client", "area", "body", "seoTitle", "description"]
-      : ["title", "categoryLabel", "short", "body", "seoTitle", "description", "imageAlt"];
+      : ["title", "categoryLabel", "short", "body", "seoTitle", "description", "imageAlt", "year"];
 
   const azValues = {} as Record<StringField, string>;
   for (const key of projectFields) {
@@ -151,7 +162,12 @@ export async function applyAutoTranslations(
   const hasAnySource = Object.values(azValues).some(Boolean);
   if (!hasAnySource) return false;
 
-  const translated = await translateFieldsForLocales(projectFields, azValues, TARGET_LOCALES);
+  const copyKeys = projectFields.filter((key) => key === "year" || isNumericDateField(azValues[key] ?? ""));
+  const translateKeys = projectFields.filter((key) => !copyKeys.includes(key));
+  const translated = translateKeys.length
+    ? await translateFieldsForLocales(translateKeys, azValues, TARGET_LOCALES)
+    : ({ en: {}, de: {}, ru: {} } as Record<(typeof TARGET_LOCALES)[number], Partial<Record<StringField, string>>>);
+
   for (const locale of TARGET_LOCALES) {
     const patch: Partial<Record<StringField, string>> = {};
     for (const key of projectFields) {
@@ -159,6 +175,11 @@ export async function applyAutoTranslations(
       const prior = readField(previous?.[locale], key);
       // Keep manual edits in EN/DE/RU when that locale tab was saved.
       if (incoming && prior && incoming !== prior) continue;
+      if (copyKeys.includes(key)) {
+        const source = azValues[key];
+        if (source) patch[key] = source;
+        continue;
+      }
       const value = translated[locale][key];
       if (value?.trim()) patch[key] = value;
     }
