@@ -121,4 +121,22 @@ export const blogLocalizedSlugs: Record<string, Record<Locale, string>> = {
     de: "erdbebensicheres-haus-in-baku",
     ru: "seysmostoykiy-dom-v-baku",
   },
+  "giris-zonasi-baki": {
+    az: "giris-zonasi-baki",
+    en: "entrance-hall-design-in-baku",
+    de: "eingangszone-in-baku",
+    ru: "vhodnaya-zona-v-baku",
+  },
+  "merdiven-plani-ev-baki": {
+    az: "merdiven-plani-ev-baki",
+    en: "stair-planning-in-a-baku-house",
+    de: "treppenplanung-haus-baku",
+    ru: "planirovka-lestnicy-v-dome-baku",
+  },
+  "kondisioner-fasad-tavan-baki": {
+    az: "kondisioner-fasad-tavan-baki",
+    en: "air-conditioning-facade-and-ceiling-in-baku",
+    de: "klimaanlage-fassade-decke-baku",
+    ru: "kondicioner-fasad-i-potolok-v-baku",
+  },
 };

@@ -11,11 +11,17 @@ import { villaLayihelendirmesiBaki } from "./posts/villa-layihelendirmesi-baki";
 import { kommersiyaMekaniMemarliqLayihesi } from "./posts/kommersiya-mekani-memarliq-layihesi";
 import { sehersalmaYasayisKompleksiLayihesi } from "./posts/sehersalma-yasayis-kompleksi-layihesi";
 import { tikintiVeTemirLayiheIle } from "./posts/tikinti-ve-temir-layihe-ile";
+import { girisZonasiBaki } from "./posts/giris-zonasi-baki";
+import { merdivenPlaniEvBaki } from "./posts/merdiven-plani-ev-baki";
+import { kondisionerFasadTavanBaki } from "./posts/kondisioner-fasad-tavan-baki";
 import { findBlogByAnySlug } from "@/lib/blog-urls";
 
 export type { BlogPost, BlogCategory, BlogLocaleCopy } from "./types";
 
 const rawPosts = [
+  girisZonasiBaki,
+  merdivenPlaniEvBaki,
+  kondisionerFasadTavanBaki,
   bimMemarliqNedir,
   evTikdirmekUcunMemarliqLayihesi,
   menzilInteryerDizayniBaki,
