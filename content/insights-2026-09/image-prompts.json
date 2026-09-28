@@ -1,0 +1,53 @@
+{
+  "mode": "built-in image_gen",
+  "prompts": [
+    {
+      "id": "focal",
+      "prompt": "Create one professional architectural editorial cover image, landscape 16:10. Quiet luxury contemporary living room, a single sculptural limestone fireplace as strong central focal point, low cream sofa oriented toward it, walnut, travertine, restrained bronze details, warm late afternoon sunlight, physically plausible high-end photoreal architectural visualization, cinematic but natural, no people, no text, no logos, no collage. This is a conceptual illustration for an architecture practice article about focal points, not an actual completed project. Save output image."
+    },
+    {
+      "id": "symmetry",
+      "prompt": "Professional architectural editorial cover, landscape 16:10, warm neutral palette of cream walnut bronze charcoal matching a premium architecture website, natural late afternoon light, sophisticated photoreal visualization, realistic proportions. Perfectly symmetrical refined bedroom, centered upholstered bed, matching walnut nightstands and twin bronze lamps, balanced wall panels and linen curtains, frontal straight-on camera. No text, no logos, no people, no collage. Concept illustration, not a real completed project."
+    },
+    {
+      "id": "asymmetry",
+      "prompt": "Professional architectural editorial cover, landscape 16:10, warm neutral palette of cream walnut bronze charcoal matching a premium architecture website, natural late afternoon light, sophisticated photoreal visualization, realistic proportions. Asymmetrically balanced contemporary living room, substantial rounded cream sofa on left balanced by two light oak armchairs and slender bronze floor lamp on right, open negative space, dark walnut shelving. No text, no logos, no people, no collage. Concept illustration, not a real completed project."
+    },
+    {
+      "id": "emphasis",
+      "prompt": "Professional architectural editorial cover, landscape 16:10, warm neutral palette of cream walnut bronze charcoal matching a premium architecture website, natural late afternoon light, sophisticated photoreal visualization, realistic proportions. Restrained neutral travertine living room with one rust-red sculptural armchair as a deliberate accent, subtle spotlight on textured wall, all other objects quiet cream and oak, sophisticated contrast. No text, no logos, no people, no collage. Concept illustration, not a real completed project."
+    },
+    {
+      "id": "hybrid",
+      "prompt": "Professional architectural editorial cover, landscape 16:10, warm neutral palette of cream walnut bronze charcoal matching a premium architecture website, natural late afternoon light, sophisticated photoreal visualization, realistic proportions. Architectural cutaway visualization of elegant midrise hybrid building, visible concrete central core, slender dark steel beams and columns, warm engineered timber floor panels, realistically supported architectural concept, integrated urban setting. No text, no logos, no people, no collage. Concept illustration, not a real completed project."
+    },
+    {
+      "id": "materials",
+      "prompt": "Professional architectural editorial cover, landscape 16:10, warm neutral palette of cream walnut bronze charcoal matching a premium architecture website, natural late afternoon light, sophisticated photoreal visualization, realistic proportions. Close architectural composition of concrete pier, dark steel beam and warm engineered timber ceiling meeting within spacious contemporary atrium, materials clearly readable, refined natural texture. No text, no logos, no people, no collage. Concept illustration, not a real completed project."
+    },
+    {
+      "id": "core",
+      "prompt": "Professional architectural editorial cover, landscape 16:10, warm neutral palette of cream walnut bronze charcoal matching a premium architecture website, natural late afternoon light, sophisticated photoreal visualization, realistic proportions. Looking upward within unfinished architectural atrium, tall exposed concrete elevator core adjoining precise steel columns and horizontal beams, warm sunlight, clean architectural structural photography. No text, no logos, no people, no collage. Concept illustration, not a real completed project."
+    },
+    {
+      "id": "timber",
+      "prompt": "Professional architectural editorial cover, landscape 16:10, warm neutral palette cream walnut bronze charcoal matching premium architecture website. Sophisticated photoreal visualization, realistic materials, warm natural light. Architectural material study, large clean cutaway floor sample showing warm laminated timber lower panel and thin grey concrete upper layer with discreet steel shear connectors, resting in a sunlit modern studio, conceptual illustration not engineering drawing. No text, no logos, no collage."
+    },
+    {
+      "id": "connections",
+      "prompt": "Professional architectural editorial cover, landscape 16:10, warm neutral palette cream walnut bronze charcoal matching premium architecture website. Sophisticated photoreal visualization, realistic materials, warm natural light. Macro architectural material detail of a clean bolted dark steel bracket joining warm glulam beam to concrete support, visible timber grain and precisely machined metal, tasteful photography, conceptual connection not construction instruction. No text, no logos, no collage."
+    },
+    {
+      "id": "efficiency",
+      "prompt": "Professional architectural editorial cover, landscape 16:10, warm neutral palette cream walnut bronze charcoal matching premium architecture website. Sophisticated photoreal visualization, realistic materials, warm natural light. Spacious contemporary office atrium showing long-span dark steel roof beams, warm timber ceiling and concrete columns, minimal elegant interior, daylight and balanced open plan, no people. No text, no logos, no collage."
+    },
+    {
+      "id": "fire",
+      "prompt": "Professional architectural editorial cover, landscape 16:10, warm neutral palette cream walnut bronze charcoal matching premium architecture website. Sophisticated photoreal visualization, realistic materials, warm natural light. Refined architectural sectional material study in a studio, protected dark steel connection, pale fire protection board layers and warm engineered timber section, architectural still life, no flames, no hazard symbols, conceptual nontechnical visualization. No text, no logos, no collage."
+    },
+    {
+      "id": "future",
+      "prompt": "Professional architectural editorial cover, landscape 16:10, warm neutral palette cream walnut bronze charcoal matching premium architecture website. Sophisticated photoreal visualization, realistic materials, warm natural light. Elegant modular timber and steel building with exposed demountable structural bays and planted terraces, warm concrete base, softly lit dusk urban context, thoughtful circular architecture concept, high-end realistic rendering. No text, no logos, no collage."
+    }
+  ]
+}

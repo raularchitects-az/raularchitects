@@ -14,6 +14,10 @@ import { isInsightsRestructureActive } from "@/lib/cms/insights-rollout";
 import { blogLanguageAlternates, blogPostPath, isBlogLocaleLive } from "@/lib/blog-urls";
 import { insightLanguageAlternates, insightPostPath, isInsightLocaleLive } from "@/lib/insights-urls";
 
+// Refresh the route itself after CMS imports that do not call a server action.
+// A cached catalog alone does not refresh a static metadata route.
+export const revalidate = 60;
+
 function localizedEntry(path: string, lastModified?: string): MetadataRoute.Sitemap[number] {
   const languages: Record<string, string> = {
     "x-default": absoluteUrl("az", path),

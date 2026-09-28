@@ -40,5 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Local source renders and CMS rollback snapshots for the PDF editorial import.
+/tmp/pdfs/
+/tmp/insights-backup/
+
 .vercel
 .env*

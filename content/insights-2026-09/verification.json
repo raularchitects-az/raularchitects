@@ -1,0 +1,478 @@
+{
+  "checkedAt": "2026-09-28T14:17:35.440Z",
+  "pages": [
+    {
+      "url": "https://www.raularchitects.com/az/insights/interyerde-fokal-noqte",
+      "status": 200,
+      "title": "İnteryerdə fokal nöqtə: diqqət mərkəzi necə yaradılır?",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-focal.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/en/insights/interior-design-focal-point",
+      "status": 200,
+      "title": "Interior focal points: how to give a room a clear focus",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-focal.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/de/insights/blickfang-in-der-innenarchitektur",
+      "status": 200,
+      "title": "Blickfang im Interieur: Räume mit einem klaren Fokus",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-focal.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/ru/insights/fokusnaya-tochka-v-interere",
+      "status": 200,
+      "title": "Фокусная точка в интерьере: как создать центр внимания",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-focal.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/az/insights/interyerde-simmetrik-balans",
+      "status": 200,
+      "title": "İnteryerdə simmetrik balans: nizam və harmoniya",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-symmetry.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/en/insights/symmetrical-balance-in-interiors",
+      "status": 200,
+      "title": "Symmetrical balance in interiors: order and harmony",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-symmetry.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/de/insights/symmetrische-balance-im-interieur",
+      "status": 200,
+      "title": "Symmetrische Balance: Ordnung und Harmonie im Raum",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-symmetry.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/ru/insights/simmetrichnyj-balans-v-interere",
+      "status": 200,
+      "title": "Симметричный баланс: порядок и гармония в интерьере",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-symmetry.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/az/insights/interyerde-asimmetrik-balans",
+      "status": 200,
+      "title": "Asimmetrik balans: fərqli elementlərlə tarazlıq",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-asymmetry.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/en/insights/asymmetrical-balance-in-interiors",
+      "status": 200,
+      "title": "Asymmetrical balance: harmony through different elements",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-asymmetry.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/de/insights/asymmetrische-balance-im-interieur",
+      "status": 200,
+      "title": "Asymmetrische Balance mit unterschiedlichen Elementen",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-asymmetry.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/ru/insights/asimmetrichnyj-balans-v-interere",
+      "status": 200,
+      "title": "Асимметричный баланс: равновесие разных элементов",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-asymmetry.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/az/insights/interyerde-vurgu-reng-isiq-tekstura",
+      "status": 200,
+      "title": "İnteryerdə vurğu: rəng, işıq və teksturanın rolu",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-emphasis.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/en/insights/interior-emphasis-colour-light-texture",
+      "status": 200,
+      "title": "Interior emphasis: the role of colour, light and texture",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-emphasis.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/de/insights/akzente-farbe-licht-textur-interieur",
+      "status": 200,
+      "title": "Akzente im Interieur: Farbe, Licht und Textur",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-emphasis.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/ru/insights/akcenty-v-interere-cvet-svet-faktura",
+      "status": 200,
+      "title": "Акценты в интерьере: цвет, свет и фактура",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-emphasis.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/az/insights/hibrid-konstruksiya-nedir",
+      "status": 200,
+      "title": "Hibrid konstruksiya nədir və necə işləyir?",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-hybrid.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/en/insights/what-is-hybrid-construction",
+      "status": 200,
+      "title": "What is hybrid construction and how does it work?",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-hybrid.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/de/insights/was-ist-hybridbau",
+      "status": 200,
+      "title": "Was ist Hybridbau und wie funktioniert er?",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-hybrid.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/ru/insights/chto-takoe-gibridnaya-konstrukciya",
+      "status": 200,
+      "title": "Что такое гибридная конструкция и как она работает?",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-hybrid.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/az/insights/hibrid-binada-beton-polad-agac",
+      "status": 200,
+      "title": "Hibrid binada beton, polad və ağacın rolu",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-materials.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/en/insights/concrete-steel-timber-hybrid-buildings",
+      "status": 200,
+      "title": "Concrete, steel and timber: roles in a hybrid building",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-materials.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/de/insights/beton-stahl-holz-im-hybridbau",
+      "status": 200,
+      "title": "Beton, Stahl und Holz: Aufgaben im Hybridbau",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-materials.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/ru/insights/beton-stal-drevesina-v-gibridnyh-zdaniyah",
+      "status": 200,
+      "title": "Бетон, сталь и древесина: роли в гибридном здании",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-materials.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/az/insights/demir-beton-nuve-polad-karkas",
+      "status": 200,
+      "title": "Dəmir-beton nüvə və polad karkas necə işləyir?",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-core.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/en/insights/concrete-core-steel-frame",
+      "status": 200,
+      "title": "How a concrete core and steel frame work together",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-core.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/de/insights/stahlbetonkern-und-stahlrahmen",
+      "status": 200,
+      "title": "Stahlbetonkern und Stahlrahmen im Zusammenspiel",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-core.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/ru/insights/zhelezobetonnoe-yadro-stalnoj-karkas",
+      "status": 200,
+      "title": "Как работают железобетонное ядро и стальной каркас",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-core.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/az/insights/taxta-beton-kompozit-doseme",
+      "status": 200,
+      "title": "Taxta-beton döşəmələr: birgə işin əsas şərti",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-timber.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/en/insights/timber-concrete-composite-floors",
+      "status": 200,
+      "title": "Timber–concrete floors: what makes them composite?",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-timber.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/de/insights/holz-beton-verbunddecken",
+      "status": 200,
+      "title": "Holz-Beton-Verbunddecken: Was den Verbund ausmacht",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-timber.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/ru/insights/derevo-betonnye-kompozitnye-perekrytiya",
+      "status": 200,
+      "title": "Деревобетонные перекрытия: условие совместной работы",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-timber.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/az/insights/hibrid-konstruksiyada-birlesme-detallari",
+      "status": 200,
+      "title": "Hibrid konstruksiyada birləşmə detalları niyə vacibdir?",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-connections.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/en/insights/hybrid-structure-connection-details",
+      "status": 200,
+      "title": "Why connection details matter in hybrid structures",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-connections.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/de/insights/anschluesse-im-hybridbau",
+      "status": 200,
+      "title": "Warum Anschlüsse im Hybridbau entscheidend sind",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-connections.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/ru/insights/uzly-soedinenij-gibridnyh-konstrukcij",
+      "status": 200,
+      "title": "Почему узлы соединений важны в гибридных конструкциях",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-connections.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/az/insights/hibrid-konstruksiyanin-ustunlukleri",
+      "status": 200,
+      "title": "Hibrid konstruksiyanın üstünlükləri və seçim meyarları",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-efficiency.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/en/insights/hybrid-construction-benefits-tradeoffs",
+      "status": 200,
+      "title": "Hybrid construction: benefits and trade-offs",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-efficiency.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/de/insights/hybridbau-vorteile-und-abwaegungen",
+      "status": 200,
+      "title": "Hybridbau: Vorteile und Entscheidungskriterien",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-efficiency.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/ru/insights/preimushchestva-i-ogranicheniya-gibridnyh-konstrukcij",
+      "status": 200,
+      "title": "Гибридные конструкции: преимущества и критерии выбора",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-efficiency.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/az/insights/hibrid-konstruksiyada-yangin-tehlukesizliyi",
+      "status": 200,
+      "title": "Hibrid konstruksiyada yanğın təhlükəsizliyi",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-fire.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/en/insights/fire-safety-in-hybrid-structures",
+      "status": 200,
+      "title": "Fire safety in hybrid structures: a system approach",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-fire.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/de/insights/brandschutz-im-hybridbau",
+      "status": 200,
+      "title": "Brandschutz im Hybridbau als Systemaufgabe",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-fire.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/ru/insights/pozharnaya-bezopasnost-gibridnyh-konstrukcij",
+      "status": 200,
+      "title": "Пожарная безопасность гибридных конструкций",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-fire.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/az/insights/hibrid-konstruksiyalarin-geleceyi",
+      "status": 200,
+      "title": "Hibrid konstruksiyaların gələcəyi: sökülmə və təkrar istifadə",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-future.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/en/insights/future-hybrid-construction-circular-design",
+      "status": 200,
+      "title": "Hybrid construction: designing for disassembly and reuse",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-future.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/de/insights/zukunft-hybridbau-kreislaufplanung",
+      "status": 200,
+      "title": "Hybridbau: für Rückbau und Wiederverwendung planen",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-future.webp",
+      "issues": []
+    },
+    {
+      "url": "https://www.raularchitects.com/ru/insights/budushchee-gibridnyh-konstrukcij",
+      "status": 200,
+      "title": "Будущее гибридных конструкций: разборка и повторное использование",
+      "image": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-future.webp",
+      "issues": []
+    }
+  ],
+  "indexes": [
+    {
+      "locale": "az",
+      "status": 200,
+      "missing": []
+    },
+    {
+      "locale": "en",
+      "status": 200,
+      "missing": []
+    },
+    {
+      "locale": "de",
+      "status": 200,
+      "missing": []
+    },
+    {
+      "locale": "ru",
+      "status": 200,
+      "missing": []
+    }
+  ],
+  "sitemap": {
+    "status": 200,
+    "missing": [
+      "https://www.raularchitects.com/az/insights/interyerde-fokal-noqte",
+      "https://www.raularchitects.com/en/insights/interior-design-focal-point",
+      "https://www.raularchitects.com/de/insights/blickfang-in-der-innenarchitektur",
+      "https://www.raularchitects.com/ru/insights/fokusnaya-tochka-v-interere",
+      "https://www.raularchitects.com/az/insights/interyerde-simmetrik-balans",
+      "https://www.raularchitects.com/en/insights/symmetrical-balance-in-interiors",
+      "https://www.raularchitects.com/de/insights/symmetrische-balance-im-interieur",
+      "https://www.raularchitects.com/ru/insights/simmetrichnyj-balans-v-interere",
+      "https://www.raularchitects.com/az/insights/interyerde-asimmetrik-balans",
+      "https://www.raularchitects.com/en/insights/asymmetrical-balance-in-interiors",
+      "https://www.raularchitects.com/de/insights/asymmetrische-balance-im-interieur",
+      "https://www.raularchitects.com/ru/insights/asimmetrichnyj-balans-v-interere",
+      "https://www.raularchitects.com/az/insights/interyerde-vurgu-reng-isiq-tekstura",
+      "https://www.raularchitects.com/en/insights/interior-emphasis-colour-light-texture",
+      "https://www.raularchitects.com/de/insights/akzente-farbe-licht-textur-interieur",
+      "https://www.raularchitects.com/ru/insights/akcenty-v-interere-cvet-svet-faktura",
+      "https://www.raularchitects.com/az/insights/hibrid-konstruksiya-nedir",
+      "https://www.raularchitects.com/en/insights/what-is-hybrid-construction",
+      "https://www.raularchitects.com/de/insights/was-ist-hybridbau",
+      "https://www.raularchitects.com/ru/insights/chto-takoe-gibridnaya-konstrukciya",
+      "https://www.raularchitects.com/az/insights/hibrid-binada-beton-polad-agac",
+      "https://www.raularchitects.com/en/insights/concrete-steel-timber-hybrid-buildings",
+      "https://www.raularchitects.com/de/insights/beton-stahl-holz-im-hybridbau",
+      "https://www.raularchitects.com/ru/insights/beton-stal-drevesina-v-gibridnyh-zdaniyah",
+      "https://www.raularchitects.com/az/insights/demir-beton-nuve-polad-karkas",
+      "https://www.raularchitects.com/en/insights/concrete-core-steel-frame",
+      "https://www.raularchitects.com/de/insights/stahlbetonkern-und-stahlrahmen",
+      "https://www.raularchitects.com/ru/insights/zhelezobetonnoe-yadro-stalnoj-karkas",
+      "https://www.raularchitects.com/az/insights/taxta-beton-kompozit-doseme",
+      "https://www.raularchitects.com/en/insights/timber-concrete-composite-floors",
+      "https://www.raularchitects.com/de/insights/holz-beton-verbunddecken",
+      "https://www.raularchitects.com/ru/insights/derevo-betonnye-kompozitnye-perekrytiya",
+      "https://www.raularchitects.com/az/insights/hibrid-konstruksiyada-birlesme-detallari",
+      "https://www.raularchitects.com/en/insights/hybrid-structure-connection-details",
+      "https://www.raularchitects.com/de/insights/anschluesse-im-hybridbau",
+      "https://www.raularchitects.com/ru/insights/uzly-soedinenij-gibridnyh-konstrukcij",
+      "https://www.raularchitects.com/az/insights/hibrid-konstruksiyanin-ustunlukleri",
+      "https://www.raularchitects.com/en/insights/hybrid-construction-benefits-tradeoffs",
+      "https://www.raularchitects.com/de/insights/hybridbau-vorteile-und-abwaegungen",
+      "https://www.raularchitects.com/ru/insights/preimushchestva-i-ogranicheniya-gibridnyh-konstrukcij",
+      "https://www.raularchitects.com/az/insights/hibrid-konstruksiyada-yangin-tehlukesizliyi",
+      "https://www.raularchitects.com/en/insights/fire-safety-in-hybrid-structures",
+      "https://www.raularchitects.com/de/insights/brandschutz-im-hybridbau",
+      "https://www.raularchitects.com/ru/insights/pozharnaya-bezopasnost-gibridnyh-konstrukcij",
+      "https://www.raularchitects.com/az/insights/hibrid-konstruksiyalarin-geleceyi",
+      "https://www.raularchitects.com/en/insights/future-hybrid-construction-circular-design",
+      "https://www.raularchitects.com/de/insights/zukunft-hybridbau-kreislaufplanung",
+      "https://www.raularchitects.com/ru/insights/budushchee-gibridnyh-konstrukcij"
+    ]
+  },
+  "images": [
+    {
+      "url": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-focal.webp",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-symmetry.webp",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-asymmetry.webp",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-emphasis.webp",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-hybrid.webp",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-materials.webp",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-core.webp",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-timber.webp",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-connections.webp",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-efficiency.webp",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-fire.webp",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://dqkbqwrlipsayoshzend.supabase.co/storage/v1/object/public/media/insights/pdf-series-2026-09/1790603920023-future.webp",
+      "status": 200,
+      "type": "image/webp"
+    }
+  ]
+}

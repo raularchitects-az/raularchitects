@@ -1,0 +1,170 @@
+{
+  "articles": 12,
+  "translations": 48,
+  "existingPreserved": 10,
+  "covers": 12,
+  "validation": "passed",
+  "publishedAt": "2026-09-28T13:58:52.525Z",
+  "inserted": [
+    {
+      "id": "004edb1b-f7e2-4558-aec4-8a2e89c9f50b",
+      "slug": "interyerde-fokal-noqte",
+      "status": "published"
+    },
+    {
+      "id": "8fbf575f-c836-44b0-b048-29d582da5ada",
+      "slug": "interyerde-simmetrik-balans",
+      "status": "published"
+    },
+    {
+      "id": "642a5b5b-09f3-409d-a075-98ca263e5b8e",
+      "slug": "interyerde-asimmetrik-balans",
+      "status": "published"
+    },
+    {
+      "id": "3c8244a7-62d5-4e26-b370-c5a93686834b",
+      "slug": "interyerde-vurgu-reng-isiq-tekstura",
+      "status": "published"
+    },
+    {
+      "id": "d700a1e5-da5c-48db-9a7f-74629e668a99",
+      "slug": "hibrid-konstruksiya-nedir",
+      "status": "published"
+    },
+    {
+      "id": "bfb73b5e-a454-4c8f-8002-4a8953285a54",
+      "slug": "hibrid-binada-beton-polad-agac",
+      "status": "published"
+    },
+    {
+      "id": "596fc793-9cb7-4524-85f6-fce750b4740c",
+      "slug": "demir-beton-nuve-polad-karkas",
+      "status": "published"
+    },
+    {
+      "id": "221720c5-b7bb-44ca-9fba-3895f5282ef0",
+      "slug": "taxta-beton-kompozit-doseme",
+      "status": "published"
+    },
+    {
+      "id": "1ef60a38-045e-4301-96b2-1904bf6c0f47",
+      "slug": "hibrid-konstruksiyada-birlesme-detallari",
+      "status": "published"
+    },
+    {
+      "id": "3a914974-0b68-434b-aca8-d1faaa16ee05",
+      "slug": "hibrid-konstruksiyanin-ustunlukleri",
+      "status": "published"
+    },
+    {
+      "id": "102238a5-58d8-4ca7-babb-c65d118033d5",
+      "slug": "hibrid-konstruksiyada-yangin-tehlukesizliyi",
+      "status": "published"
+    },
+    {
+      "id": "e4a5d19a-0ab6-4c91-b027-2654550b37e4",
+      "slug": "hibrid-konstruksiyalarin-geleceyi",
+      "status": "published"
+    }
+  ],
+  "media": [
+    {
+      "path": "insights/pdf-series-2026-09/1790603920023-focal.webp",
+      "size_bytes": 229426
+    },
+    {
+      "path": "insights/pdf-series-2026-09/1790603920023-symmetry.webp",
+      "size_bytes": 241830
+    },
+    {
+      "path": "insights/pdf-series-2026-09/1790603920023-asymmetry.webp",
+      "size_bytes": 237462
+    },
+    {
+      "path": "insights/pdf-series-2026-09/1790603920023-emphasis.webp",
+      "size_bytes": 317848
+    },
+    {
+      "path": "insights/pdf-series-2026-09/1790603920023-hybrid.webp",
+      "size_bytes": 320638
+    },
+    {
+      "path": "insights/pdf-series-2026-09/1790603920023-materials.webp",
+      "size_bytes": 208628
+    },
+    {
+      "path": "insights/pdf-series-2026-09/1790603920023-core.webp",
+      "size_bytes": 228842
+    },
+    {
+      "path": "insights/pdf-series-2026-09/1790603920023-timber.webp",
+      "size_bytes": 193080
+    },
+    {
+      "path": "insights/pdf-series-2026-09/1790603920023-connections.webp",
+      "size_bytes": 209616
+    },
+    {
+      "path": "insights/pdf-series-2026-09/1790603920023-efficiency.webp",
+      "size_bytes": 267338
+    },
+    {
+      "path": "insights/pdf-series-2026-09/1790603920023-fire.webp",
+      "size_bytes": 184110
+    },
+    {
+      "path": "insights/pdf-series-2026-09/1790603920023-future.webp",
+      "size_bytes": 330160
+    }
+  ],
+  "urls": [
+    "https://www.raularchitects.com/az/insights/interyerde-fokal-noqte",
+    "https://www.raularchitects.com/en/insights/interior-design-focal-point",
+    "https://www.raularchitects.com/de/insights/blickfang-in-der-innenarchitektur",
+    "https://www.raularchitects.com/ru/insights/fokusnaya-tochka-v-interere",
+    "https://www.raularchitects.com/az/insights/interyerde-simmetrik-balans",
+    "https://www.raularchitects.com/en/insights/symmetrical-balance-in-interiors",
+    "https://www.raularchitects.com/de/insights/symmetrische-balance-im-interieur",
+    "https://www.raularchitects.com/ru/insights/simmetrichnyj-balans-v-interere",
+    "https://www.raularchitects.com/az/insights/interyerde-asimmetrik-balans",
+    "https://www.raularchitects.com/en/insights/asymmetrical-balance-in-interiors",
+    "https://www.raularchitects.com/de/insights/asymmetrische-balance-im-interieur",
+    "https://www.raularchitects.com/ru/insights/asimmetrichnyj-balans-v-interere",
+    "https://www.raularchitects.com/az/insights/interyerde-vurgu-reng-isiq-tekstura",
+    "https://www.raularchitects.com/en/insights/interior-emphasis-colour-light-texture",
+    "https://www.raularchitects.com/de/insights/akzente-farbe-licht-textur-interieur",
+    "https://www.raularchitects.com/ru/insights/akcenty-v-interere-cvet-svet-faktura",
+    "https://www.raularchitects.com/az/insights/hibrid-konstruksiya-nedir",
+    "https://www.raularchitects.com/en/insights/what-is-hybrid-construction",
+    "https://www.raularchitects.com/de/insights/was-ist-hybridbau",
+    "https://www.raularchitects.com/ru/insights/chto-takoe-gibridnaya-konstrukciya",
+    "https://www.raularchitects.com/az/insights/hibrid-binada-beton-polad-agac",
+    "https://www.raularchitects.com/en/insights/concrete-steel-timber-hybrid-buildings",
+    "https://www.raularchitects.com/de/insights/beton-stahl-holz-im-hybridbau",
+    "https://www.raularchitects.com/ru/insights/beton-stal-drevesina-v-gibridnyh-zdaniyah",
+    "https://www.raularchitects.com/az/insights/demir-beton-nuve-polad-karkas",
+    "https://www.raularchitects.com/en/insights/concrete-core-steel-frame",
+    "https://www.raularchitects.com/de/insights/stahlbetonkern-und-stahlrahmen",
+    "https://www.raularchitects.com/ru/insights/zhelezobetonnoe-yadro-stalnoj-karkas",
+    "https://www.raularchitects.com/az/insights/taxta-beton-kompozit-doseme",
+    "https://www.raularchitects.com/en/insights/timber-concrete-composite-floors",
+    "https://www.raularchitects.com/de/insights/holz-beton-verbunddecken",
+    "https://www.raularchitects.com/ru/insights/derevo-betonnye-kompozitnye-perekrytiya",
+    "https://www.raularchitects.com/az/insights/hibrid-konstruksiyada-birlesme-detallari",
+    "https://www.raularchitects.com/en/insights/hybrid-structure-connection-details",
+    "https://www.raularchitects.com/de/insights/anschluesse-im-hybridbau",
+    "https://www.raularchitects.com/ru/insights/uzly-soedinenij-gibridnyh-konstrukcij",
+    "https://www.raularchitects.com/az/insights/hibrid-konstruksiyanin-ustunlukleri",
+    "https://www.raularchitects.com/en/insights/hybrid-construction-benefits-tradeoffs",
+    "https://www.raularchitects.com/de/insights/hybridbau-vorteile-und-abwaegungen",
+    "https://www.raularchitects.com/ru/insights/preimushchestva-i-ogranicheniya-gibridnyh-konstrukcij",
+    "https://www.raularchitects.com/az/insights/hibrid-konstruksiyada-yangin-tehlukesizliyi",
+    "https://www.raularchitects.com/en/insights/fire-safety-in-hybrid-structures",
+    "https://www.raularchitects.com/de/insights/brandschutz-im-hybridbau",
+    "https://www.raularchitects.com/ru/insights/pozharnaya-bezopasnost-gibridnyh-konstrukcij",
+    "https://www.raularchitects.com/az/insights/hibrid-konstruksiyalarin-geleceyi",
+    "https://www.raularchitects.com/en/insights/future-hybrid-construction-circular-design",
+    "https://www.raularchitects.com/de/insights/zukunft-hybridbau-kreislaufplanung",
+    "https://www.raularchitects.com/ru/insights/budushchee-gibridnyh-konstrukcij"
+  ]
+}
