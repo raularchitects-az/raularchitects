@@ -62,7 +62,7 @@ export default async function AdminPagesPage() {
         <Field label="Mobil role 2"><TextInput name="roleLine2" defaultValue={String(heroV.roleLine2 ?? "")} /></Field>
         <Field label="Mobil role 3"><TextInput name="roleLine3" defaultValue={String(heroV.roleLine3 ?? "")} /></Field>
         <Field label="Desktop foto"><TextInput name="photoDesktop" defaultValue={String(heroV.photoDesktop ?? "/images/raul-hero.jpg")} /></Field>
-        <Field label="Mobil foto"><TextInput name="photoMobile" defaultValue={String(heroV.photoMobile ?? "/images/raul-hero.jpg")} /></Field>
+        <Field label="Mobil foto"><TextInput name="photoMobile" defaultValue={String(heroV.photoMobile ?? "/images/raul-hero-mobile.jpg")} /></Field>
         <Field label="Ad bloku linki"><TextInput name="identityHref" defaultValue={String(heroV.identityHref ?? "/haqqimizda/raul-nagiyev")} /></Field>
       </section>
       <section className="flex flex-col gap-4 border border-charcoal/10 bg-white p-5">

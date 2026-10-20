@@ -36,7 +36,7 @@ export function HomeHero({
   allServicesCta,
   services,
   photoDesktop = "/images/raul-hero.jpg",
-  photoMobile = "/images/raul-hero.jpg",
+  photoMobile = "/images/raul-hero-mobile.jpg",
   identityHref = "/haqqimizda/raul-nagiyev",
 }: {
   raulName: string;
@@ -68,7 +68,7 @@ export function HomeHero({
             priority
             unoptimized
             sizes="100vw"
-            className="object-cover object-[0%_30%] -translate-x-[18%] lg:hidden"
+            className="object-cover lg:hidden"
           />
           <Image
             src={photoDesktop}
