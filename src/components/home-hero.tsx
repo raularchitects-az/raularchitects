@@ -57,9 +57,9 @@ export function HomeHero({
   const upper = (text: string) => toDisplayUpperCase(text, locale);
 
   return (
-    <section className="relative min-h-[calc(100dvh-5rem)] w-full overflow-hidden bg-cream lg:isolate">
+    <section className="relative min-h-0 w-full overflow-hidden bg-cream lg:isolate lg:min-h-[calc(100dvh-5rem)]">
       {/* LAYER 1 — photo (mask only on the image, not the name block) */}
-      <div className="relative h-[58svh] w-full lg:absolute lg:inset-0 lg:h-full">
+      <div className="relative h-[38svh] w-full lg:absolute lg:inset-0 lg:h-full">
         <div className="hero-photo absolute inset-0 overflow-hidden">
           <Image
             src={photoMobile}
@@ -68,7 +68,7 @@ export function HomeHero({
             priority
             unoptimized
             sizes="100vw"
-            className="object-cover lg:hidden"
+            className="object-cover object-top lg:hidden"
           />
           <Image
             src={photoDesktop}
@@ -79,7 +79,6 @@ export function HomeHero({
             sizes="(min-width: 1024px) 70vw, 100vw"
             className="hidden object-cover object-left lg:block"
           />
-          <div aria-hidden="true" className="hero-photo-fade-mobile lg:hidden" />
           <div aria-hidden="true" className="hero-photo-fade-desktop hidden lg:block" />
         </div>
 
@@ -137,7 +136,7 @@ export function HomeHero({
       </div>
 
       {/* LAYER 4 — services */}
-      <div className="relative z-10 flex min-h-[42svh] items-center bg-cream px-6 py-10 sm:px-8 lg:ml-auto lg:min-h-[calc(100dvh-5rem)] lg:w-[48%] lg:bg-transparent lg:px-10 lg:py-16 xl:w-[46%] xl:pr-14">
+      <div className="relative z-10 flex items-start bg-gradient-animated px-6 pt-2 pb-5 sm:px-8 lg:ml-auto lg:min-h-[calc(100dvh-5rem)] lg:w-[48%] lg:items-center lg:bg-none lg:bg-transparent lg:px-10 lg:py-16 xl:w-[46%] xl:pr-14">
         {/* LAYER 2 — logo-mark triangle */}
         <div aria-hidden="true" className="hero-triangle-wrap pointer-events-none absolute inset-0">
           <Image
@@ -161,17 +160,17 @@ export function HomeHero({
                   style={{ animationDelay: `${0.78 + index * 0.12}s` }}
                 >
                   <Icon
-                    className="h-5 w-5 shrink-0 text-[#8f6b4f] transition-transform duration-500 ease-out group-hover:translate-x-0.5 sm:h-6 sm:w-6"
+                    className="h-5 w-5 shrink-0 text-cream lg:text-[#8f6b4f] transition-transform duration-500 ease-out group-hover:translate-x-0.5 sm:h-6 sm:w-6"
                     strokeWidth={1.35}
                   />
                   <span
                     lang={locale}
-                    className="text-coffee-gradient text-[1.7rem] font-bold leading-[1.22] tracking-[-0.02em] transition-[filter] duration-500 group-hover:brightness-110 sm:text-4xl lg:text-[2.65rem] xl:text-[2.9rem]"
+                    className="text-[1.7rem] font-bold leading-[1.22] tracking-[-0.02em] text-cream transition-[filter] duration-500 group-hover:brightness-110 sm:text-4xl lg:text-coffee-gradient lg:text-[2.65rem] xl:text-[2.9rem]"
                   >
                     {upper(service.title)}
                   </span>
                   <ArrowRight
-                    className="ml-auto h-4 w-4 shrink-0 text-[#8f6b4f]/55 transition-transform duration-500 ease-out group-hover:translate-x-1 sm:h-5 sm:w-5"
+                    className="ml-auto h-4 w-4 shrink-0 text-cream/70 transition-transform duration-500 ease-out group-hover:translate-x-1 sm:h-5 sm:w-5 lg:text-[#8f6b4f]/55"
                     strokeWidth={1.5}
                   />
                 </Link>
@@ -181,7 +180,7 @@ export function HomeHero({
 
           <Link
             href="/xidmetler"
-            className="hero-all-services mt-10 inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-[#8f6b4f] transition-colors duration-300 hover:text-[#6b4a32] sm:mt-14"
+            className="hero-all-services mt-6 inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-cream/90 transition-colors duration-300 hover:text-cream sm:mt-8 lg:mt-14 lg:text-[#8f6b4f] lg:hover:text-[#6b4a32]"
           >
             {upper(allServicesCta)}
             <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} />
