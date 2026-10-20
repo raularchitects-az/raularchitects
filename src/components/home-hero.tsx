@@ -136,7 +136,11 @@ export function HomeHero({
       </div>
 
       {/* LAYER 4 — services */}
-      <div className="relative z-10 flex items-start bg-gradient-animated px-6 pt-5 pb-5 sm:px-8 lg:ml-auto lg:min-h-[calc(100dvh-5rem)] lg:w-[48%] lg:items-center lg:bg-none lg:bg-transparent lg:px-10 lg:py-16 xl:w-[46%] xl:pr-14">
+      <div className="relative z-10 flex items-start px-6 pt-5 pb-5 sm:px-8 lg:ml-auto lg:min-h-[calc(100dvh-5rem)] lg:w-[48%] lg:items-center lg:px-10 lg:py-16 xl:w-[46%] xl:pr-14">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-animated lg:hidden"
+        />
         {/* LAYER 2 — logo-mark triangle */}
         <div aria-hidden="true" className="hero-triangle-wrap pointer-events-none absolute inset-0">
           <Image
@@ -160,17 +164,17 @@ export function HomeHero({
                   style={{ animationDelay: `${0.78 + index * 0.12}s` }}
                 >
                   <Icon
-                    className="h-5 w-5 shrink-0 text-cream lg:text-[#8f6b4f] transition-transform duration-500 ease-out group-hover:translate-x-0.5 sm:h-6 sm:w-6"
+                    className="hero-service-icon h-5 w-5 shrink-0 text-[#8f6b4f] transition-transform duration-500 ease-out group-hover:translate-x-0.5 sm:h-6 sm:w-6"
                     strokeWidth={1.35}
                   />
                   <span
                     lang={locale}
-                    className="text-[1.7rem] font-bold leading-[1.22] tracking-[-0.02em] text-cream transition-[filter] duration-500 group-hover:brightness-110 sm:text-4xl lg:text-coffee-gradient lg:text-[2.65rem] xl:text-[2.9rem]"
+                    className="hero-service-title text-coffee-gradient text-[1.7rem] font-bold leading-[1.22] tracking-[-0.02em] transition-[filter] duration-500 group-hover:brightness-110 sm:text-4xl lg:text-[2.65rem] xl:text-[2.9rem]"
                   >
                     {upper(service.title)}
                   </span>
                   <ArrowRight
-                    className="ml-auto h-4 w-4 shrink-0 text-cream/70 transition-transform duration-500 ease-out group-hover:translate-x-1 sm:h-5 sm:w-5 lg:text-[#8f6b4f]/55"
+                    className="hero-service-arrow ml-auto h-4 w-4 shrink-0 text-[#8f6b4f]/55 transition-transform duration-500 ease-out group-hover:translate-x-1 sm:h-5 sm:w-5"
                     strokeWidth={1.5}
                   />
                 </Link>
@@ -180,7 +184,7 @@ export function HomeHero({
 
           <Link
             href="/xidmetler"
-            className="hero-all-services mt-6 inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-cream/90 transition-colors duration-300 hover:text-cream sm:mt-8 lg:mt-14 lg:text-[#8f6b4f] lg:hover:text-[#6b4a32]"
+            className="hero-all-services mt-6 inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.32em] text-[#8f6b4f] transition-colors duration-300 hover:text-[#6b4a32] sm:mt-8 lg:mt-14"
           >
             {upper(allServicesCta)}
             <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} />

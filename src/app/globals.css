@@ -349,6 +349,31 @@
     .hero-triangle-mark {
       max-height: 85%;
     }
+
+    .hero-service-title {
+      background-image: none !important;
+      -webkit-background-clip: unset !important;
+      background-clip: unset !important;
+      color: #f7f2ec !important;
+      padding-top: 0;
+    }
+
+    .hero-service-icon,
+    .hero-service-arrow {
+      color: #f7f2ec !important;
+    }
+
+    .hero-service-arrow {
+      opacity: 0.7;
+    }
+
+    .hero-all-services {
+      color: rgb(247 242 236 / 0.9) !important;
+    }
+
+    .hero-all-services:hover {
+      color: #f7f2ec !important;
+    }
   }
 }
 
