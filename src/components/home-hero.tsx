@@ -60,7 +60,7 @@ export function HomeHero({
     <section className="relative min-h-[calc(100dvh-5rem)] w-full overflow-hidden bg-cream lg:isolate">
       {/* LAYER 1 — photo (mask only on the image, not the name block) */}
       <div className="relative h-[58svh] w-full lg:absolute lg:inset-0 lg:h-full">
-        <div className="hero-photo absolute inset-0">
+        <div className="hero-photo absolute inset-0 overflow-hidden">
           <Image
             src={photoMobile}
             alt={raulName}
@@ -68,7 +68,7 @@ export function HomeHero({
             priority
             unoptimized
             sizes="100vw"
-            className="object-cover object-[14%_28%] lg:hidden"
+            className="object-cover object-[0%_30%] -translate-x-[18%] lg:hidden"
           />
           <Image
             src={photoDesktop}
