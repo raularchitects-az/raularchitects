@@ -148,7 +148,13 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
         allServicesCta={homeMsg.allServicesCta}
         services={homeFlags.showServices === false ? [] : visibleServices}
         photoDesktop={typeof hero.photoDesktop === "string" && hero.photoDesktop ? hero.photoDesktop : undefined}
-        photoMobile={typeof hero.photoMobile === "string" && hero.photoMobile ? hero.photoMobile : undefined}
+        photoMobile={
+          typeof hero.photoMobile === "string" &&
+          hero.photoMobile &&
+          hero.photoMobile !== "/images/raul-hero-mobile.jpg"
+            ? hero.photoMobile
+            : undefined
+        }
         identityHref={typeof hero.identityHref === "string" && hero.identityHref ? hero.identityHref : undefined}
       />
 

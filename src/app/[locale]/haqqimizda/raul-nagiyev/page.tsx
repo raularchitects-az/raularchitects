@@ -53,9 +53,9 @@ export default async function RaulNagiyevPage({ params }: PageProps<"/[locale]/h
                   alt={t("title")}
                   fill
                   priority
-                  quality={95}
+                  unoptimized
                   sizes="(min-width: 1024px) 22rem, 90vw"
-                  className="object-cover object-[20%_center]"
+                  className="object-cover object-[14%_28%]"
                 />
               </div>
               <div className="flex flex-col gap-1">
