@@ -59,7 +59,7 @@ export function HomeHero({
   return (
     <section className="relative min-h-0 w-full overflow-hidden bg-cream lg:isolate lg:min-h-[calc(100dvh-5rem)]">
       {/* LAYER 1 — photo (mask only on the image, not the name block) */}
-      <div className="relative h-[38svh] w-full lg:absolute lg:inset-0 lg:h-full">
+      <div className="relative h-[42svh] w-full lg:absolute lg:inset-0 lg:h-full">
         <div className="hero-photo absolute inset-0 overflow-hidden">
           <Image
             src={photoMobile}
@@ -136,7 +136,7 @@ export function HomeHero({
       </div>
 
       {/* LAYER 4 — services */}
-      <div className="relative z-10 flex items-start bg-gradient-animated px-6 pt-2 pb-5 sm:px-8 lg:ml-auto lg:min-h-[calc(100dvh-5rem)] lg:w-[48%] lg:items-center lg:bg-none lg:bg-transparent lg:px-10 lg:py-16 xl:w-[46%] xl:pr-14">
+      <div className="relative z-10 flex items-start bg-gradient-animated px-6 pt-5 pb-5 sm:px-8 lg:ml-auto lg:min-h-[calc(100dvh-5rem)] lg:w-[48%] lg:items-center lg:bg-none lg:bg-transparent lg:px-10 lg:py-16 xl:w-[46%] xl:pr-14">
         {/* LAYER 2 — logo-mark triangle */}
         <div aria-hidden="true" className="hero-triangle-wrap pointer-events-none absolute inset-0">
           <Image
