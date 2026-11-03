@@ -1117,8 +1117,8 @@ export async function seedInitialInsights(options: { confirm: true }) {
   const supabase = await createAdminClient();
   if (!supabase) throw new Error("CMS configured deyil");
 
-  const { insightSeedRows } = await import("@/data/insights-seed");
-  const rows = insightSeedRows.map((item, index) => ({
+  const { allInsightSeedRows } = await import("@/data/insights-seed");
+  const rows = allInsightSeedRows.map((item, index) => ({
     slug: item.slug,
     category: item.category,
     cover_path: item.cover_path,

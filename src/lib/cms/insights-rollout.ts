@@ -1,5 +1,5 @@
 import { cache } from "react";
-import { insightSeedRows } from "@/data/insights-seed";
+import { allInsightSeedRows } from "@/data/insights-seed";
 import { cmsTakesPublic } from "./legacy";
 import { isMissingRelationError } from "./missing-table";
 import { getCatalogRows, getSettings, getSettingsAdmin } from "./queries";
@@ -16,7 +16,7 @@ export const INSIGHTS_RESTRUCTURE_ACTIVE_KEY = "insights_restructure_active";
 
 export { REAL_PORTFOLIO_MIGRATE_SLUGS, type RealPortfolioMigrateSlug };
 
-export const EXPECTED_INSIGHT_SEED_SLUGS = insightSeedRows.map((row) => row.slug);
+export const EXPECTED_INSIGHT_SEED_SLUGS = allInsightSeedRows.map((row) => row.slug);
 
 function parseActiveFlag(value: Record<string, unknown> | null | undefined): boolean {
   if (!value) return false;

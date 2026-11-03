@@ -1,3 +1,5 @@
+import { insightSeedRowsBatch2 } from "./insights-seed-batch2";
+
 /** Production-ready Insights seed for admin upsert (idempotent by slug). */
 export type InsightSeed = {
   slug: string;
@@ -1321,3 +1323,6 @@ Balance für heute:
     },
   },
 ];
+
+/** Original 10 + batch-2 Insights used by seed upsert and rollout readiness. */
+export const allInsightSeedRows: InsightSeed[] = [...insightSeedRows, ...insightSeedRowsBatch2];

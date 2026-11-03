@@ -19,7 +19,7 @@ export function SeedInsightsButton() {
         onClick={async () => {
           if (
             !window.confirm(
-              "10 Insights seed upsert olunacaq (slug üzrə). Status: published. Mövcud eyni slug-lar yenilənəcək. Davam?",
+              "Insights seed upsert olunacaq (slug üzrə). Status: published. Mövcud eyni slug-lar yenilənəcək. Davam?",
             )
           ) {
             return;
@@ -39,7 +39,7 @@ export function SeedInsightsButton() {
           }
         }}
       >
-        {busy ? "Seed edilir…" : "10 Insights seed et"}
+        {busy ? "Seed edilir…" : "Insights seed et"}
       </button>
       {message ? (
         <p className={`max-w-xl text-sm ${failed ? "text-red-700" : "text-charcoal/70"}`}>{message}</p>
