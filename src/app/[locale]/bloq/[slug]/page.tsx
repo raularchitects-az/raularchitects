@@ -13,6 +13,8 @@ import { formatBlogDate, getBlogCopy, getBlogImageAlt } from "@/data/blog";
 import { getPublicBlogPosts, resolvePublicBlog } from "@/lib/cms/public";
 import { blogLanguageAlternates, blogPostPath, getBlogLocaleSlug } from "@/lib/blog-urls";
 import { BlogBody } from "@/lib/blog-body";
+import { BlogAudioPlayer } from "@/components/blog-audio-player";
+import { blogAudioSchema, getBlogAudio } from "@/lib/blog/audio";
 import {
   SITE_NAME,
   SITE_URL,
@@ -153,6 +155,7 @@ export default async function BlogPostPage({
   if (!copy) notFound();
 
   const canonical = productionAbsoluteUrl(locale, blogPostPath(post, locale));
+  const audio = await getBlogAudio(post.slug, locale);
 
   const relatedLabels: Record<string, string> = {
     "/elaqe": nav("contact"),
@@ -195,6 +198,7 @@ export default async function BlogPostPage({
       name: SITE_NAME,
       url: SITE_URL,
     },
+    ...(audio ? { audio: blogAudioSchema(audio, copy.title) } : {}),
   };
 
   return (
@@ -225,6 +229,7 @@ export default async function BlogPostPage({
               <time dateTime={post.publishedAt} className="text-sm text-charcoal/45">
                 {formatBlogDate(post.publishedAt, locale)}
               </time>
+              {audio ? <BlogAudioPlayer entry={audio} /> : null}
             </header>
 
             <figure className="relative mt-10 aspect-[16/10] overflow-hidden bg-cream-dark">
