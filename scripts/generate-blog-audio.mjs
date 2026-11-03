@@ -3,9 +3,10 @@
  * Pre-generates "listen to this article" MP3s for blog posts and uploads them
  * to the public Supabase Storage bucket `blog-audio`.
  *
- *   node --env-file=.env.local scripts/generate-blog-audio.mjs [--latest 10] [--all] [--slug a,b] [--locales az,ru,en] [--force] [--dry-run]
+ *   node --env-file=.env.local scripts/generate-blog-audio.mjs [--latest 10] [--all] [--slug a,b] [--locales az,ru,en,de] [--short] [--force] [--dry-run]
  *
  * All locales use Gemini Flash TTS (Vertex AI) with meaning-first narration styles.
+ * --short builds a ~50s–1:20 essentials briefing (also covers static-only posts not in CMS).
  * Chirp 3 HD remains a fallback if Gemini fails for a locale.
  * Google auth: Application Default Credentials via gcloud (Raul GCP only).
  * Env: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, optional FFMPEG_PATH,
@@ -24,6 +25,8 @@ import {
   speechHash,
   splitLongSentences,
 } from "./blog-audio-text.mjs";
+import { blogBriefHash, buildInsightBriefText } from "./insight-audio-text.mjs";
+import { loadStaticBlogAudioRows } from "./load-static-blog-posts.mjs";
 
 const require = createRequire(import.meta.url);
 const ffmpegStatic = (() => {
@@ -37,8 +40,9 @@ const ffmpegStatic = (() => {
 const BUCKET = "blog-audio";
 const MANIFEST_PATH = "manifest.json";
 const SAMPLE_RATE = 24000;
-/** Longer pause between paragraphs so the read feels human, not rushed. */
-const PAUSE_SECONDS = 0.85;
+/** Longer pause between paragraphs so the read feels human, not rushed. Short briefs use a tighter beat. */
+const PAUSE_SECONDS_FULL = 0.85;
+const PAUSE_SECONDS_SHORT = 0.55;
 const VOICES = {
   az: {
     id: "gemini-3.8-flash-tts:Kore",
@@ -73,11 +77,17 @@ const VOICES = {
     fallback: { id: "de-DE-Chirp3-HD-Kore", engine: "chirp", languageCode: "de-DE", voice: "de-DE-Chirp3-HD-Kore", maxBytes: 2800 },
   },
 };
-const NARRATION_STYLE = {
+const NARRATION_STYLE_FULL = {
   az: `Sən peşəkar xəbər / məlumat diktorusan, robot deyilsən. Əvvəlcə mətni tam başa düş: bu, Bakı və Azərbaycan üçün memarlıq, həyət, iqlim və yaşayış məkanı haqqında praktik məlumatdır. Sonra televiziya xəbəri və ya ciddi məlumat buraxılışı kimi oxu — aydın, sakit, inamlı; hər cümlənin mənası eşidilsin. Emosional podkast və ya reklam tonu yox. Vurğu əsas fakta və fikrə düşsün; abzaslar arasında qısa peşəkar fasilə olsun. «Raul Architects» brendini belə tələffüz et. İlləri Azərbaycan dilində tam oxu (2026 = iki min iyirmi altı).`,
   ru: `Ты профессиональный диктор новостей и справочной информации, не робот. Сначала полностью пойми текст: практический материал об архитектуре, дворе, климате и жилой среде в Баку. Читай как спокойный информационный выпуск: ясно, уверенно, по делу; смысл каждой фразы должен быть понятен. Без эмоций подкаста и рекламного тона. Паузы между абзацами короткие и профессиональные. Бренд: «Раул Аркитектс».`,
   en: `You are a professional news and information presenter, not a robot. First fully understand the text: a practical briefing on architecture, courtyards, climate and living space in Baku. Then deliver it like a calm news / factual bulletin — clear, confident, informative; every sentence must carry its meaning. No podcast chumminess and no ad voice. Short professional pauses between paragraphs. Pronounce the brand «Raul Architects».`,
   de: `Du bist eine professionelle Nachrichten- und Informationssprecherin, kein Roboter. Verstehe den Text zuerst vollständig: praktisches Wissen zu Architektur, Hof, Klima und Wohnraum in Baku. Lies wie eine ruhige Nachrichtensendung oder ein Faktenbericht — klar, sicher, sachlich; der Sinn jedes Satzes muss hörbar sein. Kein Podcast-Plauderton, keine Werbung. Kurze professionelle Pausen zwischen Absätzen. Marke: «Raul Architects».`,
+};
+const NARRATION_STYLE_SHORT = {
+  az: `Sən peşəkar xəbər / məlumat diktorusan. Bu, təxminən bir dəqiqəlik qısa brifinqdir — yalnız əsas fikirləri oxu. Aydın, sakit, inamlı; televiziya məlumat tonu. Podkast və reklam tonu yox. Abzaslar arasında qısa peşəkar fasilə. «Raul Architects» brendini belə tələffüz et.`,
+  ru: `Ты профессиональный диктор новостей. Это краткий брифинг примерно на одну минуту — только суть. Читай ясно, спокойно, уверенно, как информационный выпуск. Без подкаста и рекламы. Короткие паузы между абзацами. Бренд: «Раул Аркитектс».`,
+  en: `You are a professional news presenter. This is a roughly one-minute briefing — essentials only. Deliver clearly, calmly, confidently like a factual bulletin. No podcast chumminess, no ad voice. Short pauses between paragraphs. Pronounce «Raul Architects».`,
+  de: `Du bist eine professionelle Nachrichtensprecherin. Dies ist ein kurzes Briefing von etwa einer Minute — nur das Wesentliche. Klar, ruhig, sachlich. Kein Podcast-Ton, keine Werbung. Kurze Pausen zwischen Absätzen. Marke: «Raul Architects».`,
 };
 const PRICE = { geminiInputPerM: 0.5, geminiOutputPerM: 9, chirpPerM: 30 };
 
@@ -87,10 +97,14 @@ const { values: args } = parseArgs({
     all: { type: "boolean", default: false },
     slug: { type: "string" },
     locales: { type: "string", default: BLOG_AUDIO_LOCALES.join(",") },
+    short: { type: "boolean", default: false },
     force: { type: "boolean", default: false },
     "dry-run": { type: "boolean", default: false },
   },
 });
+const SHORT = Boolean(args.short);
+const PAUSE_SECONDS = SHORT ? PAUSE_SECONDS_SHORT : PAUSE_SECONDS_FULL;
+const NARRATION_STYLE = SHORT ? NARRATION_STYLE_SHORT : NARRATION_STYLE_FULL;
 
 const env = (name, fallback) => {
   const value = process.env[name]?.trim();
@@ -308,15 +322,16 @@ async function saveManifest(manifest) {
 }
 
 async function selectPosts() {
-  let query = supabase.from("blog_posts").select("slug,status,published_at,created_at,translations");
-  if (args.slug) {
-    query = query.in(
-      "slug",
-      args.slug
+  const slugFilter = args.slug
+    ? args.slug
         .split(",")
         .map((item) => item.trim())
-        .filter(Boolean),
-    );
+        .filter(Boolean)
+    : null;
+
+  let query = supabase.from("blog_posts").select("slug,status,published_at,created_at,translations");
+  if (slugFilter) {
+    query = query.in("slug", slugFilter);
   } else if (args.all) {
     query = query.order("created_at", { ascending: false }).range(0, 999);
   } else {
@@ -329,7 +344,15 @@ async function selectPosts() {
   }
   const { data, error } = await query;
   if (error) throw error;
-  return data ?? [];
+  const cms = data ?? [];
+  const cmsSlugs = new Set(cms.map((row) => row.slug));
+
+  // Static-only posts (e.g. latest 3 seed articles) live in src/data, not always in CMS.
+  let staticRows = loadStaticBlogAudioRows().filter((row) => !cmsSlugs.has(row.slug));
+  if (slugFilter) staticRows = staticRows.filter((row) => slugFilter.includes(row.slug));
+  else if (!args.all && !SHORT) staticRows = [];
+
+  return [...staticRows, ...cms];
 }
 
 async function main() {
@@ -349,9 +372,12 @@ async function main() {
       if (!hasSpeechLocale(post, lang)) continue;
       const voice = VOICES[lang];
       const fields = getSpeechFields(post, lang);
-      const text = buildSpeechText(fields.title, fields.body, lang);
-      const hash = speechHash(text);
-      const label = `${post.slug}/${lang}`;
+      const excerpt = String(post.translations?.[lang]?.excerpt ?? post.translations?.[lang]?.description ?? "").trim();
+      const text = SHORT
+        ? buildInsightBriefText(fields.title, excerpt, fields.body, lang)
+        : buildSpeechText(fields.title, fields.body, lang);
+      const hash = SHORT ? blogBriefHash(text) : speechHash(text);
+      const label = `${post.slug}/${lang}${SHORT ? " [short]" : ""}`;
       const existing = manifest.entries.find((entry) => entry.slug === post.slug && entry.lang === lang);
       if (!args.force && existing?.hash === hash && existing.voice === voice.id) {
         console.log(`skip  ${label} (unchanged, ${existing.duration_seconds}s)`);
@@ -379,13 +405,15 @@ async function main() {
         bytes: mp3.length,
         hash,
         voice: voice.id,
+        kind: SHORT ? "short" : "full",
         generated_at: new Date().toISOString(),
       };
       manifest.entries = manifest.entries.filter((item) => !(item.slug === post.slug && item.lang === lang)).concat(entry);
       await saveManifest(manifest);
       changed++;
+      const warn = SHORT && (durationSeconds < 40 || durationSeconds > 90) ? " ⚠ outside 50s–1:20±" : "";
       console.log(
-        `done  ${label} ${durationSeconds}s, ${(mp3.length / 1024).toFixed(0)} KB, ${chunks} chunk(s), ${text.length} chars`,
+        `done  ${label} ${durationSeconds}s, ${(mp3.length / 1024).toFixed(0)} KB, ${chunks} chunk(s), ${text.length} chars${warn}`,
       );
     }
   }

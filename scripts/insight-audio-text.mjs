@@ -140,3 +140,8 @@ export function buildInsightBriefText(title, excerpt, body, locale = "az") {
 export function insightBriefHash(text) {
   return speechHash(`insight-short-v1\n${text}`);
 }
+
+/** Same brief builder for blog shorts; separate hash namespace so full articles stay untouched. */
+export function blogBriefHash(text) {
+  return speechHash(`blog-short-v1\n${text}`);
+}
