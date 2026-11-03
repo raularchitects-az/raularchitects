@@ -14,6 +14,8 @@ import { getPublicInsights, resolvePublicInsight } from "@/lib/cms/public";
 import { isInsightsRestructureActive } from "@/lib/cms/insights-rollout";
 import { getInsightLocaleSlug, insightLanguageAlternates, insightPostPath } from "@/lib/insights-urls";
 import { BlogBody } from "@/lib/blog-body";
+import { BlogAudioPlayer } from "@/components/blog-audio-player";
+import { getInsightAudio, insightAudioSchema } from "@/lib/insights/audio";
 import {
   SITE_NAME,
   SITE_URL,
@@ -161,6 +163,7 @@ export default async function InsightPostPage({
   if (!copy) notFound();
 
   const canonical = productionAbsoluteUrl(locale, insightPostPath(post, locale));
+  const audio = await getInsightAudio(post.slug, locale);
 
   const relatedLabels: Record<string, string> = {
     "/elaqe": nav("contact"),
@@ -199,6 +202,7 @@ export default async function InsightPostPage({
       name: SITE_NAME,
       url: SITE_URL,
     },
+    ...(audio ? { audio: insightAudioSchema(audio, copy.title) } : {}),
   };
 
   return (
@@ -229,6 +233,7 @@ export default async function InsightPostPage({
               <time dateTime={post.publishedAt} className="text-sm text-charcoal/45 lg:text-base">
                 {formatInsightDate(post.publishedAt, locale)}
               </time>
+              {audio ? <BlogAudioPlayer entry={audio} variant="insight" /> : null}
             </header>
 
             <figure className="relative mt-10 aspect-[16/10] overflow-hidden bg-cream-dark lg:mt-12 min-[1600px]:mt-14">

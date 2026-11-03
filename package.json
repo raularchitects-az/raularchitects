@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "audio:blog": "node --env-file=.env.local scripts/generate-blog-audio.mjs",
+    "audio:insights": "node --env-file=.env.local scripts/generate-insight-audio.mjs",
     "test:blog-audio": "node --test scripts/blog-audio.test.mjs"
   },
   "dependencies": {

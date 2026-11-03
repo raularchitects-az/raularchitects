@@ -1,7 +1,17 @@
 import { blogAudioLabels, formatAudioDuration, type BlogAudioEntry } from "@/lib/blog/audio";
+import { insightAudioLabels, type InsightAudioEntry } from "@/lib/insights/audio";
 
-export function BlogAudioPlayer({ entry }: { entry: BlogAudioEntry }) {
-  const label = blogAudioLabels[entry.lang];
+type AudioEntry = BlogAudioEntry | InsightAudioEntry;
+
+export function BlogAudioPlayer({
+  entry,
+  variant = "blog",
+}: {
+  entry: AudioEntry;
+  variant?: "blog" | "insight";
+}) {
+  const labels = variant === "insight" ? insightAudioLabels : blogAudioLabels;
+  const label = labels[entry.lang];
   const duration = formatAudioDuration(entry.duration_seconds);
   return (
     <div className="blog-audio mt-8 max-w-lg">
